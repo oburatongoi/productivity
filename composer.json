@@ -1,0 +1,18 @@
+{
+    "name": "oburatongoi/productivity",
+    "description": "Productivity - A productivity API by Artisan Pixelworks",
+    "keywords": ["laravel", "productivity"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Productivity",
+            "email": "obura@tongoi.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/support": "~5",
+        "propaganistas/laravel-fakeid": "^2.0",
+        "baum/baum": "~1.1"
+    }
+}
