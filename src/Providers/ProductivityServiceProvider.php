@@ -3,6 +3,7 @@
 namespace Oburatongoi\Productivity\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class ProductivityServiceProvider extends ServiceProvider
 {
