@@ -14,5 +14,10 @@
         "illuminate/support": "~5",
         "propaganistas/laravel-fakeid": "^2.0",
         "baum/baum": "~1.1"
-    }
+    },
+    "autoload": {
+        "psr-4": {
+            "Oburatongoi\\Productivity\\": "oburatongoi/productivity/src"
+        }
+    },
 }
