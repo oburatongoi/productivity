@@ -5,11 +5,7 @@ Compatible with Laravel 5. To install, run `$ composer install oburatongoi/produ
 
 Next, add the service provider to the `app/config.app` file:
 
-`/*
-* Package Service Providers...
- */
-
-Oburatongoi\Productivity\Providers\ProductivityServiceProvider::class,`
+`Oburatongoi\Productivity\Providers\ProductivityServiceProvider::class,`
 
 Finally, run `php artisan vendor:publish` to publish the necessary resources.
 
