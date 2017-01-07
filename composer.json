@@ -16,6 +16,9 @@
         "baum/baum": "~1.1"
     },
     "autoload": {
+        "classmap": [
+            "database"
+        ],
         "psr-4": {
             "Oburatongoi\\Productivity\\": "src/"
         }
