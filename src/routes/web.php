@@ -11,5 +11,8 @@ Route::get('productivity', function(){
 });
 
 Route::group(['namespace' => 'Oburatongoi\Productivity\Http\Controllers'], function () {
-    Route::resource('folder', 'FolderController');
+    Route::resource('folders', 'FolderController', ['except' => ['create', 'edit']]);
+    Route::resource('goals', 'GoalController', ['except' => ['create', 'edit']]);
+    Route::resource('notes', 'NoteController', ['except' => ['create', 'edit']]);
+    Route::resource('lists', 'ChecklistController', ['except' => ['create', 'edit']]);
 });
