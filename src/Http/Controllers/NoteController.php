@@ -15,6 +15,9 @@ class NoteController extends Controller
 
     public function __construct(NoteRepository $notes)
     {
+        $this->middleware('web');
+        $this->middleware('auth');
+
         $this->notes = $notes;
     }
 
@@ -25,9 +28,12 @@ class NoteController extends Controller
      */
     public function index(Request $request)
     {
-        $notes = $notes->forUser($request->user());
+        $notes = $this->notes->forUser($request->user());
 
-        return view('productivity::notes.index')->withNotes($notes);
+        return view('productivity::notes.index')->with([
+            'notes' => $notes,
+            'model' => 'notes',
+        ]);
     }
 
     /**
@@ -56,7 +62,7 @@ class NoteController extends Controller
 
         $this->authorize('view', $note);
 
-        return view('productivity::notes.show')->withNote($note);
+        return view('productivity::notes.show')->with('note', $note);
     }
 
     /**

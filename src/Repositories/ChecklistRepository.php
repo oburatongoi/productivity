@@ -2,13 +2,16 @@
 
 namespace Oburatongoi\Productivity\Repositories;
 
-use Oburatongoi\Productivity\User;
+use App\User as AppUser;
+use Oburatongoi\Productivity\User as ProductivityUser;
 use Oburatongoi\Productivity\Folder;
 
 class ChecklistRepository {
 
-    public function forUser(User $user)
+    public function forUser(AppUser $user)
     {
+        $user = ProductivityUser::find($user->id);
+        
         return $user->checklists()->get();
     }
 

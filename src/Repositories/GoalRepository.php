@@ -2,19 +2,22 @@
 
 namespace Oburatongoi\Productivity\Repositories;
 
-use Oburatongoi\Productivity\User;
+use App\User as AppUser;
+use Oburatongoi\Productivity\User as ProductivityUser;
 use Oburatongoi\Productivity\Folder;
 
 class GoalRepository {
 
-    public function forUser(User $user)
+    public function forUser(AppUser $user)
     {
-        return $user->goal()->get();
+        $user = ProductivityUser::find($user->id);
+
+        return $user->goals()->get();
     }
 
     public function forFolder(Folder $folder)
     {
-        return $folder->goal()->get();
+        return $folder->goals()->get();
     }
 
 }

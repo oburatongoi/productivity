@@ -16,6 +16,9 @@ class FolderController extends Controller
 
     public function __construct(FolderRepository $folders)
     {
+        $this->middleware('web');
+        $this->middleware('auth');
+
         $this->folders = $folders;
     }
 
@@ -26,9 +29,12 @@ class FolderController extends Controller
      */
     public function index(Request $request)
     {
-        $folders = $folders->forUser($request->user());
+        $folders = $this->folders->forUser($request->user());
 
-        return view('productivity::folders.index')->withFolders($folders);
+        return view('productivity::folders.index')->with([
+            'folders' => $folders,
+            'model' => 'folders',
+        ]);
     }
 
     /**

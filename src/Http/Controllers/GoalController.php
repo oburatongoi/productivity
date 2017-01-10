@@ -15,6 +15,9 @@ class GoalController extends Controller
 
     public function __construct(GoalRepository $goals)
     {
+        $this->middleware('web');
+        $this->middleware('auth');
+
         $this->goals = $goals;
     }
 
@@ -25,9 +28,12 @@ class GoalController extends Controller
      */
     public function index(Request $request)
     {
-        $goals = $goals->forUser($request->user());
+        $goals = $this->goals->forUser($request->user());
 
-        return view('productivity::goals.index')->withGoals($goals);
+        return view('productivity::goals.index')->with([
+            'goals' => $goals,
+            'model' => 'goals',
+        ]);
     }
 
     /**

@@ -15,6 +15,9 @@ class ChecklistController extends Controller
 
     public function __construct(ChecklistRepository $checklists)
     {
+        $this->middleware('web');
+        $this->middleware('auth');
+
         $this->checklists = $checklists;
     }
 
@@ -25,9 +28,12 @@ class ChecklistController extends Controller
      */
     public function index(Request $request)
     {
-        $checklists = $checklists->forUser($request->user());
+        $checklists = $this->checklists->forUser($request->user());
 
-        return view('productivity::checklists.index')->withChecklists($checklists);
+        return view('productivity::checklists.index')->with([
+            'checklists' => $checklists,
+            'model' => 'lists',
+        ]);
     }
 
     /**
