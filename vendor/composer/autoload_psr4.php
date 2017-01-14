@@ -30,6 +30,7 @@ return array(
     'Oburatongoi\\Productivity\\' => array($baseDir . '/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
+    'Laracasts\\Utilities\\JavaScript\\' => array($vendorDir . '/laracasts/utilities/src'),
     'Jenssegers\\Optimus\\' => array($vendorDir . '/jenssegers/optimus/src'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),

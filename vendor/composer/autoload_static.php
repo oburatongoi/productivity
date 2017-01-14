@@ -66,6 +66,7 @@ class ComposerStaticInitce63f14aac24030ed0b3bab965d26adc
         'L' => 
         array (
             'League\\Flysystem\\' => 17,
+            'Laracasts\\Utilities\\JavaScript\\' => 31,
         ),
         'J' => 
         array (
@@ -182,6 +183,10 @@ class ComposerStaticInitce63f14aac24030ed0b3bab965d26adc
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
+        ),
+        'Laracasts\\Utilities\\JavaScript\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laracasts/utilities/src',
         ),
         'Jenssegers\\Optimus\\' => 
         array (
