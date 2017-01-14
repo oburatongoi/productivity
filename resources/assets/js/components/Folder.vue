@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-      <ul>
+      <ul class="list-unstyled">
           <li v-if="folders" v-for="folder in folders">
               <folder :folder="folder"></folder>
           </li>

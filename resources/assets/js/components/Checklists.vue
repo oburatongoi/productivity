@@ -1,5 +1,5 @@
 <template>
-    <ul>
+    <ul class="list-unstyled">
         <li v-if="checklists" v-for="checklist in checklists">
             <checklist :checklist="checklist"></checklist>
         </li>

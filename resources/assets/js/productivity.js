@@ -20,6 +20,12 @@ Vue.component('Note', require('./components/Note.vue'));
 Vue.component('Checklists', require('./components/Checklists.vue'));
 Vue.component('Checklist', require('./components/Checklist.vue'));
 
+import store from './store.js'
+
+var bus = new Vue()
+
 const app = new Vue({
-    el: '#productivity-app'
+    el: '#productivity-app',
+    store,
+    bus
 });

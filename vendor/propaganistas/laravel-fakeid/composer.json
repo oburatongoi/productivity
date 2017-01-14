@@ -1,0 +1,38 @@
+{
+    "name": "propaganistas/laravel-fakeid",
+    "description": "Automatic ID obfuscation for Eloquent models.",
+    "keywords": [
+        "laravel",
+        "optimus",
+        "hashids",
+        "fakeid",
+        "obfuscation"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Propaganistas",
+            "email": "Propaganistas@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "jenssegers/optimus": "^0.2.2",
+        "laravel/framework": "^5.0",
+        "phpseclib/phpseclib": "^2.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.0",
+        "phpunit/phpunit": "^4.0|^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Propaganistas\\LaravelFakeId\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Propaganistas\\LaravelFakeId\\Tests\\": "tests/"
+        }
+    }
+}

@@ -31,6 +31,7 @@
 </template>
 
 <script>
+
 export default {
     name: 'main-nav',
     props: ['selected'],

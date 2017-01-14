@@ -31,7 +31,8 @@ class ProductivityServiceProvider extends ServiceProvider
         ], 'migrations');
 
         $this->publishes([
-            __DIR__.'/../config/productivity.php' => config_path('productivity.php')
+            __DIR__.'/../config/productivity.php' => config_path('productivity.php'),
+            __DIR__.'/../config/javascript.php' => config_path('javascript.php'),
         ], 'config');
     }
 
@@ -42,8 +43,9 @@ class ProductivityServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register('Propaganistas\LaravelFakeId\FakeIdServiceProvider');
         $this->app->register('Baum\Providers\BaumServiceProvider');
+        $this->app->register('Propaganistas\LaravelFakeId\FakeIdServiceProvider');
+        // $this->app->register('Laracasts\Utilities\JavaScript\JavaScriptServiceProvider');
     }
 
 }

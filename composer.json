@@ -5,11 +5,12 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Productivity",
-            "email": "obura@tongoi.com"
+            "name": "Obura Tongoi",
+            "email": "obura@tongoi.com",
+            "homepage": "https://artisan.pw"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "illuminate/support": "~5",
         "propaganistas/laravel-fakeid": "^2.0",

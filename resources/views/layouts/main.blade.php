@@ -23,13 +23,8 @@
                         @yield('main-menu')
                     </div>
                     <div class="col-md-8">
-                        <div class="panel panel-default">
-                            <div class="panel-heading text-capitalize">{{ $model or 'Productivity'}}</div>
-
-                            <div class="panel-body">
-                                @yield('content')
-                            </div>
-                        </div>
+                        <h5 class="text-capitalize">{{ $model or 'Productivity'}}</h5>
+                        @yield('content')
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <template>
-    <ul>
+    <ul class="list-unstyled">
         <li v-if="notes" v-for="note in notes">
             <note :note="note"></note>
         </li>
