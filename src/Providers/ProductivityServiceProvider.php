@@ -45,7 +45,7 @@ class ProductivityServiceProvider extends ServiceProvider
     {
         $this->app->register('Baum\Providers\BaumServiceProvider');
         $this->app->register('Propaganistas\LaravelFakeId\FakeIdServiceProvider');
-        // $this->app->register('Laracasts\Utilities\JavaScript\JavaScriptServiceProvider');
+        $this->app->register('Laracasts\Utilities\JavaScript\JavaScriptServiceProvider');
     }
 
 }
