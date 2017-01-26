@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    <folders></folders>
+    <folder></folder>
 @endsection

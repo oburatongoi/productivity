@@ -16,9 +16,9 @@ class CreateFoldersTable extends Migration
         Schema::create('folders', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('fake_id')->unsigned();
+            // $table->integer('fake_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->string('name');
+            $table->string('name')->required()->default('Untitled - ' . date('y-m-d'));
             $table->string('description')->nullable();
             $table->dateTime('published_at')->nullable();
             $table->string('visibility')->default('me');

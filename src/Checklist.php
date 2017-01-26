@@ -33,12 +33,12 @@ class Checklist extends Model
 
     public function folder()
     {
-      return $this->belongsTo('App\Folder', 'listable_id');
+      return $this->belongsTo('Oburatongoi\Productivity\Folder', 'listable_id');
     }
 
     public function list_items()
     {
-      return $this->hasMany('App\ChecklistItem', 'checklist_id');
+      return $this->hasMany('Oburatongoi\Productivity\ChecklistItem', 'checklist_id');
     }
 
     protected static function boot() {

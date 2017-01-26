@@ -17,9 +17,9 @@ class ProductivityServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'productivity');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-        $this->publishes([
-            __DIR__.'/../../resources/views' => resource_path('views/vendor/productivity')
-        ], 'views');
+        // $this->publishes([
+        //     __DIR__.'/../../resources/views' => resource_path('views/vendor/productivity')
+        // ], 'views');
 
         $this->publishes([
             __DIR__.'/../../public/js' => public_path('vendor/productivity/js'),
@@ -31,9 +31,11 @@ class ProductivityServiceProvider extends ServiceProvider
         ], 'migrations');
 
         $this->publishes([
+            __DIR__.'/../config/fakeid.php' => config_path('fakeid.php'),
             __DIR__.'/../config/productivity.php' => config_path('productivity.php'),
             __DIR__.'/../config/javascript.php' => config_path('javascript.php'),
         ], 'config');
+
     }
 
     /**

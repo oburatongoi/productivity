@@ -44,7 +44,7 @@ class ChecklistController extends Controller
      */
     public function store(Request $request)
     {
-        $checklist = Checklist::create($request->input('checklist'));
+        $checklist = $request->user()->checklists()->create($request->input('checklist'));
 
         return response()->json([
             'checklist' => $checklist

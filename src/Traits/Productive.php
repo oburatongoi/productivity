@@ -1,13 +1,9 @@
 <?php
 
-namespace Oburatongoi\Productivity;
+namespace Oburatongoi\Productivity\Traits;
 
-use App\User as AppUser;
-
-class User extends AppUser
+trait Productive
 {
-    protected $table = 'users';
-
     public function folders()
     {
         return $this->hasMany('Oburatongoi\Productivity\Folder');

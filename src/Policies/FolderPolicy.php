@@ -2,7 +2,7 @@
 
 namespace Oburatongoi\Productivity\Policies;
 
-use Oburatongoi\Productivity\User;
+use App\User;
 use Oburatongoi\Productivity\Folder;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -29,7 +29,6 @@ class FolderPolicy
      */
     public function view(User $user, Folder $folder)
     {
-
       return $user->id === $folder->user_id;
 
     }

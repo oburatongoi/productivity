@@ -2,22 +2,24 @@
 
 namespace Oburatongoi\Productivity\Repositories;
 
-use App\User as AppUser;
-use Oburatongoi\Productivity\User as ProductivityUser;
+use App\User;
 use Oburatongoi\Productivity\Folder;
 
 class GoalRepository {
 
-    public function forUser(AppUser $user)
+    public function forUser(User $user)
     {
-        $user = ProductivityUser::find($user->id);
+        return $user->goals()->orderBy('updated_at', 'desc')->get();
+    }
 
-        return $user->goals()->get();
+    public function rootForUser(User $user)
+    {
+        return $user->goals()->whereNull('folder_id')->orderBy('updated_at', 'desc')->get();
     }
 
     public function forFolder(Folder $folder)
     {
-        return $folder->goals()->get();
+        return $folder->goals()->orderBy('updated_at', 'desc')->get();
     }
 
 }

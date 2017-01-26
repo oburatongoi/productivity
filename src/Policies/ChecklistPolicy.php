@@ -2,7 +2,7 @@
 
 namespace Oburatongoi\Productivity\Policies;
 
-use Oburatongoi\Productivity\User;
+use App\User;
 use Oburatongoi\Productivity\Checklist;
 use Illuminate\Auth\Access\HandlesAuthorization;
 

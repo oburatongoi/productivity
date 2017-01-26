@@ -11,7 +11,7 @@ return [
     | you want to prepend all JavaScript variables to.
     |
     */
-    'bind_js_vars_to_this_view' => 'productivity.javascript',
+    'bind_js_vars_to_this_view' => 'productivity::javascript',
 
     /*
     |--------------------------------------------------------------------------

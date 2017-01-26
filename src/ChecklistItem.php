@@ -25,6 +25,6 @@ class ChecklistItem extends Model
 
     public function checklist()
     {
-        return $this->belongsTo('App\Checklist');
+        return $this->belongsTo('Oburatongoi\Productivity\Checklist');
     }
 }

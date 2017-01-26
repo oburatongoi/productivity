@@ -2,16 +2,21 @@
 
 namespace Oburatongoi\Productivity\Repositories;
 
-use App\User as AppUser;
-use Oburatongoi\Productivity\User as ProductivityUser;
+use App\User;
 
 class FolderRepository {
 
-    public function forUser(AppUser $user)
+    public function forUser(User $user)
     {
-        $user = ProductivityUser::find($user->id);
+        return $user->folders()->with('checklists', 'goals', 'notes', 'subfolders')->orderBy('updated_at', 'desc')->get();
+    }
 
-        return $user->folders()->with('checklists', 'goals', 'notes', 'subfolders')->get();
+    public function rootForUser(User $user)
+    {
+        return $user->folders()
+                    ->whereNull('parent_id')
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
     }
 
 }

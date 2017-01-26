@@ -12,7 +12,7 @@ class Folder extends Node
 {
     use SoftDeletes;
     protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
-    use FakeIdTrait;
+    // use FakeIdTrait;
 
     protected $fillable = [
       'name', 'user_id', 'fake_id', 'description', 'published_at', 'created_at', 'updated_at', 'deleted_at', 'visibility',
@@ -35,27 +35,27 @@ class Folder extends Node
 
     public function parent()
     {
-        return $this->belongsTo('App\Folder', 'parent_id', 'id');
+        return $this->belongsTo('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
     }
 
     public function subfolders()
     {
-        return $this->hasMany('App\Folder', 'parent_id', 'id');
+        return $this->hasMany('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
     }
 
     public function checklists()
     {
-        return $this->hasMany('App\Checklist');
+        return $this->hasMany('Oburatongoi\Productivity\Checklist');
     }
 
     public function notes()
     {
-        return $this->hasMany('App\Note');
+        return $this->hasMany('Oburatongoi\Productivity\Note');
     }
 
     public function goals()
     {
-        return $this->hasMany('App\Goal');
+        return $this->hasMany('Oburatongoi\Productivity\Goal');
     }
 
     // public function teammates()

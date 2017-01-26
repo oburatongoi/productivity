@@ -2,22 +2,25 @@
 
 namespace Oburatongoi\Productivity\Repositories;
 
-use App\User as AppUser;
-use Oburatongoi\Productivity\User as ProductivityUser;
+
+use App\User;
 use Oburatongoi\Productivity\Folder;
 
 class ChecklistRepository {
 
-    public function forUser(AppUser $user)
+    public function forUser(User $user)
     {
-        $user = ProductivityUser::find($user->id);
-        
-        return $user->checklists()->get();
+        return $user->checklists()->orderBy('updated_at', 'desc')->get();
+    }
+
+    public function rootForUser(User $user)
+    {
+        return $user->checklists()->whereNull('folder_id')->orderBy('updated_at', 'desc')->get();
     }
 
     public function forFolder(Folder $folder)
     {
-        return $folder->checklists()->get();
+        return $folder->checklists()->orderBy('updated_at', 'desc')->get();
     }
 
 }

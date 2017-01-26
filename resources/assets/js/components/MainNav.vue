@@ -9,7 +9,7 @@
 
       <li :class="{active: selected=='notes'}">
           <a href="/productivity/notes">
-              <i class="fa fa-fw fa-sticky-note-o" aria-hidden="true"></i>
+              <i class="fa fa-fw fa-sticky-note" aria-hidden="true"></i>
               Notes
           </a>
       </li>

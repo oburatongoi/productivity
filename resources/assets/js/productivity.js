@@ -15,6 +15,7 @@ require('./bootstrap');
 
 Vue.component('MainNav', require('./components/MainNav.vue'));
 Vue.component('Folders', require('./components/Folders.vue'));
+Vue.component('Folder', require('./components/Folder.vue'));
 Vue.component('Notes', require('./components/Notes.vue'));
 Vue.component('Note', require('./components/Note.vue'));
 Vue.component('Checklists', require('./components/Checklists.vue'));

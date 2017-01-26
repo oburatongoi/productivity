@@ -26,6 +26,6 @@ class Note extends Model
 
   public function folder()
   {
-      return $this->belongsTo('App\Folder', 'folder_id');
+      return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id');
   }
 }
