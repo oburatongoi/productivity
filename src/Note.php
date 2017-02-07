@@ -4,28 +4,28 @@ namespace Oburatongoi\Productivity;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Propaganistas\LaravelFakeId\FakeIdTrait;
+use Oburatongoi\Productivity\Traits\Fakable;
 
 class Note extends Model
 {
-    use SoftDeletes;
-    use FakeIdTrait;
 
-  protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
+    use SoftDeletes, Fakable;
 
-  protected $fillable = [
+    protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
+
+    protected $fillable = [
       'fake_id', 'user_id', 'folder_id', 'title', 'content', 'visibility', 'published_at', 'created_at', 'updated_at', 'deleted_at',
-  ];
+    ];
 
-  protected $touches = ['folder'];
+    protected $touches = ['folder'];
 
-  public function owner()
-  {
+    public function owner()
+    {
       return $this->belongsTo('App\User', 'user_id', 'id');
-  }
+    }
 
-  public function folder()
-  {
+    public function folder()
+    {
       return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id');
-  }
+    }
 }

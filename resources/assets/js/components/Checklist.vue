@@ -1,24 +1,39 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Example Component</div>
-
-                    <div class="panel-body">
-                        <p>Productivity Notes</p>
-                    </div>
+            <div class="col-md-12">
+              <div class="panel">
+                <div class="panel-heading">
+                  <div class="page-header">
+                    <h3>
+                      <i class="fa fa-fw fa-list" aria-hidden="true"></i>
+                      {{checklist.title}}
+                    </h3>
+                  </div>
+                  <add-item :mode="'add'"></add-item>
                 </div>
-            </div>
-        </div>
-    </div>
+
+                <div class="panel-body">
+                    <checklist-items></checklist-items>
+                </div>
+              </div>
+          </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
+import ChecklistItems from './ChecklistItems.vue'
+import AddItem from './AddItem.vue'
+
 export default {
-    name: 'productivity-checklist',
-    data () {
-        return {}
+    name: 'checklist',
+    components: {
+        ChecklistItems,
+        AddItem
+    },
+    computed: {
+      ...mapGetters([
+        'checklist'
+      ])
     }
 }
 </script>

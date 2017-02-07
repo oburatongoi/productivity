@@ -8,7 +8,7 @@ class ChecklistItemRepository {
 
     public function forChecklist(Checklist $checklist)
     {
-        return $checklist->list_items()->get();
+        return $checklist->items()->get();
     }
 
 }

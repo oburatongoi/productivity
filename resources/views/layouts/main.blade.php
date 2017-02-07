@@ -27,13 +27,29 @@
     </head>
     <body>
         <div id="productivity-app">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="navbar-header">
+                                <a class="navbar-brand" href="/productivity">
+                                    Productivity
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <create-new></create-new>
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
             <div class="container">
                 <div class="row">
                     <div class="col-md-2">
                         @yield('main-menu')
                     </div>
-                    <div class="clearfix visible-md-block"></div>
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         @yield('content')
                     </div>
                 </div>

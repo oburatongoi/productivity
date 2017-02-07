@@ -1,0 +1,129 @@
+.deadline-input {
+    width: 150px;
+    display: inline-block;
+    vertical-align: middle;
+    label {
+        margin:0;
+        margin-right: 10px;
+    }
+}
+.item-form {
+    width: 100%;
+    padding: 0px;
+    border: 1px solid $input-border;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 5px;
+    .item-form-content {
+        display: inline-block;
+        height: 38px;
+        vertical-align: middle;
+        border: 0;
+        outline: none;
+        background: white;
+    }
+    .item-form-meta {
+        display: inline-block;;
+        margin:0;
+        height: 38px;
+        vertical-align: middle;
+        border-left: 1px solid $input-border;
+        background: $body-bg;
+        padding: 0;
+        .item-form-bool,
+        .item-form-date {
+
+            display: inline-block;
+            margin:0;
+            padding: 0;
+            height: 100%;
+            vertical-align: middle;
+            &:nth-child(2) {
+                border-right: 1px solid $input-border;
+                border-left: 1px solid $input-border;
+            }
+            label {
+                display: block;
+                font-size: 0.7em;
+                margin: 0;
+            }
+            p,
+            input {
+                height: 20px;
+                line-height: 20px;
+                padding: 0;
+                margin: 0;
+                display: inline-block;
+            }
+            p {
+                cursor: pointer;
+            }
+        }
+        .item-form-bool {
+            text-align: center;
+            width: 60px;
+            overflow: hidden;
+        }
+        .item-form-date {
+            position: relative;
+            input {
+                position: absolute;
+                left: 0;
+                top: 15px;
+            }
+        }
+    }
+}
+
+.checklist-items {
+    margin-top: 20px;
+}
+
+.show-item {
+    overflow: hidden;
+    &:hover {
+        background: lighten($body-bg, 1%);
+    }
+    p, i {
+        display: inline-block;
+        margin:0;
+        padding: 10px 0;
+        vertical-align: middle;
+    }
+    p {
+        font-size: 1.2em;
+        line-height: 1em;
+    }
+    i {
+        font-size: 1.8em;
+        line-height: 1em;
+        margin: 0;
+        padding: 0;
+    }
+
+    .toggle {
+        font-size: 16px;
+        float: right;
+        margin-top: 5px;
+        margin-right: 5px;
+        padding: 7px;
+        cursor: pointer;
+        &:hover {
+            color: $list-primary;
+        }
+    }
+    border-bottom: 1px solid lighten($base-border-color, 10%);
+}
+.edit-item-form {
+    padding: 10px;
+    background: $body-bg;
+    border: 1px solid $input-border;
+    border-radius: 3px;
+    margin-bottom: 10px;
+
+    .comments-label {
+        display: block;
+        font-size: 0.7em;
+        margin: 10px 0 0;
+    }
+}

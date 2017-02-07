@@ -29,9 +29,7 @@ class ChecklistPolicy
      */
     public function view(User $user, Checklist $checklist)
     {
-
       return $user->id === $checklist->user_id;
-
     }
 
     /**

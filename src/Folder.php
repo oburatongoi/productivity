@@ -2,17 +2,15 @@
 
 namespace Oburatongoi\Productivity;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Propaganistas\LaravelFakeId\FakeIdTrait;
+use Oburatongoi\Productivity\Traits\Fakable;
 use Baum\Node;
 
-// class Folder extends Model
 class Folder extends Node
 {
-    use SoftDeletes;
+    use SoftDeletes, Fakable;
+
     protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
-    // use FakeIdTrait;
 
     protected $fillable = [
       'name', 'user_id', 'fake_id', 'description', 'published_at', 'created_at', 'updated_at', 'deleted_at', 'visibility',

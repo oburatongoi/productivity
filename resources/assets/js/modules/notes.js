@@ -80,7 +80,7 @@ const actions = {
 }
 
 const getters = {
-    notes: state => state.notes,
+    notes: state => state.notes
 }
 
 export default {

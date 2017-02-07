@@ -35,3 +35,21 @@ li.listing {
         border: 1px solid $brand-primary;
     }
 }
+
+.note-color-scheme {
+    &.selected {
+        border: 1px solid $note-primary !important;
+    }
+}
+
+.goal-color-scheme {
+    &.selected {
+        border: 1px solid $goal-primary !important;
+    }
+}
+
+.list-color-scheme {
+    &.selected {
+        border: 1px solid $list-primary !important;
+    }
+}

@@ -45,6 +45,9 @@ class ProductivityServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register('Oburatongoi\Productivity\Providers\AuthServiceProvider');
+        $this->app->register('Oburatongoi\Productivity\Providers\RouteServiceProvider');
+
         $this->app->register('Baum\Providers\BaumServiceProvider');
         $this->app->register('Propaganistas\LaravelFakeId\FakeIdServiceProvider');
         $this->app->register('Laracasts\Utilities\JavaScript\JavaScriptServiceProvider');

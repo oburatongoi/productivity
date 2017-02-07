@@ -6,8 +6,13 @@ export const DELETE_FOLDER = 'folders/DELETE_FOLDER'
 export const UPDATE_FOLDER = 'folders/UPDATE_FOLDER'
 
 export const ADD_CHECKLIST = 'checklists/ADD_CHECKLIST'
+export const ADD_EDITABLE = 'checklists/ADD_EDITABLE'
+export const DELETE_EDITABLE = 'checklists/DELETE_EDITABLE'
+export const ADD_ITEM_TO_CHECKLIST = 'checklists/ADD_ITEM_TO_CHECKLIST'
 export const DELETE_CHECKLIST = 'checklists/DELETE_CHECKLIST'
 export const UPDATE_CHECKLIST = 'checklists/UPDATE_CHECKLIST'
+export const UPDATE_CHECKLIST_ITEM = 'checklists/UPDATE_CHECKLIST_ITEM'
+export const UPDATE_CHECKLIST_ITEM_CHECK = 'checklists/UPDATE_CHECKLIST_ITEM_CHECK'
 
 export const ADD_NOTE = 'notes/ADD_NOTE'
 export const DELETE_NOTE = 'notes/DELETE_NOTE'

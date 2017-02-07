@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use Oburatongoi\Productivity\Repositories\ChecklistRepository;
 use Oburatongoi\Productivity\Checklist;
+use JavaScript;
 
 class ChecklistController extends Controller
 {
@@ -46,6 +47,8 @@ class ChecklistController extends Controller
     {
         $checklist = $request->user()->checklists()->create($request->input('checklist'));
 
+        $checklist->fakeID();
+
         return response()->json([
             'checklist' => $checklist
         ]);
@@ -59,8 +62,16 @@ class ChecklistController extends Controller
      */
     public function show(Request $request, Checklist $checklist)
     {
-
         $this->authorize('view', $checklist);
+
+        $checklist->load(['items' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }]);
+
+        JavaScript::put([
+            'checklist' => $checklist,
+            'model' => 'list',
+        ]);
 
         return view('productivity::checklists.show')->withChecklist($checklist);
     }

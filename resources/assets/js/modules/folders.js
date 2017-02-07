@@ -5,8 +5,7 @@ import {
 } from '../mutations'
 
 const state = {
-    folders: Productivity.folders,
-    goals: Productivity.goals,
+    folders: Productivity.folders ? Productivity.folders : {}
 }
 
 const mutations = {
@@ -81,8 +80,7 @@ const actions = {
 }
 
 const getters = {
-    folders: state => state.folders,
-    goals: state => state.goals,
+    folders: state => state.folders
 }
 
 export default {

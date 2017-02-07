@@ -4,12 +4,11 @@ namespace Oburatongoi\Productivity;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Propaganistas\LaravelFakeId\FakeIdTrait;
+use Oburatongoi\Productivity\Traits\Fakable;
 
 class Checklist extends Model
 {
-    use SoftDeletes;
-    use FakeIdTrait;
+    use SoftDeletes, Fakable;
 
     protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
 
@@ -36,7 +35,7 @@ class Checklist extends Model
       return $this->belongsTo('Oburatongoi\Productivity\Folder', 'listable_id');
     }
 
-    public function list_items()
+    public function items()
     {
       return $this->hasMany('Oburatongoi\Productivity\ChecklistItem', 'checklist_id');
     }

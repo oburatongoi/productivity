@@ -3,6 +3,7 @@
 namespace Oburatongoi\Productivity\Repositories;
 
 use App\User;
+use Oburatongoi\Productivity\Folder;
 
 class FolderRepository {
 
@@ -15,6 +16,13 @@ class FolderRepository {
     {
         return $user->folders()
                     ->whereNull('parent_id')
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
+    }
+
+    public function rootForFolder(Folder $folder)
+    {
+        return $folder->subfolders()
                     ->orderBy('updated_at', 'desc')
                     ->get();
     }

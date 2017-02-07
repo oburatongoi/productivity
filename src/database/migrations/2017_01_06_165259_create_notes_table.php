@@ -16,10 +16,10 @@ class CreateNotesTable extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            // $table->integer('fake_id')->unsigned();
+            $table->integer('fake_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('folder_id')->unsigned()->nullable();
-            $table->string('title')->default('Untitled - ' . date('y-m-d'));
+            $table->string('title')->default('Untitled - ' . date('y-m-d H:i:s'));
             $table->text('content')->nullable();
             $table->string('visibility')->default('me');
             $table->dateTime('published_at')->nullable();

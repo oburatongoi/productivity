@@ -9,17 +9,20 @@ class GoalRepository {
 
     public function forUser(User $user)
     {
-        return $user->goals()->orderBy('updated_at', 'desc')->get();
+        // return $user->goals()->orderBy('updated_at', 'desc')->get();
+        return [];
     }
 
     public function rootForUser(User $user)
     {
-        return $user->goals()->whereNull('folder_id')->orderBy('updated_at', 'desc')->get();
+        // return $user->goals()->whereNull('folder_id')->orderBy('updated_at', 'desc')->get();
+        return [];
     }
 
     public function forFolder(Folder $folder)
     {
-        return $folder->goals()->orderBy('updated_at', 'desc')->get();
+        // return $folder->goals()->orderBy('updated_at', 'desc')->get();
+        return [];
     }
 
 }

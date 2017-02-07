@@ -44,7 +44,9 @@ class GoalController extends Controller
      */
     public function store(Request $request)
     {
-        $goal = Goal::create($request->input('goal'));
+        $goal = $request->user()->goals()->create($request->input('goal'));
+
+        $goal->fakeID();
 
         return response()->json([
             'goal' => $goal

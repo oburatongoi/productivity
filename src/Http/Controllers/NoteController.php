@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Oburatongoi\Productivity\Repositories\NoteRepository;
 use Oburatongoi\Productivity\Note;
 
+use JavaScript;
+
 class NoteController extends Controller
 {
     protected $notes;
@@ -46,6 +48,8 @@ class NoteController extends Controller
     {
         $note = $request->user()->notes()->create($request->input('note'));
 
+        $note->fakeID();
+
         return response()->json([
             'note' => $note
         ]);
@@ -59,8 +63,12 @@ class NoteController extends Controller
      */
     public function show(Request $request, Note $note)
     {
-
         $this->authorize('view', $note);
+
+        JavaScript::put([
+            'note' => $note,
+            'model' => 'note',
+        ]);
 
         return view('productivity::notes.show')->with('note', $note);
     }

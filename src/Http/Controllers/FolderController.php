@@ -47,14 +47,14 @@ class FolderController extends Controller
         $folders = $this->folders->rootForUser($request->user());
         $notes = $this->notes->rootForUser($request->user());
         $checklists = $this->checklists->rootForUser($request->user());
-        // $goals = $this->goals->rootForUser($request->user());
+        $goals = $this->goals->rootForUser($request->user());
 
         JavaScript::put([
             'user' => $request->user(),
             'folders' => $folders,
             'notes' => $notes,
             'checklists' => $checklists,
-            // 'goals' => $goals,
+            'goals' => $goals,
             'model' => 'folders',
         ]);
 
@@ -72,6 +72,7 @@ class FolderController extends Controller
      */
     public function store(Request $request)
     {
+
         $folder = $request->user()->folders()->create($request->input('folder'));
 
         if (
@@ -80,6 +81,8 @@ class FolderController extends Controller
         ) {
             $folder->makeChildOf($parent);
         }
+
+        $folder->fakeID();
 
         return response()->json([
             'folder' => $folder
@@ -94,23 +97,24 @@ class FolderController extends Controller
      */
     public function show(Request $request, Folder $folder)
     {
-        // $this->authorize('view', $folder);
+        $this->authorize('view', $folder);
 
-        // $folder->load('checklists', 'goals', 'notes', 'subfolders');
-        $folder->load('checklists', 'notes', 'subfolders');
+        $folders = $this->folders->rootForFolder($folder);
+        $notes = $this->notes->forFolder($folder);
+        $checklists = $this->checklists->forFolder($folder);
+        $goals = $this->goals->forFolder($folder);
 
         JavaScript::put([
             'user' => $request->user(),
-            'folder' => $folder,
+            'folders' => $folders,
+            'currentFolder' => $folder,
+            'notes' => $notes,
+            'checklists' => $checklists,
+            'goals' => $goals,
             'model' => 'folder',
         ]);
 
-        return view('productivity::folders.show')
-                ->with([
-                    'user' => $request->user(),
-                    'folder' => $folder,
-                    'model' => 'folder'
-                ]);
+        return view('productivity::folders.show')->withModel('folder');
     }
 
     /**

@@ -14,6 +14,7 @@
  .btn-list,
  .btn-goal {
      color: white;
+     &:active,
      &:hover {
          color: rgba(255,255,255,0.9);
      }
@@ -21,6 +22,7 @@
  .btn-note {
      background: $note-primary;
      border: 1px solid darken($note-primary, 10%);
+     &:active,
      &:hover {
          background: darken($note-primary, 4%);
      }
@@ -28,6 +30,7 @@
  .btn-list {
      background: $list-primary;
      border: 1px solid darken($list-primary, 10%);
+     &:active,
      &:hover {
          background: darken($list-primary, 4%);
      }
@@ -35,6 +38,7 @@
  .btn-goal {
      background: $goal-primary;
      border: 1px solid darken($goal-primary, 10%);
+     &:active,
      &:hover {
          background: darken($goal-primary, 4%);
      }

@@ -7688,6 +7688,158 @@ button.close {
   }
 }
 
+.deadline-input {
+  width: 150px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.deadline-input label {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.item-form {
+  width: 100%;
+  padding: 0px;
+  border: 1px solid #ccd0d2;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.item-form .item-form-content {
+  display: inline-block;
+  height: 38px;
+  vertical-align: middle;
+  border: 0;
+  outline: none;
+  background: white;
+}
+
+.item-form .item-form-meta {
+  display: inline-block;
+  margin: 0;
+  height: 38px;
+  vertical-align: middle;
+  border-left: 1px solid #ccd0d2;
+  background: #f5f8fa;
+  padding: 0;
+}
+
+.item-form .item-form-meta .item-form-bool,
+.item-form .item-form-meta .item-form-date {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.item-form .item-form-meta .item-form-bool:nth-child(2),
+.item-form .item-form-meta .item-form-date:nth-child(2) {
+  border-right: 1px solid #ccd0d2;
+  border-left: 1px solid #ccd0d2;
+}
+
+.item-form .item-form-meta .item-form-bool label,
+.item-form .item-form-meta .item-form-date label {
+  display: block;
+  font-size: 0.7em;
+  margin: 0;
+}
+
+.item-form .item-form-meta .item-form-bool p,
+.item-form .item-form-meta .item-form-bool input,
+.item-form .item-form-meta .item-form-date p,
+.item-form .item-form-meta .item-form-date input {
+  height: 20px;
+  line-height: 20px;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+}
+
+.item-form .item-form-meta .item-form-bool p,
+.item-form .item-form-meta .item-form-date p {
+  cursor: pointer;
+}
+
+.item-form .item-form-meta .item-form-bool {
+  text-align: center;
+  width: 60px;
+  overflow: hidden;
+}
+
+.item-form .item-form-meta .item-form-date {
+  position: relative;
+}
+
+.item-form .item-form-meta .item-form-date input {
+  position: absolute;
+  left: 0;
+  top: 15px;
+}
+
+.checklist-items {
+  margin-top: 20px;
+}
+
+.show-item {
+  overflow: hidden;
+  border-bottom: 1px solid #f5f8fa;
+}
+
+.show-item:hover {
+  background: #f8fafc;
+}
+
+.show-item p, .show-item i {
+  display: inline-block;
+  margin: 0;
+  padding: 10px 0;
+  vertical-align: middle;
+}
+
+.show-item p {
+  font-size: 1.2em;
+  line-height: 1em;
+}
+
+.show-item i {
+  font-size: 1.8em;
+  line-height: 1em;
+  margin: 0;
+  padding: 0;
+}
+
+.show-item .toggle {
+  font-size: 16px;
+  float: right;
+  margin-top: 5px;
+  margin-right: 5px;
+  padding: 7px;
+  cursor: pointer;
+}
+
+.show-item .toggle:hover {
+  color: #41C15F;
+}
+
+.edit-item-form {
+  padding: 10px;
+  background: #f5f8fa;
+  border: 1px solid #ccd0d2;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.edit-item-form .comments-label {
+  display: block;
+  font-size: 0.7em;
+  margin: 10px 0 0;
+}
+
 li.listing {
   background: white;
   border: 1px solid #d3e0e9;
@@ -7723,16 +7875,28 @@ li.listing.selected {
   border: 1px solid #3097D1;
 }
 
+.note-color-scheme.selected {
+  border: 1px solid #7E47C6 !important;
+}
+
+.goal-color-scheme.selected {
+  border: 1px solid #EF4548 !important;
+}
+
+.list-color-scheme.selected {
+  border: 1px solid #41C15F !important;
+}
+
 .note-color-scheme {
-  color: #703FAF !important;
+  color: #7E47C6 !important;
 }
 
 .list-color-scheme {
-  color: #4BCC6F !important;
+  color: #41C15F !important;
 }
 
 .goal-color-scheme {
-  color: #D81C3F !important;
+  color: #EF4548 !important;
 }
 
 /* Buttons */
@@ -7742,37 +7906,571 @@ li.listing.selected {
   color: white;
 }
 
-.btn-note:hover,
+.btn-note:active, .btn-note:hover,
+.btn-list:active,
 .btn-list:hover,
+.btn-goal:active,
 .btn-goal:hover {
   color: rgba(255, 255, 255, 0.9);
 }
 
 .btn-note {
-  background: #703FAF;
-  border: 1px solid #58328a;
+  background: #7E47C6;
+  border: 1px solid #6534a6;
 }
 
-.btn-note:hover {
-  background: #663aa0;
+.btn-note:active, .btn-note:hover {
+  background: #743bbe;
 }
 
 .btn-list {
-  background: #4BCC6F;
-  border: 1px solid #32b256;
+  background: #41C15F;
+  border: 1px solid #339c4c;
 }
 
-.btn-list:hover {
-  background: #3bc762;
+.btn-list:active, .btn-list:hover {
+  background: #3ab357;
 }
 
 .btn-goal {
-  background: #D81C3F;
-  border: 1px solid #ab1632;
+  background: #EF4548;
+  border: 1px solid #eb161a;
 }
 
-.btn-goal:hover {
-  background: #c61a3a;
+.btn-goal:active, .btn-goal:hover {
+  background: #ed3236;
+}
+
+@keyframes popIn {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@-webkit-keyframes popIn {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes popOut {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+}
+
+@-webkit-keyframes popOut {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+}
+
+@media print {
+  .pretty :not(.toggle) input:not(:checked) + label i:before,
+  .pretty > input[type='radio']:checked + label > i.default:before,
+  .pretty i:after {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color: transparent !important;
+  }
+  .pretty input:checked + label i:before {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .pretty.primary input:checked + label i:before {
+    color: white !important;
+  }
+  .pretty.success input:checked + label i:before {
+    color: white !important;
+  }
+  .pretty.info input:checked + label i:before {
+    color: white !important;
+  }
+  .pretty.warning input:checked + label i:before {
+    color: white !important;
+  }
+  .pretty.danger input:checked + label i:before {
+    color: white !important;
+  }
+}
+
+.pretty {
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+  margin: 0 10px 5px 0;
+}
+
+.pretty label {
+  font-weight: normal;
+}
+
+.pretty > input[type='checkbox'],
+.pretty > input[type='radio'] {
+  position: absolute;
+  z-index: 99999999;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.pretty i {
+  font-size: 1em !important;
+  position: relative;
+  display: inline-block;
+  box-sizing: initial;
+  min-width: 1em;
+  margin-right: 6px;
+  padding: 1px;
+  text-align: center;
+}
+
+.pretty i:before {
+  position: relative;
+  z-index: 999;
+  left: 0;
+  display: inline-block;
+  vertical-align: bottom;
+  color: transparent;
+}
+
+.pretty i:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '\0000';
+  color: transparent;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+}
+
+.pretty > input[type='checkbox']:checked + label > i:before,
+.pretty > input[type='radio']:checked + label > i:before {
+  color: inherit;
+}
+
+.pretty > input[type='radio'] + label > i.default:before {
+  left: 0;
+  min-width: 1em;
+  content: '\0000';
+  color: transparent;
+  border-radius: 2px;
+  background: transparent;
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+}
+
+.pretty > input[type='radio']:checked + label > i.default:before {
+  background-color: #aaa !important;
+}
+
+.pretty > input[type='checkbox'][disabled],
+.pretty > input[type='radio'][disabled] {
+  cursor: not-allowed;
+  opacity: 0;
+}
+
+.pretty > input[type='checkbox'][disabled] + label,
+.pretty > input[type='radio'][disabled] + label {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+.pretty.plain > input[type='checkbox'] + label > i:after, .pretty.plain > input[type='radio'] + label > i:after {
+  /* border-color:transparent;*/
+}
+
+.pretty.plain > input[type='checkbox']:checked + label > i:after,
+.pretty.plain > input[type='radio']:checked + label > i:after {
+  border-color: transparent;
+}
+
+.pretty.plain > input[type='checkbox'] + label + label > i:after,
+.pretty.plain > input[type='radio'] + label + label > i:after {
+  border-color: transparent;
+}
+
+.pretty.plain > input[type='checkbox']:checked + label + label > i:after,
+.pretty.plain > input[type='radio']:checked + label + label > i:after {
+  border-color: transparent;
+}
+
+.pretty.plain.toggle > input[type='checkbox'] + label > i:after, .pretty.plain.toggle > input[type='radio'] + label > i:after {
+  border-color: transparent;
+}
+
+.pretty.circle label i:after {
+  border-radius: 100px;
+}
+
+.pretty.circle label i.default:before {
+  border-radius: 100px !important;
+}
+
+.pretty.primary input:checked + label i:before {
+  color: #fff;
+}
+
+.pretty.primary input:checked + label i:after {
+  background-color: #428bca !important;
+  border-color: #428bca;
+}
+
+.pretty.primary input[type='radio']:checked + label i.default:before {
+  background-color: #428bca !important;
+  color: transparent;
+}
+
+.pretty.primary input[type='radio']:checked + label i.default:after {
+  background-color: initial !important;
+  border-color: #428bca;
+}
+
+.pretty.primary.smooth input:checked ~ label i:after {
+  -webkit-transform: scale(1) !important;
+  transform: scale(1) !important;
+}
+
+.pretty.outline-primary input:checked + label i:before {
+  color: #428bca;
+}
+
+.pretty.outline-primary input:checked + label i:after {
+  border-color: #428bca;
+}
+
+.pretty.toggle i.primary:before {
+  color: #428bca !important;
+}
+
+.pretty.toggle i.success:before {
+  color: #5cb85c !important;
+}
+
+.pretty.toggle i.info:before {
+  color: #5bc0de !important;
+}
+
+.pretty.toggle i.warning:before {
+  color: #f0ad4e !important;
+}
+
+.pretty.toggle i.danger:before {
+  color: #d9534f !important;
+}
+
+.pretty.success input:checked + label i:before {
+  color: #fff;
+}
+
+.pretty.success input:checked + label i:after {
+  background-color: #5cb85c !important;
+  border-color: #5cb85c;
+}
+
+.pretty.success input[type='radio']:checked + label i.default:before {
+  background-color: #5cb85c !important;
+  color: transparent;
+}
+
+.pretty.success input[type='radio']:checked + label i.default:after {
+  background-color: initial !important;
+  border-color: #5cb85c;
+}
+
+.pretty.success.smooth input:checked ~ label i:after {
+  -webkit-transform: scale(1) !important;
+  transform: scale(1) !important;
+}
+
+.pretty.outline-success input:checked + label i:before {
+  color: #5cb85c;
+}
+
+.pretty.outline-success input:checked + label i:after {
+  border-color: #5cb85c;
+}
+
+.pretty.toggle i.primary:before {
+  color: #428bca !important;
+}
+
+.pretty.toggle i.success:before {
+  color: #5cb85c !important;
+}
+
+.pretty.toggle i.info:before {
+  color: #5bc0de !important;
+}
+
+.pretty.toggle i.warning:before {
+  color: #f0ad4e !important;
+}
+
+.pretty.toggle i.danger:before {
+  color: #d9534f !important;
+}
+
+.pretty.info input:checked + label i:before {
+  color: #fff;
+}
+
+.pretty.info input:checked + label i:after {
+  background-color: #5bc0de !important;
+  border-color: #5bc0de;
+}
+
+.pretty.info input[type='radio']:checked + label i.default:before {
+  background-color: #5bc0de !important;
+  color: transparent;
+}
+
+.pretty.info input[type='radio']:checked + label i.default:after {
+  background-color: initial !important;
+  border-color: #5bc0de;
+}
+
+.pretty.info.smooth input:checked ~ label i:after {
+  -webkit-transform: scale(1) !important;
+  transform: scale(1) !important;
+}
+
+.pretty.outline-info input:checked + label i:before {
+  color: #5bc0de;
+}
+
+.pretty.outline-info input:checked + label i:after {
+  border-color: #5bc0de;
+}
+
+.pretty.toggle i.primary:before {
+  color: #428bca !important;
+}
+
+.pretty.toggle i.success:before {
+  color: #5cb85c !important;
+}
+
+.pretty.toggle i.info:before {
+  color: #5bc0de !important;
+}
+
+.pretty.toggle i.warning:before {
+  color: #f0ad4e !important;
+}
+
+.pretty.toggle i.danger:before {
+  color: #d9534f !important;
+}
+
+.pretty.warning input:checked + label i:before {
+  color: #fff;
+}
+
+.pretty.warning input:checked + label i:after {
+  background-color: #f0ad4e !important;
+  border-color: #f0ad4e;
+}
+
+.pretty.warning input[type='radio']:checked + label i.default:before {
+  background-color: #f0ad4e !important;
+  color: transparent;
+}
+
+.pretty.warning input[type='radio']:checked + label i.default:after {
+  background-color: initial !important;
+  border-color: #f0ad4e;
+}
+
+.pretty.warning.smooth input:checked ~ label i:after {
+  -webkit-transform: scale(1) !important;
+  transform: scale(1) !important;
+}
+
+.pretty.outline-warning input:checked + label i:before {
+  color: #f0ad4e;
+}
+
+.pretty.outline-warning input:checked + label i:after {
+  border-color: #f0ad4e;
+}
+
+.pretty.toggle i.primary:before {
+  color: #428bca !important;
+}
+
+.pretty.toggle i.success:before {
+  color: #5cb85c !important;
+}
+
+.pretty.toggle i.info:before {
+  color: #5bc0de !important;
+}
+
+.pretty.toggle i.warning:before {
+  color: #f0ad4e !important;
+}
+
+.pretty.toggle i.danger:before {
+  color: #d9534f !important;
+}
+
+.pretty.danger input:checked + label i:before {
+  color: #fff;
+}
+
+.pretty.danger input:checked + label i:after {
+  background-color: #d9534f !important;
+  border-color: #d9534f;
+}
+
+.pretty.danger input[type='radio']:checked + label i.default:before {
+  background-color: #d9534f !important;
+  color: transparent;
+}
+
+.pretty.danger input[type='radio']:checked + label i.default:after {
+  background-color: initial !important;
+  border-color: #d9534f;
+}
+
+.pretty.danger.smooth input:checked ~ label i:after {
+  -webkit-transform: scale(1) !important;
+  transform: scale(1) !important;
+}
+
+.pretty.outline-danger input:checked + label i:before {
+  color: #d9534f;
+}
+
+.pretty.outline-danger input:checked + label i:after {
+  border-color: #d9534f;
+}
+
+.pretty.toggle i.primary:before {
+  color: #428bca !important;
+}
+
+.pretty.toggle i.success:before {
+  color: #5cb85c !important;
+}
+
+.pretty.toggle i.info:before {
+  color: #5bc0de !important;
+}
+
+.pretty.toggle i.warning:before {
+  color: #f0ad4e !important;
+}
+
+.pretty.toggle i.danger:before {
+  color: #d9534f !important;
+}
+
+.pretty.toggle > input[type='checkbox'] + label > i:before, .pretty.toggle > input[type='radio'] + label > i:before {
+  color: inherit;
+}
+
+.pretty.toggle > input[type='checkbox'] + label + label,
+.pretty.toggle > input[type='radio'] + label + label {
+  display: none;
+}
+
+.pretty.toggle > input[type='checkbox']:checked + label,
+.pretty.toggle > input[type='radio']:checked + label {
+  display: none;
+}
+
+.pretty.toggle > input[type='checkbox']:checked + label + label,
+.pretty.toggle > input[type='radio']:checked + label + label {
+  display: inline-block;
+}
+
+.pretty.toggle > input[type='checkbox']:checked + label + label > i:before,
+.pretty.toggle > input[type='radio']:checked + label + label > i:before {
+  color: inherit;
+}
+
+.pretty.smooth i:before {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+.pretty.smooth i:after {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.pretty.smooth > input[type='checkbox']:checked ~ label > i:before,
+.pretty.smooth > input[type='radio']:checked ~ label > i:before {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+.pretty.smooth > input[type='checkbox']:checked ~ label > i:after,
+.pretty.smooth > input[type='radio']:checked ~ label > i:after {
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+.pretty.smooth > input[type='radio']:checked ~ label > i.default:before {
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+}
+
+.pretty.smooth > input[type='radio']:checked ~ label > i.default:after {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+.pretty.smooth.toggle i:before {
+  -webkit-transform: none;
+  transform: none;
+}
+
+.pretty.smooth.toggle > input[type='checkbox']:checked ~ label > i:before,
+.pretty.smooth.toggle > input[type='radio']:checked ~ label > i:before {
+  -webkit-transform: none;
+  transform: none;
+}
+
+.pretty.smooth.toggle > input[type='checkbox']:checked ~ label > i:after,
+.pretty.smooth.toggle > input[type='radio']:checked ~ label > i:after {
+  -webkit-transform: none;
+  transform: none;
+}
+
+.top-padding {
+  padding: 10px;
 }
 
 /*# sourceMappingURL=productivity.css.map */
