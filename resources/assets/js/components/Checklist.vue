@@ -8,7 +8,7 @@
                       {{checklist.title}}
                     </h3>
                   </div>
-                  <add-item :mode="'add'"></add-item>
+                  <add-item></add-item>
                 </div>
 
                 <div class="panel-body">

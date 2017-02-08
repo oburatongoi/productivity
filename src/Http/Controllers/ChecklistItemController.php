@@ -69,8 +69,17 @@ class ChecklistItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, ChecklistItem $item)
     {
-        //
+
+        // $checklist = $item->checklist->get();
+
+        // $this->authorize('modify', $checklist);
+        
+        $item->delete();
+
+        return response()->json([
+            'item' => $item
+        ]);
     }
 }

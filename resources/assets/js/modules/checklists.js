@@ -4,6 +4,7 @@ import {
     ADD_ITEM_TO_CHECKLIST,
     DELETE_CHECKLIST,
     DELETE_EDITABLE,
+    DELETE_CHECKLIST_ITEM,
     UPDATE_CHECKLIST,
     UPDATE_CHECKLIST_ITEM,
     UPDATE_CHECKLIST_ITEM_CHECK,
@@ -28,6 +29,10 @@ const mutations = {
     [DELETE_CHECKLIST] (state, checklist) {
         let i = state.checklists.indexOf(checklist);
         state.checklists.splice(i,1)
+    },
+    [DELETE_CHECKLIST_ITEM] (state, item) {
+        let i = state.checklist.items.indexOf(item);
+        state.checklist.items.splice(i,1)
     },
     [DELETE_EDITABLE] (state, item) {
         let i = state.editableItems.indexOf(item);
@@ -122,6 +127,23 @@ const actions = {
                     commit(UPDATE_CHECKLIST_ITEM, {item: payload.item, updatedItem: response.data.item})
                     commit(DELETE_EDITABLE, payload.item)
                     resolve()
+                },
+                (response) => {
+                    reject()
+                }
+            )
+        })
+    },
+    deleteChecklistItem({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            Vue.http.patch('/productivity/lists/item/' + payload.item.id + '/delete', {item:payload.item}).then(
+                (response) => {
+                    if (response.data && response.data.item) {
+                      commit(DELETE_CHECKLIST_ITEM, payload.item)
+                      resolve()
+                    } else {
+                      reject()
+                    }
                 },
                 (response) => {
                     reject()

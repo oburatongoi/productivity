@@ -30,7 +30,7 @@ export default {
         is_urgent: undefined,
         is_important: undefined,
         deadline: undefined,
-        addable: true,
+        addable: true
       }
     },
     showError: function() {
@@ -51,6 +51,6 @@ export default {
   },
   components: {
       ItemForm
-  },
+  }
 }
 </script>

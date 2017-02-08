@@ -7840,6 +7840,10 @@ button.close {
   margin: 10px 0 0;
 }
 
+.edit-item-form .delete-item-btn {
+  float: right;
+}
+
 li.listing {
   background: white;
   border: 1px solid #d3e0e9;

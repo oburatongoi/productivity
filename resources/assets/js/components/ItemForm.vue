@@ -24,6 +24,13 @@
       </div>
     </div>
 
+    <template v-if="!modeIsEdit&&hasUserInput">
+      <div class="form-group">
+        <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
+        <button type="button" class="btn btn-xs btn-default" @click="resetForm">Clear</button>
+      </div>
+    </template>
+
     <template v-if="modeIsEdit">
       <div class="form-group">
         <label for="deadline" class="comments-label">Comments</label>
@@ -33,13 +40,9 @@
       <div class="form-group">
         <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
         <button type="button" class="btn btn-xs btn-default" @click="cancelChanges">Cancel</button>
-      </div>
-    </template>
-
-    <template v-if="!modeIsEdit&&hasUserInput">
-      <div class="form-group">
-        <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
-        <button type="button" class="btn btn-xs btn-default" @click="resetForm">Clear</button>
+        <button type="button" class="btn btn-xs btn-default delete-item-btn" @click="deleteItem">
+          <i class="fa fa-fw fa-trash-o" aria-hidden="true">
+        </button>
       </div>
     </template>
   </form>
@@ -76,7 +79,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'updateChecklistItem'
+      'updateChecklistItem',
+      'deleteChecklistItem'
     ]),
     showDatePicker: function() {
       return this.chooseDate = true
@@ -95,6 +99,9 @@ export default {
     },
     resetForm: function() {
       this.$emit('resetForm')
+    },
+    deleteItem: function() {
+      this.deleteChecklistItem({item:this.item})
     }
   }
 }

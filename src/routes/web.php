@@ -17,6 +17,7 @@ Route::group(['prefix' => 'productivity'], function () {
 
         Route::post('lists/{list}/add-item', 'ChecklistItemController@store');
         Route::patch('lists/item/{item}/update', 'ChecklistItemController@update');
+        Route::patch('lists/item/{item}/delete', 'ChecklistItemController@destroy');
         Route::patch('lists/item/{item}/check', 'ChecklistItemController@check');
     });
 
