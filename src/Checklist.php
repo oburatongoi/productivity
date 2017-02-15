@@ -5,10 +5,11 @@ namespace Oburatongoi\Productivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Oburatongoi\Productivity\Traits\Fakable;
+use Oburatongoi\Productivity\Traits\Enfoldable;
 
 class Checklist extends Model
 {
-    use SoftDeletes, Fakable;
+    use SoftDeletes, Fakable, Enfoldable;
 
     protected $table = 'productivity_checklists';
 
@@ -30,16 +31,6 @@ class Checklist extends Model
     public function owner()
     {
      return $this->belongsTo('App\User', 'user_id', 'id');
-    }
-
-    public function folder()
-    {
-      return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id');
-    }
-
-    public function folderById()
-    {
-        return $this->folder()->where('id', $this->folder_id)->first();
     }
 
     public function items()

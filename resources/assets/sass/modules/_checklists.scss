@@ -37,14 +37,13 @@
         border-left: 1px solid $input-border;
         background: $body-bg;
         padding: 0;
-        width: 195px;
+        width: 215px;
         .item-form-bool,
         .item-form-date {
             display: inline-block;
             margin:0;
             padding: 0;
             height: 100%;
-            width: 60px;
             vertical-align: middle;
             &:nth-child(2) {
                 border-right: 1px solid $input-border;
@@ -70,9 +69,11 @@
         .item-form-bool {
             text-align: center;
             overflow: hidden;
+            width: 60px;
         }
         .item-form-date {
             position: relative;
+            width: 80px;
             p {
                 font-size:0.85em;
             }

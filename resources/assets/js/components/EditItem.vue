@@ -18,10 +18,11 @@ export default {
       'updateChecklistItem',
       'setEditability'
     ]),
-    updateItem: function() {
+    updateItem: function(item) {
       return this.updateChecklistItem({
           checklist_fake_id: this.checklist.fake_id,
-          item: this.item
+          item: item,
+          oldItem: this.item,
         })
     },
     refreshItem: function() {

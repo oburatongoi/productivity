@@ -73,7 +73,7 @@ class FolderController extends Controller
         $request->has('folder.folder_id')
         && $parent = Folder::find($request->input('folder.folder_id'))
         ) {
-            $folder->makeChildOf($parent);
+            $parent->appendNode($folder);
         }
 
         $folder->fakeID();

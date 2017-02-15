@@ -70,7 +70,7 @@ class ChecklistController extends Controller
 
         JavaScript::put([
             'checklist' => $checklist,
-            'ancestors' => $checklist->folderById()->getAncestorsAndSelf(),
+            'ancestors' => $checklist->getFolderTree(),
             'model' => 'list',
         ]);
 

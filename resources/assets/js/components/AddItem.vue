@@ -39,7 +39,7 @@ export default {
     addItem: function(item) {
       return this.addChecklistItem({
           checklist_fake_id: this.checklist.fake_id,
-          item: this.item
+          item: item
         }).then(
           () => this.refreshItem(),
           () => this.showError()

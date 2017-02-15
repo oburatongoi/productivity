@@ -5,10 +5,11 @@ namespace Oburatongoi\Productivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Oburatongoi\Productivity\Traits\Fakable;
+use Oburatongoi\Productivity\Traits\Enfoldable;
 
 class Goal extends Model
 {
-    use SoftDeletes, Fakable;
+    use SoftDeletes, Fakable, Enfoldable;
 
     protected $table = 'productivity_goals';
 

@@ -7733,7 +7733,7 @@ button.close {
   border-left: 1px solid #ccd0d2;
   background: #f5f8fa;
   padding: 0;
-  width: 195px;
+  width: 215px;
 }
 
 .item-form .item-form-meta .item-form-bool,
@@ -7742,7 +7742,6 @@ button.close {
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 60px;
   vertical-align: middle;
 }
 
@@ -7778,10 +7777,12 @@ button.close {
 .item-form .item-form-meta .item-form-bool {
   text-align: center;
   overflow: hidden;
+  width: 60px;
 }
 
 .item-form .item-form-meta .item-form-date {
   position: relative;
+  width: 80px;
 }
 
 .item-form .item-form-meta .item-form-date p {

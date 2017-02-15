@@ -124,7 +124,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             Vue.http.patch('/productivity/lists/item/' + payload.item.id + '/update', {item:payload.item}).then(
                 (response) => {
-                    commit(UPDATE_CHECKLIST_ITEM, {item: payload.item, updatedItem: response.data.item})
+                    commit(UPDATE_CHECKLIST_ITEM, {item: payload.oldItem, updatedItem: response.data.item})
                     commit(DELETE_EDITABLE, payload.item)
                     resolve()
                 },

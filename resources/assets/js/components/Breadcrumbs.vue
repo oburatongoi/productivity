@@ -6,25 +6,20 @@
         Home
       </a>
     </li>
-    <li v-for="ancestor in ancestors" @dblclick.prevent="goToListing('folder', ancestor.fake_id)">
+    <li v-for="ancestor in ancestors">
       <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
-      <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
-      {{ancestor.name}}
+      <a :href="'/productivity/folder/'+ancestor.fake_id">
+        <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
+        {{ancestor.name}}
+      </a>
     </li>
-    <template v-if="resource">
+    <li v-if="resource">
       <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
       <template v-if="model=='folder'">
         <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
         {{resource.name}}
       </template>
-
-      <!-- <template v-else>
-        <i class="fa fa-fw fa-list" aria-hidden="true" v-if="model=='checklist'"></i>
-        <i class="fa fa-fw fa-sticky-note-o" aria-hidden="true" v-if="model=='note'"></i>
-        <i class="fa fa-fw fa-check-square" aria-hidden="true" v-if="model=='goal'"></i>
-        {{resource.title}}
-      </template> -->
-    </template>
+    </li>
   </ul>
 </template>
 
