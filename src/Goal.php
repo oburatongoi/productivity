@@ -10,6 +10,8 @@ class Goal extends Model
 {
     use SoftDeletes, Fakable;
 
+    protected $table = 'productivity_goals';
+
     protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
 
 }

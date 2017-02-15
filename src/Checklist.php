@@ -10,6 +10,8 @@ class Checklist extends Model
 {
     use SoftDeletes, Fakable;
 
+    protected $table = 'productivity_checklists';
+
     protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $fillable = [
@@ -32,7 +34,12 @@ class Checklist extends Model
 
     public function folder()
     {
-      return $this->belongsTo('Oburatongoi\Productivity\Folder', 'listable_id');
+      return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id');
+    }
+
+    public function folderById()
+    {
+        return $this->folder()->where('id', $this->folder_id)->first();
     }
 
     public function items()

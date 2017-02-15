@@ -18,4 +18,5 @@ trait Fakable
         $this->fake_id = $this->getRouteKey();
         return $this->save();
     }
+
 }

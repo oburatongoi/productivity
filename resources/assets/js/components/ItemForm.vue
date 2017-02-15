@@ -1,8 +1,11 @@
 <template lang="html">
-  <form :class="{ 'edit-item-form': modeIsEdit }" @submit.prevent="submitForm">
+  <form class="item-form-container" :class="{ 'edit-item-form': modeIsEdit }" @submit.prevent="submitForm">
     <div class="item-form">
-      <input type="text" class="item-form-content col-sm-12 col-md-7" v-model="item.content" placeholder="Add item...">
-      <div class="item-form-meta col-sm-12 col-md-5" v-if="!this.item.addable||this.item.addable&&hasContent">
+      <div class="item-form-content col-sm-12 col-md-9">
+        <input type="text" v-model="item.content" placeholder="Add item...">
+      </div>
+
+      <div class="item-form-meta" v-if="!this.item.addable||this.item.addable&&hasContent">
         <span class="item-form-bool">
           <label for="is-important">Important</label>
           <input type="checkbox" id="is-important" v-model="item.is_important">
@@ -15,42 +18,44 @@
 
         <span class="item-form-date">
           <label for="deadline">Deadline</label>
-          <input type="date" v-model="item.deadline" v-if="chooseDate">
           <p @click="showDatePicker">
-            <i class="fa fa-fw fa-calendar" aria-hidden="true">
-            </i>{{deadlinePlaceholder}}
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
+            {{deadlinePlaceholder}}
           </p>
         </span>
       </div>
     </div>
 
-    <template v-if="!modeIsEdit&&hasUserInput">
-      <div class="form-group">
-        <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
-        <button type="button" class="btn btn-xs btn-default" @click="resetForm">Clear</button>
-      </div>
-    </template>
+    <div class="datepicker-container" v-if="chooseDate">
+      <datepicker value="item.deadline" @selected="setDate" :inline="true"></datepicker>
+    </div>
 
-    <template v-if="modeIsEdit">
-      <div class="form-group">
-        <label for="deadline" class="comments-label">Comments</label>
-        <textarea  class="form-control" v-model="item.comments" rows="2"></textarea>
-      </div>
+    <div class="form-group" v-if="hasUserInput">
+      <label for="deadline" class="comments-label" v-if="modeIsEdit">Comments</label>
+      <textarea  class="form-control" v-model="item.comments" rows="2" placeholder="Add a comment..."></textarea>
+    </div>
 
-      <div class="form-group">
-        <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
-        <button type="button" class="btn btn-xs btn-default" @click="cancelChanges">Cancel</button>
-        <button type="button" class="btn btn-xs btn-default delete-item-btn" @click="deleteItem">
-          <i class="fa fa-fw fa-trash-o" aria-hidden="true">
-        </button>
-      </div>
-    </template>
+    <div class="form-group" v-if="!modeIsEdit&&hasUserInput">
+      <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
+      <button type="button" class="btn btn-xs btn-default" @click="resetForm">Cancel</button>
+    </div>
+
+    <div class="form-group" v-if="modeIsEdit">
+      <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
+      <button type="button" class="btn btn-xs btn-default" @click="cancelChanges">Cancel</button>
+      <button type="button" class="btn btn-xs btn-default delete-item-btn" @click="deleteItem">
+        <i class="fa fa-fw fa-trash-o" aria-hidden="true">
+      </button>
+    </div>
   </form>
 
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+
+import Datepicker from 'vuejs-datepicker';
+
 export default {
   name: 'item-form',
   props: ['item'],
@@ -65,7 +70,7 @@ export default {
       'checklist'
     ]),
     deadlinePlaceholder: function () {
-      return this.item.deadline ? this.item.deadline : '--'
+      return this.item.deadline ? moment(this.item.deadline).format('MMM D') : '--'
     },
     modeIsEdit: function() {
       return this.editableItems.indexOf(this.item) !== -1
@@ -82,6 +87,10 @@ export default {
       'updateChecklistItem',
       'deleteChecklistItem'
     ]),
+    setDate: function(date) {
+      this.item.deadline = moment(date).format('YYYY-MM-DD')
+      return this.hideDatePicker()
+    },
     showDatePicker: function() {
       return this.chooseDate = true
     },
@@ -103,6 +112,9 @@ export default {
     deleteItem: function() {
       this.deleteChecklistItem({item:this.item})
     }
+  },
+  components: {
+    Datepicker
   }
 }
 </script>

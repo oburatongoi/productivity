@@ -26,6 +26,14 @@ class ChecklistItemController extends Controller
     public function store(Request $request, Checklist $checklist)
     {
         $this->authorize('modify', $checklist);
+
+        $this->validate($request, [
+            'item.content' => 'required|max:255',
+            'item.is_urgent' => 'boolean',
+            'item.is_important' => 'boolean',
+            'item.deadline' => 'date',
+        ]);
+
         $item = $checklist->items()->create($request->input('item'));
 
         return response()->json([
@@ -35,7 +43,14 @@ class ChecklistItemController extends Controller
 
     public function update(Request $request, ChecklistItem $item)
     {
-        // $this->authorize('modify', $item->checklist());
+        $this->authorize('modify', $item->checklistById());
+
+        $this->validate($request, [
+            'item.content' => 'required|max:255',
+            'item.is_urgent' => 'boolean',
+            'item.is_important' => 'boolean',
+            'item.deadline' => 'date',
+        ]);
 
         $item->update($request->input('item'));
 
@@ -46,9 +61,11 @@ class ChecklistItemController extends Controller
 
     public function check(Request $request, ChecklistItem $item)
     {
-        // $checklist = $item->checklist->get();
+        $this->authorize('modify', $item->checklistById());
 
-        // $this->authorize('modify', $checklist);
+        $this->validate($request, [
+            'action' => 'required',
+        ]);
 
         if ($request->input('action') && $request->input('action') == 'check') {
             $item->checked_at = date('Y-m-d H:i:s');
@@ -71,11 +88,8 @@ class ChecklistItemController extends Controller
      */
     public function destroy(Request $request, ChecklistItem $item)
     {
+        $this->authorize('modify', $item->checklistById());
 
-        // $checklist = $item->checklist->get();
-
-        // $this->authorize('modify', $checklist);
-        
         $item->delete();
 
         return response()->json([

@@ -2,13 +2,17 @@
 
 namespace Oburatongoi\Productivity;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Oburatongoi\Productivity\Traits\Fakable;
-use Baum\Node;
+use Oburatongoi\Productivity\Traits\Nestable;
+// use Baum\Node;
 
-class Folder extends Node
+class Folder extends Model
 {
-    use SoftDeletes, Fakable;
+    use SoftDeletes, Nestable, Fakable;
+
+    protected $table = 'productivity_folders';
 
     protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
 

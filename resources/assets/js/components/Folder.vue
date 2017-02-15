@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <h4>{{currentFolder.name}}</h4>
+    <breadcrumbs model="folder" :resource="currentFolder"></breadcrumbs>
     <index-all></index-all>
   </div>
 </template>
@@ -9,11 +9,13 @@
 import { mapGetters } from 'vuex'
 
 import IndexAll from './IndexAll.vue'
+import Breadcrumbs from './Breadcrumbs.vue'
 
 export default {
     name: 'folder',
     components: {
-        IndexAll
+        IndexAll,
+        Breadcrumbs
     },
     computed: {
       ...mapGetters([

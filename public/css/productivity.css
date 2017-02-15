@@ -7706,25 +7706,34 @@ button.close {
   border-radius: 3px;
   overflow: hidden;
   margin-bottom: 5px;
+  background: white;
 }
 
 .item-form .item-form-content {
-  display: inline-block;
-  height: 38px;
   vertical-align: middle;
+  position: relative;
+  height: 38px;
+  padding: 0;
+}
+
+.item-form .item-form-content input {
   border: 0;
   outline: none;
-  background: white;
+  width: 100%;
+  height: 100%;
+  padding-left: 5px;
 }
 
 .item-form .item-form-meta {
   display: inline-block;
   margin: 0;
   height: 38px;
+  float: right;
   vertical-align: middle;
   border-left: 1px solid #ccd0d2;
   background: #f5f8fa;
   padding: 0;
+  width: 195px;
 }
 
 .item-form .item-form-meta .item-form-bool,
@@ -7733,6 +7742,7 @@ button.close {
   margin: 0;
   padding: 0;
   height: 100%;
+  width: 60px;
   vertical-align: middle;
 }
 
@@ -7767,7 +7777,6 @@ button.close {
 
 .item-form .item-form-meta .item-form-bool {
   text-align: center;
-  width: 60px;
   overflow: hidden;
 }
 
@@ -7775,10 +7784,8 @@ button.close {
   position: relative;
 }
 
-.item-form .item-form-meta .item-form-date input {
-  position: absolute;
-  left: 0;
-  top: 15px;
+.item-form .item-form-meta .item-form-date p {
+  font-size: 0.85em;
 }
 
 .checklist-items {
@@ -7804,6 +7811,7 @@ button.close {
 .show-item p {
   font-size: 1.2em;
   line-height: 1em;
+  cursor: pointer;
 }
 
 .show-item i {
@@ -7813,17 +7821,26 @@ button.close {
   padding: 0;
 }
 
+.show-item .preview-deadline,
 .show-item .toggle {
-  font-size: 16px;
   float: right;
   margin-top: 5px;
   margin-right: 5px;
-  padding: 7px;
   cursor: pointer;
+}
+
+.show-item .toggle {
+  font-size: 16px;
+  padding: 7px;
 }
 
 .show-item .toggle:hover {
   color: #41C15F;
+}
+
+.show-item .preview-deadline {
+  float: right;
+  font-size: 0.75em;
 }
 
 .edit-item-form {
@@ -7832,16 +7849,28 @@ button.close {
   border: 1px solid #ccd0d2;
   border-radius: 3px;
   margin-bottom: 10px;
-}
-
-.edit-item-form .comments-label {
-  display: block;
-  font-size: 0.7em;
-  margin: 10px 0 0;
+  position: relative;
 }
 
 .edit-item-form .delete-item-btn {
   float: right;
+}
+
+.item-form-container {
+  position: relative;
+}
+
+.datepicker-container {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  z-index: 99;
+}
+
+.comments-label {
+  display: block;
+  font-size: 0.7em;
+  margin: 10px 0 0;
 }
 
 li.listing {

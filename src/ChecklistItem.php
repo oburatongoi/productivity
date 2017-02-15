@@ -9,6 +9,8 @@ class ChecklistItem extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'productivity_checklist_items';
+
     protected $dates = ['published_at', 'checked_at', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $fillable = [
@@ -27,6 +29,12 @@ class ChecklistItem extends Model
 
     public function checklist()
     {
-        return $this->belongsTo('Oburatongoi\Productivity\Checklist');
+        return $this->belongsTo('Oburatongoi\Productivity\Checklist', 'checklist_id');
     }
+
+    public function checklistById()
+    {
+        return $this->checklist()->where('id', $this->checklist_id)->first();
+    }
+
 }

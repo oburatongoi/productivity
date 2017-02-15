@@ -15,7 +15,7 @@ class ProductivityServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'productivity');
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         // $this->publishes([
         //     __DIR__.'/../../resources/views' => resource_path('views/vendor/productivity')
@@ -48,9 +48,13 @@ class ProductivityServiceProvider extends ServiceProvider
         $this->app->register('Oburatongoi\Productivity\Providers\AuthServiceProvider');
         $this->app->register('Oburatongoi\Productivity\Providers\RouteServiceProvider');
 
-        $this->app->register('Baum\Providers\BaumServiceProvider');
+        // $this->app->register('Baum\Providers\BaumServiceProvider');
         $this->app->register('Propaganistas\LaravelFakeId\FakeIdServiceProvider');
         $this->app->register('Laracasts\Utilities\JavaScript\JavaScriptServiceProvider');
+
+        // $this->app->singleton('Kalnoy\Nestedset\NodeTrait', function($app) {
+        //     return new \Kalnoy\Nestedset\NodeTrait;
+        // });
     }
 
 }

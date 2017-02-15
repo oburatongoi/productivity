@@ -44,22 +44,16 @@ class FolderController extends Controller
      */
     public function index(Request $request)
     {
-        $folders = $this->folders->rootForUser($request->user());
-        $notes = $this->notes->rootForUser($request->user());
-        $checklists = $this->checklists->rootForUser($request->user());
-        $goals = $this->goals->rootForUser($request->user());
-
         JavaScript::put([
             'user' => $request->user(),
-            'folders' => $folders,
-            'notes' => $notes,
-            'checklists' => $checklists,
-            'goals' => $goals,
+            'folders' => $this->folders->rootForUser($request->user()),
+            'notes' => $this->notes->rootForUser($request->user()),
+            'checklists' => $this->checklists->rootForUser($request->user()),
+            'goals' => $this->goals->rootForUser($request->user()),
             'model' => 'folders',
         ]);
 
         return view('productivity::folders.index')->with([
-            'folders' => $folders,
             'model' => 'folders',
         ]);
     }
@@ -99,18 +93,14 @@ class FolderController extends Controller
     {
         $this->authorize('view', $folder);
 
-        $folders = $this->folders->rootForFolder($folder);
-        $notes = $this->notes->forFolder($folder);
-        $checklists = $this->checklists->forFolder($folder);
-        $goals = $this->goals->forFolder($folder);
-
         JavaScript::put([
             'user' => $request->user(),
-            'folders' => $folders,
+            'folders' => $this->folders->rootForFolder($folder),
             'currentFolder' => $folder,
-            'notes' => $notes,
-            'checklists' => $checklists,
-            'goals' => $goals,
+            'notes' => $this->notes->forFolder($folder),
+            'checklists' => $this->checklists->forFolder($folder),
+            'goals' => $this->goals->forFolder($folder),
+            'ancestors' => $folder->getAncestors(),
             'model' => 'folder',
         ]);
 

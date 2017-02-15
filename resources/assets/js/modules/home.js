@@ -7,6 +7,7 @@ const state = {
     user: Productivity.user,
     creatingNew: undefined,
     showButtons: false,
+    ancestors: Productivity.ancestors ? Productivity.ancestors : {},
     currentFolder: Productivity.currentFolder ? Productivity.currentFolder : {}
 }
 
@@ -32,7 +33,8 @@ const getters = {
     creatingNew: state => state.creatingNew,
     currentFolder: state => state.currentFolder,
     showButtons: state => state.showButtons,
-    user: state => state.user
+    user: state => state.user,
+    ancestors: state => state.ancestors
 }
 
 export default {
