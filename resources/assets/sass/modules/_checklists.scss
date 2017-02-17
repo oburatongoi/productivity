@@ -138,6 +138,11 @@
     position: relative;
     .delete-item-btn {
         float: right;
+        cursor: pointer;
+        margin-top: 5px;
+        &:hover {
+            color: $brand-danger;
+        }
     }
 }
 
@@ -154,6 +159,42 @@
 
 .comments-label {
     display: block;
-    font-size: 0.7em;
     margin: 10px 0 0;
+    cursor: pointer;
+    color: $text-color;
+    font-size: 0.7em;
+    font-weight: 600;
+    .fa,
+    p {
+        display: inline-block;
+    }
+    p {
+        margin: 0 3px;
+    }
+}
+.delete-checklist-item {
+    font-size: 0.8em;
+    cursor: pointer;
+    float: right;
+    &:hover {
+        color: $brand-danger;
+    }
+}
+
+.edit-checklist-icon {
+    font-size: 0.6em;
+    margin-top: 10px;
+    float: right;
+    cursor: pointer;
+    &:hover {
+        color: $list-primary;
+    }
+}
+
+.edit-checklist-input {
+    width: 85%;
+    // border: 1px solid $list-primary;
+    border: 0;
+    color: $list-primary;
+    outline: none;
 }

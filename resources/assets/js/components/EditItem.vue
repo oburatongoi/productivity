@@ -1,5 +1,5 @@
 <template lang="html">
-  <item-form :item="item" @submitForm="updateItem" @resetForm="refreshItem"></item-form>
+  <item-form :item="item" @submitForm="updateItem"></item-form>
 </template>
 
 <script>
@@ -15,8 +15,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'updateChecklistItem',
-      'setEditability'
+      'updateChecklistItem'
     ]),
     updateItem: function(item) {
       return this.updateChecklistItem({
@@ -25,9 +24,6 @@ export default {
           oldItem: this.item,
         })
     },
-    refreshItem: function() {
-      this.setEditability({editable: false, item:this.item })
-    }
   },
   components: {
       ItemForm

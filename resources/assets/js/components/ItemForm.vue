@@ -1,11 +1,11 @@
 <template lang="html">
-  <form class="item-form-container" :class="{ 'edit-item-form': modeIsEdit }" @submit.prevent="submitForm">
+  <form class="item-form-container" :class="{ 'edit-item-form': itemIsEditable }" @submit.prevent="submitForm">
     <div class="item-form">
       <div class="item-form-content col-sm-12 col-md-9">
         <input type="text" v-model="localItem.content" placeholder="Add item...">
       </div>
 
-      <div class="item-form-meta" v-if="!this.localItem.addable||this.localItem.addable&&hasContent">
+      <div class="item-form-meta" v-if="itemIsEditable||hasContent">
         <span class="item-form-bool">
           <label for="is-important">Important</label>
           <input type="checkbox" id="is-important" v-model="localItem.is_important">
@@ -22,6 +22,7 @@
             <i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
             {{deadlinePlaceholder}}
           </p>
+          <i class="fa fa-fw fa-times delete-checklist-item" aria-hidden="true" v-if="this.localItem.deadline" @click="removeDeadline"></i>
         </span>
       </div>
     </div>
@@ -31,21 +32,30 @@
     </div>
 
     <div class="form-group" v-if="hasUserInput">
-      <label for="deadline" class="comments-label" v-if="modeIsEdit">Comments</label>
-      <textarea  class="form-control" v-model="localItem.comments" rows="2" placeholder="Add a comment..."></textarea>
+      <div class="comments-label" v-if="!showComments&&hasComments" @click="toggleComments">
+        <p>Comments</p>
+        <i class="fa fa-fw fa-chevron-down" aria-hidden="true">
+      </div>
+      <div class="comments-label" v-if="!showComments&&!hasComments" @click="toggleComments">
+        <p>Comments</p>
+          <i class="fa fa-fw fa-plus" aria-hidden="true">
+      </div>
+      <div class="comments-label" v-if="showComments" @click="toggleComments">
+        <p>Comments</p>
+        <i class="fa fa-fw fa-chevron-up" aria-hidden="true">
+      </div>
+      <textarea  class="form-control" v-model="localItem.comments" v-if="showComments" rows="2" placeholder="Add a comment..."></textarea>
     </div>
 
-    <div class="form-group" v-if="!modeIsEdit&&hasUserInput">
+    <div class="form-group" v-if="!itemIsEditable&&hasUserInput">
       <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
       <button type="button" class="btn btn-xs btn-default" @click="resetForm">Cancel</button>
     </div>
 
-    <div class="form-group" v-if="modeIsEdit">
+    <div class="" v-if="itemIsEditable">
       <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
-      <button type="button" class="btn btn-xs btn-default" @click="cancelChanges">Cancel</button>
-      <button type="button" class="btn btn-xs btn-default delete-item-btn" @click="deleteItem">
-        <i class="fa fa-fw fa-trash-o" aria-hidden="true">
-      </button>
+      <button type="button" class="btn btn-xs btn-default" @click="cancelEditing">Cancel</button>
+      <i class="fa fa-fw fa-trash-o delete-item-btn" aria-hidden="true" @click="deleteItem">
     </div>
   </form>
 
@@ -62,6 +72,7 @@ export default {
   data () {
     return {
       chooseDate: false,
+      showComments: false,
       localItem: {}
     }
   },
@@ -73,11 +84,14 @@ export default {
     deadlinePlaceholder: function () {
       return this.localItem.deadline ? moment(this.localItem.deadline).format('MMM D') : '--'
     },
-    modeIsEdit: function() {
+    itemIsEditable: function() {
       return this.editableItems.indexOf(this.item) !== -1
     },
     hasContent: function() {
       return this.localItem.content ? true : false
+    },
+    hasComments: function() {
+      return this.localItem.comments ? true : false
     },
     hasUserInput: function() {
       return this.localItem.content || this.localItem.is_important || this.localItem.is_urgent || this.localItem.deadline
@@ -86,11 +100,15 @@ export default {
   methods: {
     ...mapActions([
       'updateChecklistItem',
-      'deleteChecklistItem'
+      'deleteChecklistItem',
+      'setEditability'
     ]),
     setDate: function(date) {
       this.localItem.deadline = moment(date).format('YYYY-MM-DD')
       return this.hideDatePicker()
+    },
+    toggleComments: function() {
+      return this.showComments = ! this.showComments
     },
     showDatePicker: function() {
       return this.chooseDate = true
@@ -103,13 +121,16 @@ export default {
       if (this.localItem.content) {
         this.$emit('submitForm', this.localItem)
       }
+      if (!this.itemIsEditable) {
+        this.initializeLocalItem()
+      }
     },
-    cancelChanges: function() {
-      this.$emit('resetForm')
+    cancelEditing: function() {
+      this.setEditability({editable: false, item:this.item })
     },
     resetForm: function() {
       this.initializeLocalItem()
-      this.$emit('resetForm')
+      this.showComments = false
     },
     initializeLocalItem: function() {
       this.localItem = {
@@ -117,13 +138,16 @@ export default {
         deadline: this.item.deadline ? this.item.deadline : undefined,
         is_urgent: this.item.is_urgent,
         is_important: this.item.is_important,
-        addable: this.item.addable ? this.item.addable : undefined,
+        comments: this.item.comments ? this.item.comments : undefined,
         id: this.item.id ? this.item.id : undefined,
         fake_id: this.item.fake_id ? this.item.fake_id : undefined
       }
     },
     deleteItem: function() {
       this.deleteChecklistItem({item:this.item})
+    },
+    removeDeadline: function() {
+      return this.localItem.deadline = null
     }
   },
   components: {

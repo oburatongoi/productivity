@@ -7855,6 +7855,12 @@ button.close {
 
 .edit-item-form .delete-item-btn {
   float: right;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.edit-item-form .delete-item-btn:hover {
+  color: #bf5329;
 }
 
 .item-form-container {
@@ -7870,8 +7876,48 @@ button.close {
 
 .comments-label {
   display: block;
-  font-size: 0.7em;
   margin: 10px 0 0;
+  cursor: pointer;
+  color: #636b6f;
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+.comments-label .fa,
+.comments-label p {
+  display: inline-block;
+}
+
+.comments-label p {
+  margin: 0 3px;
+}
+
+.delete-checklist-item {
+  font-size: 0.8em;
+  cursor: pointer;
+  float: right;
+}
+
+.delete-checklist-item:hover {
+  color: #bf5329;
+}
+
+.edit-checklist-icon {
+  font-size: 0.6em;
+  margin-top: 10px;
+  float: right;
+  cursor: pointer;
+}
+
+.edit-checklist-icon:hover {
+  color: #41C15F;
+}
+
+.edit-checklist-input {
+  width: 85%;
+  border: 0;
+  color: #41C15F;
+  outline: none;
 }
 
 li.listing {

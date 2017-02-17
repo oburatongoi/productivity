@@ -1,5 +1,5 @@
 <template lang="html">
-  <item-form :item="item" @submitForm="addItem" @resetForm="refreshItem"></item-form>
+  <item-form :item="item" @submitForm="addItem"></item-form>
 </template>
 
 <script>
@@ -24,15 +24,6 @@ export default {
     ])
   },
   methods: {
-    refreshItem: function() {
-      return this.item = {
-        content: undefined,
-        is_urgent: undefined,
-        is_important: undefined,
-        deadline: undefined,
-        addable: true
-      }
-    },
     showError: function() {
       alert('error adding item')
     },
@@ -40,10 +31,7 @@ export default {
       return this.addChecklistItem({
           checklist_fake_id: this.checklist.fake_id,
           item: item
-        }).then(
-          () => this.refreshItem(),
-          () => this.showError()
-        )
+        })
     },
     ...mapActions([
       'addChecklistItem'

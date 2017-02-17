@@ -89,6 +89,8 @@ class ChecklistController extends Controller
 
         $this->authorize('modify', $checklist);
 
+        $checklist->update($request->checklist);
+
         return response()->json([
             'checklist' => $checklist
         ]);

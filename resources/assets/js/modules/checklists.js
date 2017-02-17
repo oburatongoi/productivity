@@ -38,9 +38,10 @@ const mutations = {
         let i = state.editableItems.indexOf(item);
         state.editableItems.splice(i,1)
     },
-    [UPDATE_CHECKLIST] (state, payload) {
-        let i = state.checklists.indexOf(payload.checklist);
-        state.checklists.splice(i,1,payload.updatedChecklist)
+    [UPDATE_CHECKLIST] (state, updatedChecklist) {
+        if (updatedChecklist && updatedChecklist.title) {
+            state.checklist.title = updatedChecklist.title
+        }
     },
     [UPDATE_CHECKLIST_ITEM] (state, payload) {
         let i = state.checklist.items.indexOf(payload.item);
@@ -73,10 +74,10 @@ const actions = {
     saveChecklist({ commit }, checklist) {
         return new Promise((resolve, reject) => {
 
-          Vue.http.patch('/productivity/lists/'+checklist.fake_id, checklist).then(
+          Vue.http.patch('/productivity/lists/'+checklist.fake_id, {checklist:checklist}).then(
             (response) => {
-              if (response.data.checklist) {
-                commit(UPDATE_CHECKLIST, {checklist:checklist, updatedChecklist:response.data.checklist})
+              if (response.data && response.data.checklist) {
+                commit(UPDATE_CHECKLIST, response.data.checklist)
                 resolve()
               } else {
                 reject()
