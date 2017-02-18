@@ -8,7 +8,7 @@
     </li>
     <li v-for="ancestor in ancestors">
       <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
-      <a :href="'/productivity/folder/'+ancestor.fake_id">
+      <a :href="'/productivity/folders/'+ancestor.fake_id">
         <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
         {{ancestor.name}}
       </a>
@@ -31,11 +31,6 @@ export default {
   props: {
     model: String,
     resource: Object,
-  },
-  methods: {
-    goToListing: function(model, id) {
-      return window.location = '/productivity/' + model + 's/' + id
-    },
   },
   computed: {
     ...mapGetters([

@@ -11,9 +11,6 @@ import Checklist from './Checklist.vue'
 export default {
     name: 'productivity-checklists',
     props: ['checklists'],
-    data () {
-        return {}
-    },
     components: {
         Checklist
     }

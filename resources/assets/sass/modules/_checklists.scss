@@ -136,14 +136,29 @@
     border-radius: 3px;
     margin-bottom: 10px;
     position: relative;
-    .delete-item-btn {
-        float: right;
-        cursor: pointer;
-        margin-top: 5px;
-        &:hover {
-            color: $brand-danger;
-        }
-    }
+}
+.delete-item-btn-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.toggle-delete-item-btn,
+.delete-item-btn {
+    cursor: pointer;
+    display: inline;
+    float: right;
+    padding: 2px;
+}
+.delete-item-btn {
+    color: $brand-danger;
+    background: white;
+    border-radius: 3px;
+    border: 1px solid $brand-danger;
+    margin-right: 7px;
+    padding: 2px 4px;
 }
 
 .item-form-container {
@@ -163,13 +178,14 @@
     cursor: pointer;
     color: $text-color;
     font-size: 0.7em;
-    font-weight: 600;
-    .fa,
+    // .fa,
     p {
         display: inline-block;
     }
     p {
         margin: 0 3px;
+        font-family: $font-family-sans-serif;
+        font-weight: 600;
     }
 }
 .delete-checklist-item {
@@ -193,7 +209,6 @@
 
 .edit-checklist-input {
     width: 85%;
-    // border: 1px solid $list-primary;
     border: 0;
     color: $list-primary;
     outline: none;

@@ -33,16 +33,20 @@
 
     <div class="form-group" v-if="hasUserInput">
       <div class="comments-label" v-if="!showComments&&hasComments" @click="toggleComments">
-        <p>Comments</p>
-        <i class="fa fa-fw fa-chevron-down" aria-hidden="true">
+        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+        <p>Show Comments</p>
       </div>
       <div class="comments-label" v-if="!showComments&&!hasComments" @click="toggleComments">
-        <p>Comments</p>
-          <i class="fa fa-fw fa-plus" aria-hidden="true">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        <p>Add Comments</p>
       </div>
-      <div class="comments-label" v-if="showComments" @click="toggleComments">
-        <p>Comments</p>
-        <i class="fa fa-fw fa-chevron-up" aria-hidden="true">
+      <div class="comments-label" v-if="showComments&&hasComments" @click="toggleComments">
+        <i class="fa fa-chevron-up" aria-hidden="true"></i>
+        <p>Hide Comments</p>
+      </div>
+      <div class="comments-label" v-if="showComments&&!hasComments" @click="toggleComments">
+        <i class="fa fa-times" aria-hidden="true"></i>
+        <p>Cancel</p>
       </div>
       <textarea  class="form-control" v-model="localItem.comments" v-if="showComments" rows="2" placeholder="Add a comment..."></textarea>
     </div>
@@ -52,11 +56,17 @@
       <button type="button" class="btn btn-xs btn-default" @click="resetForm">Cancel</button>
     </div>
 
-    <div class="" v-if="itemIsEditable">
-      <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
-      <button type="button" class="btn btn-xs btn-default" @click="cancelEditing">Cancel</button>
-      <i class="fa fa-fw fa-trash-o delete-item-btn" aria-hidden="true" @click="deleteItem">
-    </div>
+    <template v-if="itemIsEditable">
+      <div>
+        <button type="button" class="btn btn-xs btn-list" @click.prevent="submitForm">Save</button>
+        <button type="button" class="btn btn-xs btn-default" @click="cancelEditing">Cancel</button>
+      </div>
+
+      <div class="delete-item-btn-container">
+        <i class="fa toggle-delete-item-btn" :class="deletabilityIcon" aria-hidden="true" @click="toggleDeletability"></i>
+        <i class="fa fa-trash-o delete-item-btn" aria-hidden="true" v-if="isDeletable" @click="deleteItem"></i>
+      </div>
+    </template>
   </form>
 
 </template>
@@ -73,6 +83,7 @@ export default {
     return {
       chooseDate: false,
       showComments: false,
+      isDeletable: false,
       localItem: {}
     }
   },
@@ -85,7 +96,7 @@ export default {
       return this.localItem.deadline ? moment(this.localItem.deadline).format('MMM D') : '--'
     },
     itemIsEditable: function() {
-      return this.editableItems.indexOf(this.item) !== -1
+      return this.editableItems.indexOf(this.item.id) !== -1
     },
     hasContent: function() {
       return this.localItem.content ? true : false
@@ -95,6 +106,9 @@ export default {
     },
     hasUserInput: function() {
       return this.localItem.content || this.localItem.is_important || this.localItem.is_urgent || this.localItem.deadline
+    },
+    deletabilityIcon: function() {
+      return this.isDeletable ? 'fa-times' : 'fa-trash-o'
     }
   },
   methods: {
@@ -116,6 +130,9 @@ export default {
     hideDatePicker: function() {
       return this.chooseDate = false
     },
+    toggleDeletability: function() {
+      return this.isDeletable = ! this.isDeletable
+    },
     submitForm: function() {
       this.hideDatePicker()
       if (this.localItem.content) {
@@ -126,7 +143,7 @@ export default {
       }
     },
     cancelEditing: function() {
-      this.setEditability({editable: false, item:this.item })
+      this.setEditability({editable: false, id:this.item.id })
     },
     resetForm: function() {
       this.initializeLocalItem()

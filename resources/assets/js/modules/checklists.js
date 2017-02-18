@@ -13,15 +13,16 @@ import {
 const state = {
     checklists: Productivity.checklists,
     checklist: Productivity.checklist,
-    editableItems: []
+    editableItems: [],
+    deletedItems: []
 }
 
 const mutations = {
     [ADD_CHECKLIST] (state, checklist) {
         state.checklists.unshift(checklist)
     },
-    [ADD_EDITABLE] (state, item) {
-        state.editableItems.unshift(item)
+    [ADD_EDITABLE] (state, id) {
+        state.editableItems.unshift(id)
     },
     [ADD_ITEM_TO_CHECKLIST] (state, item) {
         state.checklist.items.unshift(item)
@@ -30,13 +31,12 @@ const mutations = {
         let i = state.checklists.indexOf(checklist);
         state.checklists.splice(i,1)
     },
-    [DELETE_CHECKLIST_ITEM] (state, item) {
-        let i = state.checklist.items.indexOf(item);
-        state.checklist.items.splice(i,1)
+    [DELETE_CHECKLIST_ITEM] (state, id) {
+        state.deletedItems.unshift(id)
     },
-    [DELETE_EDITABLE] (state, item) {
-        let i = state.editableItems.indexOf(item);
-        state.editableItems.splice(i,1)
+    [DELETE_EDITABLE] (state, id) {
+        let i = state.editableItems.indexOf(id);
+        ~ i && state.editableItems.splice(i,1)
     },
     [UPDATE_CHECKLIST] (state, updatedChecklist) {
         if (updatedChecklist && updatedChecklist.title) {
@@ -126,7 +126,7 @@ const actions = {
             Vue.http.patch('/productivity/lists/item/' + payload.item.id + '/update', {item:payload.item}).then(
                 (response) => {
                     commit(UPDATE_CHECKLIST_ITEM, {item: payload.oldItem, updatedItem: response.data.item})
-                    commit(DELETE_EDITABLE, payload.item)
+                    commit(DELETE_EDITABLE, payload.item.id)
                     resolve()
                 },
                 (response) => {
@@ -140,7 +140,8 @@ const actions = {
             Vue.http.patch('/productivity/lists/item/' + payload.item.id + '/delete', {item:payload.item}).then(
                 (response) => {
                     if (response.data && response.data.item) {
-                      commit(DELETE_CHECKLIST_ITEM, payload.item)
+                        commit(DELETE_EDITABLE, response.data.item.id)
+                        commit(DELETE_CHECKLIST_ITEM, response.data.item.id)
                       resolve()
                     } else {
                       reject()
@@ -167,13 +168,7 @@ const actions = {
     },
     setEditability({commit}, payload) {
         return new Promise((resolve, reject) => {
-            switch (payload.editable) {
-                case true:
-                    commit(ADD_EDITABLE, payload.item)
-                    break;
-                default: commit(DELETE_EDITABLE, payload.item)
-
-            }
+            payload.editable ? commit(ADD_EDITABLE, payload.id) : commit(DELETE_EDITABLE, payload.id)
             resolve()
         })
     }
@@ -183,6 +178,7 @@ const getters = {
     checklists: state => state.checklists,
     checklist: state => state.checklist,
     editableItems: state => state.editableItems,
+    deletedItems: state => state.deletedItems
 }
 
 export default {

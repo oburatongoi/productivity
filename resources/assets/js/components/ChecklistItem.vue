@@ -1,7 +1,7 @@
 <template>
-  <div>
-      <show-item v-if="!modeIsEdit" :item="item"></show-item>
-      <edit-item v-if="modeIsEdit" :item="item"></edit-item>
+  <div v-if="!itemIsDeleted">
+      <show-item v-if="!itemIsEditable" :item="item"></show-item>
+      <edit-item v-if="itemIsEditable" :item="item"></edit-item>
   </div>
 </template>
 
@@ -17,11 +17,15 @@ export default {
     props: ['item'],
     computed: {
       ...mapGetters([
-        'editableItems'
+        'editableItems',
+        'deletedItems'
       ]),
-      modeIsEdit: function() {
-        return this.editableItems.indexOf(this.item) !== -1
-      }
+      itemIsEditable: function() {
+        return this.editableItems.indexOf(this.item.id) !== -1
+      },
+      itemIsDeleted: function() {
+        return this.deletedItems.indexOf(this.item.id) !== -1
+      },
     },
     components: {
         ShowItem,

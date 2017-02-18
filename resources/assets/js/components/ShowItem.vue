@@ -38,7 +38,7 @@ export default {
       return this.check({ item: this.item, action: action })
     },
     edit: function() {
-      return this.setEditability({editable: true, item:this.item })
+      return this.setEditability({editable: true, id:this.item.id })
     }
   },
   computed: {
