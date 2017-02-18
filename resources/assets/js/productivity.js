@@ -24,6 +24,9 @@ Vue.component('Checklist', require('./components/Checklist.vue'));
 
 import store from './store.js'
 
+import VTooltip from 'v-tooltip'
+Vue.use(VTooltip)
+
 var bus = new Vue()
 
 const app = new Vue({

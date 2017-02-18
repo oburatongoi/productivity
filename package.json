@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "moment": "^2.17.1",
+    "v-tooltip": "^1.1.2",
     "vuejs-datepicker": "^0.5.5"
   }
 }

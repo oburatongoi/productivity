@@ -10,6 +10,7 @@
             draggable="true"
             @click.prevent="selectListing('folder', folder.fake_id)"
             @dblclick.prevent="goToListing('folder', folder.fake_id)"
+            v-tooltip.bottom-left="folder.name"
           >
               <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
               <h5>{{folder.name}}</h5>
@@ -26,6 +27,7 @@
           draggable="true"
           @click.prevent="selectListing('checklist', checklist.fake_id)"
           @dblclick.prevent="goToListing('list', checklist.fake_id)"
+          v-tooltip.bottom-left="checklist.title"
         >
             <i class="fa fa-fw fa-list" aria-hidden="true"></i>
             <h5>{{checklist.title}}</h5>
@@ -39,12 +41,13 @@
           draggable="true"
           @click.prevent="selectListing('note', note.fake_id)"
           @dblclick.prevent="goToListing('note', note.fake_id)"
+          v-tooltip.bottom-left="note.title"
         >
             <i class="fa fa-fw fa-sticky-note" aria-hidden="true"></i>
             <h5>{{note.title}}</h5>
         </li>
 
-        <li
+        <!-- <li
           v-if="goals"
           v-for="goal in goals"
           class="listing goal-color-scheme"
@@ -52,10 +55,11 @@
           draggable="true"
           @click.prevent="selectListing('goal', goal.fake_id)"
           @dblclick.prevent="goToListing('goal', goal.fake_id)"
+          v-tooltip.bottom-left="goal.title"
         >
             <i class="fa fa-fw fa-check-square" aria-hidden="true"></i>
-            <h5>{{goal.name}}</h5>
-        </li>
+            <h5>{{goal.title}}</h5>
+        </li> -->
       </ul>
 
       <p class="notice" v-if="isEmpty">No Files or Folders have been added yet.</p>

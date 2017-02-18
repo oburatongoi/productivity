@@ -31,7 +31,7 @@ class ChecklistItemController extends Controller
             'item.content' => 'required|max:255',
             'item.is_urgent' => 'boolean',
             'item.is_important' => 'boolean',
-            'item.deadline' => 'date',
+            'item.deadline' => 'nullable|date',
         ]);
 
         $item = $checklist->items()->create($request->input('item'));
@@ -49,7 +49,7 @@ class ChecklistItemController extends Controller
             'item.content' => 'required|max:255',
             'item.is_urgent' => 'boolean',
             'item.is_important' => 'boolean',
-            'item.deadline' => 'date',
+            'item.deadline' => 'nullable|date',
         ]);
 
         $item->update($request->input('item'));

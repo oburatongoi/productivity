@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <li class="col-xs-12">
     <breadcrumbs model="checklist"></breadcrumbs>
 
     <div class="panel">
@@ -19,7 +19,7 @@
           <checklist-items></checklist-items>
       </div>
     </div>
-  </div>
+  </li>
 </template>
 
 <script>
