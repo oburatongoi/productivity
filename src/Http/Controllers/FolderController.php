@@ -24,7 +24,7 @@ class FolderController extends Controller
 
     public function __construct(
         FolderRepository $folders,
-        ChecklistRepository $checklists,
+        ChecklistRepository $checklists
         // NoteRepository $notes,
         // GoalRepository $goals
     ) {
