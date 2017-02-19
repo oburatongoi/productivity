@@ -9,7 +9,8 @@ class FolderRepository {
 
     public function forUser(User $user)
     {
-        return $user->folders()->with('checklists', 'goals', 'notes', 'subfolders')->orderBy('updated_at', 'desc')->get();
+        // return $user->folders()->with('checklists', 'goals', 'notes', 'subfolders')->orderBy('updated_at', 'desc')->get();
+        return $user->folders()->with('checklists', 'subfolders')->orderBy('updated_at', 'desc')->get();
     }
 
     public function rootForUser(User $user)
