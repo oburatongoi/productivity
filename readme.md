@@ -15,7 +15,7 @@ Next, publish the package's views, migrations and routes:
 
 Next, add the Productive trait to your app's User model:
 
-```
+```php
 use Oburatongoi\Productivity\Traits\Productive;
 
 
