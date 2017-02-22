@@ -16,6 +16,7 @@
     "vue-resource": "^1.0.3"
   },
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "moment": "^2.17.1",
     "v-tooltip": "^1.1.2",
     "vuejs-datepicker": "^0.5.5"
