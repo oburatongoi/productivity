@@ -18,8 +18,8 @@ class CreateProductivityChecklistItemsTable extends Migration
             $table->increments('id');
             $table->integer('fake_id')->unsigned()->nullable();
             $table->integer('checklist_id')->unsigned();
-            $table->string('content')->required();
-            $table->text('comments')->nullable();
+            $table->text('content')->required();
+            $table->mediumText('comments')->nullable();
             $table->date('deadline')->nullable();
             $table->dateTime('checked_at')->nullable();
             $table->boolean('is_urgent')->default(0);

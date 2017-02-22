@@ -4,12 +4,15 @@ namespace Oburatongoi\Productivity;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Oburatongoi\Productivity\Traits\Encryptable;
 
 class ChecklistItem extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Encryptable;
 
     protected $table = 'productivity_checklist_items';
+
+    protected $encryptable = ['content', 'comments'];
 
     protected $dates = ['published_at', 'checked_at', 'created_at', 'updated_at', 'deleted_at'];
 

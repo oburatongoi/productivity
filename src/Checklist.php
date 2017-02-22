@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Oburatongoi\Productivity\Traits\Fakable;
 use Oburatongoi\Productivity\Traits\Enfoldable;
+use Oburatongoi\Productivity\Traits\Encryptable;
 
 class Checklist extends Model
 {
-    use SoftDeletes, Fakable, Enfoldable;
+    use SoftDeletes, Fakable, Enfoldable, Encryptable;
 
     protected $table = 'productivity_checklists';
+
+    protected $encryptable = ['title', 'comments'];
 
     protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
 

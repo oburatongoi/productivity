@@ -6,13 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Oburatongoi\Productivity\Traits\Fakable;
 use Oburatongoi\Productivity\Traits\Nestable;
+use Oburatongoi\Productivity\Traits\Encryptable;
 // use Baum\Node;
 
 class Folder extends Model
 {
-    use SoftDeletes, Nestable, Fakable;
+    use SoftDeletes, Nestable, Encryptable, Fakable;
 
     protected $table = 'productivity_folders';
+
+    protected $encryptable = ['name', 'description'];
 
     protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
 

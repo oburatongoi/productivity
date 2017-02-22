@@ -18,8 +18,8 @@ class CreateProductivityFoldersTable extends Migration
             $table->increments('id');
             $table->integer('fake_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned();
-            $table->string('name')->required()->default('Untitled - ' . date('y-m-d H:i:s'));
-            $table->string('description')->nullable();
+            $table->text('name')->required()->default('Untitled - ' . date('y-m-d H:i:s'));
+            $table->mediumText('description')->nullable();
             $table->dateTime('published_at')->nullable();
             $table->string('visibility')->default('me');
             $table->integer('parent_id')->nullable()->index();

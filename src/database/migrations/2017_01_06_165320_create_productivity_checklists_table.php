@@ -19,8 +19,8 @@ class CreateProductivityCheckListsTable extends Migration
             $table->integer('fake_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('folder_id')->unsigned()->nullable();
-            $table->string('title')->required()->default('Untitled - ' . date('y-m-d H:i:s'));
-            $table->text('comments')->nullable();
+            $table->text('title')->required()->default('Untitled - ' . date('y-m-d H:i:s'));
+            $table->mediumText('comments')->nullable();
             $table->string('visibility')->default('me');
             $table->dateTime('published_at')->nullable();
             $table->timestamps();
