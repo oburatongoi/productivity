@@ -33,7 +33,7 @@
             <h5>{{checklist.title}}</h5>
         </li>
 
-        <li
+        <!-- <li
           v-if="notes"
           v-for="note in notes"
           class="listing note-color-scheme"
@@ -45,7 +45,7 @@
         >
             <i class="fa fa-fw fa-sticky-note" aria-hidden="true"></i>
             <h5>{{note.title}}</h5>
-        </li>
+        </li> -->
 
         <!-- <li
           v-if="goals"
@@ -102,7 +102,8 @@ export default {
       return this.folders.length
     },
     hasFiles: function() {
-      return this.checklists.length || this.notes.length || this.goals.length
+      // return this.checklists.length || this.notes.length || this.goals.length
+      return this.checklists.length
     },
     isEmpty: function() {
       return ! this.hasFolders && ! this.hasFiles

@@ -14,8 +14,6 @@ module.exports = {
       compress: {
         warnings: false
       }
-    }),
-    // optimize module ids by occurrence count
-    new webpack.optimize.OccurrenceOrderPlugin()
+    })
   ]
 }
