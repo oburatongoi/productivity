@@ -34,7 +34,7 @@ class ProductivityServiceProvider extends ServiceProvider
             __DIR__.'/../config/fakeid.php' => config_path('fakeid.php'),
             __DIR__.'/../config/productivity.php' => config_path('productivity.php'),
             __DIR__.'/../config/javascript.php' => config_path('javascript.php'),
-        ], 'config');
+        ], 'productivity');
 
     }
 

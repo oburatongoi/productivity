@@ -13,6 +13,10 @@ Next, publish the package's views, migrations and routes:
 
 `$ php artisan vendor:publish`
 
+You will need to force publish the productivity config. Note that this will add or overwrite the following files in the config folder: productivity.php, fakeid.php and javascript.php:
+
+`php artisan vendor:publish --tag=productivity --force`
+
 Next, add the Productive trait to your app's User model:
 
 ```php
