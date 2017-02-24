@@ -29,10 +29,10 @@
 
     <form class="form-horizontal" v-if="creatingNew" @submit.prevent="submitForm">
       <div class="col-md-6">
-          <input type="text" class="form-control input-sm" ref="nameInput" v-model="resource.name" v-if="creatingNew=='folder'" placeholder="Name">
-          <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='note'" placeholder="Note Title">
-          <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='goal'" placeholder="Goal Title">
-          <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='list'" placeholder="List Title">
+          <input type="text" class="form-control input-sm" ref="nameInput" v-model="resource.name" v-if="creatingNew=='folder'" placeholder="Name" maxlength="255">
+          <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='note'" placeholder="Note Title" maxlength="255">
+          <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='goal'" placeholder="Goal Title" maxlength="255">
+          <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='list'" placeholder="List Title" maxlength="255">
       </div>
 
       <button type="button" class="btn btn-primary btn-sm" @click.prevent="submitForm">Create</button>

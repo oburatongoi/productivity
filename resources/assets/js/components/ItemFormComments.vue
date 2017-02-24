@@ -19,7 +19,7 @@
         <i class="fa fa-times" aria-hidden="true"></i>
         <p>Cancel</p>
       </div>
-      <textarea  class="form-control" v-model="item.comments" rows="2" placeholder="Add a comment..."></textarea>
+      <textarea  class="form-control" v-model="item.comments" rows="2" placeholder="Add a comment..." maxlength="25000"></textarea>
     </template>
   </div>
 </template>

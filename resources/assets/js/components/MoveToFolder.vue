@@ -24,6 +24,7 @@
           <i class="fa fa-fw fa-folder" aria-hidden="true" v-if="folder.id!==selectedFolder.id"></i>
           <i class="fa fa-fw fa-folder-open" aria-hidden="true" v-if="folder.id==selectedFolder.id"></i>
           {{folder.name}}
+          <i class="fa fa-angle-right" aria-hidden="true" @click="selectFolder(folder)"></i>
         </li>
       </ul>
     </div>

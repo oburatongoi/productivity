@@ -2,7 +2,7 @@
   <form class="item-form-container" :class="{ 'edit-item-form': itemIsEditable }" @submit.prevent="submitForm">
     <div class="item-form">
       <div class="item-form-content col-sm-12 col-md-8">
-        <input type="text" v-model="localItem.content" placeholder="Add item...">
+        <input type="text" v-model="localItem.content" placeholder="Add item..." maxlength="255">
       </div>
 
       <item-form-meta
