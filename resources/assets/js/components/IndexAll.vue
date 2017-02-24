@@ -1,12 +1,15 @@
 <template lang="html">
   <div>
+    <div class="form-group">
+      <button type="button" class="btn btn-primary btn-xs" v-if="selected.model&&selected.id" @click.prevent="toggleMovable">Move</button>
+    </div>
       <h5 v-if="hasFolders">Folders</h5>
       <ul class="list-unstyled">
           <li
             v-if="folders"
             v-for="folder in folders"
             class="listing folder-color-scheme"
-            :class="{selected: selectedId==folder.fake_id&&selectedModel=='folder'}"
+            :class="{selected: selected.id==folder.fake_id&&selected.model=='folder'}"
             draggable="true"
             @click.prevent="selectListing('folder', folder.fake_id)"
             @dblclick.prevent="goToListing('folder', folder.fake_id)"
@@ -23,7 +26,7 @@
           v-if="checklists"
           v-for="checklist in checklists"
           class="listing list-color-scheme"
-          :class="{selected: selectedId==checklist.fake_id&&selectedModel=='checklist'}"
+          :class="{selected: selected.id==checklist.fake_id&&selected.model=='checklist'}"
           draggable="true"
           @click.prevent="selectListing('checklist', checklist.fake_id)"
           @dblclick.prevent="goToListing('list', checklist.fake_id)"
@@ -37,7 +40,7 @@
           v-if="notes"
           v-for="note in notes"
           class="listing note-color-scheme"
-          :class="{selected: selectedId==note.fake_id&&selectedModel=='note'}"
+          :class="{selected: selected.id==note.fake_id&&selected.model=='note'}"
           draggable="true"
           @click.prevent="selectListing('note', note.fake_id)"
           @dblclick.prevent="goToListing('note', note.fake_id)"
@@ -51,7 +54,7 @@
           v-if="goals"
           v-for="goal in goals"
           class="listing goal-color-scheme"
-          :class="{selected: selectedId==goal.fake_id&&selectedModel=='goal'}"
+          :class="{selected: selected.id==goal.fake_id&&selected.model=='goal'}"
           draggable="true"
           @click.prevent="selectListing('goal', goal.fake_id)"
           @dblclick.prevent="goToListing('goal', goal.fake_id)"
@@ -63,10 +66,14 @@
       </ul>
 
       <p class="notice" v-if="isEmpty">No Files or Folders have been added yet.</p>
+
+      <move-to-folder v-if="selected.model&&selected.id&&movable" :selected="selected" @close="toggleMovable"></move-to-folder>
   </div>
 </template>
 
 <script>
+import MoveToFolder from './MoveToFolder.vue'
+
 import { mapGetters } from 'vuex'
 
 var bus = new Vue()
@@ -75,18 +82,26 @@ export default {
   name: 'index-all',
   data () {
     return {
-      selectedId: undefined,
-      selectedModel: undefined
+      selected: {
+        id: undefined,
+        model: undefined
+      },
+      movable: false
     }
   },
   methods: {
     selectListing: function(model, id) {
-      this.selectedModel = model
-      return this.selectedId = id
+      return this.selected = {
+        id:id,
+        model:model
+      }
     },
     goToListing: function(model, id) {
       return window.location = '/productivity/' + model + 's/' + id
     },
+    toggleMovable: function() {
+      this.movable = ! this.movable
+    }
   },
   computed: {
     ...mapGetters([
@@ -108,6 +123,9 @@ export default {
     isEmpty: function() {
       return ! this.hasFolders && ! this.hasFiles
     }
-  }
+  },
+  components: {
+    MoveToFolder,
+  },
 }
 </script>

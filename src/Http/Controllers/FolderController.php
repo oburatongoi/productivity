@@ -96,7 +96,7 @@ class FolderController extends Controller
         JavaScript::put([
             'user' => $request->user(),
             'folders' => $this->folders->rootForFolder($folder),
-            'currentFolder' => $folder,
+            'currentFolder' => $folder->load('folder', 'subfolders'),
             'checklists' => $this->checklists->forFolder($folder),
             // 'notes' => $this->notes->forFolder($folder),
             // 'goals' => $this->goals->forFolder($folder),
@@ -136,6 +136,28 @@ class FolderController extends Controller
         $this->authorize('modify', $folder);
 
         $folder->delete();
+
+        return response()->json([
+            'folder' => $folder
+        ]);
+    }
+
+    public function fetchInitialTree(Request $request)
+    {
+        $folders = Folder::select('name', 'fake_id', 'id')
+                    ->where('parent_id', $request->input('folder_id'))
+                    ->orderBy('name', 'asc')
+                    ->with('folder')
+                    ->get();
+
+        return response()->json([
+            'folders' => $folders
+        ]);
+    }
+
+    public function fetchNewTree(Request $request, Folder $folder)
+    {
+        $folder->load('folder', 'subfolders');
 
         return response()->json([
             'folder' => $folder

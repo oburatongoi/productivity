@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Oburatongoi\Productivity\Traits\Fakable;
 use Oburatongoi\Productivity\Traits\Nestable;
 use Oburatongoi\Productivity\Traits\Encryptable;
+use Oburatongoi\Productivity\Traits\Enfoldable;
 // use Baum\Node;
 
 class Folder extends Model
 {
-    use SoftDeletes, Nestable, Encryptable, Fakable;
+    use SoftDeletes, Nestable, Encryptable, Enfoldable, Fakable;
 
     protected $table = 'productivity_folders';
 
@@ -38,10 +39,10 @@ class Folder extends Model
     return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
-    public function parent()
-    {
-        return $this->belongsTo('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
-    }
+    // public function parent()
+    // {
+    //     return $this->belongsTo('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
+    // }
 
     public function subfolders()
     {
@@ -68,12 +69,12 @@ class Folder extends Model
     //     return $this->belongsToMany('App\User', 'folder_user', 'reference_id', 'user_id');
     // }
 
-    protected $touches = ['parent'];
+    protected $touches = ['folder'];
     protected static function boot() {
     parent::boot();
     static::deleting(function(Folder $folder) {
         $folder->subfolders()->delete();
-        $folder->notes()->delete();
+        // $folder->notes()->delete();
         $folder->checklists()->delete();
         // $folder->teammates()->delete();
     });

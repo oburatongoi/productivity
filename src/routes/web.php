@@ -19,6 +19,9 @@ Route::group(['prefix' => 'productivity'], function () {
         Route::patch('lists/item/{item}/update', 'ChecklistItemController@update');
         Route::patch('lists/item/{item}/delete', 'ChecklistItemController@destroy');
         Route::patch('lists/item/{item}/check', 'ChecklistItemController@check');
+
+        Route::post('fetch-initial-tree', 'FolderController@fetchInitialTree');
+        Route::post('/{folder}/fetch-new-tree', 'FolderController@fetchNewTree');
     });
 
 });

@@ -1,10 +1,14 @@
 <?php namespace Oburatongoi\Productivity\Traits;
 
+use Oburatongoi\Productivity\Folder;
+
 trait Enfoldable
 {
+
     public function folder()
     {
-      return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id');
+        if ($this instanceof Folder) return $this->belongsTo('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
+        return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id');
     }
 
     public function folderById()
@@ -20,6 +24,13 @@ trait Enfoldable
         }
 
         return null;
+    }
+
+    public function moveToFolder(Folder $folder)
+    {
+        $this->authorize('modify', $this);
+        
+        return $this->folder()->associate($folder)->save();
     }
 
 }
