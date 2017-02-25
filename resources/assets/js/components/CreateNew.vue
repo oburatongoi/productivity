@@ -1,6 +1,6 @@
 <template lang="html">
 
-  <div class="top-padding">
+  <div class="create-new">
     <button type="button" class="btn btn-sm btn-primary" v-if="!showButtons" @click="toggleButtons">New</button>
 
     <template v-if="showButtons&&!creatingNew">

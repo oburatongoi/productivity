@@ -145,7 +145,7 @@ class FolderController extends Controller
     public function fetchInitialTree(Request $request)
     {
         $folders = Folder::select('name', 'fake_id', 'id')
-                    ->where('parent_id', $request->input('folder_id'))
+                    ->where('folder_id', $request->input('folder_id'))
                     ->orderBy('name', 'asc')
                     ->with('folder')
                     ->get();
@@ -161,6 +161,57 @@ class FolderController extends Controller
 
         return response()->json([
             'folder' => $folder
+        ]);
+    }
+
+    public function moveToFolder(Request $request, Folder $folder)
+    {
+
+        switch ($request->input('child.model')) {
+            case 'folder':
+                $child = Folder::where('fake_id', $request->input('child.id'))->first();
+                break;
+            case 'checklist':
+                $child = \Oburatongoi\Productivity\Checklist::where('fake_id', $request->input('child.id'))->first();
+                break;
+            // case 'note':
+            //     $child = \Oburatongoi\Productivity\Note::where('fake_id', $request->input('child.id'))->first();
+            //     break;
+            // case 'goal':
+            //    $child = \Oburatongoi\Productivity\Goal::where('fake_id', $request->input('child.id'))->first();
+            //     break;
+        }
+
+        $child->moveToFolder($folder);
+
+        return response()->json([
+            'folder' => $folder,
+            'child' => $child
+        ]);
+    }
+
+    public function moveToHome(Request $request)
+    {
+
+        switch ($request->input('child.model')) {
+            case 'folder':
+                $child = Folder::where('fake_id', $request->input('child.id'))->first();
+                break;
+            case 'checklist':
+                $child = \Oburatongoi\Productivity\Checklist::where('fake_id', $request->input('child.id'))->first();
+                break;
+            // case 'note':
+            //     $child = \Oburatongoi\Productivity\Note::where('fake_id', $request->input('child.id'))->first();
+            //     break;
+            // case 'goal':
+            //    $child = \Oburatongoi\Productivity\Goal::where('fake_id', $request->input('child.id'))->first();
+            //     break;
+        }
+
+        $child->moveToHome();
+
+        return response()->json([
+            'child' => $child
         ]);
     }
 }

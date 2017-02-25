@@ -22,6 +22,9 @@ Route::group(['prefix' => 'productivity'], function () {
 
         Route::post('fetch-initial-tree', 'FolderController@fetchInitialTree');
         Route::post('/{folder}/fetch-new-tree', 'FolderController@fetchNewTree');
+
+        Route::patch('move-to/{folder}', 'FolderController@moveToFolder');
+        Route::patch('move-to-home', 'FolderController@moveToHome');
     });
 
 });

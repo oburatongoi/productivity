@@ -1,17 +1,14 @@
 <template lang="html">
-  <div>
-    <div class="form-group">
-      <button type="button" class="btn btn-primary btn-xs" v-if="selected.model&&selected.id" @click.prevent="toggleMovable">Move</button>
-    </div>
+  <div class="index-all" @click.self="deselectListing">
       <h5 v-if="hasFolders">Folders</h5>
-      <ul class="list-unstyled">
+      <ul class="list-unstyled" @click.self="deselectListing">
           <li
             v-if="folders"
             v-for="folder in folders"
             class="listing folder-color-scheme"
             :class="{selected: selected.id==folder.fake_id&&selected.model=='folder'}"
             draggable="true"
-            @click.prevent="selectListing('folder', folder.fake_id)"
+            @click.prevent="selectListing({model: 'folder', id: folder.fake_id, listing: folder})"
             @dblclick.prevent="goToListing('folder', folder.fake_id)"
             v-tooltip.bottom-left="folder.name"
           >
@@ -21,14 +18,14 @@
       </ul>
 
       <h5 v-if="hasFiles">Files</h5>
-      <ul class="list-unstyled">
+      <ul class="list-unstyled" @click.self="deselectListing">
         <li
           v-if="checklists"
           v-for="checklist in checklists"
           class="listing list-color-scheme"
           :class="{selected: selected.id==checklist.fake_id&&selected.model=='checklist'}"
           draggable="true"
-          @click.prevent="selectListing('checklist', checklist.fake_id)"
+          @click.prevent="selectListing({model:'checklist', id:checklist.fake_id, listing: checklist})"
           @dblclick.prevent="goToListing('list', checklist.fake_id)"
           v-tooltip.bottom-left="checklist.title"
         >
@@ -42,7 +39,7 @@
           class="listing note-color-scheme"
           :class="{selected: selected.id==note.fake_id&&selected.model=='note'}"
           draggable="true"
-          @click.prevent="selectListing('note', note.fake_id)"
+          @click.prevent="selectListing({model:'note', id:note.fake_id, listing: note})"
           @dblclick.prevent="goToListing('note', note.fake_id)"
           v-tooltip.bottom-left="note.title"
         >
@@ -56,7 +53,7 @@
           class="listing goal-color-scheme"
           :class="{selected: selected.id==goal.fake_id&&selected.model=='goal'}"
           draggable="true"
-          @click.prevent="selectListing('goal', goal.fake_id)"
+          @click.prevent="selectListing({model:'goal', id:goal.fake_id, listing: goal})"
           @dblclick.prevent="goToListing('goal', goal.fake_id)"
           v-tooltip.bottom-left="goal.title"
         >
@@ -67,40 +64,27 @@
 
       <p class="notice" v-if="isEmpty">No Files or Folders have been added yet.</p>
 
-      <move-to-folder v-if="selected.model&&selected.id&&movable" :selected="selected" @close="toggleMovable"></move-to-folder>
+      <move-to-folder v-if="selected.model&&selected.id&&selected.movable"></move-to-folder>
   </div>
 </template>
 
 <script>
 import MoveToFolder from './MoveToFolder.vue'
 
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 var bus = new Vue()
 
 export default {
   name: 'index-all',
-  data () {
-    return {
-      selected: {
-        id: undefined,
-        model: undefined
-      },
-      movable: false
-    }
-  },
   methods: {
-    selectListing: function(model, id) {
-      return this.selected = {
-        id:id,
-        model:model
-      }
-    },
+    ...mapActions([
+      'selectListing',
+      'deselectListing',
+      'toggleMovable'
+    ]),
     goToListing: function(model, id) {
       return window.location = '/productivity/' + model + 's/' + id
-    },
-    toggleMovable: function() {
-      this.movable = ! this.movable
     }
   },
   computed: {
@@ -111,7 +95,8 @@ export default {
       'notes',
       'goals',
       'creatingNew',
-      'currentFolder'
+      'currentFolder',
+      'selected'
     ]),
     hasFolders: function() {
       return this.folders.length
@@ -125,7 +110,7 @@ export default {
     }
   },
   components: {
-    MoveToFolder,
+    MoveToFolder
   },
 }
 </script>

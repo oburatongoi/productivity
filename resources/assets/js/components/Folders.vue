@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-      <index-all></index-all>
+    <index-all></index-all>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import IndexAll from './IndexAll.vue'
 export default {
   name: 'folders',
   components: {
-    IndexAll,
+    IndexAll
   },
 }
 </script>

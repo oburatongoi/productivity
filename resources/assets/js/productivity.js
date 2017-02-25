@@ -13,7 +13,8 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('CreateNew', require('./components/CreateNew.vue'));
+// Vue.component('CreateNew', require('./components/CreateNew.vue'));
+Vue.component('ActionNav', require('./components/ActionNav.vue'));
 Vue.component('MainNav', require('./components/MainNav.vue'));
 Vue.component('Folders', require('./components/Folders.vue'));
 Vue.component('Folder', require('./components/Folder.vue'));

@@ -16,7 +16,7 @@ class FolderRepository {
     public function rootForUser(User $user)
     {
         return $user->folders()
-                    ->whereNull('parent_id')
+                    ->whereNull('folder_id')
                     ->orderBy('updated_at', 'desc')
                     ->get();
     }

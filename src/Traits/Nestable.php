@@ -18,7 +18,7 @@ trait Nestable
 
     public function getParentIdName()
     {
-        return 'parent_id';
+        return 'folder_id';
     }
 
     // Specify parent id attribute mutator

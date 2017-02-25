@@ -54,6 +54,12 @@ const mutations = {
 }
 
 const actions = {
+    delistChecklist({ commit }, checklist) {
+      return new Promise((resolve, reject) => {
+          commit(DELETE_CHECKLIST, checklist)
+          resolve()
+      })
+    },
     deleteChecklist({ commit }, checklist) {
       return new Promise((resolve, reject) => {
         Vue.http.delete('/productivity/lists/'+ checklist.fake_id).then((response) => {

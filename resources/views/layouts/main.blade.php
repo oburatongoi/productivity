@@ -38,18 +38,18 @@
                             </div>
                         </div>
                         <div class="col-md-10">
-                            <create-new></create-new>
+                            <action-nav></action-nav>
                         </div>
                     </div>
                 </div>
 
             </nav>
-            <div class="container">
+            <div class="container content-wrapper">
                 <div class="row">
                     <div class="col-md-2">
                         @yield('main-menu')
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10 content">
                         @yield('content')
                     </div>
                 </div>

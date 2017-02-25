@@ -27,7 +27,7 @@ class Folder extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
-        'parent_id' => 'integer',
+        'folder_id' => 'integer',
         'parent_model' => 'string',
         'fake_id' => 'integer',
         'description' => 'string',
@@ -41,12 +41,12 @@ class Folder extends Model
 
     // public function parent()
     // {
-    //     return $this->belongsTo('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
+    //     return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id', 'id');
     // }
 
     public function subfolders()
     {
-        return $this->hasMany('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
+        return $this->hasMany('Oburatongoi\Productivity\Folder', 'folder_id', 'id');
     }
 
     public function checklists()

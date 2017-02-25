@@ -13,7 +13,8 @@
         border-bottom: 1px solid $base-border-color;
         padding: 10px;
         text-align: left;
-        .fa {
+        .fa-times,
+        .fa-arrow-left {
             cursor: pointer;
             &:hover {
                 color: $folder-primary;
@@ -48,6 +49,17 @@
         overflow-x: hidden;
         padding: 10px 10px 10px 30px;
         position: relative;
+        .info-message {
+            .fa-spin {
+                color: $folder-primary;
+            }
+            .error {
+                color: $brand-warning;
+            }
+            .info {
+                color: $brand-info;
+            }
+        }
         .nested-folder {
             display: block;
             padding: 5px;
@@ -82,13 +94,18 @@
         border-top: 1px solid $base-border-color;
         padding: 10px;
         p {
+            margin: 0;
             margin-left: 10px;
             font-size: 0.8em;
             display: inline-block;
-            span {
+            span.footer-text {
                 color: $folder-primary;
                 font-weight: 600;
             }
         }
     }
+}
+.toggle-move-btn {
+    float: right;
+    margin-top: 10px;
 }

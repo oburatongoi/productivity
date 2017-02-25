@@ -23,6 +23,12 @@ const mutations = {
 }
 
 const actions = {
+    delistFolder({ commit }, folder) {
+      return new Promise((resolve, reject) => {
+          commit(DELETE_FOLDER, folder)
+          resolve()
+      })
+    },
     deleteFolder({ commit }, folder) {
       return new Promise((resolve, reject) => {
         Vue.http.delete('/productivity/folders/'+ folder.id).then((response) => {
