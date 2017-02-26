@@ -65,7 +65,7 @@ class ChecklistController extends Controller
         $this->authorize('view', $checklist);
 
         $checklist->load(['items' => function($query) {
-            $query->orderBy('created_at', 'desc');
+            $query->orderBy('deadline', 'asc');
         }]);
 
         JavaScript::put([

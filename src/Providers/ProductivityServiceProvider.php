@@ -60,6 +60,7 @@ class ProductivityServiceProvider extends ServiceProvider
         // $this->app->register('Baum\Providers\BaumServiceProvider');
         $this->app->register('Propaganistas\LaravelFakeId\FakeIdServiceProvider');
         $this->app->register('Laracasts\Utilities\JavaScript\JavaScriptServiceProvider');
+        $this->app->register('Laravel\Scout\ScoutServiceProvider');
 
         // $this->app->singleton('Kalnoy\Nestedset\NodeTrait', function($app) {
         //     return new \Kalnoy\Nestedset\NodeTrait;
