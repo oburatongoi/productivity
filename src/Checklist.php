@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Oburatongoi\Productivity\Traits\Fakable;
 use Oburatongoi\Productivity\Traits\Enfoldable;
 use Oburatongoi\Productivity\Traits\Encryptable;
+use Laravel\Scout\Searchable;
 
 class Checklist extends Model
 {
-    use SoftDeletes, Fakable, Enfoldable, Encryptable;
+    use SoftDeletes, Fakable, Enfoldable, Encryptable, Searchable;
 
     protected $table = 'productivity_checklists';
 
@@ -30,6 +31,30 @@ class Checklist extends Model
         'is_checklist' => 'boolean',
         'has_deadlines' => 'boolean',
     ];
+
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return env('CHECKLIST_INDEX_NAME', 'dev_CHECKLISTS');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array = array_only($array, ['id', 'title', 'fake_id']);
+
+        return $array;
+    }
 
     public function owner()
     {

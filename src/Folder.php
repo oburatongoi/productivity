@@ -8,11 +8,11 @@ use Oburatongoi\Productivity\Traits\Fakable;
 use Oburatongoi\Productivity\Traits\Nestable;
 use Oburatongoi\Productivity\Traits\Encryptable;
 use Oburatongoi\Productivity\Traits\Enfoldable;
-// use Baum\Node;
+use Laravel\Scout\Searchable;
 
 class Folder extends Model
 {
-    use SoftDeletes, Nestable, Encryptable, Enfoldable, Fakable;
+    use SoftDeletes, Nestable, Encryptable, Enfoldable, Fakable, Searchable;
 
     protected $table = 'productivity_folders';
 
@@ -33,6 +33,30 @@ class Folder extends Model
         'description' => 'string',
         'visibility' => 'string',
     ];
+
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return env('FOLDER_INDEX_NAME', 'dev_FOLDERS');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array = array_only($array, ['id', 'name', 'fake_id']);
+
+        return $array;
+    }
 
     public function owner()
     {

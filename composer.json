@@ -14,11 +14,11 @@
     "require": {
         "illuminate/support": "~5",
         "propaganistas/laravel-fakeid": "^2.0",
-        "baum/baum": "~1.1",
         "laracasts/utilities": "~2.0",
         "kalnoy/nestedset": "^4.2",
         "doctrine/dbal": "^2.5",
-        "laravel/scout": "^3.0"
+        "laravel/scout": "^3.0",
+        "algolia/algoliasearch-client-php": "^1.15"
     },
     "autoload": {
         "psr-4": {

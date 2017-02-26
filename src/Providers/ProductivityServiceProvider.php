@@ -34,6 +34,7 @@ class ProductivityServiceProvider extends ServiceProvider
         //     __DIR__.'/../config/fakeid.php' => config_path('fakeid.php'),
         //     __DIR__.'/../config/productivity.php' => config_path('productivity.php'),
         //     __DIR__.'/../config/javascript.php' => config_path('javascript.php'),
+//             __DIR__.'/../config/scout.php' => config_path('scout.php'),
         // ], 'config');
 
         $this->publishes([
@@ -42,6 +43,7 @@ class ProductivityServiceProvider extends ServiceProvider
             __DIR__.'/../config/fakeid.php' => config_path('fakeid.php'),
             __DIR__.'/../config/productivity.php' => config_path('productivity.php'),
             __DIR__.'/../config/javascript.php' => config_path('javascript.php'),
+            __DIR__.'/../config/scout.php' => config_path('scout.php'),
             __DIR__.'/../database/migrations/' => database_path('migrations'),
         ], 'productivity');
 
@@ -57,14 +59,9 @@ class ProductivityServiceProvider extends ServiceProvider
         $this->app->register('Oburatongoi\Productivity\Providers\AuthServiceProvider');
         $this->app->register('Oburatongoi\Productivity\Providers\RouteServiceProvider');
 
-        // $this->app->register('Baum\Providers\BaumServiceProvider');
         $this->app->register('Propaganistas\LaravelFakeId\FakeIdServiceProvider');
         $this->app->register('Laracasts\Utilities\JavaScript\JavaScriptServiceProvider');
-        // $this->app->register('Laravel\Scout\ScoutServiceProvider');
-
-        // $this->app->singleton('Kalnoy\Nestedset\NodeTrait', function($app) {
-        //     return new \Kalnoy\Nestedset\NodeTrait;
-        // });
+        $this->app->register('Laravel\Scout\ScoutServiceProvider');
     }
 
 }
