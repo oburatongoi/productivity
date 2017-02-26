@@ -1,6 +1,6 @@
 import {
     SET_CREATING_NEW,
-    TOGGLE_BUTTONS,
+    TOGGLE_CREATING_NEW_BUTTONS,
     SELECT_LISTING,
     DESELECT_LISTING,
     TOGGLE_DELETABLE,
@@ -10,7 +10,7 @@ import {
 const state = {
     user: Productivity.user,
     creatingNew: undefined,
-    showButtons: false,
+    showCreatingNewButtons: false,
     ancestors: Productivity.ancestors ? Productivity.ancestors : {},
     selected: {
         id: undefined,
@@ -25,8 +25,8 @@ const mutations = {
     [SET_CREATING_NEW] (state, model) {
         state.creatingNew = model
     },
-    [TOGGLE_BUTTONS] (state) {
-        state.showButtons = ! state.showButtons
+    [TOGGLE_CREATING_NEW_BUTTONS] (state) {
+        state.showCreatingNewButtons = ! state.showCreatingNewButtons
     },
     [TOGGLE_MOVABLE] (state) {
         state.selected.movable = ! state.selected.movable
@@ -52,8 +52,8 @@ const actions = {
     createNew({ commit }, model) {
         commit(SET_CREATING_NEW, model)
     },
-    toggleButtons({ commit }) {
-        commit(TOGGLE_BUTTONS)
+    toggleCreatingNewButtons({ commit }) {
+        commit(TOGGLE_CREATING_NEW_BUTTONS)
     },
     toggleMovable({ commit }) {
         commit(TOGGLE_MOVABLE)
@@ -71,7 +71,7 @@ const actions = {
 
 const getters = {
     creatingNew: state => state.creatingNew,
-    showButtons: state => state.showButtons,
+    showCreatingNewButtons: state => state.showCreatingNewButtons,
     user: state => state.user,
     ancestors: state => state.ancestors,
     selected: state => state.selected

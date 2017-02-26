@@ -1,42 +1,44 @@
 <template lang="html">
 
   <div class="create-new">
-    <button type="button" class="btn btn-sm btn-primary" v-if="!showButtons" @click="toggleButtons">New</button>
+    <button type="button" class="btn btn-xs btn-primary" v-if="!showCreatingNewButtons" @click="toggleCreatingNewButtons">New</button>
 
-    <template v-if="showButtons&&!creatingNew">
-      <button type="button" class="btn btn-sm btn-primary" @click="toggleCreateNew('folder')">
+    <template v-if="showCreatingNewButtons&&!creatingNew">
+      <button type="button" class="btn btn-xs btn-primary" @click="toggleCreateNew('folder')">
         <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
         New Folder
       </button>
 
-      <button type="button" class="btn btn-sm btn-list" @click="toggleCreateNew('list')">
+      <button type="button" class="btn btn-xs btn-list" @click="toggleCreateNew('list')">
         <i class="fa fa-fw fa-list" aria-hidden="true"></i>
         New List
       </button>
 
-      <button type="button" class="btn btn-sm btn-note" @click="toggleCreateNew('note')">
+      <!-- <button type="button" class="btn btn-xs btn-note" @click="toggleCreateNew('note')">
         <i class="fa fa-fw fa-sticky-note-o" aria-hidden="true"></i>
         New Note
       </button>
 
-      <button type="button" class="btn btn-sm btn-goal" @click="toggleCreateNew('goal')">
+      <button type="button" class="btn btn-xs btn-goal" @click="toggleCreateNew('goal')">
         <i class="fa fa-fw fa-check-square" aria-hidden="true"></i>
         New Goal
-      </button>
+      </button> -->
 
-      <button type="button" class="btn btn-sm btn-default" @click="toggleButtons">Cancel</button>
+      <button type="button" class="btn btn-xs btn-default" @click="toggleCreatingNewButtons">Cancel</button>
     </template>
 
     <form class="form-horizontal" v-if="creatingNew" @submit.prevent="submitForm">
-      <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6">
           <input type="text" class="form-control input-sm" ref="nameInput" v-model="resource.name" v-if="creatingNew=='folder'" placeholder="Name" maxlength="255">
           <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='note'" placeholder="Note Title" maxlength="255">
           <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='goal'" placeholder="Goal Title" maxlength="255">
           <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='list'" placeholder="List Title" maxlength="255">
-      </div>
+        </div>
 
-      <button type="button" class="btn btn-primary btn-sm" @click.prevent="submitForm">Create</button>
-      <button type="button" class="btn btn-default btn-sm" @click="createNew(undefined)">Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm" @click.prevent="submitForm">Create</button>
+        <button type="button" class="btn btn-default btn-sm" @click="createNew(undefined)">Cancel</button>
+      </div>
     </form>
   </div>
 </template>
@@ -59,7 +61,7 @@ export default {
       ...mapGetters([
         'currentFolder',
         'creatingNew',
-        'showButtons',
+        'showCreatingNewButtons',
       ])
     },
     methods: {
@@ -68,7 +70,7 @@ export default {
         'storeChecklist',
         'storeNote',
         'createNew',
-        'toggleButtons'
+        'toggleCreatingNewButtons'
       ]),
       toggleCreateNew: function(model) {
         this.createNew(model)
@@ -93,7 +95,7 @@ export default {
             this.storeFolder(this.resource).then(
               (response) => {
                 this.createNew(undefined)
-                this.toggleButtons()
+                this.toggleCreatingNewButtons()
                 this.resetForm()
               },
               (response) => {
@@ -106,7 +108,7 @@ export default {
             this.storeChecklist(this.resource).then(
               (response) => {
                 this.createNew(undefined)
-                this.toggleButtons()
+                this.toggleCreatingNewButtons()
                 this.resetForm()
               },
               (response) => {
@@ -119,7 +121,7 @@ export default {
             this.storeNote(this.resource).then(
               (response) => {
                 this.createNew(undefined)
-                this.toggleButtons()
+                this.toggleCreatingNewButtons()
                 this.resetForm()
               },
               (response) => {

@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="col-md-10">
-                            <action-nav></action-nav>
+                            @yield('breadcrumbs')
                         </div>
                     </div>
                 </div>

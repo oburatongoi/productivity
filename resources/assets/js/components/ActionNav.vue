@@ -2,18 +2,18 @@
   <div class="action-nav">
       <create-new></create-new>
       <button type="button"
-              class="btn btn-default btn-sm toggle-delete-btn"
+              class="btn btn-default btn-xs toggle-delete-btn"
               v-if="listingIsSelected&&!selected.movable&&selected.deletable"
               @click.once="toggleDeletable"
       ><i class="fa fa-times" aria-hidden="true"></i></button>
       <button type="button"
-              class="btn btn-default btn-sm toggle-delete-btn"
+              class="btn btn-default btn-xs toggle-delete-btn"
               :class="{ 'delete-armed': selected.deletable }"
               v-if="listingIsSelected&&!selected.movable"
               @click.dblclick.prevent="confirmOrDelete"
       ><i class="fa fa-trash-o" aria-hidden="true"></i></button>
       <button type="button"
-              class="btn btn-primary btn-sm toggle-move-btn"
+              class="btn btn-primary btn-xs toggle-move-btn"
               v-if="listingIsSelected&&!selected.movable"
               @click.prevent="toggleMovable"
       >Move</button>

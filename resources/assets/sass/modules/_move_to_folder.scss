@@ -95,7 +95,7 @@
         }
         .nested-folder {
             display: block;
-            padding: 5px;
+            padding: 5px 5px 0px;
             border-radius: 3px;
             cursor: default;
             .fa-angle-right {
@@ -119,6 +119,16 @@
                 .fa-angle-right {
                     display: inline-block;
                 }
+            }
+            span {
+                display: inline-block;
+                width: 93%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                margin: 0;
+                padding: 0;
+                line-height: 1.5;
             }
 
         }
