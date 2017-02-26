@@ -5,12 +5,15 @@ import {
 } from '../mutations'
 
 const state = {
-    folders: Productivity.folders ? Productivity.folders : {}
+    folders: Productivity.folders ? Productivity.folders : {},
+    currentFolder: Productivity.currentFolder ? Productivity.currentFolder : {}
 }
 
 const mutations = {
     [ADD_FOLDER] (state, folder) {
-        state.folders.unshift(folder)
+        if (state.currentFolder.id == folder.folder_id) {
+            state.folders.unshift(folder)
+        }
     },
     [DELETE_FOLDER] (state, folder) {
         let i = state.folders.indexOf(folder);
@@ -31,11 +34,13 @@ const actions = {
     },
     deleteFolder({ commit }, folder) {
       return new Promise((resolve, reject) => {
-        Vue.http.delete('/productivity/folders/'+ folder.id).then((response) => {
+        Vue.http.delete('/productivity/folders/'+ folder.fake_id).then((response) => {
 
           if (response.data && response.data.folder) {
             commit(DELETE_FOLDER, folder)
-            resolve()
+            resolve({
+                folder: response.data.folder
+            })
           } else {
             reject()
           }
@@ -49,11 +54,13 @@ const actions = {
     saveFolder({ commit }, folder) {
         return new Promise((resolve, reject) => {
 
-          Vue.http.patch('/productivity/folders/'+folder.id, folder).then(
+          Vue.http.patch('/productivity/folders/'+folder.fake_id, folder).then(
             (response) => {
               if (response.data.folder) {
                 commit(UPDATE_FOLDER, {folder:folder, updatedFolder:response.data.folder})
-                resolve()
+                resolve({
+                    folder: response.data.folder
+                })
               } else {
                 reject()
               }
@@ -72,7 +79,9 @@ const actions = {
                 (response) => {
                     if (response.data && response.data.folder) {
                         commit(ADD_FOLDER, response.data.folder)
-                        resolve()
+                        resolve({
+                            folder: response.data.folder
+                        })
                     } else {
                         reject()
                     }
@@ -86,7 +95,8 @@ const actions = {
 }
 
 const getters = {
-    folders: state => state.folders
+    folders: state => state.folders,
+    currentFolder: state => state.currentFolder
 }
 
 export default {

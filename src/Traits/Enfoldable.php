@@ -2,12 +2,13 @@
 
 use Oburatongoi\Productivity\Folder;
 
+use Auth;
+
 trait Enfoldable
 {
 
     public function folder()
     {
-        // if ($this instanceof Folder) return $this->belongsTo('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
         return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id');
     }
 
@@ -28,18 +29,21 @@ trait Enfoldable
 
     public function moveToFolder(Folder $folder)
     {
-        // $this->authorize('modify', $this);
+        if (Auth::user()->can('modify', $this)) {
 
-        return $this->folder()->associate($folder)->save();
+            return $this->folder()->associate($folder)->save();
+        }
     }
 
     public function moveToHome()
     {
-        // $this->authorize('modify', $this);
 
-        if ($this instanceof Folder) return $this->saveAsRoot();
+        if (Auth::user()->can('modify', $this)) {
 
-        return $this->update(['folder_id' => null]);
+            if ($this instanceof Folder) return $this->saveAsRoot();
+
+            return $this->update(['folder_id' => null]);
+        }
     }
 
 }

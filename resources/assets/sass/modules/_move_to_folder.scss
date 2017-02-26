@@ -1,12 +1,30 @@
 .move-to-folder {
     position: fixed;
-    top: 20%;
-    left: 30%;
-    right: 30%;
     background: white;
     border: 1px solid $base-border-color;
     border-radius: 3px;
     padding: 0;
+
+    @media(max-width:767px){
+        top: 10%;
+        left: 5%;
+        right: 5%;
+    }
+    @media(min-width:768px){
+        top: 10%;
+        left: 15%;
+        right: 15%;
+    }
+    @media(min-width:992px){
+        top: 10%;
+        left: 30%;
+        right: 30%;
+    }
+    @media(min-width:1200px){
+        top: 10%;
+        left: 30%;
+        right: 30%;
+    }
 
     .move-to-folder-heading {
         background: $body-bg;
@@ -39,6 +57,21 @@
             cursor: default;
             &.active {
                 color: $folder-primary
+            }
+        }
+        .add-folder-form {
+            display: inline-block;
+            width: 90%;
+            margin: 0;
+            margin-left: 10px;
+
+            .add-folder-form-input {
+                width: 83%;
+                display: inline-block;
+            }
+            .add-folder-form-buttons {
+                width: 15%;
+                display: inline-block;
             }
         }
 
@@ -103,9 +136,19 @@
                 font-weight: 600;
             }
         }
+        .toggle-add-folder-btn {
+            float: right;
+            cursor: pointer;
+            margin-top: 8px;
+            .fa-folder {
+                font-size: 1.5em;
+                line-height: 16px;
+            }
+            .fa-times,
+            .fa-plus {
+                font-size: 0.7em;
+                line-height: 18px;
+            }
+        }
     }
-}
-.toggle-move-btn {
-    float: right;
-    margin-top: 10px;
 }

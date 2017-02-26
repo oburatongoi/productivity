@@ -5,13 +5,28 @@
       <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFolders()" v-if="currentFolder.id&&!currentFolder.folder"></i>
       <span
         class="current-folder"
-        v-if="currentFolder"
+        v-if="currentFolder&&!addingFolder"
         :class="{ active: currentFolder.id==selectedFolder.id }"
         @click.prevent="highlightFolder(currentFolder)"
       >
         <i class="fa fa-home" aria-hidden="true" v-if="!currentFolder.id&&!currentFolder.folder"></i>
         {{currentFolder.name}}
       </span>
+
+      <form class="form-horizontal add-folder-form" v-if="addingFolder" @submit.prevent="createNewFolder">
+        <div class="add-folder-form-input">
+          <input type="text" class="form-control input-sm" v-model="newFolder.name" placeholder="New Folder Name" maxlength="255">
+        </div>
+        <div class="add-folder-form-buttons">
+          <button type="submit" class="btn btn-primary btn-xs">
+            <i class="fa fa-fw fa-check" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-default btn-xs" @click.prevent="toggleAddingFolder">
+            <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+      </form>
+
       <i class="fa fa-times heading-right" aria-hidden="true" @click="toggleMovable"></i>
     </div>
 
@@ -64,6 +79,12 @@
         <span v-if="!isCurrentFolder&&!isAlreadyInFolder">Move to</span>
         <span class="footer-text"> {{footerText}}</span>
       </p>
+
+      <span class="fa-stack toggle-add-folder-btn" @click="toggleAddingFolder">
+        <i class="fa fa-folder fa-stack-2x folder-color-scheme"></i>
+        <i class="fa fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"></i>
+        <i class="fa fa-times fa-stack-1x fa-inverse" v-if="addingFolder"></i>
+      </span>
     </div>
   </div>
 
@@ -77,15 +98,14 @@ export default {
   name: 'move-to-folder',
   data () {
     return {
-      folders: {},
-      selectedFolder: {},
-      destinationFolder: {},
+      addingFolder: false,
       currentFolder: Productivity.currentFolder ? Productivity.currentFolder : {},
+      destinationFolder: {},
+      folders: {},
+      infoMessage: { content: undefined, type: undefined },
       isLoading: false,
-      infoMessage: {
-        content: undefined,
-        type: undefined
-      }
+      newFolder: { name: undefined },
+      selectedFolder: {}
     }
   },
   created: function() {
@@ -93,10 +113,30 @@ export default {
   },
   methods: {
     ...mapActions([
-      'toggleMovable',
+      'delistChecklist',
       'delistFolder',
-      'delistChecklist'
+      'storeFolder',
+      'toggleMovable'
     ]),
+    createNewFolder: function() {
+      this.isLoading = true
+      let folder = {
+        name: this.newFolder.name,
+        folder_id:this.currentFolder.id
+      };
+
+      this.storeFolder(folder).then(
+        (response) => {
+          this.folders.unshift(response.folder)
+          this.isLoading = false
+          this.toggleAddingFolder('false')
+        },
+        (response) => {
+          this.isLoading = false
+          alert('Error creating folder')
+        }
+      )
+    },
     fetchInitialFolders: function(id = null) {
       this.isLoading = true
       this.$http.post('/productivity/fetch-initial-tree', {folder_id: id}).then(
@@ -110,24 +150,29 @@ export default {
     fetchNewFolders: function(folder) {
       this.isLoading = true
       this.resetInfoMessage()
+      this.resetSelectedFolder()
       this.$http.post('/productivity/'+folder.fake_id+'/fetch-new-tree').then(
         (response) => {
-          response.data.folder ? this.currentFolder = response.data.folder : this.setInfoMessage('The folder could not be retrieved', 'error')
+          this.refreshCurrentFolder(response.data.folder)
           this.refreshFolders(response.data.folder.subfolders)
         },
         (response) => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error')
       )
     },
-    refreshFolders: function(freshFolders) {
-      this.isLoading = false
-      freshFolders ? this.folders = freshFolders : this.folders = {}
-      if (!freshFolders.length) this.setInfoMessage('This folder has no subfolders', 'info')
+
+    handleSuccessfulMove: function() {
+      switch (this.selected.model) {
+        case 'folder': this.delistFolder(this.selected.listing)
+          break;
+        case 'checklist': this.delistChecklist(this.selected.listing)
+          break;
+        default: console.log('Could not find selected model');
+      }
+      this.toggleMovable()
     },
     highlightFolder: function(folder) {
+      this.toggleAddingFolder('false')
       return folder.id ? this.selectedFolder = folder : this.selectedFolder = {}
-    },
-    selectFolder: function(folder) {
-      return this.fetchNewFolders(folder)
     },
     moveTo: function(folder) {
       this.$http.patch('/productivity/move-to/'+folder.fake_id, { child:this.selected }).then(
@@ -141,38 +186,49 @@ export default {
         (response) => alert('Error moving '+this.selected.model)
       )
     },
-    handleSuccessfulMove: function() {
-      switch (this.selected.model) {
-        case 'folder': this.delistFolder(this.selected.listing)
-          break;
-        case 'checklist': this.delistChecklist(this.selected.listing)
-          break;
-        default: console.log('Could not find selected model');
-      }
-      this.toggleMovable()
+    refreshFolders: function(freshFolders) {
+      this.isLoading = false
+      freshFolders ? this.folders = freshFolders : this.folders = {}
+      if (!freshFolders.length) this.setInfoMessage('This folder has no subfolders', 'info')
+    },
+    refreshCurrentFolder: function(folder) {
+      return folder.id ? this.currentFolder = folder : this.setInfoMessage('The folder could not be retrieved', 'error')
+    },
+    resetSelectedFolder: function() {
+      return this.selectedFolder = {}
+    },
+    resetInfoMessage: function() {
+      return this.infoMessage = { content: undefined, type: undefined }
+    },
+    selectFolder: function(folder) {
+      return this.fetchNewFolders(folder)
     },
     setInfoMessage: function(content, type) {
       return this.infoMessage = { content:content, type:type }
     },
-    resetInfoMessage: function() {
-      return this.infoMessage = { content: undefined, type: undefined }
+    toggleAddingFolder: function(boolean = null) {
+      this.resetSelectedFolder()
+      return boolean && boolean === 'false' ? this.addingFolder = false : this.addingFolder = ! this.addingFolder
     }
   },
   computed: {
     ...mapGetters([
       'selected'
     ]),
+    currentFolderIsSelected: function() {
+      return this.currentFolder.id && this.selectedFolder.id && this.currentFolder.id == this.selectedFolder.id
+    },
+    footerText: function() {
+      return this.currentFolder.name && this.addingFolder ? 'Add to ' + this.currentFolder.name : this.isCurrentFolder ? 'Cannot move a folder into itself' : this.isAlreadyInFolder && ! this.selectedFolder.id ? 'Please select a folder' : this.isAlreadyInFolder ? 'Item is already in this folder' : this.selectedFolder.name ? this.selectedFolder.name : this.currentFolder.name ?  this.currentFolder.name : undefined
+    },
     headerText: function() {
       return this.currentFolder.name ? this.currentFolder.name : 'Choose a folder'
     },
-    footerText: function() {
-      return this.isCurrentFolder ? 'Cannot move a folder into itself' : this.isAlreadyInFolder && ! this.selectedFolder.id ? 'Please select a folder' : this.isAlreadyInFolder ? 'Item is already in this folder' : this.selectedFolder.name ? this.selectedFolder.name : this.currentFolder.name ?  this.currentFolder.name : undefined
-    },
-    showInfoMessage: function() {
-      return this.isLoading || this.infoMessage.content && this.infoMessage.type
-    },
     isAlreadyInFolder: function() {
       return this.isInSelectedFolder || ! this.selectedFolder.id && this.isInCurrentFolder
+    },
+    isCurrentFolder: function() {
+      return this.selected.model == 'folder' && (this.selected.listing.id == this.currentFolder.id || this.selected.listing.id == this.selectedFolder.id)
     },
     isInCurrentFolder: function() {
       return this.currentFolder.id && this.selected.listing.folder_id && this.currentFolder.id == this.selected.listing.folder_id ? true : false
@@ -180,11 +236,8 @@ export default {
     isInSelectedFolder: function() {
       return this.selectedFolder.id && this.selected.listing.folder_id && this.selectedFolder.id == this.selected.listing.folder_id ? true : false
     },
-    isCurrentFolder: function() {
-      return this.selected.model == 'folder' && (this.selected.listing.id == this.currentFolder.id || this.selected.listing.id == this.selectedFolder.id)
-    },
-    currentFolderIsSelected: function() {
-      return this.currentFolder.id && this.selectedFolder.id && this.currentFolder.id == this.selectedFolder.id
+    showInfoMessage: function() {
+      return this.isLoading || this.infoMessage.content && this.infoMessage.type
     }
   }
 }

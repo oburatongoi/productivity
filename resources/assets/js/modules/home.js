@@ -3,6 +3,7 @@ import {
     TOGGLE_BUTTONS,
     SELECT_LISTING,
     DESELECT_LISTING,
+    TOGGLE_DELETABLE,
     TOGGLE_MOVABLE
 } from '../mutations'
 
@@ -11,12 +12,12 @@ const state = {
     creatingNew: undefined,
     showButtons: false,
     ancestors: Productivity.ancestors ? Productivity.ancestors : {},
-    currentFolder: Productivity.currentFolder ? Productivity.currentFolder : {},
     selected: {
         id: undefined,
         model: undefined,
         listing: {},
-        movable: false
+        movable: false,
+        deletable: false
     }
 }
 
@@ -30,6 +31,9 @@ const mutations = {
     [TOGGLE_MOVABLE] (state) {
         state.selected.movable = ! state.selected.movable
     },
+    [TOGGLE_DELETABLE] (state) {
+        state.selected.deletable = ! state.selected.deletable
+    },
     [SELECT_LISTING] (state, payload) {
         state.selected.model = payload.model
         state.selected.id = payload.id
@@ -39,7 +43,8 @@ const mutations = {
         state.selected.model = undefined
         state.selected.id = undefined
         state.selected.listing = {}
-        state.selected.movable = false
+        state.selected.movable = false,
+        state.selected.deletable = false
     },
 }
 
@@ -53,6 +58,9 @@ const actions = {
     toggleMovable({ commit }) {
         commit(TOGGLE_MOVABLE)
     },
+    toggleDeletable({ commit }) {
+        commit(TOGGLE_DELETABLE)
+    },
     selectListing: function({ commit }, payload) {
       commit(SELECT_LISTING, payload)
     },
@@ -63,7 +71,6 @@ const actions = {
 
 const getters = {
     creatingNew: state => state.creatingNew,
-    currentFolder: state => state.currentFolder,
     showButtons: state => state.showButtons,
     user: state => state.user,
     ancestors: state => state.ancestors,

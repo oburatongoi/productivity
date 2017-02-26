@@ -1,5 +1,6 @@
 export const SET_CREATING_NEW = 'home/SET_CREATING_NEW'
 export const TOGGLE_BUTTONS = 'home/TOGGLE_BUTTONS'
+export const TOGGLE_DELETABLE = 'home/TOGGLE_DELETABLE'
 export const TOGGLE_MOVABLE = 'home/TOGGLE_MOVABLE'
 export const SELECT_LISTING = 'home/SELECT_LISTING'
 export const DESELECT_LISTING = 'home/DESELECT_LISTING'
