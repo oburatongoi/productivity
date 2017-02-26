@@ -1,25 +1,19 @@
 <template>
-  <li class="col-xs-12">
-    <breadcrumbs model="checklist"></breadcrumbs>
-
-    <div class="panel">
-      <div class="panel-heading">
-        <div class="page-header">
-          <h3>
-            <i class="fa fa-fw fa-list" :class="{'list-color-scheme':isEditable}" aria-hidden="true"></i>
-            <span v-if="!isEditable" @click="toggleEditability">{{checklist.title}}</span>
-            <input type="text" class="edit-checklist-input" ref="titleinput" v-model="localChecklist.title" v-if="isEditable" @keyup.enter.prevent="save">
-            <i class="fa fa-fw fa-times edit-checklist-icon" aria-hidden="true" v-if="isEditable" @click="toggleEditability"></i>
-          </h3>
-        </div>
-        <add-item></add-item>
-      </div>
-
-      <div class="panel-body">
-          <checklist-items></checklist-items>
-      </div>
+  <div class="panel">
+    <div class="panel-heading">
+        <h3>
+          <i class="fa fa-fw fa-list" :class="{'list-color-scheme':isEditable}" aria-hidden="true"></i>
+          <span v-if="!isEditable" @click="toggleEditability">{{checklist.title}}</span>
+          <input type="text" class="edit-checklist-input" ref="titleinput" v-model="localChecklist.title" v-if="isEditable" @keyup.enter.prevent="save">
+          <i class="fa fa-fw fa-times edit-checklist-icon" aria-hidden="true" v-if="isEditable" @click="toggleEditability"></i>
+        </h3>
     </div>
-  </li>
+
+    <div class="panel-body">
+        <add-item></add-item>
+        <checklist-items></checklist-items>
+    </div>
+  </div>
 </template>
 
 <script>
