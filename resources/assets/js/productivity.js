@@ -13,7 +13,6 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('ActionNav', require('./components/ActionNav.vue'));
 Vue.component('Breadcrumbs', require('./components/Breadcrumbs.vue'));
 Vue.component('MainNav', require('./components/MainNav.vue'));
 Vue.component('Folders', require('./components/Folders.vue'));
@@ -24,8 +23,8 @@ Vue.component('Checklists', require('./components/Checklists.vue'));
 Vue.component('Checklist', require('./components/Checklist.vue'));
 
 import store from './store.js'
-
 import VTooltip from 'v-tooltip'
+
 Vue.use(VTooltip)
 
 var bus = new Vue()

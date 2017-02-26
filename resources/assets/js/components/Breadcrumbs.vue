@@ -14,7 +14,7 @@
           {{ancestor.name}}
         </a>
       </li>
-      <li v-if="currentFolder.id">
+      <li v-if="currentFolder.id" class="current-folder">
         <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
         <template v-if="model=='folder'">
           <i class="fa fa-fw fa-folder" aria-hidden="true"></i>

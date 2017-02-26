@@ -9,11 +9,13 @@
 import { mapGetters } from 'vuex'
 
 import IndexAll from './IndexAll.vue'
+import ActionNav from './ActionNav.vue'
 
 export default {
     name: 'folder',
     components: {
-        IndexAll
+        IndexAll,
+        ActionNav
     },
     computed: {
       ...mapGetters([

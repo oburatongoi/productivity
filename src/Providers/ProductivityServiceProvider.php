@@ -21,19 +21,28 @@ class ProductivityServiceProvider extends ServiceProvider
         //     __DIR__.'/../../resources/views' => resource_path('views/vendor/productivity')
         // ], 'views');
 
+        // $this->publishes([
+        //     __DIR__.'/../../public/js' => public_path('vendor/productivity/js'),
+        //     __DIR__.'/../../public/css' => public_path('vendor/productivity/css'),
+        // ], 'public');
+        //
+        // $this->publishes([
+        //     __DIR__.'/../database/migrations/' => database_path('migrations')
+        // ], 'migrations');
+        //
+        // $this->publishes([
+        //     __DIR__.'/../config/fakeid.php' => config_path('fakeid.php'),
+        //     __DIR__.'/../config/productivity.php' => config_path('productivity.php'),
+        //     __DIR__.'/../config/javascript.php' => config_path('javascript.php'),
+        // ], 'config');
+
         $this->publishes([
             __DIR__.'/../../public/js' => public_path('vendor/productivity/js'),
             __DIR__.'/../../public/css' => public_path('vendor/productivity/css'),
-        ], 'public');
-
-        $this->publishes([
-            __DIR__.'/../database/migrations/' => database_path('migrations')
-        ], 'migrations');
-
-        $this->publishes([
             __DIR__.'/../config/fakeid.php' => config_path('fakeid.php'),
             __DIR__.'/../config/productivity.php' => config_path('productivity.php'),
             __DIR__.'/../config/javascript.php' => config_path('javascript.php'),
+            __DIR__.'/../database/migrations/' => database_path('migrations'),
         ], 'productivity');
 
     }
@@ -47,7 +56,7 @@ class ProductivityServiceProvider extends ServiceProvider
     {
         $this->app->register('Oburatongoi\Productivity\Providers\AuthServiceProvider');
         $this->app->register('Oburatongoi\Productivity\Providers\RouteServiceProvider');
-        
+
         // $this->app->register('Baum\Providers\BaumServiceProvider');
         $this->app->register('Propaganistas\LaravelFakeId\FakeIdServiceProvider');
         $this->app->register('Laracasts\Utilities\JavaScript\JavaScriptServiceProvider');
