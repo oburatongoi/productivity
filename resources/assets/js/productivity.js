@@ -23,6 +23,15 @@ Vue.component('Note', require('./components/Note.vue'));
 Vue.component('Checklists', require('./components/Checklists.vue'));
 Vue.component('Checklist', require('./components/Checklist.vue'));
 
+// v-focus global directive
+Vue.directive('focus', {
+  // When the bound element is inserted into the DOM...
+  inserted: function (el) {
+    // Focus the element
+    el.focus()
+  }
+})
+
 import store from './store.js'
 import VTooltip from 'v-tooltip'
 

@@ -29,10 +29,8 @@
     <form class="form-horizontal" v-if="creatingNew" @submit.prevent="submitForm">
       <div class="row">
         <div class="col-md-6">
-          <input type="text" class="form-control input-sm" ref="nameInput" v-model="resource.name" v-if="creatingNew=='folder'" placeholder="Name" maxlength="255">
-          <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='list'" placeholder="List Title" maxlength="255">
-          <!-- <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='note'" placeholder="Note Title" maxlength="255"> -->
-          <!-- <input type="text" class="form-control input-sm" ref="titleInput" v-model="resource.title" v-if="creatingNew=='goal'" placeholder="Goal Title" maxlength="255"> -->
+          <input type="text" class="form-control input-sm" v-model="resource.name" v-if="creatingNew=='folder'" placeholder="Name" maxlength="255" v-focus>
+          <input type="text" class="form-control input-sm" v-model="resource.title" :placeholder="placeholderText" maxlength="255" v-focus>
         </div>
 
         <button type="button" class="btn btn-sm" :class="buttonClass" @click.prevent="submitForm">Create</button>
@@ -64,12 +62,14 @@ export default {
       ]),
       buttonClass: function() {
         switch (this.creatingNew) {
-          case 'list':
-            return 'btn-list';
+          case 'list': return 'btn-list'
             break;
           default: return 'btn-folder'
 
         }
+      },
+      placeholderText: function() {
+        return this.creatingNew == 'list' ? 'List title' : this.creatingNew == 'note' ? 'Note title' : this.creatingNew == 'goal' ? 'Goal title' : 'Title'
       }
     },
     methods: {
@@ -83,19 +83,6 @@ export default {
       ]),
       toggleCreateNew: function(model) {
         this.createNew(model)
-        switch (model) {
-          case 'folder':
-            this.$nextTick(function () {
-              this.$refs.nameInput.focus()
-            })
-            break;
-
-            default:
-            this.$nextTick(function () {
-              this.$refs.titleInput.focus()
-            })
-
-        }
       },
       submitForm: function() {
 

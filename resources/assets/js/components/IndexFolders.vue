@@ -7,7 +7,7 @@
         :class="{selected: selected.id==folder.fake_id&&selected.model=='folder'}"
         draggable="true"
         @click="selectListing({model: 'folder', id: folder.fake_id, listing: folder})"
-        @dblclick.prevent="goToListing('folder', folder.fake_id)"
+        @dblclick="goToListing('folder', folder.fake_id)"
         v-tooltip.bottom-left="folder.name"
       >
           <h5>
