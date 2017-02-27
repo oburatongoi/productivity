@@ -45,17 +45,15 @@ class FolderController extends Controller
     public function index(Request $request)
     {
         JavaScript::put([
-            'user' => $request->user(),
             'folders' => $this->folders->rootForUser($request->user()),
             'checklists' => $this->checklists->rootForUser($request->user()),
             // 'notes' => $this->notes->rootForUser($request->user()),
             // 'goals' => $this->goals->rootForUser($request->user()),
             'model' => 'folders',
+            'currentView' => 'foldersIndex'
         ]);
 
-        return view('productivity::folders.index')->with([
-            'model' => 'folders',
-        ]);
+        return view('productivity::folders.index');
     }
 
     /**

@@ -1,4 +1,9 @@
 <template lang="html">
+
+  <div class="main-nav">
+    <!-- <button type="button" class="btn btn-sm btn-primary" v-if="!showCreatingNewButtons" @click="toggleCreatingNewButtons">New</button> -->
+
+
     <ul class="nav nav-pills nav-stacked">
 
       <li :class="{active: selected=='home'}">
@@ -15,15 +20,14 @@
         </a>
 
         <ul class="dropdown-menu">
-          <!-- <li :class="{active: selected=='folders'}"> -->
-          <li>
+          <li class="folder-color-scheme">
               <a href="/productivity/folders">
                   <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
                   Folders
               </a>
           </li>
 
-          <li :class="{active: selected=='checklists'}">
+          <li class="list-color-scheme">
               <a href="/productivity/lists">
                   <i class="fa fa-fw fa-list" aria-hidden="true"></i>
                   Lists
@@ -60,13 +64,23 @@
           </a>
       </li> -->
     </ul>
+  </div>
 </template>
 
 <script>
-
+import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'main-nav',
-    props: ['selected'],
-
+    computed: {
+      ...mapGetters([
+        'showCreatingNewButtons',
+        'selected'
+      ])
+    },
+    methods: {
+      ...mapActions([
+        'toggleCreatingNewButtons'
+      ])
+    }
 }
 </script>

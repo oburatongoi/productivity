@@ -21,6 +21,18 @@
           {{currentFolder.name}}
         </template>
       </li>
+
+      <li v-if="currentView&&currentView.length" class="current-view">
+        <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
+        <template v-if="currentView=='foldersIndex'">
+          <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
+          Folders
+        </template>
+        <template v-if="currentView=='checklistsIndex'">
+          <i class="fa fa-fw fa-list" aria-hidden="true"></i>
+          Lists
+        </template>
+      </li>
     </ul>
   </div>
 </template>
@@ -30,14 +42,13 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'breadcrumbs',
-  props: {
-    model: String
-  },
   computed: {
     ...mapGetters([
       'currentFolder',
       'ancestors',
-      'checklist'
+      'checklist',
+      'model',
+      'currentView'
     ])
   }
 }

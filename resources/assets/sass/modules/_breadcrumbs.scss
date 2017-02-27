@@ -1,5 +1,5 @@
 .productivity-breadcrumbs {
-    display: block;
+    display: inline-block;
     width: 75%;
     font-size: 1em;
     margin-top: 15px;
@@ -13,6 +13,7 @@
 
     font-weight: 300;
 
+    .current-view,
     .current-folder {
         font-weight: 600;
     }

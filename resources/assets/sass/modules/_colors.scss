@@ -13,6 +13,7 @@
 
 
 /* Buttons */
+ .btn-folder,
  .btn-note,
  .btn-list,
  .btn-goal {
@@ -20,6 +21,14 @@
      &:active,
      &:hover {
          color: rgba(255,255,255,0.9);
+     }
+ }
+ .btn-folder {
+     background: $folder-primary;
+     border: 1px solid darken($folder-primary, 10%);
+     &:active,
+     &:hover {
+         background: darken($folder-primary, 4%);
      }
  }
  .btn-note {

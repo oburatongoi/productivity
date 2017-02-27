@@ -1,18 +1,26 @@
 <template>
-    <ul class="list-unstyled">
-        <li v-if="checklists" v-for="checklist in checklists">
-            <checklist :checklist="checklist"></checklist>
-        </li>
-    </ul>
+  <div class="index-files">
+    <h5>Lists</h5>
+    <index-files></index-files>
+    <move-to-folder v-if="selectedIsMovable"></move-to-folder>
+  </div>
 </template>
 
 <script>
-import Checklist from './Checklist.vue'
+import { mapGetters } from 'vuex'
+import IndexFiles from './IndexFiles.vue'
+import MoveToFolder from './MoveToFolder.vue'
+
 export default {
     name: 'productivity-checklists',
-    props: ['checklists'],
+    computed: {
+      ...mapGetters([
+        'selectedIsMovable'
+      ])
+    },
     components: {
-        Checklist
+      IndexFiles,
+      MoveToFolder
     }
 }
 </script>

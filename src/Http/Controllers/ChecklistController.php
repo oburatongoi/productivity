@@ -29,12 +29,13 @@ class ChecklistController extends Controller
      */
     public function index(Request $request)
     {
-        $checklists = $this->checklists->forUser($request->user());
-
-        return view('productivity::checklists.index')->with([
-            'checklists' => $checklists,
-            'model' => 'lists',
+        JavaScript::put([
+            'checklists' => $this->checklists->forUser($request->user()),
+            'model' => 'checklists',
+            'currentView' => 'checklistsIndex'
         ]);
+
+        return view('productivity::checklists.index');
     }
 
     /**

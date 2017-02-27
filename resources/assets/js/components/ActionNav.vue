@@ -1,32 +1,47 @@
 <template lang="html">
-  <div class="action-nav">
-      <create-new></create-new>
-      <button type="button"
-              class="btn btn-default btn-xs toggle-delete-btn"
-              v-if="listingIsSelected&&!selected.movable&&selected.deletable"
-              @click.once="toggleDeletable"
-      ><i class="fa fa-times" aria-hidden="true"></i></button>
-      <button type="button"
-              class="btn btn-default btn-xs toggle-delete-btn"
-              :class="{ 'delete-armed': selected.deletable }"
-              v-if="listingIsSelected&&!selected.movable"
-              @click.dblclick.prevent="confirmOrDelete"
-      ><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-      <button type="button"
-              class="btn btn-primary btn-xs toggle-move-btn"
-              v-if="listingIsSelected&&!selected.movable"
-              @click.prevent="toggleMovable"
-      >Move</button>
-  </div>
+  <nav class="navbar navbar-default action-nav">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                <button type="button" class="btn btn-sm toggle-create-new-btn btn-primary" @click="toggleCreatingNewButtons">New</button>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+              <create-new v-if="showCreatingNewButtons||creatingNew"></create-new>
+
+              <search v-if="!showCreatingNewButtons"></search>
+
+              <button type="button"
+                      class="btn btn-default btn-sm toggle-delete-btn"
+                      v-if="listingIsSelected&&!selected.movable&&selected.deletable"
+                      @click.once="toggleDeletable"
+              ><i class="fa fa-times" aria-hidden="true"></i></button>
+              <button type="button"
+                      class="btn btn-default btn-sm toggle-delete-btn"
+                      :class="{ 'delete-armed': selected.deletable }"
+                      v-if="listingIsSelected&&!selected.movable"
+                      @click.dblclick.prevent="confirmOrDelete"
+              ><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              <button type="button"
+                      class="btn btn-primary btn-sm toggle-move-btn"
+                      v-if="listingIsSelected&&!selected.movable"
+                      @click.prevent="toggleMovable"
+              >Move</button>
+            </div>
+        </div>
+    </div>
+</nav>
 </template>
 
 <script>
-import CreateNew from './CreateNew.vue'
 import { mapActions, mapGetters } from 'vuex'
+import CreateNew from './CreateNew.vue'
+import Search from './Search.vue'
+
 export default {
   name: 'action-nav',
   methods: {
     ...mapActions([
+      'toggleCreatingNewButtons',
       'deleteChecklist',
       'deleteFolder',
       'toggleDeletable',
@@ -59,6 +74,8 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'showCreatingNewButtons',
+      'creatingNew',
       'selected'
     ]),
     listingIsSelected: function() {
@@ -66,7 +83,8 @@ export default {
     }
   },
   components: {
-    CreateNew
+    CreateNew,
+    Search
   }
 }
 </script>

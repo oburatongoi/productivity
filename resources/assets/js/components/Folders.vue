@@ -1,20 +1,25 @@
 <template lang="html">
   <div>
-    <action-nav></action-nav>
     <index-all></index-all>
+    <move-to-folder v-if="selectedIsMovable"></move-to-folder>
   </div>
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 import IndexAll from './IndexAll.vue'
-import ActionNav from './ActionNav.vue'
+import MoveToFolder from './MoveToFolder.vue'
 
 export default {
   name: 'folders',
+  computed: {
+    ...mapGetters([
+      'selectedIsMovable'
+    ])
+  },
   components: {
     IndexAll,
-    ActionNav
-  },
+    MoveToFolder
+  }
 }
 </script>

@@ -12,6 +12,8 @@ const state = {
     creatingNew: undefined,
     showCreatingNewButtons: false,
     ancestors: Productivity.ancestors ? Productivity.ancestors : {},
+    model: Productivity.model ? Productivity.model : {},
+    currentView: Productivity.currentView ? Productivity.currentView : {},
     selected: {
         id: undefined,
         model: undefined,
@@ -74,7 +76,10 @@ const getters = {
     showCreatingNewButtons: state => state.showCreatingNewButtons,
     user: state => state.user,
     ancestors: state => state.ancestors,
-    selected: state => state.selected
+    model: state => state.model,
+    currentView: state => state.currentView,
+    selected: state => state.selected,
+    selectedIsMovable: state => state.selected.model && state.selected.id && state.selected.movable
 }
 
 export default {

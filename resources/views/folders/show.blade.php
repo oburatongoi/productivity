@@ -1,11 +1,15 @@
 @extends('productivity::layouts.main')
 
+@section('action-nav')
+    <action-nav></action-nav>
+@endsection
+
 @section('breadcrumbs')
-    <breadcrumbs model="folder"></breadcrumbs>
+    <breadcrumbs></breadcrumbs>
 @endsection
 
 @section('main-menu')
-    <main-nav :selected="'{{ $model }}'"></main-nav>
+    <main-nav></main-nav>
 @endsection
 
 @section('content')

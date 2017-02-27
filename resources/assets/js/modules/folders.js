@@ -11,7 +11,7 @@ const state = {
 
 const mutations = {
     [ADD_FOLDER] (state, folder) {
-        if (state.currentFolder.id == folder.folder_id) {
+        if (state.currentFolder.id && folder.folder_id && state.currentFolder.id == folder.folder_id) {
             state.folders.unshift(folder)
         }
     },

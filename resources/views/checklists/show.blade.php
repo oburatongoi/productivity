@@ -1,11 +1,11 @@
 @extends('productivity::layouts.main')
 
 @section('breadcrumbs')
-    <breadcrumbs model="checklists"></breadcrumbs>
+    <breadcrumbs></breadcrumbs>
 @endsection
 
 @section('main-menu')
-    <main-nav :selected="null"></main-nav>
+    <main-nav></main-nav>
 @endsection
 
 @section('content')
