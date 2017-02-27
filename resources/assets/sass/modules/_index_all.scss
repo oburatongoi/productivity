@@ -96,17 +96,31 @@ li.listing {
     }
     .item-count-tag {
         position: absolute;
-        top: -10px;
+        top: -11px;
         right: 5px;
-        font-size: 0.75em;
-        background: $list-primary;
-        color: white;
+        font-size: 0.7em;
+        background: white;
+        color: darken($base-border-color, 30%);
         font-weight: bold;
+        border: 1px solid $base-border-color;
         border-radius: 50%;
-        min-width: 20px;
-        padding: 3px;
-        height: 20px;
-        line-height: 12px;
+        min-width: 22px;
+        height: 22px;
         text-align: center;
+        display: table;
+
+        .item-count {
+          display: table-cell;
+          text-align: center;
+          vertical-align: middle;
+        }
+    }
+    &.selected {
+        .item-count-tag {
+            border: 1px solid $list-primary;
+            // color: $list-primary;
+            background: $list-primary;
+            color: white;
+        }
     }
 }
