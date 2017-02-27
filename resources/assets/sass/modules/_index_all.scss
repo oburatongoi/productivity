@@ -96,13 +96,17 @@ li.listing {
     }
     .item-count-tag {
         position: absolute;
-        top: -8px;
+        top: -10px;
         right: 5px;
-        font-size: 0.7em;
+        font-size: 0.75em;
         background: $list-primary;
         color: white;
-        padding: 0px 6px 1px;
-        border-radius: 2px;
-        line-height: 1.5;
+        font-weight: bold;
+        border-radius: 50%;
+        min-width: 20px;
+        padding: 3px;
+        height: 20px;
+        line-height: 12px;
+        text-align: center;
     }
 }
