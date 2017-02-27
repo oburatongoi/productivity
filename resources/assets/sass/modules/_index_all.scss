@@ -23,6 +23,7 @@ li.listing {
     padding: 0 6px 0 6px;
     margin-right: 12px;
     margin-top: 12px;
+    position: relative;
 
     @media(max-width:767px){
         width: 100%;
@@ -92,5 +93,16 @@ li.listing {
         .go-to-listing {
             color: $list-primary;
         }
+    }
+    .item-count-tag {
+        position: absolute;
+        top: -8px;
+        right: 5px;
+        font-size: 0.7em;
+        background: $list-primary;
+        color: white;
+        padding: 0px 6px 1px;
+        border-radius: 2px;
+        line-height: 1.5;
     }
 }

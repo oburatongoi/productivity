@@ -20,7 +20,7 @@
                       :class="{ 'delete-armed': selected.deletable }"
                       v-if="listingIsSelected&&!selected.movable"
                       @click.dblclick.prevent="confirmOrDelete"
-              ><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              ><i class="fa fa-trash-o" aria-hidden="true"></i><span v-if="selected.deletable"> Delete</span></button>
               <button type="button"
                       class="btn btn-primary btn-sm toggle-move-btn"
                       v-if="listingIsSelected&&!selected.movable"

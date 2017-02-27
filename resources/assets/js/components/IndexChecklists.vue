@@ -18,6 +18,7 @@
       >
         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
       </a>
+      <span class="item-count-tag" v-if="checklist.items_count">{{checklist.items_count}}</span>
   </li>
 </template>
 
