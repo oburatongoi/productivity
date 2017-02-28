@@ -30,7 +30,7 @@
       <div class="row">
         <div class="col-md-6">
           <input type="text" class="form-control input-sm" v-model="resource.name" v-if="creatingNew=='folder'" placeholder="Name" maxlength="255" v-focus>
-          <input type="text" class="form-control input-sm" v-model="resource.title" :placeholder="placeholderText" maxlength="255" v-focus>
+          <input type="text" class="form-control input-sm" v-model="resource.title" v-else :placeholder="placeholderText" maxlength="255" v-focus>
         </div>
 
         <button type="button" class="btn btn-sm" :class="buttonClass" @click.prevent="submitForm">Create</button>
