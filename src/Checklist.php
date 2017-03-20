@@ -69,7 +69,7 @@ class Checklist extends Model
     protected static function boot() {
         parent::boot();
         static::deleting(function(Checklist $checklist) {
-          $checklist->list_items()->delete();
+          $checklist->items()->delete();
         });
     }
 
