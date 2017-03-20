@@ -5,14 +5,25 @@
       <input type="checkbox" :checked="item.checked_at" @click="checkItem"/>
       <label><i class="fa fa-check"></i></label>
     </div>
-    <p @click="edit">
+    <p class="show-item-content" @click="edit">
       {{ item.content }}
     </p>
 
     <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="edit"></i>
 
-    <p class="preview-deadline" v-if="deadlinePlaceholder" @click="edit">
-      {{ deadlinePlaceholder }}
+    <p class="preview-deadline" @click="edit">
+      <span v-if="item.is_important">
+        <i class="fa fa-fw fa-star" aria-hidden="true"></i>
+      </span>
+      
+      <span v-if="item.is_urgent">
+        <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
+      </span>
+
+      <span v-if="deadlinePlaceholder">
+        <!-- <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> -->
+          {{ deadlinePlaceholder }}
+      </span>
     </p>
 
   </div>
@@ -43,7 +54,7 @@ export default {
   },
   computed: {
     deadlinePlaceholder: function () {
-      return this.item.deadline ? moment(this.item.deadline).format('MMM D') : undefined
+      return this.item.deadline ? moment(this.item.deadline).format('MMM DD') : undefined
     },
   },
 }
