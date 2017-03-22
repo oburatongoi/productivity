@@ -3,6 +3,7 @@
 namespace Oburatongoi\Productivity\Traits;
 
 use Propaganistas\LaravelFakeId\FakeIdTrait;
+use Illuminate\Support\Facades\App;
 
 trait Fakable
 {
@@ -17,6 +18,12 @@ trait Fakable
     {
         $this->fake_id = $this->getRouteKey();
         return $this->save();
+    }
+
+    protected static function bootFakable() {
+        static::created(function($fakable) {
+          $fakable->fakeID();
+        });
     }
 
 }

@@ -1,8 +1,38 @@
+.search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-form,
+.search-results {
+    width: 50%;
+    display: block;
+}
+
+
 .search-form {
-    display: inline-block;
-    // max-width: 30%;
-    input,
+    input{
+        display: inline-block;
+        width:80%;
+    }
     button {
-        // display: inline-block;
+        float: right;
+        &:not(:only-child) {
+            margin-left: 5px;
+        }
+    }
+}
+
+.search-results {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    z-index: 99;
+    background: rgba(255,255,255,1);
+    padding: 6px;
+    border: 1px solid $base-border-color;
+    border-radius: 3px;
+    ul {
+        margin: 0;
     }
 }

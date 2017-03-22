@@ -9,6 +9,7 @@ Route::group(['prefix' => 'productivity'], function () {
 
     Route::group(['namespace' => 'Oburatongoi\Productivity\Http\Controllers'], function () {
         Route::get('/', 'FolderController@index');
+        Route::post('search', 'SearchController@search');
 
         Route::resource('folders', 'FolderController', ['except' => ['create', 'edit']]);
         Route::resource('goals', 'GoalController', ['except' => ['create', 'edit']]);
