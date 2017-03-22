@@ -1,25 +1,25 @@
 .folder-color-scheme {
     &,
-    * {
-        color: $folder-primary !important;
+    a {
+        color: $folder-primary;
     }
 }
 .note-color-scheme {
     &,
-    * {
-        color: $note-primary !important;
+    a {
+        color: $note-primary;
     }
 }
 .list-color-scheme {
     &,
-    * {
-        color: $list-primary !important;
+    a {
+        color: $list-primary;
     }
 }
 .goal-color-scheme {
     &,
-    * {
-        color: $goal-primary !important;
+    a {
+        color: $goal-primary;
     }
 }
 
