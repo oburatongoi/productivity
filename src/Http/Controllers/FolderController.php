@@ -74,8 +74,6 @@ class FolderController extends Controller
             $parent->appendNode($folder);
         }
 
-        $folder->fakeID();
-
         return response()->json([
             'folder' => $folder
         ]);

@@ -53,7 +53,7 @@ class Folder extends Model
     {
         $array = $this->toArray();
 
-        $array = array_only($array, ['id', 'name', 'fake_id']);
+        $array = array_only($array, ['id', 'name', 'fake_id', 'folder_id']);
 
         return $array;
     }
@@ -62,11 +62,6 @@ class Folder extends Model
     {
     return $this->belongsTo('App\User', 'user_id', 'id');
     }
-
-    // public function parent()
-    // {
-    //     return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id', 'id');
-    // }
 
     public function subfolders()
     {
@@ -78,15 +73,15 @@ class Folder extends Model
         return $this->hasMany('Oburatongoi\Productivity\Checklist');
     }
 
-    public function notes()
-    {
-        return $this->hasMany('Oburatongoi\Productivity\Note');
-    }
-
-    public function goals()
-    {
-        return $this->hasMany('Oburatongoi\Productivity\Goal');
-    }
+    // public function notes()
+    // {
+    //     return $this->hasMany('Oburatongoi\Productivity\Note');
+    // }
+    //
+    // public function goals()
+    // {
+    //     return $this->hasMany('Oburatongoi\Productivity\Goal');
+    // }
 
     // public function teammates()
     // {
@@ -98,8 +93,9 @@ class Folder extends Model
     parent::boot();
     static::deleting(function(Folder $folder) {
         $folder->subfolders()->delete();
-        // $folder->notes()->delete();
         $folder->checklists()->delete();
+        // $folder->notes()->delete();
+        // $folder->goals()->delete();
         // $folder->teammates()->delete();
     });
   }

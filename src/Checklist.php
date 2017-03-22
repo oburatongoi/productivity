@@ -51,7 +51,7 @@ class Checklist extends Model
     {
         $array = $this->toArray();
 
-        $array = array_only($array, ['id', 'title', 'fake_id']);
+        $array = array_only($array, ['id', 'title', 'fake_id', 'folder_id']);
 
         return $array;
     }

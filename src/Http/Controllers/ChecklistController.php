@@ -48,9 +48,7 @@ class ChecklistController extends Controller
     {
         $checklist = $request->user()->checklists()->create($request->input('checklist'));
 
-        $checklist->fakeID();
-
-        return response()->json([
+        if ($checklist) return response()->json([
             'checklist' => $checklist
         ]);
     }
