@@ -1,26 +1,34 @@
 <template lang="html">
   <div class="search-wrapper">
     <form class="search-form" @submit.prevent="search">
-      <input type="search" class="form-control input-sm" v-model="query" placeholder="Search...">
-      <button type="button" class="btn btn-default btn-sm" v-if="query" @click="cancel"><i class="fa fa-times" aria-hidden="true"></i></button>
-      <button type="submit" class="btn btn-primary btn-sm" v-if="query"><i class="fa fa-search" aria-hidden="true"></i></button>
+      <i class="fa fa-search" aria-hidden="true"></i>
+      <input type="search" class="search-input" v-model="query" placeholder="SEARCH" v-on:keyup="search" v-on:keyup.delete="clearResults">
+      <i class="fa fa-times cancel-search-btn" aria-hidden="true" v-if="query" @click="cancel"></i>
     </form>
 
-    <div class="search-results" v-if="query&&hasResults||searching">
-      <i class="fa fa-spinner fa-spin" aria-hidden="true" v-if="searching"></i>
+    <div class="search-results" v-if="query&&hasResults||isSearching">
+      <i class="fa fa-spinner fa-spin" aria-hidden="true" v-if="isSearching"></i>
       <ul class="list-unstyled folder-color-scheme" v-if="results.folders">
         <li v-for="folder in results.folders">
-          <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
-          <a :href="'/productivity/folders/'+folder.fake_id">{{folder.name}}</a>
+          <a :href="'/productivity/folders/'+folder.fake_id">
+            <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
+            {{folder.name}}
+          </a>
         </li>
       </ul>
 
       <ul class="list-unstyled list-color-scheme" v-if="results.checklists">
         <li v-for="checklist in results.checklists">
-          <i class="fa fa-fw fa-list" aria-hidden="true"></i>
-          <a :href="'/productivity/lists/'+checklist.fake_id">{{checklist.title}}</a>
+          <a :href="'/productivity/lists/'+checklist.fake_id">
+            <i class="fa fa-fw fa-list" aria-hidden="true"></i>
+            {{checklist.title}}
+          </a>
         </li>
       </ul>
+      <p v-if="errorMessage" class="error-message">{{errorMessage}}</p>
+      <div class="algolia-image">
+        powered by <img src="/vendor/productivity/images/Algolia_logo_bg-white.jpg" alt="Powered by Algolia">
+      </div>
     </div>
   </div>
 
@@ -28,6 +36,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Mark from 'mark.js'
 
 export default {
   name: 'search',
@@ -38,35 +47,51 @@ export default {
         folders: {},
         checklists: {}
       },
-      searching: false
+      errorMessage: undefined,
+      isSearching: false
     }
   },
   methods: {
-    search: function() {
-      this.searching = true
+    search: _.debounce(function() {
+      this.clearErrorMessage()
+      // this.clearResults()
+      this.isSearching = true
       this.$http.post('/productivity/search', {currentFolderId: this.currentFolder.id, query: this.query}).then(
         (response) => this.handleSuccessfulSearch(response),
         (response) => this.handleSearchError(response)
       )
-    },
+    }, 300),
     handleSuccessfulSearch: function(response) {
-      this.searching = false
+      this.isSearching = false
       response.data.results ? this.results = response.data.results : this.clearResults()
+      var markSearchResults = new Mark(document.querySelector(".search-results"));
+      var keyword = this.query;
+      this.$nextTick(function () {
+        markSearchResults.unmark({
+          done: function() {
+            markSearchResults.mark(keyword)
+          }
+        })
+      })
     },
     handleSearchError: function(response) {
-      this.searching = false
-      console.log(response);
+      this.isSearching = false
+      this.errorMessage = "An error occurred while searching"
     },
     cancel: function() {
       this.clearResults()
+      this.clearErrorMessage()
       this.query = undefined
-      return this.searching = false
+      return this.isSearching = false
     },
     clearResults: function() {
       return this.results = {
         folders: {},
         checklists: {}
       }
+    },
+    clearErrorMessage: function() {
+      return this.errorMessage = undefined
     }
   },
   computed: {
