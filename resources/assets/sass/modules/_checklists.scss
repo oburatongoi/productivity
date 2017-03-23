@@ -94,12 +94,9 @@
     p, i {
         display: inline-block;
         margin:0;
-        // padding: 10px 0;
         vertical-align: middle;
     }
     p {
-        // font-size: 1.2em;
-        // line-height: 1em;
         cursor: pointer;
     }
     i {
@@ -153,7 +150,7 @@
         margin-top: 10px;
         color: darken($base-border-color, 20%);
         .fa {
-            font-size: 1em;
+            font-size: 1.2em;
         }
         span {
             margin-right: 5px;
