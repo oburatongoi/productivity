@@ -53,7 +53,8 @@ class FolderController extends Controller
             'currentView' => 'foldersIndex'
         ]);
 
-        return view('productivity::folders.index');
+        return view('productivity::folders.index')
+                ->withTitle('Folders - Productivity - ' . env('APP_NAME', ''));
     }
 
     /**
@@ -100,7 +101,9 @@ class FolderController extends Controller
             'model' => 'folder',
         ]);
 
-        return view('productivity::folders.show')->withModel('folder');
+        return view('productivity::folders.show')
+                ->withModel('folder')
+                ->withTitle($folder->name . ' - Productivity - ' . env('APP_NAME', ''));
     }
 
     /**

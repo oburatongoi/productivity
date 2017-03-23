@@ -35,7 +35,8 @@ class ChecklistController extends Controller
             'currentView' => 'checklistsIndex'
         ]);
 
-        return view('productivity::checklists.index');
+        return view('productivity::checklists.index')
+                ->withTitle('Lists - Productivity - ' . env('APP_NAME', ''));
     }
 
     /**
@@ -73,7 +74,9 @@ class ChecklistController extends Controller
             'model' => 'list',
         ]);
 
-        return view('productivity::checklists.show')->withChecklist($checklist);
+        return view('productivity::checklists.show')
+                ->withChecklist($checklist)
+                ->withTitle($checklist->title . ' - Productivity - ' . env('APP_NAME', ''));
     }
 
     /**

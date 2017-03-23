@@ -32,8 +32,7 @@ class GoalController extends Controller
 
         return view('productivity::goals.index')->with([
             'goals' => $goals,
-            'model' => 'goals',
-        ]);
+        ])->withTitle('Goals - Productivity - ' . env('APP_NAME', ''));
     }
 
     /**
@@ -64,7 +63,9 @@ class GoalController extends Controller
 
         $this->authorize('view', $goal);
 
-        return view('productivity::goals.show')->withGoal($goal);
+        return view('productivity::goals.show')
+                ->withGoal($goal)
+                ->withTitle($goal->title . ' - Productivity - ' . env('APP_NAME', ''));
     }
 
     /**

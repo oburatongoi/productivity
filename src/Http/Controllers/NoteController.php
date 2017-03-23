@@ -33,9 +33,8 @@ class NoteController extends Controller
         $notes = $this->notes->forUser($request->user());
 
         return view('productivity::notes.index')->with([
-            'notes' => $notes,
-            'model' => 'notes',
-        ]);
+            'notes' => $notes
+        ])->withTitle('Notes - Productivity - ' . env('APP_NAME', ''));
     }
 
     /**
@@ -70,7 +69,9 @@ class NoteController extends Controller
             'model' => 'note',
         ]);
 
-        return view('productivity::notes.show')->with('note', $note);
+        return view('productivity::notes.show')
+                ->with('note', $note)
+                ->withTitle($note->title . ' - Productivity - ' . env('APP_NAME', ''));
     }
 
     /**
