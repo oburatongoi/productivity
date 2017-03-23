@@ -15,9 +15,13 @@
       <span v-if="item.is_important">
         <i class="fa fa-fw fa-star" aria-hidden="true"></i>
       </span>
-      
+
       <span v-if="item.is_urgent">
         <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
+      </span>
+
+      <span v-if="item.comments">
+        <i class="fa fa-fw fa-comment-o" aria-hidden="true"></i>
       </span>
 
       <span v-if="deadlinePlaceholder">
