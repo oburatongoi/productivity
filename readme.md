@@ -37,4 +37,6 @@ Finally, run the migration to add productivity's folders to the database. Note t
 
 ## Getting Started
 
-TBD
+When adding Productivity to a fresh Laravel installation, consider doing the following:
+* Change app name in config/app
+* Install Bugsnag
