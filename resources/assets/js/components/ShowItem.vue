@@ -25,7 +25,6 @@
       </span>
 
       <span v-if="deadlinePlaceholder">
-        <!-- <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> -->
           {{ deadlinePlaceholder }}
       </span>
     </p>
