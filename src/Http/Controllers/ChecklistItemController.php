@@ -4,7 +4,7 @@ namespace Oburatongoi\Productivity\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\Controller;
+use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
 
 use Oburatongoi\Productivity\Checklist;
 use Oburatongoi\Productivity\ChecklistItem;
@@ -90,10 +90,26 @@ class ChecklistItemController extends Controller
     {
         $this->authorize('modify', $item->checklistById());
 
-        $item->delete();
+        // $item->delete();
+        //
+        // return response()->json([
+        //     'item' => $item
+        // ]);
 
-        return response()->json([
-            'item' => $item
-        ]);
+        try {
+
+            $item->delete();
+
+            return response()->json([
+                'item' => $item
+            ]);
+
+        } catch (Exception $e) {
+
+            return response()->json([
+                'error' => $e
+            ]);
+
+        }
     }
 }

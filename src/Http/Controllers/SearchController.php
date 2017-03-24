@@ -3,7 +3,7 @@
 namespace Oburatongoi\Productivity\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
 use Oburatongoi\Productivity\Folder;
 use Oburatongoi\Productivity\Checklist;
 

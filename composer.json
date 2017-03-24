@@ -18,7 +18,8 @@
         "kalnoy/nestedset": "^4.2",
         "doctrine/dbal": "^2.5",
         "laravel/scout": "^3.0",
-        "algolia/algoliasearch-client-php": "^1.15"
+        "algolia/algoliasearch-client-php": "^1.15",
+        "chocoholics/exceptional": "^0.0.1"
     },
     "autoload": {
         "psr-4": {

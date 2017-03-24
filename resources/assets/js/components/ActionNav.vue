@@ -44,6 +44,7 @@ export default {
       'toggleCreatingNewButtons',
       'deleteChecklist',
       'deleteFolder',
+      'deselectListing',
       'toggleDeletable',
       'toggleMovable'
     ]),
@@ -54,22 +55,26 @@ export default {
       switch (this.selected.model) {
         case 'folder':
           this.deleteFolder(this.selected.listing).then(
-            (response) => this.toggleDeletable('false'),
-            (response) => this.handleDeleteError()
+            (response) => this.handleSuccessfulDelete(),
+            (response) => this.handleDeleteError(response)
           )
           break;
         case 'checklist':
           this.deleteChecklist(this.selected.listing).then(
-            (response) => this.toggleDeletable('false'),
-            (response) => this.handleDeleteError()
+            (response) => this.handleSuccessfulDelete(),
+            (response) => this.handleDeleteError(response)
           )
           break;
         default: console.log('Selected model not set.');
 
       }
     },
-    handleDeleteError: function() {
-      alert('Error deleting item')
+    handleSuccessfulDelete: function() {
+      this.toggleDeletable('false')
+      this.deselectListing()
+    },
+    handleDeleteError: function(response) {
+      console.log(response.error);
     }
   },
   computed: {

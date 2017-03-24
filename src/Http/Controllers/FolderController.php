@@ -4,7 +4,7 @@ namespace Oburatongoi\Productivity\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\Controller;
+use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
 
 use Oburatongoi\Productivity\Repositories\FolderRepository;
 use Oburatongoi\Productivity\Repositories\ChecklistRepository;
@@ -54,7 +54,7 @@ class FolderController extends Controller
         ]);
 
         return view('productivity::folders.index')
-                ->withTitle('Folders - Productivity - ' . env('APP_NAME', ''));
+                ->withTitle('Folders - Productivity - ' . config('app.name'));
     }
 
     /**
@@ -103,7 +103,7 @@ class FolderController extends Controller
 
         return view('productivity::folders.show')
                 ->withModel('folder')
-                ->withTitle($folder->name . ' - Productivity - ' . env('APP_NAME', ''));
+                ->withTitle($folder->name . ' - Productivity - ' . config('app.name'));
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Oburatongoi\Productivity\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\Controller;
+use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
 
 use Oburatongoi\Productivity\Repositories\NoteRepository;
 use Oburatongoi\Productivity\Note;
@@ -34,7 +34,7 @@ class NoteController extends Controller
 
         return view('productivity::notes.index')->with([
             'notes' => $notes
-        ])->withTitle('Notes - Productivity - ' . env('APP_NAME', ''));
+        ])->withTitle('Notes - Productivity - ' . config('app.name'));
     }
 
     /**
@@ -71,7 +71,7 @@ class NoteController extends Controller
 
         return view('productivity::notes.show')
                 ->with('note', $note)
-                ->withTitle($note->title . ' - Productivity - ' . env('APP_NAME', ''));
+                ->withTitle($note->title . ' - Productivity - ' . config('app.name'));
     }
 
     /**

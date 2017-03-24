@@ -4,7 +4,7 @@ namespace Oburatongoi\Productivity\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\Controller;
+use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
 
 use Oburatongoi\Productivity\Repositories\GoalRepository;
 use Oburatongoi\Productivity\Goal;
@@ -32,7 +32,7 @@ class GoalController extends Controller
 
         return view('productivity::goals.index')->with([
             'goals' => $goals,
-        ])->withTitle('Goals - Productivity - ' . env('APP_NAME', ''));
+        ])->withTitle('Goals - Productivity - ' . config('app.name'));
     }
 
     /**
@@ -65,7 +65,7 @@ class GoalController extends Controller
 
         return view('productivity::goals.show')
                 ->withGoal($goal)
-                ->withTitle($goal->title . ' - Productivity - ' . env('APP_NAME', ''));
+                ->withTitle($goal->title . ' - Productivity - ' . config('app.name'));
     }
 
     /**

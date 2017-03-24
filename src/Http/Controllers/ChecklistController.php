@@ -3,8 +3,7 @@
 namespace Oburatongoi\Productivity\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
+use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
 
 use Oburatongoi\Productivity\Repositories\ChecklistRepository;
 use Oburatongoi\Productivity\Checklist;
@@ -12,6 +11,7 @@ use JavaScript;
 
 class ChecklistController extends Controller
 {
+
     protected $checklists;
 
     public function __construct(ChecklistRepository $checklists)
@@ -36,7 +36,7 @@ class ChecklistController extends Controller
         ]);
 
         return view('productivity::checklists.index')
-                ->withTitle('Lists - Productivity - ' . env('APP_NAME', ''));
+                ->withTitle('Lists - Productivity - ' . config('app.name'));
     }
 
     /**
@@ -47,11 +47,25 @@ class ChecklistController extends Controller
      */
     public function store(Request $request)
     {
-        $checklist = $request->user()->checklists()->create($request->input('checklist'));
 
-        if ($checklist) return response()->json([
-            'checklist' => $checklist
-        ]);
+        try {
+
+            $checklist = $request->user()->checklists()->create($request->input('checklist'));
+
+            if ($checklist) return response()->json([
+                'checklist' => $checklist
+            ]);
+
+        } catch (\Exception $e) {
+
+            return $this->handleException($e);
+
+        } catch (\AlgoliaException $e) {
+
+            return $this->handleException($e);
+
+        }
+
     }
 
     /**
@@ -76,7 +90,7 @@ class ChecklistController extends Controller
 
         return view('productivity::checklists.show')
                 ->withChecklist($checklist)
-                ->withTitle($checklist->title . ' - Productivity - ' . env('APP_NAME', ''));
+                ->withTitle($checklist->title . ' - Productivity - ' . config('app.name'));
     }
 
     /**
@@ -108,10 +122,31 @@ class ChecklistController extends Controller
     {
         $this->authorize('modify', $checklist);
 
-        $checklist->delete();
+        try {
 
-        return response()->json([
-            'checklist' => $checklist
-        ]);
+            $checklist->delete();
+
+            return response()->json([
+                'checklist' => $checklist
+            ]);
+
+        } catch (\ModelNotFoundException $e) {
+
+            return $this->handleException($e);
+
+        } catch (\NotFoundHttpException $e) {
+
+            return $this->handleException($e);
+
+        } catch (\AlgoliaException $e) {
+
+            return $this->handleException($e);
+
+        } catch (\Exception $e) {
+
+            return $this->handleException($e);
+
+        }
+
     }
 }
