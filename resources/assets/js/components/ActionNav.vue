@@ -74,7 +74,9 @@ export default {
       this.deselectListing()
     },
     handleDeleteError: function(response) {
-      console.log(response.error);
+      console.log(response);
+      // console.log(response.error);
+      // console.log(response.data.error);
     }
   },
   computed: {
