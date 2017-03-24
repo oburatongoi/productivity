@@ -43,12 +43,11 @@ const actions = {
                   folder: response.data.folder
               })
             } else {
-              reject()
+              reject(response.data.error)
             }
         })
         .catch(function(error) {
-            console.log(response);
-            reject()
+            reject(error)
         })
 
       })
@@ -64,11 +63,11 @@ const actions = {
                     folder: response.data.folder
                 })
               } else {
-                reject()
+                reject(response.data.error)
               }
           })
           .catch(function(error) {
-              reject()
+              reject(error)
           })
 
         })
@@ -84,11 +83,11 @@ const actions = {
                         folder: response.data.folder
                     })
                 } else {
-                    reject()
+                    reject(response.data.error)
                 }
             })
             .catch(function(error) {
-                reject()
+                reject(error)
             })
         })
     },

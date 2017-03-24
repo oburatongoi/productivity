@@ -31,12 +31,11 @@ const actions = {
               commit(DELETE_GOAL, goal)
               resolve()
             } else {
-              reject()
+              reject(response.data.error)
             }
         })
         .catch(function(error) {
-            console.log(error);
-            reject()
+            reject(error)
         })
 
       })
@@ -50,11 +49,11 @@ const actions = {
                 commit(UPDATE_GOAL, {goal:goal, updatedGoal:response.data.goal})
                 resolve()
               } else {
-                reject()
+                reject(response.data.error)
               }
           })
           .catch(function(error) {
-              reject()
+              reject(error)
           })
 
         })
@@ -68,13 +67,13 @@ const actions = {
                     commit(ADD_GOAL, response.data.goal)
                     resolve()
                 } else {
-                    reject()
+                    reject(response.data.error)
                 }
             })
             .catch(function(error) {
-                reject()
+                reject(error)
             })
-            
+
         })
     },
 }

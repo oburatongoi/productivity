@@ -68,12 +68,11 @@ const actions = {
                     commit(DELETE_CHECKLIST, checklist)
                     resolve()
                 } else {
-                    reject()
+                    reject(response.data.error)
                 }
             })
             .catch(function(error) {
-                console.log(error);
-                reject()
+                reject(error)
             })
         })
     },
@@ -86,11 +85,11 @@ const actions = {
                 commit(UPDATE_CHECKLIST, response.data.checklist)
                 resolve()
               } else {
-                reject()
+                reject(response.data.error)
               }
           })
           .catch(function(error) {
-              reject()
+              reject(error)
           })
 
         })
@@ -104,11 +103,11 @@ const actions = {
                     commit(ADD_CHECKLIST, response.data.checklist)
                     resolve()
                 } else {
-                    reject()
+                    reject(response.data.error)
                 }
             })
             .catch(function(error) {
-                reject()
+                reject(error)
             })
         })
     },
@@ -120,7 +119,7 @@ const actions = {
                 resolve()
             })
             .catch(function(error) {
-                reject()
+                reject(error)
             })
         })
     },
@@ -133,7 +132,7 @@ const actions = {
                 resolve()
             })
             .catch(function(error) {
-                reject()
+                reject(error)
             })
         })
     },
@@ -146,11 +145,11 @@ const actions = {
                     commit(DELETE_CHECKLIST_ITEM, response.data.item.id)
                   resolve()
                 } else {
-                  reject()
+                  reject(response.data.error)
                 }
             })
             .catch(function(error) {
-                reject()
+                reject(error)
             })
         })
     },
@@ -162,7 +161,7 @@ const actions = {
                 resolve()
             })
             .catch(function(error) {
-                reject()
+                reject(error)
             })
         })
     },

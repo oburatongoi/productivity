@@ -32,12 +32,11 @@ const actions = {
               commit(DELETE_NOTE, note)
               resolve()
             } else {
-              reject()
+              reject(response.data.error)
             }
         })
         .catch(function(error) {
-            console.log(response);
-            reject()
+            reject(error)
         })
 
       })
@@ -51,11 +50,11 @@ const actions = {
                 commit(UPDATE_NOTE, {note:note, updatedNote:response.data.note})
                 resolve()
               } else {
-                reject()
+                reject(response.data.error)
               }
           })
           .catch(function(error) {
-              reject()
+              reject(error)
           })
 
         })
@@ -63,18 +62,18 @@ const actions = {
     },
     storeNote({commit}, note) {
         return new Promise((resolve, reject) => {
-            
+
             axios.post('/productivity/notes', {note: note})
             .then(function(response) {
                 if (response.data && response.data.note) {
                     commit(ADD_NOTE, response.data.note)
                     resolve()
                 } else {
-                    reject()
+                    reject(response.data.error)
                 }
             })
             .catch(function(error) {
-                reject()
+                reject(error)
             })
 
         })

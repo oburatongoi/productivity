@@ -54,15 +54,21 @@ export default {
     delete: function() {
       switch (this.selected.model) {
         case 'folder':
-          this.deleteFolder(this.selected.listing).then(
-            (response) => this.handleSuccessfulDelete(),
-            (response) => this.handleDeleteError(response)
+          this.deleteFolder(this.selected.listing)
+          .then(
+            (response) => this.handleSuccessfulDelete()
+          )
+          .catch(
+            (error) => this.handleDeleteError(error)
           )
           break;
         case 'checklist':
-          this.deleteChecklist(this.selected.listing).then(
-            (response) => this.handleSuccessfulDelete(),
-            (response) => this.handleDeleteError(response)
+          this.deleteChecklist(this.selected.listing)
+          .then(
+            (response) => this.handleSuccessfulDelete()
+          )
+          .catch(
+            (error) => this.handleDeleteError(error)
           )
           break;
         default: console.log('Selected model not set.');
@@ -73,10 +79,14 @@ export default {
       this.toggleDeletable('false')
       this.deselectListing()
     },
-    handleDeleteError: function(response) {
-      console.log(response);
-      // console.log(response.error);
-      // console.log(response.data.error);
+    handleDeleteError: function(error) {
+      if ( error.status === 420 && error.message.includes("Hosts unreachable")) {
+        console.log('There was a problem reaching the Algolia Server, either because you are offline, or because your access is blocked by a firewall.');
+        this.toggleDeletable('false')
+        this.deselectListing()
+      } else {
+        console.log(error);
+      }
     }
   },
   computed: {
