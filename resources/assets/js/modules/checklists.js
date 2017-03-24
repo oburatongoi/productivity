@@ -62,114 +62,108 @@ const actions = {
     },
     deleteChecklist({ commit }, checklist) {
       return new Promise((resolve, reject) => {
-        Vue.http.delete('/productivity/lists/'+ checklist.fake_id).then((response) => {
-
-          if (response.data && response.data.checklist) {
-            commit(DELETE_CHECKLIST, checklist)
-            resolve()
-          } else {
-            reject()
-          }
-
-        }, (response) => {
-          console.log(response);
-          reject()
+          axios.delete('/productivity/lists/'+ checklist.fake_id)
+            .then(function(response) {
+                if (response.data && response.data.checklist) {
+                    commit(DELETE_CHECKLIST, checklist)
+                    resolve()
+                } else {
+                    reject()
+                }
+            })
+            .catch(function(error) {
+                console.log(error);
+                reject()
+            })
         })
-      })
     },
     saveChecklist({ commit }, checklist) {
         return new Promise((resolve, reject) => {
 
-          Vue.http.patch('/productivity/lists/'+checklist.fake_id, {checklist:checklist}).then(
-            (response) => {
+          axios.patch('/productivity/lists/'+checklist.fake_id, {checklist:checklist})
+          .then(function(response) {
               if (response.data && response.data.checklist) {
                 commit(UPDATE_CHECKLIST, response.data.checklist)
                 resolve()
               } else {
                 reject()
               }
-            },
-            (response) => {
+          })
+          .catch(function(error) {
               reject()
-            }
-          )
+          })
 
         })
 
     },
     storeChecklist({commit}, checklist) {
         return new Promise((resolve, reject) => {
-            Vue.http.post('/productivity/lists', {checklist: checklist}).then(
-                (response) => {
-                    if (response.data && response.data.checklist) {
-                        commit(ADD_CHECKLIST, response.data.checklist)
-                        resolve()
-                    } else {
-                        reject()
-                    }
-                },
-                (response) => {
+            axios.post('/productivity/lists', {checklist: checklist})
+            .then(function(response) {
+                if (response.data && response.data.checklist) {
+                    commit(ADD_CHECKLIST, response.data.checklist)
+                    resolve()
+                } else {
                     reject()
                 }
-            )
+            })
+            .catch(function(error) {
+                reject()
+            })
         })
     },
     addChecklistItem({commit}, payload) {
         return new Promise((resolve, reject) => {
-            Vue.http.post('/productivity/lists/' + payload.checklist_fake_id + '/add-item', {item:payload.item}).then(
-                (response) => {
-                    commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
-                    resolve()
-                },
-                (response) => {
-                    reject()
-                }
-            )
+            axios.post('/productivity/lists/' + payload.checklist_fake_id + '/add-item', {item:payload.item})
+            .then(function(response) {
+                commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
+                resolve()
+            })
+            .catch(function(error) {
+                reject()
+            })
         })
     },
     updateChecklistItem({commit}, payload) {
         return new Promise((resolve, reject) => {
-            Vue.http.patch('/productivity/lists/item/' + payload.item.id + '/update', {item:payload.item}).then(
-                (response) => {
-                    commit(UPDATE_CHECKLIST_ITEM, {item: payload.oldItem, updatedItem: response.data.item})
-                    commit(DELETE_EDITABLE, payload.item.id)
-                    resolve()
-                },
-                (response) => {
-                    reject()
-                }
-            )
+            axios.patch('/productivity/lists/item/' + payload.item.id + '/update', {item:payload.item})
+            .then(function(response) {
+                commit(UPDATE_CHECKLIST_ITEM, {item: payload.oldItem, updatedItem: response.data.item})
+                commit(DELETE_EDITABLE, payload.item.id)
+                resolve()
+            })
+            .catch(function(error) {
+                reject()
+            })
         })
     },
     deleteChecklistItem({commit}, payload) {
         return new Promise((resolve, reject) => {
-            Vue.http.patch('/productivity/lists/item/' + payload.item.id + '/delete', {item:payload.item}).then(
-                (response) => {
-                    if (response.data && response.data.item) {
-                        commit(DELETE_EDITABLE, response.data.item.id)
-                        commit(DELETE_CHECKLIST_ITEM, response.data.item.id)
-                      resolve()
-                    } else {
-                      reject()
-                    }
-                },
-                (response) => {
-                    reject()
+            axios.patch('/productivity/lists/item/' + payload.item.id + '/delete', {item:payload.item})
+            .then(function(response) {
+                if (response.data && response.data.item) {
+                    commit(DELETE_EDITABLE, response.data.item.id)
+                    commit(DELETE_CHECKLIST_ITEM, response.data.item.id)
+                  resolve()
+                } else {
+                  reject()
                 }
-            )
+            })
+            .catch(function(error) {
+                reject()
+            })
         })
     },
     check({commit}, payload) {
         return new Promise((resolve, reject) => {
-            Vue.http.patch('/productivity/lists/item/' + payload.item.id + '/check', {item:payload.item, action: payload.action}).then(
-                (response) => {
-                    commit(UPDATE_CHECKLIST_ITEM_CHECK, {item: payload.item, updatedItem: response.data.item})
-                    resolve()
-                },
-                (response) => {
-                    reject()
-                }
-            )
+            axios.patch('/productivity/lists/item/' + payload.item.id + '/check', {item:payload.item, action: payload.action})
+            .then(function(response) {
+                commit(UPDATE_CHECKLIST_ITEM_CHECK, {item: payload.item, updatedItem: response.data.item})
+                resolve()
+            })
+            .catch(function(error) {
+                reject()
+            })
         })
     },
     setEditability({commit}, payload) {

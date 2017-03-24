@@ -25,56 +25,56 @@ const mutations = {
 const actions = {
     deleteGoal({ commit }, goal) {
       return new Promise((resolve, reject) => {
-        Vue.http.delete('/productivity/goals/'+ goal.id).then((response) => {
-
-          if (response.data && response.data.goal) {
-            commit(DELETE_GOAL, goal)
-            resolve()
-          } else {
-            reject()
-          }
-
-        }, (response) => {
-          console.log(response);
-          reject()
+        axios.delete('/productivity/goals/'+ goal.id)
+        .then(function(response) {
+            if (response.data && response.data.goal) {
+              commit(DELETE_GOAL, goal)
+              resolve()
+            } else {
+              reject()
+            }
         })
+        .catch(function(error) {
+            console.log(error);
+            reject()
+        })
+
       })
     },
     saveGoal({ commit }, goal) {
         return new Promise((resolve, reject) => {
 
-          Vue.http.patch('/productivity/goals/'+goal.id, goal).then(
-            (response) => {
+          axios.patch('/productivity/goals/'+goal.id, goal)
+          .then(function(response) {
               if (response.data.goal) {
                 commit(UPDATE_GOAL, {goal:goal, updatedGoal:response.data.goal})
                 resolve()
               } else {
                 reject()
               }
-            },
-            (response) => {
+          })
+          .catch(function(error) {
               reject()
-            }
-          )
+          })
 
         })
-
     },
     storeGoal({commit}, goal) {
         return new Promise((resolve, reject) => {
-            Vue.http.post('/productivity/goals', {goal: goal}).then(
-                (response) => {
-                    if (response.data && response.data.goal) {
-                        commit(ADD_GOAL, response.data.goal)
-                        resolve()
-                    } else {
-                        reject()
-                    }
-                },
-                (response) => {
+
+            axios.post('/productivity/goals', {goal: goal})
+            .then(function(response) {
+                if (response.data && response.data.goal) {
+                    commit(ADD_GOAL, response.data.goal)
+                    resolve()
+                } else {
                     reject()
                 }
-            )
+            })
+            .catch(function(error) {
+                reject()
+            })
+            
         })
     },
 }

@@ -25,56 +25,58 @@ const mutations = {
 const actions = {
     deleteNote({ commit }, note) {
       return new Promise((resolve, reject) => {
-        Vue.http.delete('/productivity/notes/'+ note.id).then((response) => {
 
-          if (response.data && response.data.note) {
-            commit(DELETE_NOTE, note)
-            resolve()
-          } else {
-            reject()
-          }
-
-        }, (response) => {
-          console.log(response);
-          reject()
+        axios.delete('/productivity/notes/'+ note.id)
+        .then(function(response) {
+            if (response.data && response.data.note) {
+              commit(DELETE_NOTE, note)
+              resolve()
+            } else {
+              reject()
+            }
         })
+        .catch(function(error) {
+            console.log(response);
+            reject()
+        })
+
       })
     },
     saveNote({ commit }, note) {
         return new Promise((resolve, reject) => {
 
-          Vue.http.patch('/productivity/notes/'+note.id, note).then(
-            (response) => {
+          axios.patch('/productivity/notes/'+note.id, note)
+          .then(function(response) {
               if (response.data.note) {
                 commit(UPDATE_NOTE, {note:note, updatedNote:response.data.note})
                 resolve()
               } else {
                 reject()
               }
-            },
-            (response) => {
+          })
+          .catch(function(error) {
               reject()
-            }
-          )
+          })
 
         })
 
     },
     storeNote({commit}, note) {
         return new Promise((resolve, reject) => {
-            Vue.http.post('/productivity/notes', {note: note}).then(
-                (response) => {
-                    if (response.data && response.data.note) {
-                        commit(ADD_NOTE, response.data.note)
-                        resolve()
-                    } else {
-                        reject()
-                    }
-                },
-                (response) => {
+            
+            axios.post('/productivity/notes', {note: note})
+            .then(function(response) {
+                if (response.data && response.data.note) {
+                    commit(ADD_NOTE, response.data.note)
+                    resolve()
+                } else {
                     reject()
                 }
-            )
+            })
+            .catch(function(error) {
+                reject()
+            })
+
         })
     },
 }

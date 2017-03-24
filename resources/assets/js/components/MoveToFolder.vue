@@ -141,23 +141,29 @@ export default {
     },
     fetchInitialFolders: function(id = null) {
       this.isLoading = true
-      this.$http.post('/productivity/fetch-initial-tree', {folder_id: id}).then(
-        (response) => {
-          if (!id) this.currentFolder = {name: 'Home', id: null}
-          this.refreshFolders(response.data.folders)
-        },
-        (response) => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error')
-      )
+      axios.post('/productivity/fetch-initial-tree', {folder_id: id})
+           .then(
+              (response) => {
+                if (!id) this.currentFolder = {name: 'Home', id: null}
+                this.refreshFolders(response.data.folders)
+              }
+            )
+           .catch(
+              (response) => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error')
+            )
     },
     fetchNewFolders: function(folder) {
       this.isLoading = true
       this.resetInfoMessage()
       this.resetSelectedFolder()
-      this.$http.post('/productivity/'+folder.fake_id+'/fetch-new-tree').then(
+      axios.post('/productivity/'+folder.fake_id+'/fetch-new-tree')
+      .then(
         (response) => {
           this.refreshCurrentFolder(response.data.folder)
           this.refreshFolders(response.data.folder.subfolders)
-        },
+        }
+      )
+      .catch(
         (response) => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error')
       )
     },
@@ -177,14 +183,20 @@ export default {
       return folder.id ? this.selectedFolder = folder : this.selectedFolder = {}
     },
     moveTo: function(folder) {
-      this.$http.patch('/productivity/move-to/'+folder.fake_id, { child:this.selected }).then(
-        (response) => response.data.child ? this.handleSuccessfulMove() : alert('No child returned'),
+      axios.patch('/productivity/move-to/'+folder.fake_id, { child:this.selected })
+      .then(
+        (response) => response.data.child ? this.handleSuccessfulMove() : alert('No child returned')
+      )
+      .catch(
         (response) => alert('Error moving '+this.selected.model)
       )
     },
     moveToHome: function(folder) {
-      this.$http.patch('/productivity/move-to-home/', { child:this.selected }).then(
-        (response) => response.data.child ? this.handleSuccessfulMove() : alert('No child returned'),
+      axios.patch('/productivity/move-to-home/', { child:this.selected })
+      .then(
+        (response) => response.data.child ? this.handleSuccessfulMove() : alert('No child returned')
+      )
+      .catch(
         (response) => alert('Error moving '+this.selected.model)
       )
     },

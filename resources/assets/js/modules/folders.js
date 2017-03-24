@@ -34,28 +34,30 @@ const actions = {
     },
     deleteFolder({ commit }, folder) {
       return new Promise((resolve, reject) => {
-        Vue.http.delete('/productivity/folders/'+ folder.fake_id).then((response) => {
 
-          if (response.data && response.data.folder) {
-            commit(DELETE_FOLDER, folder)
-            resolve({
-                folder: response.data.folder
-            })
-          } else {
-            reject()
-          }
-
-        }, (response) => {
-          console.log(response);
-          reject()
+        axios.delete('/productivity/folders/'+ folder.fake_id)
+        .then(function(response) {
+            if (response.data && response.data.folder) {
+              commit(DELETE_FOLDER, folder)
+              resolve({
+                  folder: response.data.folder
+              })
+            } else {
+              reject()
+            }
         })
+        .catch(function(error) {
+            console.log(response);
+            reject()
+        })
+
       })
     },
     saveFolder({ commit }, folder) {
         return new Promise((resolve, reject) => {
 
-          Vue.http.patch('/productivity/folders/'+folder.fake_id, folder).then(
-            (response) => {
+          axios.patch('/productivity/folders/'+folder.fake_id, folder)
+          .then(function(response) {
               if (response.data.folder) {
                 commit(UPDATE_FOLDER, {folder:folder, updatedFolder:response.data.folder})
                 resolve({
@@ -64,32 +66,30 @@ const actions = {
               } else {
                 reject()
               }
-            },
-            (response) => {
+          })
+          .catch(function(error) {
               reject()
-            }
-          )
+          })
 
         })
 
     },
     storeFolder({commit}, folder) {
         return new Promise((resolve, reject) => {
-            Vue.http.post('/productivity/folders', {folder: folder}).then(
-                (response) => {
-                    if (response.data && response.data.folder) {
-                        commit(ADD_FOLDER, response.data.folder)
-                        resolve({
-                            folder: response.data.folder
-                        })
-                    } else {
-                        reject()
-                    }
-                },
-                (response) => {
+            axios.post('/productivity/folders', {folder: folder})
+            .then(function(response) {
+                if (response.data && response.data.folder) {
+                    commit(ADD_FOLDER, response.data.folder)
+                    resolve({
+                        folder: response.data.folder
+                    })
+                } else {
                     reject()
                 }
-            )
+            })
+            .catch(function(error) {
+                reject()
+            })
         })
     },
 }

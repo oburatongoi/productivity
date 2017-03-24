@@ -56,8 +56,11 @@ export default {
       this.clearErrorMessage()
       // this.clearResults()
       this.isSearching = true
-      this.$http.post('/productivity/search', {currentFolderId: this.currentFolder.id, query: this.query}).then(
-        (response) => this.handleSuccessfulSearch(response),
+      axios.post('/productivity/search', {currentFolderId: this.currentFolder.id, query: this.query})
+      .then(
+        (response) => this.handleSuccessfulSearch(response)
+      )
+      .catch(
         (response) => this.handleSearchError(response)
       )
     }, 300),
