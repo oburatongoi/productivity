@@ -226,11 +226,20 @@
     }
 }
 
+.edit-checklist-btn,
 .edit-checklist-icon {
-    font-size: 0.6em;
-    margin-top: 10px;
     float: right;
+}
+.edit-checklist-btn {
+    margin-top: 5px;
+}
+
+.edit-checklist-icon {
+    margin-top: 8px;
+    margin-left: 5px;
+    font-size: 0.6em;
     cursor: pointer;
+    color: $input-border;
     &:hover {
         color: $list-primary;
     }

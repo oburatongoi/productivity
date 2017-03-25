@@ -5,13 +5,14 @@
           <i class="fa fa-fw fa-list" :class="{'list-color-scheme':isEditable}" aria-hidden="true"></i>
           <span v-if="!isEditable" @click="toggleEditability(true)">{{localChecklist.title}}</span>
           <input type="text" class="edit-checklist-input" ref="titleinput" v-model="checklist.title" v-if="isEditable" @keyup.enter.prevent="save" @keyup="checkForChanges" @change="checkForChanges">
-          <i class="fa fa-fw fa-times edit-checklist-icon" aria-hidden="true" v-if="isEditable" @click="toggleEditability(false)"></i>
-        </h3>
-        <div class="form-group" v-if="unsavedChanges">
-          <button type="button" class="btn btn-list btn-xs" @click.prevent="save">
+          <i class="fa fa-fw fa-times edit-checklist-icon" aria-hidden="true" v-if="isEditable" @click="cancelChanges"></i>
+          <button type="button" class="btn btn-list btn-xs edit-checklist-btn" v-if="unsavedChanges" @click.prevent="save">
             Save
             <i class="fa fa-spinner fa-spin" aria-hidden="true"v-if="loading"></i>
           </button>
+        </h3>
+        <div class="form-group">
+
         </div>
     </div>
 
@@ -55,6 +56,10 @@ export default {
       ...mapActions([
         'saveChecklist'
       ]),
+      cancelChanges: function() {
+        this.checklist.title = this.localChecklist.title
+        this.toggleEditability(false)
+      },
       checkForChanges: _.debounce(
         function() {
           console.log('checking for changes...');
