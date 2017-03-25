@@ -3,10 +3,16 @@
     <div class="panel-heading">
         <h3>
           <i class="fa fa-fw fa-list" :class="{'list-color-scheme':isEditable}" aria-hidden="true"></i>
-          <span v-if="!isEditable" @click="toggleEditability">{{checklist.title}}</span>
-          <input type="text" class="edit-checklist-input" ref="titleinput" v-model="localChecklist.title" v-if="isEditable" @keyup.enter.prevent="save">
-          <i class="fa fa-fw fa-times edit-checklist-icon" aria-hidden="true" v-if="isEditable" @click="toggleEditability"></i>
+          <span v-if="!isEditable" @click="toggleEditability(true)">{{localChecklist.title}}</span>
+          <input type="text" class="edit-checklist-input" ref="titleinput" v-model="checklist.title" v-if="isEditable" @keyup.enter.prevent="save" @keyup="checkForChanges" @change="checkForChanges">
+          <i class="fa fa-fw fa-times edit-checklist-icon" aria-hidden="true" v-if="isEditable" @click="toggleEditability(false)"></i>
         </h3>
+        <div class="form-group" v-if="unsavedChanges">
+          <button type="button" class="btn btn-list btn-xs" @click.prevent="save">
+            Save
+            <i class="fa fa-spinner fa-spin" aria-hidden="true"v-if="loading"></i>
+          </button>
+        </div>
     </div>
 
     <div class="panel-body">
@@ -27,8 +33,12 @@ export default {
     name: 'checklist',
     data () {
       return {
-        localChecklist: {},
-        isEditable: false
+        localChecklist: {
+          title: undefined
+        },
+        isEditable: false,
+        loading: false,
+        unsavedChanges: false
       }
     },
     components: {
@@ -39,38 +49,65 @@ export default {
     computed: {
       ...mapGetters([
         'checklist'
-      ])
+      ]),
     },
     methods: {
       ...mapActions([
         'saveChecklist'
       ]),
+      checkForChanges: _.debounce(
+        function() {
+          console.log('checking for changes...');
+          let stringsMatch = this.checklist.title === this.localChecklist.title;
+          if (!stringsMatch) {
+            console.log('There are unsaved changes...');
+          }
+          return this.unsavedChanges = ! stringsMatch
+        },
+        300
+      ),
       save: function() {
-        this.saveChecklist(this.localChecklist).then(
-          () => this.toggleEditability(),
-          () => { alert('Error saving List') }
+        this.loading = true
+        this.saveChecklist(this.checklist)
+        .then(
+          (checklist) => {
+            this.toggleEditability(false)
+            this.loading = this.unsavedChanges = false
+            this.checklist = checklist
+            this.syncChecklist()
+          }
+        )
+        .catch(
+          () => {
+            this.loading = false
+            alert('Error saving List')
+          }
         )
       },
-      initializeChecklist: function(){
+      syncChecklist: function(){
         this.localChecklist.title = this.checklist.title
-        this.localChecklist.id = this.checklist.id
-        this.localChecklist.fake_id = this.checklist.fake_id
       },
-      toggleEditability: function() {
-        this.isEditable = ! this.isEditable
+      toggleEditability: function(bool = "unset") {
+
+        if (bool !== "unset") {
+          this.isEditable = bool
+        } else {
+          this.isEditable = ! this.isEditable
+        }
+
         if (this.isEditable) {
           this.$nextTick(function(){
             this.focusOnInput()
           })
-
         }
+
       },
       focusOnInput: function() {
         this.$refs.titleinput.focus()
       }
     },
     created: function() {
-      this.initializeChecklist()
+      this.syncChecklist()
     }
 }
 </script>

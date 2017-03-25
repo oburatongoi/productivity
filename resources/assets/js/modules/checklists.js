@@ -83,7 +83,7 @@ const actions = {
           .then(function(response) {
               if (response.data && response.data.checklist) {
                 commit(UPDATE_CHECKLIST, response.data.checklist)
-                resolve()
+                resolve(response.data.checklist)
               } else {
                 reject(response.data.error)
               }
