@@ -11,19 +11,24 @@ class SearchController extends Controller
 {
     public function search(Request $request)
     {
-        if ($request->currentFolderId) {
-            $folders = Folder::search($request->input('query'))
-                                ->where('folder_id', $request->currentFolderId)
-                                ->get();
-            $checklists = Checklist::search($request->input('query'))
-                                    ->where('folder_id', $request->currentFolderId)
-                                    ->get();
-        } else {
-            $folders = Folder::search($request->input('query'))
-                                ->get();
-            $checklists = Checklist::search($request->input('query'))
-                                ->get();
-        }
+        // if ($request->currentFolderId) {
+        //     $folders = Folder::search($request->input('query'))
+        //                         ->where('folder_id', $request->currentFolderId)
+        //                         ->get();
+        //     $checklists = Checklist::search($request->input('query'))
+        //                             ->where('folder_id', $request->currentFolderId)
+        //                             ->get();
+        // } else {
+        //     $folders = Folder::search($request->input('query'))
+        //                         ->get();
+        //     $checklists = Checklist::search($request->input('query'))
+        //                         ->get();
+        // }
+
+        $folders = Folder::search($request->input('query'))
+                            ->get();
+        $checklists = Checklist::search($request->input('query'))
+                            ->get();
 
         $results = [
             'folders' => $folders,
