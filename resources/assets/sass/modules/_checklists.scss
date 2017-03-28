@@ -98,6 +98,11 @@
     }
     p {
         cursor: pointer;
+        @media(min-width:992px){
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
     i {
         font-size: 1.8em;
@@ -125,9 +130,9 @@
             padding: 10px 0;
             font-size: 1.2em;
             line-height: 1em;
-            // white-space: nowrap;
-            // overflow: hidden;
-            // text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 
