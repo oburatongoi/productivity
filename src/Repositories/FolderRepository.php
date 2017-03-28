@@ -28,4 +28,9 @@ class FolderRepository {
                     ->get();
     }
 
+    public function missingFakeId()
+    {
+        return Folder::whereNull('fake_id')->get();
+    }
+
 }

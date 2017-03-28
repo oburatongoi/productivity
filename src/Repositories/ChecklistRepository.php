@@ -5,6 +5,7 @@ namespace Oburatongoi\Productivity\Repositories;
 
 use App\User;
 use Oburatongoi\Productivity\Folder;
+use Oburatongoi\Productivity\Checklist;
 
 class ChecklistRepository {
 
@@ -27,6 +28,11 @@ class ChecklistRepository {
         return $folder->checklists()->orderBy('updated_at', 'desc')->withCount(['items' => function($query) {
             $query->where('checked_at', null);
         }])->get();
+    }
+
+    public function missingFakeId()
+    {
+        return Checklist::whereNull('fake_id')->get();
     }
 
 }

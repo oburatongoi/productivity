@@ -26,6 +26,8 @@ Route::group(['prefix' => 'productivity'], function () {
 
         Route::patch('move-to/{folder}', 'FolderController@moveToFolder');
         Route::patch('move-to-home', 'FolderController@moveToHome');
+
+        Route::get('add-missing-fake-ids', 'MissingFakeIdController@addMissingFakeIds');
     });
 
 });
