@@ -213,4 +213,13 @@ class FolderController extends Controller
             'child' => $child
         ]);
     }
+
+    public function fixTree()
+    {
+        $tree = Folder::fixTree();
+
+        return response()->json([
+            'fixed' => $tree
+        ]);
+    }
 }
