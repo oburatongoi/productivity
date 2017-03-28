@@ -68,11 +68,17 @@ export default {
       this.isSearching = false
       response.data.results ? this.results = response.data.results : this.clearResults()
       var markSearchResults = new Mark(document.querySelector(".search-results"));
-      var keyword = this.query;
+      var keyword = this.query,
+          options = {
+            // "accuracy": {
+            //   "value": "partially",
+            //   "limiters": [",", ".", "-", "/"]
+            // }
+          };
       this.$nextTick(function () {
         markSearchResults.unmark({
           done: function() {
-            markSearchResults.mark(keyword)
+            markSearchResults.mark(keyword, options)
           }
         })
       })
