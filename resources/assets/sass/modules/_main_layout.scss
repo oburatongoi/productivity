@@ -16,6 +16,10 @@ body,
 
 .section-wrapper {
     display: flex;
+    flex-direction: row;
+    @media(max-width:767px){
+        flex-direction: column;
+    }
 }
 
 .content-wrapper {
