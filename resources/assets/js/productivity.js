@@ -14,7 +14,7 @@ require('./bootstrap');
  */
 
 Vue.component('Breadcrumbs', require('./components/Breadcrumbs.vue'));
-Vue.component('MainNav', require('./components/MainNav.vue'));
+Vue.component('MainMenu', require('./components/MainMenu.vue'));
 Vue.component('ActionNav', require('./components/ActionNav.vue'));
 Vue.component('Folders', require('./components/Folders.vue'));
 Vue.component('Folder', require('./components/Folder.vue'));

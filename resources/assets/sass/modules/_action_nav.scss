@@ -1,9 +1,8 @@
 .action-nav {
     position: relative;
-    margin-top: -25px;
-    padding-top: 8px;
-    width: 100%;
-    border-radius: 0;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    @include main-nav;
 }
 .toggle-delete-btn,
 .toggle-move-btn {
@@ -31,6 +30,22 @@
 }
 
 .toggle-create-new-btn {
-    display: block;
-    min-width: 100px;
+    margin: 0;
+    margin-right: 10px;
+    padding: 0;
+    border-radius: 50%;
+    a {
+        height: 27px;
+        width: 27px;
+        color: white;
+        text-decoration: none;
+        display: table;
+        padding: 0;
+        i.fa {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            padding: 2px 0 0;
+        }
+    }
 }

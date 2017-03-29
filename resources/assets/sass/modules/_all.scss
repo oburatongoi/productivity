@@ -1,8 +1,9 @@
-@import "action_nav";
+
 @import "breadcrumbs";
 @import "create_new";
 @import "checklists";
 @import "index_all";
+@import "main_layout";
 @import "move_to_folder";
 @import "navs";
 @import "colors";
@@ -10,6 +11,6 @@
 @import "vendor_tooltip";
 @import "../../../../node_modules/pretty-checkbox/src/pretty.scss";
 
-.top-padding {
-    padding: 10px;
-}
+// .top-padding {
+//     padding: 10px;
+// }

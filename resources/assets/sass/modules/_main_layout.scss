@@ -1,0 +1,66 @@
+html,
+body,
+#productivity-app,
+.section-wrapper {
+    height: 100vh;
+    left:0;
+    right:0;
+    padding: 0;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.main-menu-wrapper {
+    background: $base-background;
+}
+
+.section-wrapper {
+    display: flex;
+}
+
+.content-wrapper {
+    padding: 2vh 2% 3vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 90vh;
+}
+.nav-wrapper {
+    width: 100%;
+    margin: 0;
+}
+
+.narrow-section,
+.wide-section {
+    // height: 100%;
+}
+.wide-section {
+    width: 100%;
+    overflow: hidden;
+}
+
+.narrow-section {
+    @media(max-width:767px){
+        width: 100%;
+    }
+    @media(min-width:768px){
+        width: 20%;
+    }
+    @media(min-width:992px){
+        width: 20%;
+    }
+    @media(min-width:1200px){
+        width: 20%;
+    }
+}
+
+.main-logo {
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    @include top-menu-height;
+    a {
+        font-size: 1.4em;
+        line-height: 35px;
+        color: white;
+        text-decoration: none;
+    }
+}

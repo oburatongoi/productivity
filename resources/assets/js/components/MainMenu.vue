@@ -1,10 +1,16 @@
 <template lang="html">
 
-  <div class="main-nav">
+  <nav class="main-menu">
+
+    <div class="main-logo">
+        <a href="/productivity">
+            Productivity
+        </a>
+    </div>
     <!-- <button type="button" class="btn btn-sm btn-primary" v-if="!showCreatingNewButtons" @click="toggleCreatingNewButtons">New</button> -->
 
 
-    <ul class="nav nav-pills nav-stacked">
+    <ul class="main-menu-nav">
 
       <li :class="{active: selected=='home'}">
           <a href="/productivity">
@@ -35,42 +41,14 @@
           </li>
         </ul>
       </li>
-
-      <!-- <li :class="{active: selected=='home'}">
-          <a href="/productivity">
-              <i class="fa fa-fw fa-home" aria-hidden="true"></i>
-              Home
-          </a>
-      </li>
-
-      <li :class="{active: selected=='checklists'}">
-          <a href="/productivity/lists">
-              <i class="fa fa-fw fa-list" aria-hidden="true"></i>
-              Lists
-          </a>
-      </li> -->
-<!--
-      <li :class="{active: selected=='notes'}">
-          <a href="/productivity/notes">
-              <i class="fa fa-fw fa-sticky-note" aria-hidden="true"></i>
-              Notes
-          </a>
-      </li>
-
-      <li :class="{active: selected=='goals'}">
-          <a href="/productivity/goals">
-              <i class="fa fa-fw fa-check-square" aria-hidden="true"></i>
-              Goals
-          </a>
-      </li> -->
     </ul>
-  </div>
+  </nav>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-    name: 'main-nav',
+    name: 'main-menu',
     computed: {
       ...mapGetters([
         'showCreatingNewButtons',

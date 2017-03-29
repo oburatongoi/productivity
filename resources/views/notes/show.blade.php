@@ -5,7 +5,7 @@
 @endsection
 
 @section('main-menu')
-    <main-nav></main-nav>
+    <main-menu></main-menu>
 @endsection
 
 @section('content')

@@ -1,34 +1,33 @@
 <template lang="html">
-  <nav class="navbar navbar-default action-nav">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-2">
-                <button type="button" class="btn btn-sm toggle-create-new-btn btn-primary" @click="toggleCreatingNewButtons">New</button>
-            </div>
-            <div class="col-xs-12 col-sm-10">
-              <create-new v-if="showCreatingNewButtons||creatingNew"></create-new>
+  <nav class="action-nav">
+    <span class="btn btn-sm toggle-create-new-btn btn-primary" v-if="!showCreatingNewButtons" @click="toggleCreatingNewButtons">
+      <a href="#">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+      </a>
+    </span>
 
-              <search v-if="!showCreatingNewButtons"></search>
+    <span class="">
+      <create-new v-if="showCreatingNewButtons||creatingNew"></create-new>
 
-              <button type="button"
-                      class="btn btn-default btn-sm toggle-delete-btn"
-                      v-if="listingIsSelected&&!selected.movable&&selected.deletable"
-                      @click.once="toggleDeletable"
-              ><i class="fa fa-times" aria-hidden="true"></i></button>
-              <button type="button"
-                      class="btn btn-default btn-sm toggle-delete-btn"
-                      :class="{ 'delete-armed': selected.deletable }"
-                      v-if="listingIsSelected&&!selected.movable"
-                      @click.dblclick.prevent="confirmOrDelete"
-              ><i class="fa fa-trash-o" aria-hidden="true"></i><span v-if="selected.deletable"> Delete</span></button>
-              <button type="button"
-                      class="btn btn-primary btn-sm toggle-move-btn"
-                      v-if="listingIsSelected&&!selected.movable"
-                      @click.prevent="toggleMovable"
-              >Move</button>
-            </div>
-        </div>
-    </div>
+      <search v-if="!showCreatingNewButtons"></search>
+
+      <button type="button"
+              class="btn btn-default btn-sm toggle-delete-btn"
+              v-if="listingIsSelected&&!selected.movable&&selected.deletable"
+              @click.once="toggleDeletable"
+      ><i class="fa fa-times" aria-hidden="true"></i></button>
+      <button type="button"
+              class="btn btn-default btn-sm toggle-delete-btn"
+              :class="{ 'delete-armed': selected.deletable }"
+              v-if="listingIsSelected&&!selected.movable"
+              @click.dblclick.prevent="confirmOrDelete"
+      ><i class="fa fa-trash-o" aria-hidden="true"></i><span v-if="selected.deletable"> Delete</span></button>
+      <button type="button"
+              class="btn btn-primary btn-sm toggle-move-btn"
+              v-if="listingIsSelected&&!selected.movable"
+              @click.prevent="toggleMovable"
+      >Move</button>
+    </span>
 </nav>
 </template>
 

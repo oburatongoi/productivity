@@ -1,0 +1,57 @@
+@mixin main-nav {
+    display: block;
+    background: white;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid $base-border-color;
+    width: 100%;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+.main-navbar {
+    @include main-nav;
+    padding-top: 8px;
+    @include top-menu-height;
+}
+
+@import "action_nav";
+
+.main-menu {
+    padding: 0;
+    ul {
+        list-style: none;
+    }
+    ul.main-menu-nav {
+        margin-top: 5px;
+        & > li > a {
+            color: white;
+        }
+    }
+    li {
+        text-align: left;
+        border-radius: $base-border-radius;
+        a {
+            display: block;
+            padding: 8px 10px;
+        }
+        &.dropdown {
+            ul.dropdown-menu {
+                display: none;
+            }
+        }
+        &.open {
+            ul.dropdown-menu {
+                display: block;
+            }
+        }
+        &:hover {
+            background: rgba(255,255,255,0.2);
+        }
+    }
+}
+
+.auth-links {
+    float: right;
+    list-style: none;
+    margin: 0;
+}

@@ -36,7 +36,7 @@
      }
  }
  .btn-folder {
-     background: $folder-primary;
+     background: $base-background;
      border: 1px solid darken($folder-primary, 10%);
      &:active,
      &:hover {
@@ -52,7 +52,7 @@
      }
  }
  .btn-list {
-     background: $list-primary;
+     background: $list-background;
      border: 1px solid darken($list-primary, 10%);
      &:active,
      &:hover {
@@ -67,3 +67,7 @@
          background: darken($goal-primary, 4%);
      }
  }
+
+.btn-primary {
+    background: $base-background;
+}
