@@ -16,6 +16,7 @@ export const ADD_ITEM_TO_CHECKLIST = 'checklists/ADD_ITEM_TO_CHECKLIST'
 export const DELETE_CHECKLIST = 'checklists/DELETE_CHECKLIST'
 export const DELETE_CHECKLIST_ITEM = 'checklists/DELETE_CHECKLIST_ITEM'
 export const UPDATE_CHECKLIST = 'checklists/UPDATE_CHECKLIST'
+export const UPDATE_FILTERS = 'checklists/UPDATE_FILTERS'
 export const UPDATE_CHECKLIST_ITEM = 'checklists/UPDATE_CHECKLIST_ITEM'
 export const UPDATE_CHECKLIST_ITEM_CHECK = 'checklists/UPDATE_CHECKLIST_ITEM_CHECK'
 

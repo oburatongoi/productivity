@@ -5,6 +5,7 @@ import {
     DELETE_CHECKLIST,
     DELETE_EDITABLE,
     DELETE_CHECKLIST_ITEM,
+    UPDATE_FILTERS,
     UPDATE_CHECKLIST,
     UPDATE_CHECKLIST_ITEM,
     UPDATE_CHECKLIST_ITEM_CHECK,
@@ -14,7 +15,11 @@ const state = {
     checklists: Productivity.checklists,
     checklist: Productivity.checklist,
     editableItems: [],
-    deletedItems: []
+    deletedItems: [],
+    filters: {
+        checked: 'unchecked',
+        priority: 'none'
+    }
 }
 
 const mutations = {
@@ -37,6 +42,16 @@ const mutations = {
     [DELETE_EDITABLE] (state, id) {
         let i = state.editableItems.indexOf(id);
         ~ i && state.editableItems.splice(i,1)
+    },
+    [UPDATE_FILTERS] (state, payload) {
+        switch (payload.type) {
+            case 'checked':
+                state.filters.checked = payload.value
+                break;
+            case 'priority':
+                state.filters.priority = payload.value
+                break;
+        }
     },
     [UPDATE_CHECKLIST] (state, updatedChecklist) {
         if (updatedChecklist && updatedChecklist.title) {
@@ -94,6 +109,12 @@ const actions = {
 
         })
 
+    },
+    setFilters: function({commit}, payload){
+        return new Promise((resolve, reject) => {
+            commit(UPDATE_FILTERS, payload)
+            resolve()
+        })
     },
     storeChecklist({commit}, checklist) {
         return new Promise((resolve, reject) => {
@@ -177,7 +198,8 @@ const getters = {
     checklists: state => state.checklists,
     checklist: state => state.checklist,
     editableItems: state => state.editableItems,
-    deletedItems: state => state.deletedItems
+    deletedItems: state => state.deletedItems,
+    filters: state => state.filters
 }
 
 export default {

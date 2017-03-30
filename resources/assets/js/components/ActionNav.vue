@@ -1,7 +1,7 @@
 <template lang="html">
   <nav class="action-nav">
     <span class="btn btn-sm toggle-create-new-btn btn-primary" v-if="!showCreatingNewButtons" @click="toggleCreatingNewButtons">
-      <a href="#">
+      <a href="#" @click.prevent>
         <i class="fa fa-plus" aria-hidden="true"></i>
       </a>
     </span>

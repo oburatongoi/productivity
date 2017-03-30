@@ -5,12 +5,12 @@
     <template v-if="showCreatingNewButtons&&!creatingNew">
       <button type="button" class="btn btn-sm btn-primary" @click="toggleCreateNew('folder')">
         <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
-        New Folder
+        Folder
       </button>
 
       <button type="button" class="btn btn-sm btn-list" @click="toggleCreateNew('list')">
         <i class="fa fa-fw fa-list" aria-hidden="true"></i>
-        New List
+        List
       </button>
 
       <!-- <button type="button" class="btn btn-sm btn-note" @click="toggleCreateNew('note')">
@@ -23,7 +23,9 @@
         New Goal
       </button> -->
 
-      <button type="button" class="btn btn-sm btn-default" @click="toggleCreatingNewButtons">Cancel</button>
+      <button type="button" class="btn btn-sm btn-default" @click="toggleCreatingNewButtons">
+        <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+      </button>
     </template>
 
     <form class="form-horizontal" v-if="creatingNew" @submit.prevent="submitForm">
