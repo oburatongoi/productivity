@@ -9,46 +9,23 @@
             <label><i class="fa fa-check"></i></label>
           </div>
 
-          <textarea v-model="currentEditableItem.content" class="content-textarea" @change.keyup.blur.delete="updateItem"></textarea>
+          <textarea v-model="currentEditableItem.content" class="content-textarea" @change.keyup.blur.delete="saveChanges"></textarea>
         </h4>
       </div>
     </div>
 
     <div class="panel-body position-relative">
-      <manage-item-form-meta
-        @showDatePicker="showDatePicker"
-      ></manage-item-form-meta>
+      <manage-item-form-meta></manage-item-form-meta>
 
-      <!-- <div class="datepicker-container" v-if="chooseDate">
-        <div class="delete-deadline">
-          <button v-if="currentEditableItem.deadline" type="button" class="btn btn-xs btn-default" @click="removeDeadline">
-            <i class="fa fa-fw fa-calendar-times-o" aria-hidden="true"></i>
-               Remove Due Date
-          </button>
-          <button type="button" class="btn btn-xs btn-default" @click="hideDatePicker">
-            <i class="fa fa-fw fa-times" aria-hidden="true"></i>
-               Cancel
-          </button>
-        </div>
-
-        <datepicker
-          value="item.deadline"
-          @selected="setDate"
-          :inline="true"
-        ></datepicker>
-      </div> -->
-
-      <item-form-comments
-        :item="currentEditableItem"
-        :showComments="showComments"
-      ></item-form-comments>
+      <item-form-comments :item="currentEditableItem"></item-form-comments>
 
       <item-form-buttons
         :item="currentEditableItem"
         :hasUserInput="hasUserInput"
         :itemIsEditable="itemIsEditable"
+        :isSaving="savingChanges"
         @resetForm="cancel"
-        @submitForm="updateItem"
+        @submitForm="saveCurrentEditableItem"
       ></item-form-buttons>
     </div>
   </div>
@@ -60,7 +37,6 @@ import { mapActions, mapGetters } from 'vuex'
 import ManageItemFormMeta from './ManageItemFormMeta.vue'
 import ItemFormComments from './ItemFormComments.vue'
 import ItemFormButtons from './ItemFormButtons.vue'
-// import Datepicker from 'vuejs-datepicker';
 
 import autosize from 'autosize';
 
@@ -71,7 +47,7 @@ export default {
       showComments: true,
       hasUserInput: true,
       itemIsEditable: true,
-      // chooseDate: false
+      savingChanges: false
     }
   },
   methods: {
@@ -85,6 +61,12 @@ export default {
       this.removeCurrentlyEditable()
       this.setEditability({editable: false, item:this.currentEditableItem })
     },
+    saveChanges: function() {
+      this.savingChanges = true
+      this.saveCurrentEditableItem().then(
+        () => this.savingChanges = true
+      )
+    },
     checkItem: function() {
       let action = '';
       if (this.currentEditableItem.checked_at) {
@@ -97,27 +79,7 @@ export default {
                     (response) => this.initializeLocalItem(response.updatedItem),
                     (response) => {console.log('Error: No updated item was returned');}
                   )
-    },
-    updateItem: function() {
-      // this.hideDatePicker()
-      this.saveCurrentEditableItem()
-    },
-  //   showDatePicker: function() {
-  //     return this.chooseDate = true
-  //   },
-  //   hideDatePicker: function() {
-  //     return this.chooseDate = false
-  //   },
-  //   setDate: function(date) {
-  //     date ? this.currentEditableItem.deadline = moment(date).format('YYYY-MM-DD') : this.currentEditableItem.deadline = undefined
-  //     this.hideDatePicker()
-  //     this.saveCurrentEditableItem()
-  //   },
-  //   removeDeadline: function() {
-  //     this.currentEditableItem.deadline = null
-  //     this.hideDatePicker()
-  //     this.saveCurrentEditableItem()
-  //   }
+    }
   },
   computed: {
     ...mapGetters([
@@ -127,8 +89,7 @@ export default {
   components: {
       ManageItemFormMeta,
       ItemFormComments,
-      ItemFormButtons,
-      // Datepicker
+      ItemFormButtons
   },
   created: function() {
     this.$nextTick(function() {
