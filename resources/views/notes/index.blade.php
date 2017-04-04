@@ -1,7 +1,7 @@
 @extends('productivity::layouts.main')
 
-@section('breadcrumbs')
-    <breadcrumbs></breadcrumbs>
+@section('top-nav')
+    <top-nav></top-nav>
 @endsection
 
 @section('main-menu')

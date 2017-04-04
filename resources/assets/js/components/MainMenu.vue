@@ -7,8 +7,8 @@
             Productivity
         </a>
     </div>
-    <!-- <button type="button" class="btn btn-sm btn-primary" v-if="!showCreatingNewButtons" @click="toggleCreatingNewButtons">New</button> -->
 
+    <search></search>
 
     <ul class="main-menu-nav">
 
@@ -47,6 +47,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Search from './Search.vue'
+
 export default {
     name: 'main-menu',
     computed: {
@@ -59,6 +61,9 @@ export default {
       ...mapActions([
         'toggleCreatingNewButtons'
       ])
+    },
+    components: {
+      Search
     }
 }
 </script>

@@ -5,8 +5,10 @@ import Vuex from 'vuex'
 import Home from './modules/home'
 import Folders from './modules/folders'
 import Checklists from './modules/checklists'
+import Search from './modules/search'
 import Notes from './modules/notes'
 import Goals from './modules/goals'
+
 
 Vue.use(Vuex)
 
@@ -15,7 +17,8 @@ export default new Vuex.Store({
         Home,
         Folders,
         Checklists,
+        Search,
         Notes,
-        Goals,
+        Goals
     }
 })

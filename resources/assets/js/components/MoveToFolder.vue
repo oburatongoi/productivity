@@ -74,7 +74,7 @@
 
       <button type="button"
               class="btn btn-xs btn-default"
-              @click="toggleMovable"
+              @click="cancel"
       >Cancel</button>
 
       <p v-if="footerText">
@@ -118,8 +118,13 @@ export default {
       'delistChecklist',
       'delistFolder',
       'storeFolder',
+      'deselectListing',
       'toggleMovable'
     ]),
+    cancel: function() {
+      this.toggleMovable()
+      return this.deselectListing()
+    },
     createNewFolder: function() {
       this.isLoading = true
       let folder = {

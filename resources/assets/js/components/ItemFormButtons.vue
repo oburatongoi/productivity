@@ -12,7 +12,7 @@
         class="btn btn-xs btn-default"
         v-if="itemIsEditable||!itemIsEditable&&hasUserInput"
         @click="cancel"
-      >Cancel</button>
+      >Close</button>
     </div>
 
     <div class="delete-item-btn-container" v-if="itemIsEditable">
@@ -54,14 +54,14 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setEditability',
       'deleteChecklistItem'
     ]),
     submit: function() {
       this.$emit('submitForm')
     },
     cancel: function() {
-      this.itemIsEditable ? this.setEditability({editable: false, id:this.item.id }) : this.$emit('resetForm')
+      // this.itemIsEditable ? this.setEditability({editable: false, item:this.item }) : this.$emit('resetForm')
+      this.$emit('resetForm')
     },
     toggleDeletability: function() {
       return this.isDeletable = ! this.isDeletable

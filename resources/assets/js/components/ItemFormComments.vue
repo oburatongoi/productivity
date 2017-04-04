@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="form-group">
+  <div class="item-form-comments form-group">
     <template v-if="!showComments">
       <div class="comments-label" v-if="hasComments" @click="toggleComments">
         <i class="fa fa-chevron-down" aria-hidden="true"></i>
@@ -28,12 +28,8 @@
 export default {
   name: 'item-form-comments',
   props: {
-    item: Object
-  },
-  data () {
-    return {
-      showComments: false
-    }
+    item: Object,
+    showComments: Boolean
   },
   computed: {
     hasComments: function() {

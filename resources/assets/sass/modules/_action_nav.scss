@@ -1,13 +1,41 @@
 .action-nav {
-    position: relative;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
-    @include main-nav;
+    text-align: center;
+    padding: 0;
+
+    @include clearfix;
+
+    .available-actions {
+        @include main-nav;
+        position: relative;
+        display: inline-block;
+        width: auto;
+        padding: 10px 30px 10px;
+        margin: 0 auto;
+        border-bottom-right-radius: $base-border-radius;
+        border-bottom-left-radius: $base-border-radius;
+        z-index: 900;
+        -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
+        -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
+        box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
+        p {
+            font-size: 0.9em;
+        }
+    }
+}
+.toggle-deselect-btn {
+    position: absolute;
+    top: 5px;
+    right:5px;
+    font-size: 0.8em;
+    color: darken($base-border-color, 10%);
+    cursor: pointer;
+    &:hover {
+        color: darken($base-border-color, 20%);
+    }
 }
 .toggle-delete-btn,
 .toggle-move-btn {
-    float: right;
-    &:not(:last-child) {
+    &:not(:first-child) {
         margin-left: 5px;
     }
 }
@@ -25,27 +53,6 @@
         &:hover {
             background: $brand-danger;
             color: white;
-        }
-    }
-}
-
-.toggle-create-new-btn {
-    margin: 0;
-    margin-right: 10px;
-    padding: 0;
-    border-radius: 50%;
-    a {
-        height: 27px;
-        width: 27px;
-        color: white;
-        text-decoration: none;
-        display: table;
-        padding: 0;
-        i.fa {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
-            padding: 2px 0 0;
         }
     }
 }

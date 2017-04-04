@@ -63,10 +63,10 @@ const actions = {
     toggleDeletable({ commit }) {
         commit(TOGGLE_DELETABLE)
     },
-    selectListing: function({ commit }, payload) {
+    selectListing({ commit }, payload) {
       commit(SELECT_LISTING, payload)
     },
-    deselectListing: function({ commit }) {
+    deselectListing({ commit }) {
       commit(DESELECT_LISTING)
     },
 }
@@ -79,7 +79,8 @@ const getters = {
     model: state => state.model,
     currentView: state => state.currentView,
     selected: state => state.selected,
-    selectedIsMovable: state => state.selected.model && state.selected.id && state.selected.movable
+    selectedIsMovable: state => state.selected.model && state.selected.id && state.selected.movable,
+    listingIsActionable: state =>  state.selected.model && state.selected.id && !state.selected.movable
 }
 
 export default {

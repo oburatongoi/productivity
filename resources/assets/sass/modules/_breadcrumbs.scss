@@ -1,18 +1,20 @@
 .productivity-breadcrumbs {
+    border-left: 1px solid $base-border-color;
+    padding-left: 10px;
     display: inline-block;
-    width: 75%;
+    width: 80%;
     font-size: 1em;
-    // margin-top: 15px;
     margin: 0;
+    vertical-align: middle;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
     -ms-overflow-style: none;
-    color: $folder-primary;
+    color: $brand-primary;
+
     &::-webkit-scrollbar {
         display: none;
     }
-
     font-weight: 300;
 
     .current-view,

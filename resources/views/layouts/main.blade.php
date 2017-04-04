@@ -12,6 +12,7 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        {{-- <link rel="stylesheet" href="/vendor/productivity/css/font-awesome-4.7.0/css/font-awesome.min.css"> --}}
         <link rel="stylesheet" href="/vendor/productivity/css/productivity.css">
 
         <script>
@@ -28,17 +29,20 @@
         <div id="productivity-app">
             <div class="section-wrapper">
                 <div class="narrow-section main-menu-wrapper">
-                    @yield('main-menu')
+                    <div class="nav-sizer">
+                        @yield('main-menu')
+                    </div>
+                    @include('productivity::partials._auth_links')
                 </div>
 
                 <div class="wide-section">
-                    <div class="nav-wrapper">
-                        @include('productivity::partials.main_nav')
-                        @yield('action-nav')
+                    <div class="nav-sizer">
+                        @include('productivity::partials._top_nav')
                     </div>
 
                     <div class="content-wrapper">
                         @yield('content')
+                        <search-results></search-results>
                     </div>
                 </div>
             </div>

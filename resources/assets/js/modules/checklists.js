@@ -3,18 +3,20 @@ import {
     ADD_EDITABLE,
     ADD_ITEM_TO_CHECKLIST,
     DELETE_CHECKLIST,
+    DELETE_CURRENTLY_EDITABLE,
     DELETE_EDITABLE,
     DELETE_CHECKLIST_ITEM,
     UPDATE_FILTERS,
     UPDATE_CHECKLIST,
     UPDATE_CHECKLIST_ITEM,
-    UPDATE_CHECKLIST_ITEM_CHECK,
+    UPDATE_CHECKLIST_ITEM_CHECK
 } from '../mutations'
 
 const state = {
     checklists: Productivity.checklists,
     checklist: Productivity.checklist,
     editableItems: [],
+    currentEditableItem: {},
     deletedItems: [],
     filters: {
         checked: 'unchecked',
@@ -26,8 +28,9 @@ const mutations = {
     [ADD_CHECKLIST] (state, checklist) {
         state.checklists.unshift(checklist)
     },
-    [ADD_EDITABLE] (state, id) {
-        state.editableItems.unshift(id)
+    [ADD_EDITABLE] (state, item) {
+        state.currentEditableItem = item
+        state.editableItems.unshift(item.id)
     },
     [ADD_ITEM_TO_CHECKLIST] (state, item) {
         state.checklist.items.unshift(item)
@@ -39,8 +42,11 @@ const mutations = {
     [DELETE_CHECKLIST_ITEM] (state, id) {
         state.deletedItems.unshift(id)
     },
-    [DELETE_EDITABLE] (state, id) {
-        let i = state.editableItems.indexOf(id);
+    [DELETE_CURRENTLY_EDITABLE] (state) {
+        state.currentEditableItem = {}
+    },
+    [DELETE_EDITABLE] (state, item) {
+        let i = state.editableItems.indexOf(item.id);
         ~ i && state.editableItems.splice(i,1)
     },
     [UPDATE_FILTERS] (state, payload) {
@@ -149,7 +155,17 @@ const actions = {
             axios.patch('/productivity/lists/item/' + payload.item.id + '/update', {item:payload.item})
             .then(function(response) {
                 commit(UPDATE_CHECKLIST_ITEM, {item: payload.oldItem, updatedItem: response.data.item})
-                commit(DELETE_EDITABLE, payload.item.id)
+                resolve()
+            })
+            .catch(function(error) {
+                reject(error)
+            })
+        })
+    },
+    saveCurrentEditableItem({commit}) {
+        return new Promise((resolve, reject) => {
+            axios.patch('/productivity/lists/item/' + state.currentEditableItem.id + '/update', {item:state.currentEditableItem})
+            .then(function(response) {
                 resolve()
             })
             .catch(function(error) {
@@ -162,7 +178,7 @@ const actions = {
             axios.patch('/productivity/lists/item/' + payload.item.id + '/delete', {item:payload.item})
             .then(function(response) {
                 if (response.data && response.data.item) {
-                    commit(DELETE_EDITABLE, response.data.item.id)
+                    commit(DELETE_EDITABLE, response.data.item)
                     commit(DELETE_CHECKLIST_ITEM, response.data.item.id)
                   resolve()
                 } else {
@@ -179,7 +195,7 @@ const actions = {
             axios.patch('/productivity/lists/item/' + payload.item.id + '/check', {item:payload.item, action: payload.action})
             .then(function(response) {
                 commit(UPDATE_CHECKLIST_ITEM_CHECK, {item: payload.item, updatedItem: response.data.item})
-                resolve()
+                resolve({updatedItem:response.data.item})
             })
             .catch(function(error) {
                 reject(error)
@@ -188,7 +204,13 @@ const actions = {
     },
     setEditability({commit}, payload) {
         return new Promise((resolve, reject) => {
-            payload.editable ? commit(ADD_EDITABLE, payload.id) : commit(DELETE_EDITABLE, payload.id)
+            payload.editable ? commit(ADD_EDITABLE, payload.item) : commit(DELETE_EDITABLE, payload.item)
+            resolve()
+        })
+    },
+    removeCurrentlyEditable({commit}) {
+        return new Promise((resolve, reject) => {
+            commit(DELETE_CURRENTLY_EDITABLE)
             resolve()
         })
     }
@@ -199,7 +221,9 @@ const getters = {
     checklist: state => state.checklist,
     editableItems: state => state.editableItems,
     deletedItems: state => state.deletedItems,
-    filters: state => state.filters
+    filters: state => state.filters,
+    // hasEditableItem: state => state.editableItems && state.editableItems.length > 0,
+    currentEditableItem: state => state.currentEditableItem
 }
 
 export default {

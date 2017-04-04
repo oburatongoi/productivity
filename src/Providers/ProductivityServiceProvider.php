@@ -20,6 +20,7 @@ class ProductivityServiceProvider extends ServiceProvider
             __DIR__.'/../../public/js' => public_path('vendor/productivity/js'),
             __DIR__.'/../../public/css' => public_path('vendor/productivity/css'),
             __DIR__.'/../../public/images' => public_path('vendor/productivity/images'),
+            __DIR__.'/../../public/vendor' => public_path('vendor/productivity/css'),
             __DIR__.'/../config/fakeid.php' => config_path('fakeid.php'),
             __DIR__.'/../config/productivity.php' => config_path('productivity.php'),
             __DIR__.'/../config/javascript.php' => config_path('javascript.php'),

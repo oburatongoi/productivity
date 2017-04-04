@@ -1,4 +1,55 @@
 .create-new {
     display: inline-block;
-    width: 75%;
+    // width: 75%;
+
+    //WIP: Create color schemes
+
+    // ::-webkit-input-placeholder { /* Chrome */
+    //   color: inherit;
+    // }
+    // :-ms-input-placeholder { /* IE 10+ */
+    //   color: inherit;
+    // }
+    // ::-moz-placeholder { /* Firefox 19+ */
+    //   color: inherit;
+    //   opacity: 1;
+    // }
+    // :-moz-placeholder { /* Firefox 4 - 18 */
+    //   color: inherit;
+    //   opacity: 1;
+    // }
 }
+
+.toggle-create-new-btn {
+    margin: 0;
+    margin-right: 10px;
+    // border-radius: 3px;
+    // width: 43px;
+    color: white;
+    vertical-align: middle;
+
+    // To make it round again, uncomment the lines below
+    border-radius: 50%;
+    height: 27px;
+    width: 27px;
+    padding: 0;
+
+    &:active {
+        outline: none;
+    }
+}
+
+.create-new-input {
+    border: 0;
+    outline: none;
+    background: white;
+    display: inline-block;
+    width: 100%;
+    &:active {
+        outline: none;
+    }
+}
+
+// .folder-color-scheme {
+//
+// }

@@ -47,15 +47,3 @@ $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
 $panel-default-heading-bg: #fff;
-
-@mixin top-menu-height {
-    height: 5vh;
-    min-height: 35px;
-}
-@mixin clearfix {
-    &:after {
-        display: inline-block;
-        content:"";
-        clear:both;
-    }
-}

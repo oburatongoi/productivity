@@ -13,9 +13,9 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('Breadcrumbs', require('./components/Breadcrumbs.vue'));
+Vue.component('TopNav', require('./components/TopNav.vue'));
+Vue.component('SearchResults', require('./components/SearchResults.vue'));
 Vue.component('MainMenu', require('./components/MainMenu.vue'));
-Vue.component('ActionNav', require('./components/ActionNav.vue'));
 Vue.component('Folders', require('./components/Folders.vue'));
 Vue.component('Folder', require('./components/Folder.vue'));
 Vue.component('Notes', require('./components/Notes.vue'));

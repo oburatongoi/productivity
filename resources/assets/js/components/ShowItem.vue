@@ -1,13 +1,12 @@
 <template lang="html">
-  <div class="show-item">
+  <div class="show-item" :class="{'is-selected':itemIsCurrentlyEditable}" @click.self="edit">
 
-    <div class="pretty inline outline-success plain smooth">
-      <input type="checkbox" :checked="item.checked_at" @click="checkItem"/>
+    <div class="pretty inline outline-success plain smooth" @click="checkItem">
+      <input type="checkbox" :checked="item.checked_at"/>
       <label><i class="fa fa-check"></i></label>
     </div>
-    <p class="show-item-content" @click="edit">
-      {{ item.content }}
-    </p>
+
+    <p class="show-item-content" @click="edit">{{ item.content }}</p>
 
     <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="edit"></i>
 
@@ -33,7 +32,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'show-item',
   props: ['item'],
@@ -52,10 +51,17 @@ export default {
       return this.check({ item: this.item, action: action })
     },
     edit: function() {
-      return this.setEditability({editable: true, id:this.item.id })
+      return this.setEditability({editable: true, item:this.item })
     }
   },
   computed: {
+    ...mapGetters([
+      'editableItems',
+      'currentEditableItem'
+    ]),
+    itemIsCurrentlyEditable: function() {
+      return this.item.id == this.currentEditableItem.id
+    },
     deadlinePlaceholder: function () {
       return this.item.deadline ? moment(this.item.deadline).format('MMM DD') : undefined
     },

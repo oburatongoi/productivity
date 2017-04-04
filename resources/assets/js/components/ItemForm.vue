@@ -5,11 +5,11 @@
         <input type="text" v-model="localItem.content" placeholder="Add item..." maxlength="255">
       </div>
 
-      <item-form-meta
+      <add-item-form-meta
         :item="localItem"
         v-if="itemIsEditable||hasContent"
         @showDatePicker="showDatePicker"
-      ></item-form-meta>
+      ></add-item-form-meta>
     </div>
 
     <div class="datepicker-container" v-if="chooseDate">
@@ -41,7 +41,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 import ItemFormButtons from './ItemFormButtons.vue'
 import ItemFormComments from './ItemFormComments.vue'
-import ItemFormMeta from './ItemFormMeta.vue'
+import AddItemFormMeta from './AddItemFormMeta.vue'
 import Datepicker from 'vuejs-datepicker';
 
 export default {
@@ -111,7 +111,7 @@ export default {
     Datepicker,
     ItemFormButtons,
     ItemFormComments,
-    ItemFormMeta
+    AddItemFormMeta
   },
   created: function() {
     this.initializeLocalItem()

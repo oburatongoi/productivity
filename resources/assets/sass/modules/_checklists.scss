@@ -7,90 +7,31 @@
         margin-right: 10px;
     }
 }
-.item-form {
-    width: 100%;
-    padding: 0px;
-    border: 1px solid $input-border;
-    border-radius: 3px;
-    overflow: hidden;
-    // margin-bottom: 5px;
-    background: white;
-    .item-form-content {
-        vertical-align: middle;
-        position: relative;
-        height: 38px;
-        padding: 0;
-        input {
-            border: 0;
-            outline: none;
-            width: 100%;
-            height: 100%;
-            padding-left: 5px;
-        }
-    }
-    .item-form-meta {
-        display: inline-block;;
-        margin:0;
-        height: 38px;
-        float:right;
-        vertical-align: middle;
-        border-left: 1px solid $input-border;
-        background: $body-bg;
-        padding: 0;
-        width: 215px;
-        .item-form-bool,
-        .item-form-date {
-            display: inline-block;
-            margin:0;
-            padding: 0;
-            height: 100%;
-            vertical-align: middle;
-            &:nth-child(2) {
-                border-right: 1px solid $input-border;
-                border-left: 1px solid $input-border;
-            }
-            label {
-                display: block;
-                font-size: 0.7em;
-                margin: 0;
-            }
-            p,
-            input {
-                height: 20px;
-                line-height: 20px;
-                padding: 0;
-                margin: 0;
-                display: inline-block;
-            }
-            p {
-                cursor: pointer;
-            }
-        }
-        .item-form-bool {
-            text-align: center;
-            overflow: hidden;
-            width: 60px;
-        }
-        .item-form-date {
-            position: relative;
-            width: 80px;
-            p {
-                font-size:0.85em;
-            }
-        }
-    }
-}
-
-.checklist-items {
-    margin-top: 20px;
-}
 
 .show-item {
-    overflow: hidden;
+    @include desktop-overflow-y;
     border-bottom: 1px solid lighten($base-border-color, 10%);
+    &.is-selected,
     &:hover {
         background: lighten($body-bg, 1%);
+
+        .fa-angle-down.toggle {
+            color: $list-primary;
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
     }
+
+    &.is-selected {
+        border: 1px solid $list-primary;
+        border-radius: 2px;
+        padding-left: 10px;
+        color: black;
+    }
+
     p, i {
         display: inline-block;
         margin:0;
@@ -100,7 +41,7 @@
         cursor: pointer;
         @media(min-width:992px){
             white-space: nowrap;
-            overflow: hidden;
+            @include desktop-overflow-y;
             text-overflow: ellipsis;
         }
     }
@@ -122,17 +63,15 @@
         @media(min-width:992px){
             width: 75%;
             padding: 7px 0;
-            font-size: 1.1em;
-            line-height: 1em;
+            white-space: nowrap;
+            @include desktop-overflow-y;
+            text-overflow: ellipsis;
         }
         @media(min-width:1200px){
             width: 80%;
             padding: 10px 0;
-            font-size: 1.2em;
+            font-size: 1.1em;
             line-height: 1em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
     }
 
@@ -175,7 +114,7 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
-    overflow: hidden;
+    @include desktop-overflow-y;
     margin: 0;
     padding: 0;
 }
@@ -195,15 +134,20 @@
     padding: 2px 4px;
 }
 
-.item-form-container {
-    position: relative;
-}
-
 .datepicker-container {
     position: absolute;
     right: 10px;
     top: 15px;
     z-index: 99;
+
+    .delete-deadline {
+        border-top: 1px solid $base-border-color;
+        border-left: 1px solid $base-border-color;
+        border-right: 1px solid $base-border-color;
+        background: white;
+        padding: 10px;
+        text-align: center;
+    }
 }
 
 .comments-label {
@@ -258,6 +202,7 @@
 }
 
 .checklist-filters {
+    margin-bottom: 10px;
     @include clearfix;
 
     .checked-filter {
@@ -298,7 +243,7 @@
                 display: block;
                 padding: 2px;
                 border-radius: 2px;
-                
+
                 i.fa {
                     color: darken($base-border-color, 20%);
                 }
@@ -309,6 +254,162 @@
                 &:not(:last-child) {
                     margin-bottom: 5px;
                 }
+            }
+        }
+    }
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+.checklist {
+    height: 100%;
+    @include desktop-overflow-y;
+    .main-panel {
+        height: 100%;
+        @include desktop-overflow-y;
+        .panel-heading {
+            padding-bottom: 0;
+        }
+    }
+    .checklist-index-panel {
+        height: 75%;
+        overflow-y: scroll;
+        padding-top: 0;
+    }
+    &.has-editable-item {
+        .main-panel {
+            width: 50%;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .side-panel {
+            width: 48%;
+            margin-left: 1%;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .show-item-content-input,
+        .show-item-content {
+            width: 60%;
+            font-size: 0.9em;
+            line-height: 1.2;
+            @media(min-width:768px){
+                width: 50%;
+                padding: 5px 0;
+            }
+            @media(min-width:992px){
+                width: 50%;
+                padding: 7px 0;
+                font-size: 1em;
+                line-height: 0.7em;
+                white-space: nowrap;
+                @include desktop-overflow-y;
+                text-overflow: ellipsis;
+            }
+            @media(min-width:1200px){
+                width: 60%;
+                padding: 10px 0;
+                font-size: 1.1em;
+                line-height: 1em;
+            }
+            @media(min-width:1400px){
+                width: 65%;
+            }
+        }
+
+        .show-item-content-input {
+            border: 0;
+            outline: none;
+        }
+    }
+}
+
+.manage-checklist-item {
+    border: 1px solid $list-primary;
+    .panel-heading {
+        padding-bottom: 0;
+
+        .fa-times {
+            cursor: pointer;
+            color: $base-border-color;
+
+            &:hover {
+                color: $list-primary;
+            }
+        }
+    }
+    .panel-body {
+        padding-top: 0;
+    }
+    
+    .manage-checklist-item-content-textarea {
+        margin: 0;
+        padding: 10px;
+
+        .pretty {
+            vertical-align: text-top;
+            margin-top: 5px;
+        }
+    }
+
+    .edit-content {
+        textarea {
+            display: inline-block;
+            vertical-align: top;
+            width: 85%;
+            border: 0;
+            border-radius: 2px;
+            outline-color: white;
+            outline-style: solid;
+            padding: 4px 4px 6px;
+            outline-width: 1px;
+            height: auto;
+            margin: 0;
+            resize: none;
+            font-size: 0.9em;
+            &:focus {
+                outline-color: $list-primary;
+                color: black;
+            }
+            @media(min-width:1200px){
+                width: 85%;
+            }
+            @media(min-width:1433px){
+                width: 90%;
+            }
+        }
+    }
+
+    .manage-item-form-meta {
+        background: lighten($body-bg, 1%);
+        padding: 5px;
+        border: 1px solid $base-border-color;
+        border-radius: 2px;
+        text-align: center;
+
+        .is-important,
+        .is-urgent,
+        .deadline {
+            display: inline-block;
+            margin: 0;
+            width: 32.5%;
+            color: darken($base-border-color, 20%);
+
+            label {
+                display: block;
+                font-size: 0.8em;
+            }
+
+            .fa {
+                font-size: 1.2em;
+                cursor: pointer;
+            }
+            &:nth-child(2) {
+                border-left: 1px solid $base-border-color;
+                border-right: 1px solid $base-border-color;
             }
         }
     }
