@@ -37,12 +37,15 @@ class ProductivityServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Register productivity services
         $this->app->register('Oburatongoi\Productivity\Providers\AuthServiceProvider');
         $this->app->register('Oburatongoi\Productivity\Providers\RouteServiceProvider');
 
+        // Register dependancies' services
         $this->app->register('Propaganistas\LaravelFakeId\FakeIdServiceProvider');
         $this->app->register('Laracasts\Utilities\JavaScript\JavaScriptServiceProvider');
         $this->app->register('Laravel\Scout\ScoutServiceProvider');
+        $this->app->register('GeneaLabs\LaravelCaffeine\Providers\LaravelCaffeineService');
     }
 
 }
