@@ -108,7 +108,7 @@ export default {
         is_important: undefined,
         deadline: undefined,
         comments: undefined,
-        addable: true,
+        addable: true
       }
     }
   },

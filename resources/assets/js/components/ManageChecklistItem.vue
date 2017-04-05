@@ -6,7 +6,7 @@
         <h4 class="manage-checklist-item-content-textarea">
           <div class="pretty inline outline-success plain smooth">
             <input type="checkbox" :checked="currentEditableItem.checked_at" @click="checkItem"/>
-            <label><i class="fa fa-check"></i></label>
+            <label><i class="fa" :class="checkboxClass"></i></label>
           </div>
 
           <textarea v-model="currentEditableItem.content" class="content-textarea" @change.keyup.blur.delete="saveChanges"></textarea>
@@ -42,7 +42,8 @@ export default {
   name: 'manage-checklist-item',
   data () {
     return {
-      savingChanges: false
+      savingChanges: false,
+      checkboxClass: 'fa-check',
     }
   },
   methods: {
@@ -50,7 +51,7 @@ export default {
       'removeCurrentlyEditable',
       'saveCurrentEditableItem',
       'setEditability',
-      'check'
+      // 'check'
     ]),
     cancel: function() {
       this.removeCurrentlyEditable()
@@ -63,17 +64,19 @@ export default {
       )
     },
     checkItem: function() {
-      let action = '';
+      this.checkboxClass = 'fa-spinner fa-spin'
       if (this.currentEditableItem.checked_at) {
-        action = 'uncheck'
+        this.currentEditableItem.checked_at = null
       } else {
-        action = 'check'
+        this.currentEditableItem.checked_at = moment().format()
       }
-      return this.check({ item: this.currentEditableItem, action: action })
-                  .then(
-                    (response) => this.initializeLocalItem(response.updatedItem),
-                    (response) => {console.log('Error: Item could not be checked at this time.');}
-                  )
+      this.saveCurrentEditableItem(this.currentEditableItem)
+          .then(
+            () => {this.checkboxClass = 'fa-check'}
+          )
+          .catch(
+            () => {this.checkboxClass = 'fa-check'}
+          )
     }
   },
   computed: {

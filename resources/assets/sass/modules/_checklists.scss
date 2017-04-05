@@ -258,9 +258,9 @@
         }
     }
 }
-::-webkit-scrollbar {
-    display: none;
-}
+// ::-webkit-scrollbar {
+//     display: none;
+// }
 
 .checklist {
     height: 100%;
@@ -344,7 +344,7 @@
     .panel-body {
         padding-top: 0;
     }
-    
+
     .manage-checklist-item-content-textarea {
         margin: 0;
         padding: 10px;

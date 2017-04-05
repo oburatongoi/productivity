@@ -90,13 +90,6 @@ export default {
     name: 'checklist',
     data () {
       return {
-        // item: {
-        //   content: undefined,
-        //   is_urgent: undefined,
-        //   is_important: undefined,
-        //   deadline: undefined,
-        //   addable: true,
-        // },
         localChecklist: {
           title: undefined
         },
