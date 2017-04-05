@@ -10,8 +10,7 @@ import {
     DELETE_CHECKLIST_ITEM,
     UPDATE_FILTERS,
     UPDATE_CHECKLIST,
-    // UPDATE_CHECKLIST_ITEM,
-    UPDATE_CHECKLIST_ITEM_CHECK
+    // UPDATE_CHECKLIST_ITEM_CHECK
 } from '../mutations'
 
 const state = {
@@ -77,14 +76,10 @@ const mutations = {
             state.checklist.title = updatedChecklist.title
         }
     },
-    // [UPDATE_CHECKLIST_ITEM] (state, payload) {
+    // [UPDATE_CHECKLIST_ITEM_CHECK] (state, payload) {
     //     let i = state.checklist.items.indexOf(payload.item);
-    //     state.checklist.items.splice(i,1,payload.updatedItem)
+    //     state.checklist.items[i].checked_at = payload.updatedItem.checked_at
     // },
-    [UPDATE_CHECKLIST_ITEM_CHECK] (state, payload) {
-        let i = state.checklist.items.indexOf(payload.item);
-        state.checklist.items[i].checked_at = payload.updatedItem.checked_at
-    },
 }
 
 const actions = {
@@ -165,18 +160,6 @@ const actions = {
             })
         })
     },
-    // updateChecklistItem({commit}, payload) {
-    //     return new Promise((resolve, reject) => {
-    //         axios.patch('/productivity/lists/item/' + payload.item.id + '/update', {item:payload.item})
-    //         .then(function(response) {
-    //             commit(UPDATE_CHECKLIST_ITEM, {item: payload.oldItem, updatedItem: response.data.item})
-    //             resolve()
-    //         })
-    //         .catch(function(error) {
-    //             reject(error)
-    //         })
-    //     })
-    // },
     saveCurrentEditableItem({commit}, item = null) {
         return new Promise((resolve, reject) => {
             if (!item) {
@@ -209,19 +192,6 @@ const actions = {
             })
         })
     },
-    // check({commit}, payload) {
-    //     return new Promise((resolve, reject) => {
-    //         axios.patch('/productivity/lists/item/' + payload.item.id + '/check', {item:payload.item, action: payload.action})
-    //         .then(function(response) {
-    //             // commit(UPDATE_CHECKLIST_ITEM_CHECK, {item: payload.item, updatedItem: response.data.item})
-    //             commit(ADD_UNFILTERED, payload.item)
-    //             resolve({updatedItem:response.data.item})
-    //         })
-    //         .catch(function(error) {
-    //             reject(error)
-    //         })
-    //     })
-    // },
     setEditability({commit}, payload) {
         return new Promise((resolve, reject) => {
             payload.editable ? commit(ADD_EDITABLE, payload.item) : commit(DELETE_EDITABLE, payload.item)

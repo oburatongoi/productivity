@@ -278,18 +278,61 @@
         padding-top: 0;
     }
     &.has-editable-item {
-        .main-panel {
-            width: 50%;
-            display: inline-block;
-            vertical-align: top;
+        @media(max-width:768px){
+            .main-panel {
+                display: none;
+            }
+            .side-panel {
+                position: absolute;
+                top: 56px;
+                left: 0;
+                right: 0;
+                width: 100%;
+                // min-height: 100%;
+            }
         }
 
-        .side-panel {
-            width: 48%;
-            margin-left: 1%;
-            display: inline-block;
-            vertical-align: top;
+        @media(min-width:769px){
+            .main-panel,
+            .side-panel {
+                display: inline-block;
+                vertical-align: top;
+            }
+            .main-panel {
+                width: 40%;
+            }
+            .side-panel {
+                width: 58%;
+                margin-left: 1%;
+            }
         }
+
+        @media(min-width:1200px){
+            .main-panel {
+                width: 45%;
+            }
+            .side-panel {
+                width: 53%;
+                margin-left: 1%;
+            }
+        }
+
+        // .main-panel {
+        //     width: 50%;
+        //     display: inline-block;
+        //     vertical-align: top;
+        // }
+
+        // .side-panel {
+        //     @media(max-width:768px){
+        //         position: absolute;
+        //         top: 0;
+        //         left: 0;
+        //         right: 0;
+        //         width: 100%;
+        //         // min-height: 100%;
+        //     }
+        // }
 
         .show-item-content-input,
         .show-item-content {
@@ -334,11 +377,16 @@
 }
 
 .manage-checklist-item {
-    border: 1px solid $list-primary;
-    .panel-heading {
-        padding-bottom: 0;
+    @media(min-width:769px){
+        border: 1px solid $list-primary;
+    }
 
-        .fa-times {
+
+    .sizing-buttons {
+        padding: 10px;
+        @include clearfix;
+
+        .fa {
             cursor: pointer;
             color: $base-border-color;
 
@@ -346,6 +394,12 @@
                 color: $list-primary;
             }
         }
+    }
+
+    .panel-heading {
+        padding-bottom: 0;
+        padding-top: 10px;
+
     }
     .panel-body {
         padding-top: 0;
@@ -379,6 +433,12 @@
             &:focus {
                 outline-color: $list-primary;
                 color: black;
+            }
+            @media(max-width:768px){
+                width: 83%;
+            }
+            @media(min-width:1000px){
+                width: 81%;
             }
             @media(min-width:1200px){
                 width: 85%;

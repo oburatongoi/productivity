@@ -1,7 +1,11 @@
 <template lang="html">
   <div class="manage-checklist-item panel side-panel">
-    <div class="panel-heading">
+    <div class="sizing-buttons">
       <i class="fa fa-fw fa-times pull-right" aria-hidden="true" @click="cancel"></i>
+      <i class="fa fa-fw fa-expand pull-left" aria-hidden="true" @click="cancel"></i>
+    </div>
+
+    <div class="panel-heading">
       <div class="edit-content">
         <h4 class="manage-checklist-item-content-textarea">
           <div class="pretty inline outline-success plain smooth">
