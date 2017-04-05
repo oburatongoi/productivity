@@ -71,7 +71,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'deleteChecklistItem'
+      'deleteChecklistItem',
+      'removeCurrentlyEditable'
     ]),
     submit: function() {
       this.$emit('submitForm')
@@ -84,6 +85,12 @@ export default {
     },
     deleteItem: function() {
       this.deleteChecklistItem({item:this.currentEditableItem})
+          .then(
+            () => this.removeCurrentlyEditable()
+          )
+          .catch(
+            () => { console.log('Error occured while deleting');}
+          )
     },
   }
 }
