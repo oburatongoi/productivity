@@ -45,7 +45,6 @@ export default {
     },
     methods: {
       ...mapActions([
-        'setFilterability',
         'setEditability',
         'saveCurrentEditableItem'
       ]),
@@ -56,7 +55,6 @@ export default {
         } else {
           this.item.checked_at = moment().format()
         }
-        this.setFilterability({filterable:true, item: this.item})
         this.saveCurrentEditableItem(this.item)
             .then(
               () => {this.checkboxClass = 'fa-check'}

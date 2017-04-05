@@ -182,6 +182,7 @@ const actions = {
             if (!item) {
                 item = state.currentEditableItem ? state.currentEditableItem : reject('There is no item or currently editable item')
             }
+            commit(ADD_UNFILTERED, item)
             axios.patch('/productivity/lists/item/' + item.id + '/update', {item:item})
             .then(function(response) {
                 resolve()

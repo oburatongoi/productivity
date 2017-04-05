@@ -50,8 +50,7 @@ export default {
     ...mapActions([
       'removeCurrentlyEditable',
       'saveCurrentEditableItem',
-      'setEditability',
-      'setFilterability'
+      'setEditability'
     ]),
     cancel: function() {
       this.removeCurrentlyEditable()
@@ -59,7 +58,6 @@ export default {
     },
     saveChanges: function() {
       this.savingChanges = true
-      this.setFilterability({filterable:true, item: this.currentEditableItem})
       this.saveCurrentEditableItem().then(
         () => this.savingChanges = false
       )
@@ -71,7 +69,6 @@ export default {
       } else {
         this.currentEditableItem.checked_at = moment().format()
       }
-      this.setFilterability({filterable:true, item: this.currentEditableItem})
       this.saveCurrentEditableItem(this.currentEditableItem)
           .then(
             () => {this.checkboxClass = 'fa-check'}

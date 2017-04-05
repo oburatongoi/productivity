@@ -87,7 +87,6 @@ export default {
       this.deadlineIsLoading = true
       date ? this.currentEditableItem.deadline = moment(date).format('YYYY-MM-DD') : this.currentEditableItem.deadline = undefined
       this.hideDatePicker()
-      this.setFilterability({filterable:true, item: this.currentEditableItem})
       this.saveCurrentEditableItem().then(
         () => this.deadlineIsLoading = false
       )
@@ -96,7 +95,6 @@ export default {
       this.currentEditableItem.deadline = null
       this.deadlineIsLoading = true
       this.hideDatePicker()
-      this.setFilterability({filterable:true, item: this.currentEditableItem})
       this.saveCurrentEditableItem().then(
         () => this.deadlineIsLoading = false
       )
@@ -104,7 +102,6 @@ export default {
     toggleImportance: function() {
       this.importanceIsLoading = true
       this.currentEditableItem.is_important = ! this.currentEditableItem.is_important
-      this.setFilterability({filterable:true, item: this.currentEditableItem})
       this.saveCurrentEditableItem().then(
         (response) => this.importanceIsLoading = false
       )
@@ -112,7 +109,6 @@ export default {
     toggleUrgency: function() {
       this.urgencyIsLoading = true
       this.currentEditableItem.is_urgent = ! this.currentEditableItem.is_urgent
-      this.setFilterability({filterable:true, item: this.currentEditableItem})
       this.saveCurrentEditableItem().then(
         (response) => this.urgencyIsLoading = false
       )
