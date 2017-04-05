@@ -1,12 +1,14 @@
 <template lang="html">
   <div class="item-form-buttons">
     <div :class="{'form-group':!itemIsEditable}">
-      <button
+      <button v-if="hasUserInput"
         type="button"
         class="btn btn-xs btn-list"
-        v-if="hasUserInput"
         @click.prevent="submit"
-      >Save</button>
+      >
+      <i class="fa" :class="saveButtonIcon" aria-hidden="true"></i>
+      Save
+      </button>
       <button
         type="button"
         class="btn btn-xs btn-default"
@@ -33,14 +35,23 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'item-form-buttons',
   props: {
-    item: Object,
-    itemIsEditable: Boolean,
-    hasUserInput: Boolean
+    itemIsEditable: {
+      type: Boolean,
+      default: true
+    },
+    hasUserInput: {
+      type: Boolean,
+      default: true
+    },
+    isSaving: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {
@@ -48,8 +59,14 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'currentEditableItem'
+    ]),
     deletabilityIcon: function() {
       return this.isDeletable ? 'fa-times' : 'fa-trash-o'
+    },
+    saveButtonIcon: function() {
+      return this.isSaving ? 'fa-spinner fa-spin' : 'fa-floppy-o'
     }
   },
   methods: {
@@ -60,14 +77,13 @@ export default {
       this.$emit('submitForm')
     },
     cancel: function() {
-      // this.itemIsEditable ? this.setEditability({editable: false, item:this.item }) : this.$emit('resetForm')
       this.$emit('resetForm')
     },
     toggleDeletability: function() {
       return this.isDeletable = ! this.isDeletable
     },
     deleteItem: function() {
-      this.deleteChecklistItem({item:this.item})
+      this.deleteChecklistItem({item:this.currentEditableItem})
     },
   }
 }

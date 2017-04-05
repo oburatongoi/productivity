@@ -140,7 +140,8 @@ const actions = {
     },
     addChecklistItem({commit}, payload) {
         return new Promise((resolve, reject) => {
-            axios.post('/productivity/lists/' + payload.checklist_fake_id + '/add-item', {item:payload.item})
+            var fakeId = payload.checklist_fake_id ? payload.checklist_fake_id : state.checklist.fake_id
+            axios.post('/productivity/lists/' + fakeId + '/add-item', {item:payload.item})
             .then(function(response) {
                 commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
                 resolve()

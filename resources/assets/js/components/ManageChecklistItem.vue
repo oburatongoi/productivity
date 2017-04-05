@@ -17,15 +17,13 @@
     <div class="panel-body position-relative">
       <manage-item-form-meta></manage-item-form-meta>
 
-      <item-form-comments :item="currentEditableItem"></item-form-comments>
+      <item-form-comments @saveChanges="saveChanges" :item="currentEditableItem"></item-form-comments>
 
       <item-form-buttons
         :item="currentEditableItem"
-        :hasUserInput="hasUserInput"
-        :itemIsEditable="itemIsEditable"
         :isSaving="savingChanges"
         @resetForm="cancel"
-        @submitForm="saveCurrentEditableItem"
+        @submitForm="saveChanges"
       ></item-form-buttons>
     </div>
   </div>
@@ -44,9 +42,6 @@ export default {
   name: 'manage-checklist-item',
   data () {
     return {
-      showComments: true,
-      hasUserInput: true,
-      itemIsEditable: true,
       savingChanges: false
     }
   },
@@ -64,7 +59,7 @@ export default {
     saveChanges: function() {
       this.savingChanges = true
       this.saveCurrentEditableItem().then(
-        () => this.savingChanges = true
+        () => this.savingChanges = false
       )
     },
     checkItem: function() {
@@ -77,7 +72,7 @@ export default {
       return this.check({ item: this.currentEditableItem, action: action })
                   .then(
                     (response) => this.initializeLocalItem(response.updatedItem),
-                    (response) => {console.log('Error: No updated item was returned');}
+                    (response) => {console.log('Error: Item could not be checked at this time.');}
                   )
     }
   },

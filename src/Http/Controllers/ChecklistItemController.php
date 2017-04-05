@@ -67,17 +67,30 @@ class ChecklistItemController extends Controller
             'action' => 'required',
         ]);
 
-        if ($request->input('action') && $request->input('action') == 'check') {
-            $item->checked_at = date('Y-m-d H:i:s');
-        } else {
-            $item->checked_at = null;
+        try {
+
+            if ($request->input('action') && $request->input('action') == 'check') {
+                $item->checked_at = date('Y-m-d H:i:s');
+            } else {
+                $item->checked_at = null;
+            }
+
+            $item->save();
+
+            return response()->json([
+                'item' => $item
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'errorMessage' => $e->getMessage(),
+                'errorCode' => $e->getCode(),
+                'status' => 420,
+            ]);
         }
 
-        $item->save();
 
-        return response()->json([
-            'item' => $item
-        ]);
+
     }
 
     /**
