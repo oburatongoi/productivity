@@ -1,30 +1,11 @@
 .create-new {
     display: inline-block;
-    // width: 75%;
-
-    //WIP: Create color schemes
-
-    // ::-webkit-input-placeholder { /* Chrome */
-    //   color: inherit;
-    // }
-    // :-ms-input-placeholder { /* IE 10+ */
-    //   color: inherit;
-    // }
-    // ::-moz-placeholder { /* Firefox 19+ */
-    //   color: inherit;
-    //   opacity: 1;
-    // }
-    // :-moz-placeholder { /* Firefox 4 - 18 */
-    //   color: inherit;
-    //   opacity: 1;
-    // }
+    width: 100%;
 }
 
 .toggle-create-new-btn {
     margin: 0;
     margin-right: 10px;
-    // border-radius: 3px;
-    // width: 43px;
     color: white;
     vertical-align: middle;
 
@@ -41,15 +22,24 @@
 
 .create-new-input {
     border: 0;
+    border-right: 1px solid $base-border-color;
     outline: none;
     background: white;
-    display: inline-block;
-    width: 100%;
+    display: block;
+    line-height: 2;
     &:active {
         outline: none;
     }
+    @media(min-width:768px){
+        width: 100%;
+    }
 }
 
-// .folder-color-scheme {
-//
-// }
+.create-new-form {
+    .input-wrap {
+        padding-right: 5px;
+    }
+    .button-wrap {
+        padding-left: 5px;
+    }
+}

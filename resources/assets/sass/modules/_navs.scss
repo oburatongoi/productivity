@@ -16,13 +16,19 @@
 
 .top-nav {
     @include main-nav;
-    @include clearfix;
+    // @include clearfix;
     padding-right: 1.7vw;
     padding-left: 1.7vw;
     padding-top: 4px;
     padding-bottom: 4px;
     height: inherit;
-    .top-nav-wrap {margin:0;padding:0;height:auto;}
+    .top-nav-wrap {
+        margin:0;
+        padding:0;
+        // padding-top: 3px;
+        height:100%;
+    }
+    position: relative;
 }
 
 @import "action_nav";

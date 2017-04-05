@@ -18,10 +18,10 @@
           <input type="text" class="form-control input-sm" v-model="newFolder.name" placeholder="New Folder Name" maxlength="255">
         </div>
         <div class="add-folder-form-buttons">
-          <button type="submit" class="btn btn-primary btn-xs">
+          <button type="submit" class="btn btn-primary btn-sm">
             <i class="fa fa-fw fa-check" aria-hidden="true"></i>
           </button>
-          <button type="button" class="btn btn-default btn-xs" @click.prevent="toggleAddingFolder">
+          <button type="button" class="btn btn-default btn-sm" @click.prevent="toggleAddingFolder">
             <i class="fa fa-fw fa-times" aria-hidden="true"></i>
           </button>
         </div>
@@ -56,24 +56,27 @@
     <div class="move-to-folder-footer">
       <template v-if="!isAlreadyInFolder&&!isCurrentFolder">
         <button type="button"
-                class="btn btn-xs btn-primary"
+                class="btn btn-sm"
+                :class="moveButtonClass"
                 v-if="selectedFolder.id"
                 @click.prevent="moveTo(selectedFolder)"
         >Move</button>
         <button type="button"
-                class="btn btn-xs btn-primary"
+                class="btn btn-sm"
+                :class="moveButtonClass"
                 v-if="!selectedFolder.id&&currentFolder.id"
                 @click.prevent="moveTo(currentFolder)"
         >Move Here</button>
         <button type="button"
-                class="btn btn-xs btn-primary"
+                class="btn btn-sm"
+                :class="moveButtonClass"
                 v-if="!selectedFolder.id&&currentFolder.name=='Home'"
                 @click.prevent="moveToHome()"
         >Move</button>
       </template>
 
       <button type="button"
-              class="btn btn-xs btn-default"
+              class="btn btn-sm btn-default"
               @click="cancel"
       >Cancel</button>
 
@@ -257,6 +260,14 @@ export default {
     },
     showInfoMessage: function() {
       return this.isLoading || this.infoMessage.content && this.infoMessage.type
+    },
+    moveButtonClass: function() {
+      switch (this.selected.model) {
+        case 'checklist': return 'btn-list'
+          break;
+        default: return 'btn-folder'
+
+      }
     }
   }
 }

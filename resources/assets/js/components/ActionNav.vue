@@ -1,21 +1,20 @@
 <template lang="html">
   <nav class="action-nav">
     <div class="available-actions">
-      <i class="fa fa-times toggle-deselect-btn" aria-hidden="true" @click="deselectListing"></i>
-      <p>What would you like to do?</p>
       <button type="button"
-              class="btn btn-primary btn-sm toggle-move-btn"
-              @click.prevent="toggleMovable"
+        class="btn btn-sm toggle-move-btn"
+        :class="moveButtonClass"
+        @click.prevent="toggleMovable"
       >Move</button>
       <button type="button"
-              class="btn btn-default btn-sm toggle-delete-btn"
-              :class="{ 'delete-armed': selected.deletable }"
-              @click.dblclick.prevent="confirmOrDelete"
+        class="btn btn-default btn-sm toggle-delete-btn"
+        :class="{ 'delete-armed': selected.deletable }"
+        @click.dblclick.prevent="confirmOrDelete"
       ><i class="fa fa-trash-o" aria-hidden="true"></i><span v-if="selected.deletable"> Delete</span></button>
       <button type="button"
-              class="btn btn-default btn-sm toggle-delete-btn"
-              v-if="selected.deletable"
-              @click.once="toggleDeletable"
+        class="btn btn-default btn-sm toggle-delete-btn"
+        v-if="selected.deletable"
+        @click.once="toggleDeletable"
       ><i class="fa fa-times" aria-hidden="true"></i></button>
     </div>
   </nav>
@@ -78,7 +77,15 @@ export default {
   computed: {
     ...mapGetters([
       'selected'
-    ])
+    ]),
+    moveButtonClass: function() {
+      switch (this.selected.model) {
+        case 'checklist': return 'btn-list'
+          break;
+        default: return 'btn-folder'
+
+      }
+    }
   }
 }
 </script>

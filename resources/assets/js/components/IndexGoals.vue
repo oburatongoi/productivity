@@ -11,7 +11,7 @@
         <i class="fa fa-fw fa-check-square" aria-hidden="true"></i>
         {{goal.title}}
       </h5>
-      
+
       <a :href="'/productivity/lists/' + goal.fake_id"
           class="go-to-listing"
           v-if="selected.id==goal.fake_id&&selected.model=='goal'"

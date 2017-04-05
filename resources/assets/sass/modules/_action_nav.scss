@@ -1,38 +1,24 @@
 .action-nav {
     text-align: center;
-    padding: 0;
-
+    padding: 0 10px;
+    position: absolute;
+    z-index: 9999999;
+    top: 5px;
+    right: 20px;
     @include clearfix;
+    background: white;
+    border-left: 1px solid $base-border-color;
 
     .available-actions {
-        @include main-nav;
         position: relative;
         display: inline-block;
         width: auto;
-        padding: 10px 30px 10px;
-        margin: 0 auto;
-        border-bottom-right-radius: $base-border-radius;
-        border-bottom-left-radius: $base-border-radius;
-        z-index: 900;
-        -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
-        -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
-        box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
         p {
             font-size: 0.9em;
         }
     }
 }
-.toggle-deselect-btn {
-    position: absolute;
-    top: 5px;
-    right:5px;
-    font-size: 0.8em;
-    color: darken($base-border-color, 10%);
-    cursor: pointer;
-    &:hover {
-        color: darken($base-border-color, 20%);
-    }
-}
+
 .toggle-delete-btn,
 .toggle-move-btn {
     &:not(:first-child) {
