@@ -1,16 +1,16 @@
 <template>
-  <div v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsCurrentlyEditable}" @click.self="edit">
+  <div v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsCurrentlyEditable}" @click.self="toggleEditability">
 
     <div class="pretty inline outline-success plain smooth" @click="checkItem">
       <input type="checkbox" :checked="item.checked_at"/>
       <label><i class="fa" :class="checkboxClass"></i></label>
     </div>
 
-    <p class="show-item-content" @click="edit">{{ item.content }}</p>
+    <p class="show-item-content" @click="toggleEditability">{{ item.content }}</p>
 
-    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="edit"></i>
+    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="toggleEditability"></i>
 
-    <p class="preview-deadline" @click="edit">
+    <p class="preview-deadline" @click="toggleEditability">
       <span v-if="item.is_important">
         <i class="fa fa-fw fa-star" aria-hidden="true"></i>
       </span>
@@ -45,8 +45,9 @@ export default {
     },
     methods: {
       ...mapActions([
-        'setEditability',
-        'saveCurrentEditableItem'
+        'saveCurrentEditableItem',
+        'addCurrentlyEditable',
+        'removeCurrentlyEditable'
       ]),
       checkItem: function() {
         this.checkboxClass = 'fa-check fa-spin'
@@ -63,8 +64,8 @@ export default {
               () => {this.checkboxClass = 'fa-check'}
             )
       },
-      edit: function() {
-        return this.setEditability({editable: true, item:this.item })
+      toggleEditability: function() {
+        return this.itemIsCurrentlyEditable ? this.removeCurrentlyEditable() : this.addCurrentlyEditable(this.item)
       }
     },
     computed: {
@@ -127,7 +128,7 @@ export default {
         return this.itemIsUnfiltered || !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
       },
       itemIsCurrentlyEditable: function() {
-        return this.item.id == this.currentEditableItem.id
+        return this.currentEditableItem.id && this.item.id == this.currentEditableItem.id
       },
       deadlinePlaceholder: function () {
         return this.item.deadline ? moment(this.item.deadline).format('MMM DD') : undefined

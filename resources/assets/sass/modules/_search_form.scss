@@ -1,6 +1,8 @@
 .search-wrapper {
     position: relative;
-    padding: 10px;
+    padding: 10px 0;
+    width: 100%;
+
     @media(max-width:767px){
         width: 100%;
         height: 35px;
@@ -18,10 +20,13 @@
     .fa {
         color: white;
     }
-    height: 35px;
     background: rgba(255,255,255,0.2);
-    padding: 5px;
-    border-radius: $base-border-radius;
+    padding: 6px 8px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0);
+    &.has-query {
+        border: 1px solid rgba(255,255,255,0.4);
+    }
     .search-input {
         background: rgba(255,255,255,0.2);
         &,
@@ -35,12 +40,15 @@
             background: transparent;
             color: white;
             width: 85%;
+            @media(min-width:769px) and (max-width:840px) {
+                width: 80%;
+            }
         }
     }
     .cancel-search-btn {
         cursor: pointer;
         font-size: 0.8em;
-        margin-top: 7px;
+        margin-top: 6px;
         float: right;
     }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="checklist" :class="{'has-editable-item': currentEditableItem.id}">
+  <div class="checklist" :class="checklistClass">
     <div class="panel main-panel">
       <div class="panel-heading">
           <h4>
@@ -110,8 +110,14 @@ export default {
       ...mapGetters([
         'checklist',
         'currentEditableItem',
+        'currentEditableItemIsExpanded',
         'filters'
       ]),
+      checklistClass: function() {
+        if (this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
+        if (this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
+        return null
+      },
       checkedFilterText: function() {
         var text
         switch (this.filters.checked) {

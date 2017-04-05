@@ -2,7 +2,7 @@
   <div class="manage-checklist-item panel side-panel">
     <div class="sizing-buttons">
       <i class="fa fa-fw fa-times pull-right" aria-hidden="true" @click="cancel"></i>
-      <i class="fa fa-fw fa-expand pull-left" aria-hidden="true" @click="cancel"></i>
+      <i class="fa fa-fw pull-left" :class="toggleExpansionClass" aria-hidden="true" @click="toggleCurrentEditableItemExpansion"></i>
     </div>
 
     <div class="panel-heading">
@@ -52,13 +52,14 @@ export default {
   },
   methods: {
     ...mapActions([
-      'removeCurrentlyEditable',
+      'toggleCurrentEditableItemExpansion',
       'saveCurrentEditableItem',
-      'setEditability'
+      'addCurrentlyEditable',
+      'removeCurrentlyEditable'
     ]),
     cancel: function() {
       this.removeCurrentlyEditable()
-      this.setEditability({editable: false, item:this.currentEditableItem })
+      this.addCurrentlyEditable(this.currentEditableItem)
     },
     saveChanges: function() {
       this.savingChanges = true
@@ -84,8 +85,12 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'currentEditableItem'
-    ])
+      'currentEditableItem',
+      'currentEditableItemIsExpanded'
+    ]),
+    toggleExpansionClass: function() {
+      return this.currentEditableItemIsExpanded ? 'fa-compress' : 'fa-expand'
+    }
   },
   components: {
       ManageItemFormMeta,

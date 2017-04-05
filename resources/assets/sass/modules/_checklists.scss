@@ -277,6 +277,17 @@
         overflow-y: scroll;
         padding-top: 0;
     }
+    &.has-expanded-editable-item {
+        .main-panel {
+            display: none;
+        }
+
+        .side-panel {
+            min-height: 100%;
+            width: 100%;
+        }
+    }
+
     &.has-editable-item {
         @media(max-width:768px){
             .main-panel {
@@ -288,7 +299,6 @@
                 left: 0;
                 right: 0;
                 width: 100%;
-                // min-height: 100%;
             }
         }
 
@@ -316,23 +326,6 @@
                 margin-left: 1%;
             }
         }
-
-        // .main-panel {
-        //     width: 50%;
-        //     display: inline-block;
-        //     vertical-align: top;
-        // }
-
-        // .side-panel {
-        //     @media(max-width:768px){
-        //         position: absolute;
-        //         top: 0;
-        //         left: 0;
-        //         right: 0;
-        //         width: 100%;
-        //         // min-height: 100%;
-        //     }
-        // }
 
         .show-item-content-input,
         .show-item-content {

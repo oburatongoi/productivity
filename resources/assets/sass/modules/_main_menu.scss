@@ -1,35 +1,71 @@
 .main-menu {
-    padding: 0;
+    text-align: left;
+    @media(max-width:767px){
+        padding: 0 5px;
+    }
+    @media(min-width:768px){
+        padding: 0 10px;
+    }
     ul {
         list-style: none;
+
+        &,
+        & li {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            display: block;
+        }
     }
-    ul.main-menu-nav {
+
+    ul.main-menu-options {
         margin-top: 5px;
-        & > li > a {
+        a, button {
             color: white;
         }
     }
-    li {
+    li.menu-option {
         text-align: left;
-        border-radius: $base-border-radius;
-        a {
+        border-radius: 18px;
+        a, button {
             display: block;
-            padding: 8px 10px;
+            width: 100%;
+            padding: 8px;
         }
-        &.dropdown {
-            ul.dropdown-menu {
-                display: none;
+        button {
+            background: transparent;
+            outline: none;
+            border: 0;
+            text-align: left;
+
+            .fa-caret-down {
+                margin-top: 5px;
+            }
+            .fa-caret-up {
+                margin-top: 4px;
             }
         }
-        &.open {
-            ul.dropdown-menu {
-                display: block;
-            }
-        }
+        &.open,
         &:hover {
             background: rgba(255,255,255,0.2);
         }
     }
+
+    .nested-menu-options {
+        padding-left: 20px;
+        li {
+            // margin-bottom: 5px;
+        }
+        a {
+            display: block;
+            padding: 5px 8px ;
+            border-radius: 18px;
+            &:hover {
+                background: rgba(255,255,255,0.2);
+            }
+        }
+    }
+
 }
 
 .auth-links {
@@ -43,5 +79,15 @@
     cursor: pointer;
     &:hover {
         color: rgba(255,255,255,1);
+    }
+}
+
+.main-logo {
+    text-align: center;
+    a {
+        font-size: 1.2em;
+        line-height: 35px;
+        color: white;
+        text-decoration: none;
     }
 }

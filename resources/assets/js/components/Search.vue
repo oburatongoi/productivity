@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="search-wrapper">
-    <form class="search-form" @submit.prevent="triggerSearch">
+    <form class="search-form" :class="searchFormClass" @submit.prevent="triggerSearch">
       <i class="fa fa-search" aria-hidden="true"></i>
       <input type="search" class="search-input" v-model="query" placeholder="SEARCH" v-on:keyup="triggerSearch" v-on:keyup.delete="clearSearchResults">
       <i class="fa fa-times cancel-search-btn" aria-hidden="true" v-if="query" @click="cancel"></i>
@@ -76,7 +76,10 @@ export default {
       'currentFolder',
       'search',
       'hasSearchResults'
-    ])
+    ]),
+    searchFormClass: function() {
+      return this.query ? 'has-query' : null
+    }
   },
 }
 </script>

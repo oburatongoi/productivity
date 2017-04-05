@@ -1,6 +1,7 @@
 import {
     ADD_CHECKLIST,
     ADD_EDITABLE,
+    ADD_CURRENTLY_EDITABLE,
     ADD_UNFILTERED,
     ADD_ITEM_TO_CHECKLIST,
     DELETE_CHECKLIST,
@@ -10,7 +11,7 @@ import {
     DELETE_CHECKLIST_ITEM,
     UPDATE_FILTERS,
     UPDATE_CHECKLIST,
-    // UPDATE_CHECKLIST_ITEM_CHECK
+    TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION
 } from '../mutations'
 
 const state = {
@@ -19,6 +20,7 @@ const state = {
     editableItems: [],
     unfilteredItems: [],
     currentEditableItem: {},
+    currentEditableItemIsExpanded: false,
     deletedItems: [],
     filters: {
         checked: 'unchecked',
@@ -31,8 +33,10 @@ const mutations = {
         state.checklists.unshift(checklist)
     },
     [ADD_EDITABLE] (state, item) {
-        state.currentEditableItem = item
         state.editableItems.unshift(item.id)
+    },
+    [ADD_CURRENTLY_EDITABLE] (state, item) {
+        state.currentEditableItem = item
     },
     [ADD_UNFILTERED] (state, item) {
         state.unfilteredItems.unshift(item.id)
@@ -76,16 +80,21 @@ const mutations = {
             state.checklist.title = updatedChecklist.title
         }
     },
-    // [UPDATE_CHECKLIST_ITEM_CHECK] (state, payload) {
-    //     let i = state.checklist.items.indexOf(payload.item);
-    //     state.checklist.items[i].checked_at = payload.updatedItem.checked_at
-    // },
+    [TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION] (state) {
+        state.currentEditableItemIsExpanded = ! state.currentEditableItemIsExpanded
+    },
 }
 
 const actions = {
     delistChecklist({ commit }, checklist) {
       return new Promise((resolve, reject) => {
           commit(DELETE_CHECKLIST, checklist)
+          resolve()
+      })
+    },
+    toggleCurrentEditableItemExpansion({ commit }) {
+      return new Promise((resolve, reject) => {
+          commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
           resolve()
       })
     },
@@ -182,6 +191,9 @@ const actions = {
                 if (response.data && response.data.item) {
                     commit(DELETE_EDITABLE, response.data.item)
                     commit(DELETE_CHECKLIST_ITEM, response.data.item.id)
+                    if (state.currentEditableItemIsExpanded) {
+                        commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
+                    }
                   resolve()
                 } else {
                   reject(response.data.error)
@@ -204,8 +216,17 @@ const actions = {
             resolve()
         })
     },
+    addCurrentlyEditable({commit}, item) {
+        return new Promise((resolve, reject) => {
+            commit(ADD_CURRENTLY_EDITABLE, item)
+            resolve()
+        })
+    },
     removeCurrentlyEditable({commit}) {
         return new Promise((resolve, reject) => {
+            if (state.currentEditableItemIsExpanded) {
+                commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
+            }
             commit(DELETE_CURRENTLY_EDITABLE)
             resolve()
         })
@@ -219,7 +240,8 @@ const getters = {
     unfilteredItems: state => state.unfilteredItems,
     deletedItems: state => state.deletedItems,
     filters: state => state.filters,
-    currentEditableItem: state => state.currentEditableItem
+    currentEditableItem: state => state.currentEditableItem,
+    currentEditableItemIsExpanded: state => state.currentEditableItemIsExpanded
 }
 
 export default {
