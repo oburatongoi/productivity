@@ -1,5 +1,5 @@
 <template lang="html">
-  <form class="item-form-container" @submit.prevent="submitForm">
+  <form class="add-item" @submit.prevent="submitForm">
     <div class="item-form">
       <div class="item-form-content col-sm-12 col-md-8">
         <input type="text" v-model="item.content" placeholder="Add item..." maxlength="255">

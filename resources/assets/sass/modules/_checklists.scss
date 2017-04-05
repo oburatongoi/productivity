@@ -327,6 +327,12 @@
     }
 }
 
+.pretty {
+    .fa {
+        color: $list-primary;
+    }
+}
+
 .manage-checklist-item {
     border: 1px solid $list-primary;
     .panel-heading {
@@ -347,7 +353,7 @@
 
     .manage-checklist-item-content-textarea {
         margin: 0;
-        padding: 10px;
+        padding: 0 0 3px 0;
 
         .pretty {
             vertical-align: text-top;
@@ -385,7 +391,7 @@
 
     .manage-item-form-meta {
         background: lighten($body-bg, 1%);
-        padding: 5px;
+        padding: 3px;
         border: 1px solid $base-border-color;
         border-radius: 2px;
         text-align: center;
@@ -400,11 +406,12 @@
 
             label {
                 display: block;
+                margin: 0;
                 font-size: 0.8em;
             }
 
             .fa {
-                font-size: 1.2em;
+                font-size: 1.1em;
                 cursor: pointer;
             }
             &:nth-child(2) {

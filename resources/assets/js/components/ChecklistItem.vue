@@ -1,7 +1,4 @@
 <template>
-  <!-- <div v-if="itemIsVisible">
-      <show-item :item="item"></show-item>
-  </div> -->
   <div v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsCurrentlyEditable}" @click.self="edit">
 
     <div class="pretty inline outline-success plain smooth" @click="checkItem">
@@ -38,8 +35,6 @@
 
 import { mapActions, mapGetters } from 'vuex'
 
-import ShowItem from './ShowItem.vue'
-
 export default {
     name: 'checklist-item',
     props: ['item'],
@@ -50,17 +45,18 @@ export default {
     },
     methods: {
       ...mapActions([
-        // 'check',
+        'setFilterability',
         'setEditability',
         'saveCurrentEditableItem'
       ]),
       checkItem: function() {
-        this.checkboxClass = 'fa-spinner fa-spin'
+        this.checkboxClass = 'fa-check fa-spin'
         if (this.item.checked_at) {
           this.item.checked_at = null
         } else {
-          this.currentEditableItem.checked_at = moment().format()
+          this.item.checked_at = moment().format()
         }
+        this.setFilterability({filterable:true, item: this.item})
         this.saveCurrentEditableItem(this.item)
             .then(
               () => {this.checkboxClass = 'fa-check'}
@@ -138,9 +134,6 @@ export default {
       deadlinePlaceholder: function () {
         return this.item.deadline ? moment(this.item.deadline).format('MMM DD') : undefined
       }
-    },
-    components: {
-        ShowItem
     }
 }
 </script>

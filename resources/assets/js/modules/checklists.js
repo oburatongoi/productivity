@@ -184,7 +184,6 @@ const actions = {
             }
             axios.patch('/productivity/lists/item/' + item.id + '/update', {item:item})
             .then(function(response) {
-                commit(ADD_UNFILTERED, item)
                 resolve()
             })
             .catch(function(error) {
