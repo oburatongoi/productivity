@@ -18,8 +18,6 @@ Vue.component('SearchResults', require('./components/SearchResults.vue'));
 Vue.component('MainMenu', require('./components/MainMenu.vue'));
 Vue.component('Folders', require('./components/Folders.vue'));
 Vue.component('Folder', require('./components/Folder.vue'));
-Vue.component('Notes', require('./components/Notes.vue'));
-Vue.component('Note', require('./components/Note.vue'));
 Vue.component('Checklists', require('./components/Checklists.vue'));
 Vue.component('Checklist', require('./components/Checklist.vue'));
 
@@ -34,8 +32,10 @@ Vue.directive('focus', {
 
 import store from './store.js'
 import VTooltip from 'v-tooltip'
+import VueTokenMismatch from './plugins/vue-token-mismatch.js'
 
 Vue.use(VTooltip)
+Vue.use(VueTokenMismatch)
 
 var bus = new Vue()
 

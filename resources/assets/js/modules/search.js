@@ -6,6 +6,8 @@ import {
     UPDATE_IS_SEARCHING
 } from '../mutations'
 
+const namespaced = true;
+
 const state = {
     search: {
         query: undefined,

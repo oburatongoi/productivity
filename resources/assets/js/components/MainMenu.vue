@@ -24,7 +24,7 @@
         <button type="button" @click="toggleNestedOptions">
           <i class="fa fa-fw fa-inbox" aria-hidden="true"></i>
           Browse
-          <i class="fa pull-right" :class="showNestedOptionsClass" aria-hidden="true"></i>
+          <i class="fa" :class="showNestedOptionsClass" aria-hidden="true"></i>
         </button>
       </li>
 

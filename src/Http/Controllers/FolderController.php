@@ -8,8 +8,6 @@ use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Cont
 
 use Oburatongoi\Productivity\Repositories\FolderRepository;
 use Oburatongoi\Productivity\Repositories\ChecklistRepository;
-// use Oburatongoi\Productivity\Repositories\NoteRepository;
-// use Oburatongoi\Productivity\Repositories\GoalRepository;
 use Oburatongoi\Productivity\Folder;
 
 use JavaScript;
@@ -19,22 +17,16 @@ class FolderController extends Controller
 
     protected $folders;
     protected $checklists;
-    // protected $notes;
-    // protected $goals;
 
     public function __construct(
         FolderRepository $folders,
         ChecklistRepository $checklists
-        // NoteRepository $notes,
-        // GoalRepository $goals
     ) {
         $this->middleware('web');
         $this->middleware('auth');
 
         $this->folders = $folders;
         $this->checklists = $checklists;
-        // $this->notes = $notes;
-        // $this->goals = $goals;
     }
 
     /**
@@ -47,8 +39,6 @@ class FolderController extends Controller
         JavaScript::put([
             'folders' => $this->folders->rootForUser($request->user()),
             'checklists' => $this->checklists->rootForUser($request->user()),
-            // 'notes' => $this->notes->rootForUser($request->user()),
-            // 'goals' => $this->goals->rootForUser($request->user()),
             'model' => 'folders',
             'currentView' => 'foldersIndex'
         ]);
@@ -95,8 +85,6 @@ class FolderController extends Controller
             'folders' => $this->folders->rootForFolder($folder),
             'currentFolder' => $folder->load('folder', 'subfolders'),
             'checklists' => $this->checklists->forFolder($folder),
-            // 'notes' => $this->notes->forFolder($folder),
-            // 'goals' => $this->goals->forFolder($folder),
             'ancestors' => $folder->getAncestors(),
             'model' => 'folder',
         ]);
@@ -173,12 +161,6 @@ class FolderController extends Controller
             case 'checklist':
                 $child = \Oburatongoi\Productivity\Checklist::where('fake_id', $request->input('child.id'))->first();
                 break;
-            // case 'note':
-            //     $child = \Oburatongoi\Productivity\Note::where('fake_id', $request->input('child.id'))->first();
-            //     break;
-            // case 'goal':
-            //    $child = \Oburatongoi\Productivity\Goal::where('fake_id', $request->input('child.id'))->first();
-            //     break;
         }
 
         $child->moveToFolder($folder);
@@ -199,12 +181,6 @@ class FolderController extends Controller
             case 'checklist':
                 $child = \Oburatongoi\Productivity\Checklist::where('fake_id', $request->input('child.id'))->first();
                 break;
-            // case 'note':
-            //     $child = \Oburatongoi\Productivity\Note::where('fake_id', $request->input('child.id'))->first();
-            //     break;
-            // case 'goal':
-            //    $child = \Oburatongoi\Productivity\Goal::where('fake_id', $request->input('child.id'))->first();
-            //     break;
         }
 
         $child->moveToHome();

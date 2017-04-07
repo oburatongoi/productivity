@@ -377,14 +377,29 @@
 
     .sizing-buttons {
         padding: 10px;
+        height: 25px;
+        overflow: visible;
         @include clearfix;
+        text-align: center;
 
         .fa {
             cursor: pointer;
             color: $base-border-color;
 
-            &:hover {
+            & > &:hover {
                 color: $list-primary;
+            }
+        }
+
+        .fa-stack {
+            margin-top: -5px;
+            font-size: 0.75em;
+            .fa-flopy-o {
+                color: darken($base-border-color, 10%);
+            }
+            .fa-circle-o-notch {
+                color: $list-primary;
+                opacity: 0.6;
             }
         }
     }

@@ -32,8 +32,6 @@ export default {
       'user',
       'folders',
       'checklists',
-      'notes',
-      'goals',
       'selected',
       'selectedIsMovable'
     ]),
@@ -41,7 +39,7 @@ export default {
       return this.folders.length
     },
     hasFiles: function() {
-      return this.checklists && this.checklists.length || this.notes && this.notes.length || this.goals && this.goals.length
+      return this.checklists && this.checklists.length
     },
     isEmpty: function() {
       return ! this.hasFolders && ! this.hasFiles

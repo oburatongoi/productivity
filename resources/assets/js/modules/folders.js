@@ -4,6 +4,8 @@ import {
     UPDATE_FOLDER,
 } from '../mutations'
 
+const namespaced = true;
+
 const state = {
     folders: Productivity.folders ? Productivity.folders : {},
     currentFolder: Productivity.currentFolder ? Productivity.currentFolder : {}
@@ -37,13 +39,28 @@ const actions = {
 
         axios.delete('/productivity/folders/'+ folder.fake_id)
         .then(function(response) {
-            if (response.data && response.data.folder) {
-              commit(DELETE_FOLDER, folder)
-              resolve({
-                  folder: response.data.folder
-              })
+            if (response.data.tokenMismatch) {
+                Vue.handleTokenMismatch(response.data).then(
+                    (response) => {
+                        if (response.data.item) {
+                            commit(DELETE_FOLDER, response.data.folder)
+                            resolve(response.data.folder)
+                        } else if (response.data.error) {
+                            reject(response.data.error)
+                        } else {
+                            reject()
+                        }
+                    }
+                ).catch(
+                    (error) => reject(error)
+                )
+            } else if (response.data.folder) {
+                commit(DELETE_FOLDER, response.data.folder)
+                resolve(response.data.folder)
+            } else if (response.data.error) {
+                reject(response.data.error)
             } else {
-              reject(response.data.error)
+                reject()
             }
         })
         .catch(function(error) {
@@ -57,13 +74,28 @@ const actions = {
 
           axios.patch('/productivity/folders/'+folder.fake_id, folder)
           .then(function(response) {
-              if (response.data.folder) {
-                commit(UPDATE_FOLDER, {folder:folder, updatedFolder:response.data.folder})
-                resolve({
-                    folder: response.data.folder
-                })
+              if (response.data.tokenMismatch) {
+                  Vue.handleTokenMismatch(response.data).then(
+                      (response) => {
+                          if (response.data.item) {
+                              commit(UPDATE_FOLDER, response.data.folder)
+                              resolve(response.data.folder)
+                          } else if (response.data.error) {
+                              reject(response.data.error)
+                          } else {
+                              reject()
+                          }
+                      }
+                  ).catch(
+                      (error) => reject(error)
+                  )
+              } else if (response.data.folder) {
+                  commit(UPDATE_FOLDER, response.data.folder)
+                  resolve(response.data.folder)
+              } else if (response.data.error) {
+                  reject(response.data.error)
               } else {
-                reject(response.data.error)
+                  reject()
               }
           })
           .catch(function(error) {
@@ -77,13 +109,28 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post('/productivity/folders', {folder: folder})
             .then(function(response) {
-                if (response.data && response.data.folder) {
+                if (response.data.tokenMismatch) {
+                    Vue.handleTokenMismatch(response.data).then(
+                        (response) => {
+                            if (response.data.item) {
+                                commit(ADD_FOLDER, response.data.folder)
+                                resolve(response.data.folder)
+                            } else if (response.data.error) {
+                                reject(response.data.error)
+                            } else {
+                                reject()
+                            }
+                        }
+                    ).catch(
+                        (error) => reject(error)
+                    )
+                } else if (response.data.folder) {
                     commit(ADD_FOLDER, response.data.folder)
-                    resolve({
-                        folder: response.data.folder
-                    })
-                } else {
+                    resolve(response.data.folder)
+                } else if (response.data.error) {
                     reject(response.data.error)
+                } else {
+                    reject()
                 }
             })
             .catch(function(error) {

@@ -7,6 +7,8 @@ import {
     TOGGLE_MOVABLE
 } from '../mutations'
 
+const namespaced = true;
+
 const state = {
     user: Productivity.user,
     creatingNew: undefined,

@@ -14,6 +14,8 @@ import {
     TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION
 } from '../mutations'
 
+const namespaced = true;
+
 const state = {
     checklists: Productivity.checklists,
     checklist: Productivity.checklist,
@@ -102,11 +104,28 @@ const actions = {
       return new Promise((resolve, reject) => {
           axios.delete('/productivity/lists/'+ checklist.fake_id)
             .then(function(response) {
-                if (response.data && response.data.checklist) {
-                    commit(DELETE_CHECKLIST, checklist)
-                    resolve()
-                } else {
+                if (response.data.tokenMismatch) {
+                    Vue.handleTokenMismatch(response.data).then(
+                        (response) => {
+                            if (response.data.item) {
+                                commit(DELETE_CHECKLIST, response.data.checklist)
+                                resolve(response.data.checklist)
+                            } else if (response.data.error) {
+                                reject(response.data.error)
+                            } else {
+                                reject()
+                            }
+                        }
+                    ).catch(
+                        (error) => reject(error)
+                    )
+                } else if (response.data.checklist) {
+                    commit(DELETE_CHECKLIST, response.data.checklist)
+                    resolve(response.data.checklist)
+                } else if (response.data.error) {
                     reject(response.data.error)
+                } else {
+                    reject()
                 }
             })
             .catch(function(error) {
@@ -118,11 +137,28 @@ const actions = {
         return new Promise((resolve, reject) => {
           axios.patch('/productivity/lists/'+checklist.fake_id, {checklist:checklist})
           .then(function(response) {
-              if (response.data && response.data.checklist) {
-                commit(UPDATE_CHECKLIST, response.data.checklist)
-                resolve(response.data.checklist)
+              if (response.data.tokenMismatch) {
+                  Vue.handleTokenMismatch(response.data).then(
+                      (response) => {
+                          if (response.data.item) {
+                              commit(UPDATE_CHECKLIST, response.data.checklist)
+                              resolve(response.data.checklist)
+                          } else if (response.data.error) {
+                              reject(response.data.error)
+                          } else {
+                              reject()
+                          }
+                      }
+                  ).catch(
+                      (error) => reject(error)
+                  )
+              } else if (response.data.checklist) {
+                  commit(UPDATE_CHECKLIST, response.data.checklist)
+                  resolve(response.data.checklist)
+              } else if (response.data.error) {
+                  reject(response.data.error)
               } else {
-                reject(response.data.error)
+                  reject()
               }
           })
           .catch(function(error) {
@@ -143,11 +179,28 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post('/productivity/lists', {checklist: checklist})
             .then(function(response) {
-                if (response.data && response.data.checklist) {
+                if (response.data.tokenMismatch) {
+                    Vue.handleTokenMismatch(response.data).then(
+                        (response) => {
+                            if (response.data.item) {
+                                commit(ADD_CHECKLIST, response.data.checklist)
+                                resolve(response.data.checklist)
+                            } else if (response.data.error) {
+                                reject(response.data.error)
+                            } else {
+                                reject()
+                            }
+                        }
+                    ).catch(
+                        (error) => reject(error)
+                    )
+                } else if (response.data.checklist) {
                     commit(ADD_CHECKLIST, response.data.checklist)
-                    resolve()
-                } else {
+                    resolve(response.data.checklist)
+                } else if (response.data.error) {
                     reject(response.data.error)
+                } else {
+                    reject()
                 }
             })
             .catch(function(error) {
@@ -160,9 +213,32 @@ const actions = {
             var fakeId = payload.checklist_fake_id ? payload.checklist_fake_id : state.checklist.fake_id
             axios.post('/productivity/lists/' + fakeId + '/add-item', {item:payload.item})
             .then(function(response) {
-                commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
-                commit(ADD_UNFILTERED, response.data.item)
-                resolve()
+                if (response.data.tokenMismatch) {
+                    Vue.handleTokenMismatch(response.data).then(
+                        (response) => {
+                            if (response.data.item) {
+                                commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
+                                commit(ADD_UNFILTERED, response.data.item)
+                                resolve(response.data.item)
+                            } else if (response.data.error) {
+                                reject(response.data.error)
+                            } else {
+                                reject()
+                            }
+                        }
+                    ).catch(
+                        (error) => reject(error)
+                    )
+                } else if (response.data.item) {
+                    commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
+                    commit(ADD_UNFILTERED, response.data.item)
+                    resolve(response.data.item)
+                } else if (response.data.error) {
+                    reject(response.data.error)
+                } else {
+                    reject()
+                }
+
             })
             .catch(function(error) {
                 reject(error)
@@ -177,7 +253,16 @@ const actions = {
             commit(ADD_UNFILTERED, item)
             axios.patch('/productivity/lists/item/' + item.id + '/update', {item:item})
             .then(function(response) {
-                resolve()
+
+                if (response.data.tokenMismatch) {
+                    Vue.handleTokenMismatch(response.data).then(
+                        (response) => resolve(response)
+                    ).catch(
+                        (error) => reject(error)
+                    )
+                } else {
+                    resolve(response)
+                }
             })
             .catch(function(error) {
                 reject(error)
@@ -186,18 +271,34 @@ const actions = {
     },
     deleteChecklistItem({commit}, payload) {
         return new Promise((resolve, reject) => {
-            axios.patch('/productivity/lists/item/' + payload.item.id + '/delete', {item:payload.item})
+            axios.delete('/productivity/lists/item/' + payload.item.id + '/delete', {item:payload.item})
             .then(function(response) {
-                if (response.data && response.data.item) {
+
+                if (response.data.tokenMismatch) {
+                    Vue.handleTokenMismatch(response.data).then(
+                        (response) => {
+                            commit(DELETE_EDITABLE, response.data.item)
+                            commit(DELETE_CHECKLIST_ITEM, response.data.item.id)
+                            if (state.currentEditableItemIsExpanded) {
+                                commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
+                            }
+                            resolve(response)
+                        }
+                    ).catch(
+                        (error) => reject(error)
+                    )
+                } else if (response.data.item) {
                     commit(DELETE_EDITABLE, response.data.item)
                     commit(DELETE_CHECKLIST_ITEM, response.data.item.id)
                     if (state.currentEditableItemIsExpanded) {
                         commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
                     }
-                  resolve()
-                } else {
+                  resolve(response.data.item)
+              } else if (response.data.error) {
                   reject(response.data.error)
-                }
+              } else {
+                  reject()
+              }
             })
             .catch(function(error) {
                 reject(error)

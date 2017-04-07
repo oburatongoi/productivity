@@ -25,10 +25,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Folder::class => FolderPolicy::class,
-        Note::class => NotePolicy::class,
         Checklist::class => ChecklistPolicy::class,
         ChecklistItem::class => ChecklistItemPolicy::class,
-        Goal::class => GoalPolicy::class,
     ];
 
     /**
