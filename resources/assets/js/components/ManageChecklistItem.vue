@@ -88,7 +88,7 @@ export default {
       )
     },
     checkItem: function() {
-      this.checkboxClass = 'fa-check fa-spin'
+      this.checkboxClass = 'fa-circle-o-notch fa-spin'
       if (this.currentEditableItem.checked_at) {
         this.currentEditableItem.checked_at = null
       } else {
