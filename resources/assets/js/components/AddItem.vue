@@ -2,11 +2,10 @@
   <form class="add-item" @submit.prevent="submitForm">
     <div class="item-form">
       <div class="item-form-content col-sm-12 col-md-8">
-        <input type="text" v-model="item.content" placeholder="Add item..." maxlength="255">
+        <input type="text" v-model="newChecklistItem.content" placeholder="Add item..." maxlength="255">
       </div>
 
       <add-item-form-meta
-        :item="item"
         v-if="hasContent"
         @showDatePicker="showDatePicker"
       ></add-item-form-meta>
@@ -14,22 +13,20 @@
 
     <div class="datepicker-container" v-if="chooseDate">
       <datepicker
-        value="item.deadline"
+        value="newChecklistItem.deadline"
         @selected="setDate"
         :inline="true"
       ></datepicker>
     </div>
 
     <add-item-form-comments
-      :item="item"
       v-if="hasUserInput"
     ></add-item-form-comments>
 
     <add-item-form-buttons
-      :item="item"
       :hasUserInput=hasUserInput
       :isSaving=isSaving
-      @resetForm="resetItem"
+      @resetForm="resetNewChecklistItem"
       @submitForm="submitForm"
     ></add-item-form-buttons>
   </form>
@@ -48,37 +45,31 @@ export default {
   data () {
     return {
       chooseDate: false,
-      isSaving: false,
-      item: {
-        content: undefined,
-        is_urgent: undefined,
-        is_important: undefined,
-        deadline: undefined,
-        comments: undefined,
-        addable: true
-      }
+      isSaving: false
     }
   },
   computed: {
     ...mapGetters([
-      'checklist'
+      'checklist',
+      'newChecklistItem'
     ]),
     hasContent: function() {
-      return this.item.content ? true : false
+      return this.newChecklistItem.content ? true : false
     },
     hasUserInput: function() {
-      return this.item.content
-      || this.item.is_important
-      || this.item.is_urgent
-      || this.item.deadline ? true : false
+      return this.newChecklistItem.content
+      || this.newChecklistItem.is_important
+      || this.newChecklistItem.is_urgent
+      || this.newChecklistItem.deadline ? true : false
     }
   },
   methods: {
     ...mapActions([
-      'addChecklistItem'
+      'addChecklistItem',
+      'resetNewChecklistItem'
     ]),
     setDate: function(date) {
-      date ? this.item.deadline = moment(date).format('YYYY-MM-DD') : this.item.deadline = undefined
+      date ? this.newChecklistItem.deadline = moment(date).format('YYYY-MM-DD') : this.newChecklistItem.deadline = undefined
       return this.hideDatePicker()
     },
     showDatePicker: function() {
@@ -91,24 +82,13 @@ export default {
       this.hideDatePicker()
       this.isSaving = true
       if (this.hasContent) {
-        return this.addChecklistItem( {item: this.item} ).then(
+        return this.addChecklistItem( {item: this.newChecklistItem} ).then(
           () => {
             this.isSaving = false
-            this.resetItem()
           }
         ).catch(
           () => {console.log('Error has occured');}
         )
-      }
-    },
-    resetItem: function() {
-      this.item = {
-        content: undefined,
-        is_urgent: undefined,
-        is_important: undefined,
-        deadline: undefined,
-        comments: undefined,
-        addable: true
       }
     }
   },

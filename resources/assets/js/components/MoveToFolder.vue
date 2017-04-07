@@ -149,7 +149,7 @@ export default {
     },
     fetchInitialFolders: function(id = null) {
       this.isLoading = true
-      axios.post('/productivity/fetch-initial-tree', {folder_id: id})
+      axios.post('/fetch-initial-tree', {folder_id: id})
            .then(
               (response) => {
                 if (!id) this.currentFolder = {name: 'Home', id: null}
@@ -164,7 +164,7 @@ export default {
       this.isLoading = true
       this.resetInfoMessage()
       this.resetSelectedFolder()
-      axios.post('/productivity/'+folder.fake_id+'/fetch-new-tree')
+      axios.post('/'+folder.fake_id+'/fetch-new-tree')
       .then(
         (response) => {
           this.refreshCurrentFolder(response.data.folder)
@@ -191,7 +191,7 @@ export default {
       return folder.id ? this.selectedFolder = folder : this.selectedFolder = {}
     },
     moveTo: function(folder) {
-      axios.patch('/productivity/move-to/'+folder.fake_id, { child:this.selected })
+      axios.patch('/move-to/'+folder.fake_id, { child:this.selected })
       .then(
         (response) => response.data.child ? this.handleSuccessfulMove() : alert('No child returned')
       )
@@ -200,7 +200,7 @@ export default {
       )
     },
     moveToHome: function(folder) {
-      axios.patch('/productivity/move-to-home/', { child:this.selected })
+      axios.patch('/move-to-home/', { child:this.selected })
       .then(
         (response) => response.data.child ? this.handleSuccessfulMove() : alert('No child returned')
       )

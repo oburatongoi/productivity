@@ -32,7 +32,7 @@ export default {
       this.setSearchErrorMessage()
       this.setIsSearching(true)
       this.setSearchQuery(this.query)
-      axios.post('/productivity/search', {currentFolderId: this.currentFolder.id, query: this.query})
+      axios.post('/search', {currentFolderId: this.currentFolder.id, query: this.query})
       .then(
         (response) => this.handleSuccessfulSearch(response)
       )

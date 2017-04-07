@@ -27,7 +27,7 @@ class ChecklistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index($account, Request $request)
     {
         JavaScript::put([
             'checklists' => $this->checklists->forUser($request->user()),
@@ -45,7 +45,7 @@ class ChecklistController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($account, Request $request)
     {
 
         try {
@@ -74,7 +74,7 @@ class ChecklistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Checklist $checklist)
+    public function show($account, Request $request, Checklist $checklist)
     {
         $this->authorize('view', $checklist);
 
@@ -103,7 +103,7 @@ class ChecklistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Checklist $checklist)
+    public function update($account, Request $request, Checklist $checklist)
     {
 
         $this->authorize('modify', $checklist);
@@ -121,7 +121,7 @@ class ChecklistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Checklist $checklist)
+    public function destroy($account, Request $request, Checklist $checklist)
     {
         $this->authorize('modify', $checklist);
 

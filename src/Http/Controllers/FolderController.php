@@ -34,7 +34,7 @@ class FolderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index($account, Request $request)
     {
         JavaScript::put([
             'folders' => $this->folders->rootForUser($request->user()),
@@ -53,7 +53,7 @@ class FolderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($account, Request $request)
     {
 
         $folder = $request->user()->folders()->create($request->input('folder'));
@@ -76,7 +76,7 @@ class FolderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Folder $folder)
+    public function show($account, Request $request, Folder $folder)
     {
         $this->authorize('view', $folder);
 
@@ -101,7 +101,7 @@ class FolderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Folder $folder)
+    public function update($account, Request $request, Folder $folder)
     {
         $this->authorize('modify', $folder);
 
@@ -118,7 +118,7 @@ class FolderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Folder $folder)
+    public function destroy($account, Request $request, Folder $folder)
     {
         $this->authorize('modify', $folder);
 
@@ -129,7 +129,7 @@ class FolderController extends Controller
         ]);
     }
 
-    public function fetchInitialTree(Request $request)
+    public function fetchInitialTree($account, Request $request)
     {
         $folders = Folder::select('name', 'fake_id', 'id')
                     ->where('folder_id', $request->input('folder_id'))
@@ -142,7 +142,7 @@ class FolderController extends Controller
         ]);
     }
 
-    public function fetchNewTree(Request $request, Folder $folder)
+    public function fetchNewTree($account, Request $request, Folder $folder)
     {
         $folder->load('folder', 'subfolders');
 
@@ -151,7 +151,7 @@ class FolderController extends Controller
         ]);
     }
 
-    public function moveToFolder(Request $request, Folder $folder)
+    public function moveToFolder($account, Request $request, Folder $folder)
     {
 
         switch ($request->input('child.model')) {
@@ -171,7 +171,7 @@ class FolderController extends Controller
         ]);
     }
 
-    public function moveToHome(Request $request)
+    public function moveToHome($account, Request $request)
     {
 
         switch ($request->input('child.model')) {

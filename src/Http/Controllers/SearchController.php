@@ -9,7 +9,7 @@ use Oburatongoi\Productivity\Checklist;
 
 class SearchController extends Controller
 {
-    public function search(Request $request)
+    public function search($account, Request $request)
     {
         // if ($request->currentFolderId) {
         //     $folders = Folder::search($request->input('query'))

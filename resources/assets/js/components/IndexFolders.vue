@@ -15,7 +15,7 @@
             {{folder.name}}
           </h5>
 
-          <a :href="'/productivity/folders/' + folder.fake_id"
+          <a :href="'/folders/' + folder.fake_id"
               class="go-to-listing"
               v-if="selected.id==folder.fake_id&&selected.model=='folder'"
           >
@@ -35,7 +35,7 @@ export default {
       'deselectListing'
     ]),
     goToListing: function(model, id) {
-      return window.location = '/productivity/' + model + 's/' + id
+      return window.location = '/' + model + 's/' + id
     }
   },
   computed: {

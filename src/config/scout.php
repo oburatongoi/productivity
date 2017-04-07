@@ -59,4 +59,8 @@ return [
         'secret' => env('ALGOLIA_SECRET', ''),
     ],
 
+    'folder_index_name' => env('FOLDER_INDEX_NAME', 'folders'),
+
+    'checklist_index_name' => env('CHECKLIST_INDEX_NAME', 'checklists'),
+
 ];

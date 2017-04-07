@@ -8,7 +8,7 @@
 
     <ul class="list-unstyled folder-color-scheme" v-if="search.results.folders">
       <li v-for="folder in search.results.folders">
-        <a :href="'/productivity/folders/'+folder.fake_id">
+        <a :href="'/folders/'+folder.fake_id">
           <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
           {{folder.name}}
         </a>
@@ -17,7 +17,7 @@
 
     <ul class="list-unstyled list-color-scheme" v-if="search.results.checklists">
       <li v-for="checklist in search.results.checklists">
-        <a :href="'/productivity/lists/'+checklist.fake_id">
+        <a :href="'/lists/'+checklist.fake_id">
           <i class="fa fa-fw fa-list" aria-hidden="true"></i>
           {{checklist.title}}
         </a>

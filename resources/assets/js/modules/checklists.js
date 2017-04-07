@@ -11,6 +11,7 @@ import {
     DELETE_CHECKLIST_ITEM,
     UPDATE_FILTERS,
     UPDATE_CHECKLIST,
+    RESET_NEW_CHECKLIST_ITEM,
     TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION
 } from '../mutations'
 
@@ -23,6 +24,13 @@ const state = {
     unfilteredItems: [],
     currentEditableItem: {},
     currentEditableItemIsExpanded: false,
+    newChecklistItem: {
+        content: null,
+        is_urgent: false,
+        is_important: false,
+        deadline: null,
+        comments: null
+    },
     deletedItems: [],
     filters: {
         checked: 'unchecked',
@@ -82,6 +90,15 @@ const mutations = {
             state.checklist.title = updatedChecklist.title
         }
     },
+    [RESET_NEW_CHECKLIST_ITEM] (state) {
+        state.newChecklistItem = {
+            content: undefined,
+            is_urgent: undefined,
+            is_important: undefined,
+            deadline: undefined,
+            comments: undefined
+        }
+    },
     [TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION] (state) {
         state.currentEditableItemIsExpanded = ! state.currentEditableItemIsExpanded
     },
@@ -102,13 +119,13 @@ const actions = {
     },
     deleteChecklist({ commit }, checklist) {
       return new Promise((resolve, reject) => {
-          axios.delete('/productivity/lists/'+ checklist.fake_id)
+          axios.delete('/lists/'+ checklist.fake_id)
             .then(function(response) {
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(
                         (response) => {
                             if (response.data.item) {
-                                commit(DELETE_CHECKLIST, response.data.checklist)
+                                commit(DELETE_CHECKLIST, checklist)
                                 resolve(response.data.checklist)
                             } else if (response.data.error) {
                                 reject(response.data.error)
@@ -120,7 +137,7 @@ const actions = {
                         (error) => reject(error)
                     )
                 } else if (response.data.checklist) {
-                    commit(DELETE_CHECKLIST, response.data.checklist)
+                    commit(DELETE_CHECKLIST, checklist)
                     resolve(response.data.checklist)
                 } else if (response.data.error) {
                     reject(response.data.error)
@@ -135,13 +152,13 @@ const actions = {
     },
     saveChecklist({ commit }, checklist) {
         return new Promise((resolve, reject) => {
-          axios.patch('/productivity/lists/'+checklist.fake_id, {checklist:checklist})
+          axios.patch('/lists/'+checklist.fake_id, {checklist:checklist})
           .then(function(response) {
               if (response.data.tokenMismatch) {
                   Vue.handleTokenMismatch(response.data).then(
                       (response) => {
                           if (response.data.item) {
-                              commit(UPDATE_CHECKLIST, response.data.checklist)
+                              commit(UPDATE_CHECKLIST, checklist)
                               resolve(response.data.checklist)
                           } else if (response.data.error) {
                               reject(response.data.error)
@@ -153,7 +170,7 @@ const actions = {
                       (error) => reject(error)
                   )
               } else if (response.data.checklist) {
-                  commit(UPDATE_CHECKLIST, response.data.checklist)
+                  commit(UPDATE_CHECKLIST, checklist)
                   resolve(response.data.checklist)
               } else if (response.data.error) {
                   reject(response.data.error)
@@ -177,7 +194,7 @@ const actions = {
     },
     storeChecklist({commit}, checklist) {
         return new Promise((resolve, reject) => {
-            axios.post('/productivity/lists', {checklist: checklist})
+            axios.post('/lists', {checklist: checklist})
             .then(function(response) {
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(
@@ -210,8 +227,7 @@ const actions = {
     },
     addChecklistItem({commit}, payload) {
         return new Promise((resolve, reject) => {
-            var fakeId = payload.checklist_fake_id ? payload.checklist_fake_id : state.checklist.fake_id
-            axios.post('/productivity/lists/' + fakeId + '/add-item', {item:payload.item})
+            axios.post('/lists/' + state.checklist.fake_id + '/add-item', {item:payload.item})
             .then(function(response) {
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(
@@ -219,6 +235,7 @@ const actions = {
                             if (response.data.item) {
                                 commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
                                 commit(ADD_UNFILTERED, response.data.item)
+                                commit(RESET_NEW_CHECKLIST_ITEM)
                                 resolve(response.data.item)
                             } else if (response.data.error) {
                                 reject(response.data.error)
@@ -232,6 +249,7 @@ const actions = {
                 } else if (response.data.item) {
                     commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
                     commit(ADD_UNFILTERED, response.data.item)
+                    commit(RESET_NEW_CHECKLIST_ITEM)
                     resolve(response.data.item)
                 } else if (response.data.error) {
                     reject(response.data.error)
@@ -251,7 +269,7 @@ const actions = {
                 item = state.currentEditableItem ? state.currentEditableItem : reject('There is no item or currently editable item')
             }
             commit(ADD_UNFILTERED, item)
-            axios.patch('/productivity/lists/item/' + item.id + '/update', {item:item})
+            axios.patch('/lists/item/' + item.id + '/update', {item:item})
             .then(function(response) {
 
                 if (response.data.tokenMismatch) {
@@ -271,14 +289,14 @@ const actions = {
     },
     deleteChecklistItem({commit}, payload) {
         return new Promise((resolve, reject) => {
-            axios.delete('/productivity/lists/item/' + payload.item.id + '/delete', {item:payload.item})
+            axios.delete('/lists/item/' + payload.item.id + '/delete', {item:payload.item})
             .then(function(response) {
 
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(
                         (response) => {
-                            commit(DELETE_EDITABLE, response.data.item)
-                            commit(DELETE_CHECKLIST_ITEM, response.data.item.id)
+                            commit(DELETE_EDITABLE, payload.item)
+                            commit(DELETE_CHECKLIST_ITEM, payload.item.id)
                             if (state.currentEditableItemIsExpanded) {
                                 commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
                             }
@@ -288,8 +306,8 @@ const actions = {
                         (error) => reject(error)
                     )
                 } else if (response.data.item) {
-                    commit(DELETE_EDITABLE, response.data.item)
-                    commit(DELETE_CHECKLIST_ITEM, response.data.item.id)
+                    commit(DELETE_EDITABLE, payload.item)
+                    commit(DELETE_CHECKLIST_ITEM, payload.item.id)
                     if (state.currentEditableItemIsExpanded) {
                         commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
                     }
@@ -323,6 +341,12 @@ const actions = {
             resolve()
         })
     },
+    resetNewChecklistItem({commit}) {
+        return new Promise((resolve, reject) => {
+            commit(RESET_NEW_CHECKLIST_ITEM)
+            resolve()
+        })
+    },
     removeCurrentlyEditable({commit}) {
         return new Promise((resolve, reject) => {
             if (state.currentEditableItemIsExpanded) {
@@ -341,6 +365,7 @@ const getters = {
     unfilteredItems: state => state.unfilteredItems,
     deletedItems: state => state.deletedItems,
     filters: state => state.filters,
+    newChecklistItem: state => state.newChecklistItem,
     currentEditableItem: state => state.currentEditableItem,
     currentEditableItemIsExpanded: state => state.currentEditableItemIsExpanded
 }

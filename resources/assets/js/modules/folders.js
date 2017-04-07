@@ -13,9 +13,10 @@ const state = {
 
 const mutations = {
     [ADD_FOLDER] (state, folder) {
-        if (state.currentFolder.id && folder.folder_id && state.currentFolder.id == folder.folder_id) {
-            state.folders.unshift(folder)
-        }
+        // if (state.currentFolder.id && folder.folder_id && state.currentFolder.id == folder.folder_id) {
+        //     state.folders.unshift(folder)
+        // }
+        state.folders.unshift(folder)
     },
     [DELETE_FOLDER] (state, folder) {
         let i = state.folders.indexOf(folder);
@@ -37,13 +38,13 @@ const actions = {
     deleteFolder({ commit }, folder) {
       return new Promise((resolve, reject) => {
 
-        axios.delete('/productivity/folders/'+ folder.fake_id)
+        axios.delete('/folders/'+ folder.fake_id)
         .then(function(response) {
             if (response.data.tokenMismatch) {
                 Vue.handleTokenMismatch(response.data).then(
                     (response) => {
                         if (response.data.item) {
-                            commit(DELETE_FOLDER, response.data.folder)
+                            commit(DELETE_FOLDER, folder)
                             resolve(response.data.folder)
                         } else if (response.data.error) {
                             reject(response.data.error)
@@ -55,7 +56,7 @@ const actions = {
                     (error) => reject(error)
                 )
             } else if (response.data.folder) {
-                commit(DELETE_FOLDER, response.data.folder)
+                commit(DELETE_FOLDER, folder)
                 resolve(response.data.folder)
             } else if (response.data.error) {
                 reject(response.data.error)
@@ -72,13 +73,13 @@ const actions = {
     saveFolder({ commit }, folder) {
         return new Promise((resolve, reject) => {
 
-          axios.patch('/productivity/folders/'+folder.fake_id, folder)
+          axios.patch('/folders/'+folder.fake_id, folder)
           .then(function(response) {
               if (response.data.tokenMismatch) {
                   Vue.handleTokenMismatch(response.data).then(
                       (response) => {
                           if (response.data.item) {
-                              commit(UPDATE_FOLDER, response.data.folder)
+                              commit(UPDATE_FOLDER, folder)
                               resolve(response.data.folder)
                           } else if (response.data.error) {
                               reject(response.data.error)
@@ -90,7 +91,7 @@ const actions = {
                       (error) => reject(error)
                   )
               } else if (response.data.folder) {
-                  commit(UPDATE_FOLDER, response.data.folder)
+                  commit(UPDATE_FOLDER, folder)
                   resolve(response.data.folder)
               } else if (response.data.error) {
                   reject(response.data.error)
@@ -107,7 +108,7 @@ const actions = {
     },
     storeFolder({commit}, folder) {
         return new Promise((resolve, reject) => {
-            axios.post('/productivity/folders', {folder: folder})
+            axios.post('/folders', {folder: folder})
             .then(function(response) {
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(

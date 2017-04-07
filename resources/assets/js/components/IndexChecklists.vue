@@ -12,7 +12,7 @@
         {{checklist.title}}
       </h5>
 
-      <a :href="'/productivity/lists/' + checklist.fake_id"
+      <a :href="'/lists/' + checklist.fake_id"
           class="go-to-listing"
           v-if="selected.id==checklist.fake_id&&selected.model=='checklist'"
       >
@@ -36,7 +36,7 @@ export default {
       'selectListing'
     ]),
     goToListing: function(model, id) {
-      return window.location = '/productivity/' + model + 's/' + id
+      return window.location = '/' + model + 's/' + id
     }
   },
   computed: {

@@ -9,6 +9,12 @@ Next, add the service provider to the provider array in the `app/config.app` fil
 
 `Oburatongoi\Productivity\Providers\ProductivityServiceProvider::class,`
 
+
+In your .env file, add the following variables:
+
+`PRODUCTIVITY_DOMAIN=your-domain.com`
+`PRODUCTIVITY_SUBDOMAIN=productivity`
+
 Next, publish the package's views, migrations and routes:
 
 `$ php artisan vendor:publish`
@@ -40,3 +46,4 @@ Finally, run the migration to add productivity's folders to the database. Note t
 When adding Productivity to a fresh Laravel installation, consider doing the following:
 * Change app name in config/app
 * Install Bugsnag
+* Install and Configure Algolia

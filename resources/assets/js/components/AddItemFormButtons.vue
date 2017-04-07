@@ -29,6 +29,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'newChecklistItem'
+    ]),
     saveButtonIcon: function() {
       return this.isSaving ? 'fa-spinner fa-spin' : 'fa-floppy-o'
     }

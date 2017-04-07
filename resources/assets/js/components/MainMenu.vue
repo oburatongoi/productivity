@@ -4,7 +4,7 @@
 
     <div class="main-logo">
       <!-- <i class="fa fa-bars" aria-hidden="true"></i> -->
-        <a href="/productivity">
+        <a href="/">
             Productivity
         </a>
     </div>
@@ -14,7 +14,7 @@
     <ul class="main-menu-options">
 
       <li class="menu-option">
-          <a href="/productivity">
+          <a href="/">
               <i class="fa fa-fw fa-home" aria-hidden="true"></i>
               Home
           </a>
@@ -31,14 +31,14 @@
       <li v-if="showNestedOptions" class="nested-menu-options" :class="{open:showNestedOptions}">
         <ul>
           <li>
-            <a href="/productivity/folders">
+            <a href="/folders">
                 <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
                 Folders
             </a>
           </li>
 
           <li>
-            <a href="/productivity/lists">
+            <a href="/lists">
                 <i class="fa fa-fw fa-list" aria-hidden="true"></i>
                 Lists
             </a>

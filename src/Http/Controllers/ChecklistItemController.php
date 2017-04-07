@@ -25,7 +25,7 @@ class ChecklistItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Checklist $checklist)
+    public function store($account, Request $request, Checklist $checklist)
     {
         $this->authorize('modify', $checklist);
 
@@ -43,7 +43,7 @@ class ChecklistItemController extends Controller
         ]);
     }
 
-    public function update(Request $request, ChecklistItem $item)
+    public function update($account, Request $request, ChecklistItem $item)
     {
         $this->authorize('modify', $item->checklistById());
 
@@ -60,10 +60,10 @@ class ChecklistItemController extends Controller
         } else $item->checked_at = null;
 
         if ($request->has('item.content')) $item->content = $request->item['content'];
-        $item->comments = $request->item['comments'];
-        $item->is_urgent = $request->item['is_urgent'];
-        $item->is_important = $request->item['is_important'];
-        $item->deadline = $request->item['deadline'] ?: null;
+        if ($request->has('item.comments')) $item->comments = $request->item['comments'];
+        if ($request->has('item.is_urgent')) $item->is_urgent = $request->item['is_urgent'];
+        if ($request->has('item.is_important')) $item->is_important = $request->item['is_important'];
+        if ($request->has('item.deadline')) $item->deadline = $request->item['deadline'];
 
         $item->save();
 
@@ -72,47 +72,13 @@ class ChecklistItemController extends Controller
         ]);
     }
 
-    // public function check(Request $request, ChecklistItem $item)
-    // {
-    //     $this->authorize('modify', $item->checklistById());
-    //
-    //     $this->validate($request, [
-    //         'action' => 'required',
-    //     ]);
-    //
-    //     try {
-    //
-    //         if ($request->input('action') && $request->input('action') == 'check') {
-    //             $item->checked_at = date('Y-m-d H:i:s');
-    //         } else {
-    //             $item->checked_at = null;
-    //         }
-    //
-    //         $item->save();
-    //
-    //         return response()->json([
-    //             'item' => $item
-    //         ]);
-    //
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'errorMessage' => $e->getMessage(),
-    //             'errorCode' => $e->getCode(),
-    //             'status' => 420,
-    //         ]);
-    //     }
-    //
-    //
-    //
-    // }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, ChecklistItem $item)
+    public function destroy($account, Request $request, ChecklistItem $item)
     {
         $this->authorize('modify', $item->checklistById());
 
