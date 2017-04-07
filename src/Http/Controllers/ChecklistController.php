@@ -79,13 +79,15 @@ class ChecklistController extends Controller
         $this->authorize('view', $checklist);
 
         $checklist->load(['items' => function($query) {
-            // $query->orderBy(\DB::raw('-`deadline`'), 'desc');
+            $query->orderBy(\DB::raw('-`deadline`'), 'desc');
+            $query->orderBy('created_at', 'desc');
             $query->latest();
         }]);
 
         JavaScript::put([
             'checklist' => $checklist,
             'ancestors' => $checklist->getFolderTree(),
+            'currentFolder' => $checklist->folderById(),
             'model' => 'list',
         ]);
 
