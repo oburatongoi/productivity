@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="search-wrapper">
-    <form class="search-form" :class="searchFormClass" @submit.prevent="triggerSearch">
+    <form class="search-form" :class="searchFormClass" @submit.prevent="debounceSearch">
       <i class="fa fa-search" aria-hidden="true"></i>
-      <input type="search" class="search-input" v-model="query" placeholder="SEARCH" v-on:keyup="triggerSearch" v-on:keyup.delete="clearSearchResults">
+      <input type="search" class="search-input" v-model="query" placeholder="SEARCH" v-on:keyup="debounceSearch" v-on:keyup.delete="clearSearchResults">
       <i class="fa fa-times cancel-search-btn" aria-hidden="true" v-if="query" @click="cancel"></i>
     </form>
   </div>
@@ -28,10 +28,15 @@ export default {
       'setIsSearching',
       'setSearchErrorMessage'
     ]),
-    triggerSearch: _.debounce(function() {
+    debounceSearch: _.debounce(function() {
       this.setSearchErrorMessage()
       this.setIsSearching(true)
       this.setSearchQuery(this.query)
+      if (this.query) {
+        this.triggerSearch()
+      }
+    }, 500),
+    triggerSearch: function() {
       axios.post('/search', {currentFolderId: this.currentFolder.id, query: this.query})
       .then(
         (response) => this.handleSuccessfulSearch(response)
@@ -39,7 +44,7 @@ export default {
       .catch(
         (response) => this.handleSearchError(response)
       )
-    }, 300),
+    },
     handleSuccessfulSearch: function(response) {
       this.setIsSearching(false)
       response.data.results ? this.setSearchResults(response.data.results) : this.clearSearchResults()

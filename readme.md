@@ -15,6 +15,12 @@ In your .env file, add the following variables:
 `PRODUCTIVITY_DOMAIN=your-domain.com`
 `PRODUCTIVITY_SUBDOMAIN=productivity`
 
+If using Scout with Algolia, set the following environment variables
+`FOLDER_INDEX_NAME=the-name-of-your-folder-index` defaults to  `prod_FOLDERS`
+`CHECKLIST_INDEX_NAME=the-name-of-your-folder-index` defaults to  `prod_CHECKLISTS`
+
+Be sure to update your DNS 'A' or 'CNAME' settings to include the new name and add SSL encryption for your desired subdomain if you do not have wildcard subdomain encryption.
+
 Next, publish the package's views, migrations and routes:
 
 `$ php artisan vendor:publish`

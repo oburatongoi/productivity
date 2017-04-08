@@ -41,7 +41,8 @@ class Folder extends Model
      */
     public function searchableAs()
     {
-        return env('FOLDER_INDEX_NAME', 'dev_FOLDERS');
+        // return env('FOLDER_INDEX_NAME', 'dev_FOLDERS');
+        return config('productivity.folder_index_name', 'folders');
     }
 
     /**
@@ -73,30 +74,21 @@ class Folder extends Model
         return $this->hasMany('Oburatongoi\Productivity\Checklist');
     }
 
-    // public function notes()
-    // {
-    //     return $this->hasMany('Oburatongoi\Productivity\Note');
-    // }
-    //
-    // public function goals()
-    // {
-    //     return $this->hasMany('Oburatongoi\Productivity\Goal');
-    // }
-
-    // public function teammates()
-    // {
-    //     return $this->belongsToMany('App\User', 'folder_user', 'reference_id', 'user_id');
-    // }
-
     protected $touches = ['folder'];
     protected static function boot() {
     parent::boot();
     static::deleting(function(Folder $folder) {
-        $folder->subfolders()->delete();
-        $folder->checklists()->delete();
-        // $folder->notes()->delete();
-        // $folder->goals()->delete();
-        // $folder->teammates()->delete();
+        if ($folder->isForceDeleting()) {
+            $folder->subfolders()->forceDelete();
+            $folder->checklists()->forceDelete();
+        } else {
+            $folder->subfolders()->delete();
+            $folder->checklists()->delete();
+        }
+    });
+    static::restoring(function(Folder $folder) {
+        $folder->subfolders()->restore();
+        $folder->checklists()->restore();
     });
   }
 }

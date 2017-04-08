@@ -23,8 +23,6 @@ class Checklist extends Model
       'fake_id', 'user_id', 'folder_id', 'title', 'comments', 'visibility', 'published_at', 'created_at', 'updated_at', 'deleted_at',
     ];
 
-    protected $touches = ['folder'];
-
     protected $casts = [
         'id' => 'integer',
         'reference_id' => 'integer',
@@ -39,7 +37,8 @@ class Checklist extends Model
      */
     public function searchableAs()
     {
-        return env('CHECKLIST_INDEX_NAME', 'dev_CHECKLISTS');
+        // return env('CHECKLIST_INDEX_NAME', 'dev_CHECKLISTS');
+        return config('productivity.checklist_index_name', 'checklists');
     }
 
     /**
@@ -66,10 +65,18 @@ class Checklist extends Model
       return $this->hasMany('Oburatongoi\Productivity\ChecklistItem', 'checklist_id');
     }
 
+    protected $touches = ['folder'];
     protected static function boot() {
         parent::boot();
         static::deleting(function(Checklist $checklist) {
-          $checklist->items()->delete();
+            if ($checklist->isForceDeleting()) {
+                $checklist->items()->forceDelete();
+            } else {
+                $checklist->items()->delete();
+            }
+        });
+        static::restoring(function(Checklist $checklist) {
+            $checklist->items()->restore();
         });
     }
 

@@ -22,4 +22,24 @@ return [
 
     'subdomain' => env('PRODUCTIVITY_SUBDOMAIN', 'productivity'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Scout index to use when searching folders
+    |--------------------------------------------------------------------------
+    |
+    | Specify which index you would like Productivity to use
+    |
+    */
+    'folder_index_name' => env('FOLDER_INDEX_NAME', 'prod_FOLDERS'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Scout index to use when searching checklists
+    |--------------------------------------------------------------------------
+    |
+    | Specify which index you would like Productivity to use
+    |
+    */
+    'checklist_index_name' => env('CHECKLIST_INDEX_NAME', 'prod_CHECKLISTS'),
+
 ];
