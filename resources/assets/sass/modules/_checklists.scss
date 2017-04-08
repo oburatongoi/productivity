@@ -124,6 +124,7 @@
     display: inline;
     float: right;
     padding: 2px;
+    vertical-align: middle;
 }
 .delete-item-btn {
     color: $brand-danger;
@@ -132,6 +133,9 @@
     border: 1px solid $brand-danger;
     margin-right: 7px;
     padding: 2px 4px;
+}
+button.delete-item-btn {
+    font-size: 0.9em;
 }
 
 .datepicker-container {
@@ -156,14 +160,11 @@
     cursor: pointer;
     color: $text-color;
     font-size: 0.7em;
-    // .fa,
-    p {
-        display: inline-block;
-    }
     p {
         margin: 0 3px;
         font-family: $font-family-sans-serif;
         font-weight: 600;
+        display: inline-block;
     }
 }
 .delete-checklist-item {
@@ -423,20 +424,32 @@
         }
     }
 
-    .edit-content {
+
+    .edit-content,
+    .edit-comments {
         textarea {
             display: inline-block;
             vertical-align: top;
-            width: 85%;
-            border: 0;
             border-radius: 2px;
             outline-color: white;
             outline-style: solid;
-            padding: 4px 4px 6px;
             outline-width: 1px;
             height: auto;
             margin: 0;
             resize: none;
+            &:focus {
+                outline-color: $list-primary;
+                color: black;
+            }
+        }
+    }
+
+    .edit-content {
+        textarea {
+            border: 0;
+            width: 85%;
+            border: 0;
+            padding: 4px 4px 6px;
             font-size: 0.9em;
             &:focus {
                 outline-color: $list-primary;
@@ -453,6 +466,20 @@
             }
             @media(min-width:1433px){
                 width: 90%;
+            }
+        }
+    }
+
+    .edit-comments {
+        margin-bottom: 20px;
+        textarea {
+            padding: 10px;
+            border: 1px solid $base-border-color;
+            font-size: 0.9em;
+            width: 100%;
+            &:focus {
+                border: 0;
+                margin-left: 0;
             }
         }
     }

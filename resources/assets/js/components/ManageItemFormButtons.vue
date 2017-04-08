@@ -1,35 +1,29 @@
 <template lang="html">
   <div class="item-form-buttons">
-    <div :class="{'form-group':!itemIsEditable}">
-      <button v-if="hasUserInput"
-        type="button"
-        class="btn btn-xs btn-list"
-        @click.prevent="submit"
-      >
-      <i class="fa" :class="saveButtonIcon" aria-hidden="true"></i>
-      Save
-      </button>
-      <button
-        type="button"
-        class="btn btn-xs btn-default"
-        v-if="itemIsEditable||!itemIsEditable&&hasUserInput"
-        @click="cancel"
-      >Close</button>
-    </div>
+    <button
+      type="button"
+      class="btn btn-xs btn-list"
+      @click.prevent="saveAndClose"
+    >
+    <i class="fa" :class="saveButtonIcon" aria-hidden="true"></i>
+    Save &amp; Close
+    </button>
 
-    <div class="delete-item-btn-container" v-if="itemIsEditable">
+    <div class="delete-item-btn-container">
       <i
         class="fa toggle-delete-item-btn"
         :class="deletabilityIcon"
         aria-hidden="true"
         @click="toggleDeletability"
       ></i>
-      <i
-        class="fa fa-trash-o delete-item-btn"
-        aria-hidden="true"
-        v-if="isDeletable"
-        @click="deleteItem"
-      ></i>
+      <button type="button" v-if="isDeletable" class="delete-item-btn">
+        <i
+          class="fa fa-trash-o"
+          aria-hidden="true"
+          @click="deleteItem"
+        ></i> Delete
+      </button>
+
     </div>
   </div>
 </template>
@@ -40,14 +34,6 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'manage-item-form-buttons',
   props: {
-    itemIsEditable: {
-      type: Boolean,
-      default: true
-    },
-    hasUserInput: {
-      type: Boolean,
-      default: true
-    },
     isSaving: {
       type: Boolean,
       default: false
@@ -77,7 +63,7 @@ export default {
     submit: function() {
       this.$emit('saveChanges')
     },
-    cancel: function() {
+    saveAndClose: function() {
       this.$emit('resetForm')
     },
     toggleDeletability: function() {

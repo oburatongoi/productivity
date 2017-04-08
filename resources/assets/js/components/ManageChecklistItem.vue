@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="manage-checklist-item panel side-panel">
     <div class="sizing-buttons">
-      <i class="fa fa-fw fa-times pull-right" v-if="!savingChanges" aria-hidden="true" @click="cancel"></i>
+      <i class="fa fa-fw fa-times pull-right" v-if="!savingChanges" aria-hidden="true" @click="saveAndClose"></i>
       <span class="fa-stack pull-right" v-if="savingChanges">
         <i class="fa fa-circle-o-notch fa-spin fa-stack-2x"></i>
         <i class="fa fa-floppy-o fa-stack-1x"></i>
@@ -23,7 +23,9 @@
             @keyup="debounceSaveChanges"
             @keydown="debounceSaveChanges"
             @delete="debounceSaveChanges"
-            @change.blur="saveChanges"
+            @change="debounceSaveChanges"
+            @blur="saveChanges"
+            maxlength="255"
           ></textarea>
         </h4>
       </div>
@@ -33,14 +35,12 @@
       <manage-item-form-meta></manage-item-form-meta>
 
       <manage-item-form-comments
-        @saveChanges="saveChanges"
-        :item="currentEditableItem"
+        @saveChanges="debounceSaveChanges"
       ></manage-item-form-comments>
 
       <manage-item-form-buttons
-        :item="currentEditableItem"
         :isSaving="savingChanges"
-        @resetForm="cancel"
+        @resetForm="saveAndClose"
         @saveChanges="saveChanges"
       ></manage-item-form-buttons>
     </div>
@@ -69,12 +69,13 @@ export default {
     ...mapActions([
       'toggleCurrentEditableItemExpansion',
       'saveCurrentEditableItem',
-      'addCurrentlyEditable',
+      // 'addCurrentlyEditable',
       'removeCurrentlyEditable'
     ]),
-    cancel: function() {
+    saveAndClose: function() {
+      this.saveChanges()
       this.removeCurrentlyEditable()
-      this.addCurrentlyEditable(this.currentEditableItem)
+      // this.addCurrentlyEditable(this.currentEditableItem)
     },
     debounceSaveChanges: _.debounce(function() {
       this.saveChanges()
@@ -123,7 +124,8 @@ export default {
   },
   created: function() {
     this.$nextTick(function() {
-      autosize(document.querySelector('textarea'));
+      autosize(document.querySelector('.content-textarea'));
+      autosize(document.querySelector('.comments-textarea'));
     })
   }
 }
