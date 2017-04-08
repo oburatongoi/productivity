@@ -35,7 +35,7 @@
       <manage-item-form-meta></manage-item-form-meta>
 
       <manage-item-form-comments
-        @saveChanges="debounceSaveChanges"
+        @saveChanges="saveChanges"
       ></manage-item-form-comments>
 
       <manage-item-form-buttons
@@ -61,21 +61,18 @@ export default {
   data () {
     return {
       savingChanges: false,
-      checkboxClass: 'fa-check',
-      // itemClone: {}
+      checkboxClass: 'fa-check'
     }
   },
   methods: {
     ...mapActions([
       'toggleCurrentEditableItemExpansion',
       'saveCurrentEditableItem',
-      // 'addCurrentlyEditable',
       'removeCurrentlyEditable'
     ]),
     saveAndClose: function() {
       this.saveChanges()
       this.removeCurrentlyEditable()
-      // this.addCurrentlyEditable(this.currentEditableItem)
     },
     debounceSaveChanges: _.debounce(function() {
       this.saveChanges()
@@ -89,7 +86,7 @@ export default {
       )
     },
     checkItem: function() {
-      this.checkboxClass = 'fa-circle-o-notch fa-spin'
+      this.checkboxClass = 'fa-check fa-spin'
       if (this.currentEditableItem.checked_at) {
         this.currentEditableItem.checked_at = null
       } else {
@@ -102,11 +99,7 @@ export default {
           .catch(
             () => {this.checkboxClass = 'fa-check'}
           )
-    },
-    // cloneItem: function() {
-    //   this.itemClone.content = this.currentEditableItem.content
-    //   this.itemClone.comments = this.currentEditableItem.comments
-    // }
+    }
   },
   computed: {
     ...mapGetters([

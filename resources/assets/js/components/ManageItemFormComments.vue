@@ -6,14 +6,15 @@
     </div>
 
     <textarea
-      @change="saveChanges"
-      @keyup="saveChanges"
-      @blur="saveChanges"
-      @delete="saveChanges"
+      @change="debounceSaveChanges"
+      @keyup="debounceSaveChanges"
+      @keydown="debounceSaveChanges"
+      @delete="debounceSaveChanges"
       class="comments-textarea"
       v-model="currentEditableItem.comments"
       placeholder="Add a comment..."
       maxlength="25000"></textarea>
+
   </div>
 </template>
 
@@ -28,9 +29,12 @@ export default {
     ])
   },
   methods: {
+    debounceSaveChanges: _.debounce(function() {
+      this.saveChanges()
+    }, 500),
     saveChanges: function() {
       this.$emit('saveChanges')
     }
-  },
+  }
 }
 </script>

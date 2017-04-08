@@ -6,11 +6,11 @@
       <label><i class="fa" :class="checkboxClass"></i></label>
     </div>
 
-    <p class="show-item-content" @click="toggleEditability">{{ item.content }}</p>
+    <p class="show-item-content" @click="toggleEditability" @dblclick="toggleEditability">{{ item.content }}</p>
 
-    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="toggleEditability"></i>
+    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="toggleEditability" @dblclick="toggleEditability"></i>
 
-    <p class="preview-deadline" @click="toggleEditability">
+    <p class="preview-deadline" @click="toggleEditability" @dblclick="toggleEditability">
       <span v-if="item.is_important">
         <i class="fa fa-fw fa-star" aria-hidden="true"></i>
       </span>
