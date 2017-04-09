@@ -24,7 +24,6 @@
             @keydown="debounceSaveChanges"
             @delete="debounceSaveChanges"
             @change="debounceSaveChanges"
-            @blur="saveChanges"
             maxlength="255"
           ></textarea>
         </h4>
@@ -76,7 +75,7 @@ export default {
     },
     debounceSaveChanges: _.debounce(function() {
       this.saveChanges()
-    }, 500),
+    }, 1000),
     saveChanges: function() {
       this.savingChanges = true
       this.saveCurrentEditableItem().then(

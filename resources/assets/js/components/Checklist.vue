@@ -4,13 +4,24 @@
       <div class="panel-heading">
           <h4>
             <i class="fa fa-fw fa-list" :class="{'list-color-scheme':isEditable}" aria-hidden="true"></i>
-            <span v-if="!isEditable" @click="toggleEditability(true)">{{localChecklist.title}}</span>
-            <input type="text" class="edit-checklist-input" ref="titleinput" v-model="checklist.title" v-if="isEditable" @keyup.enter.prevent="save" @keyup="checkForChanges" @change="checkForChanges">
-            <i class="fa fa-fw fa-times edit-checklist-icon" aria-hidden="true" v-if="isEditable" @click="cancelChanges"></i>
-            <button type="button" class="btn btn-list btn-xs edit-checklist-btn" v-if="unsavedChanges" @click.prevent="save">
+            <span v-if="!isEditable" @click="toggleEditability(true)">{{checklist.title}}</span>
+            <input
+              type="text"
+              class="edit-checklist-input"
+              ref="titleinput"
+              v-model="checklist.title"
+              v-if="isEditable"
+              @keyup.enter="debounceSaveChanges"
+              @keyup="debounceSaveChanges"
+              @keydown="debounceSaveChanges"
+              @change="debounceSaveChanges"
+              v-focus
+            />
+            <i class="fa fa-fw edit-checklist-icon" :class="inputIcon" aria-hidden="true" v-if="isEditable" @click="saveAndClose"></i>
+            <!-- <button type="button" class="btn btn-list btn-xs edit-checklist-btn" v-if="unsavedChanges" @click.prevent="debounceSaveChanges">
               Save
               <i class="fa fa-spinner fa-spin" aria-hidden="true"v-if="loading"></i>
-            </button>
+            </button> -->
           </h4>
 
           <div class="checklist-filters">
@@ -48,7 +59,7 @@
                 <ul :class="{ open: selectingPriorityFilter }" v-if="selectingPriorityFilter">
                   <li v-if="selectingPriorityFilter||filters.priority=='none'" @click="setPriorityFilter('none')">
                     <i class="fa fa-fw fa-globe" aria-hidden="true"></i>
-                    All
+                    All (No Priority)
                   </li>
                   <li v-if="selectingPriorityFilter||filters.priority=='both'" @click="setPriorityFilter('both')">
                     <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
@@ -90,11 +101,8 @@ export default {
     name: 'checklist',
     data () {
       return {
-        localChecklist: {
-          title: undefined
-        },
         isEditable: false,
-        loading: false,
+        inputIcon: 'fa-times',
         unsavedChanges: false,
         selectingCheckedFilter: false,
         selectingPriorityFilter: false
@@ -159,35 +167,39 @@ export default {
         'saveChecklist',
         'setFilters'
       ]),
-      cancelChanges: function() {
-        this.checklist.title = this.localChecklist.title
+      saveAndClose: function() {
+        if (this.unsavedChanges == true) {
+          this.saveChanges()
+        }
         this.toggleEditability(false)
       },
-      checkForChanges: _.debounce(
-        function() {
-          console.log('checking for changes...');
-          let stringsMatch = this.checklist.title === this.localChecklist.title;
-          if (!stringsMatch) {
-            console.log('There are unsaved changes...');
-          }
-          return this.unsavedChanges = ! stringsMatch
-        },
-        300
-      ),
-      save: function() {
-        this.loading = true
+      debounceSaveChanges: _.debounce(function() {
+        this.unsavedChanges = true
+        this.saveChanges()
+      }, 1000),
+      // checkForChanges: _.debounce(
+      //   function() {
+      //     console.log('checking for changes...');
+      //     let stringsMatch = this.checklist.title === this.localChecklist.title;
+      //     if (!stringsMatch) {
+      //       console.log('There are unsaved changes...');
+      //     }
+      //     return this.unsavedChanges = ! stringsMatch
+      //   },
+      //   500
+      // ),
+      saveChanges: function() {
+        this.inputIcon = 'fa-spin fa-circle-o-notch'
         this.saveChecklist(this.checklist)
         .then(
           (checklist) => {
-            this.toggleEditability(false)
-            this.loading = this.unsavedChanges = false
-            this.checklist = checklist
-            this.syncChecklist()
+            this.inputIcon = 'fa-times'
+            this.unsavedChanges = false
           }
         )
         .catch(
           () => {
-            this.loading = false
+            this.inputIcon = 'fa-times'
             alert('Error saving List')
           }
         )
@@ -199,9 +211,6 @@ export default {
       setPriorityFilter: function(filter){
         this.setFilters({type: 'priority', value: filter})
         return this.toggleFilter()
-      },
-      syncChecklist: function(){
-        this.localChecklist.title = this.checklist.title
       },
       toggleFilter: function(type = null){
         this.selectingCheckedFilter = this.selectingPriorityFilter = false
@@ -223,20 +232,7 @@ export default {
         } else {
           this.isEditable = ! this.isEditable
         }
-
-        if (this.isEditable) {
-          this.$nextTick(function(){
-            this.focusOnInput()
-          })
-        }
-
       },
-      focusOnInput: function() {
-        this.$refs.titleinput.focus()
-      }
-    },
-    created: function() {
-      this.syncChecklist()
     }
 }
 </script>

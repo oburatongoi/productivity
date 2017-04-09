@@ -31,7 +31,7 @@ export default {
   methods: {
     debounceSaveChanges: _.debounce(function() {
       this.saveChanges()
-    }, 500),
+    }, 1000),
     saveChanges: function() {
       this.$emit('saveChanges')
     }
