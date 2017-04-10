@@ -111,8 +111,19 @@
     position: relative;
 }
 .delete-item-btn-container {
-    position: absolute;
-    bottom: 10px;
+    & > button,
+    & > i {
+        position: absolute;
+        bottom: 10px;
+    }
+    & > button {
+        left: 10px;
+    }
+
+    & > i {
+        right: 10px;
+    }
+
     right: 10px;
     @include desktop-overflow-y;
     margin: 0;
@@ -177,13 +188,29 @@ button.delete-item-btn {
     font-size: 0.6em;
     cursor: pointer;
     color: $input-border;
+    &.fa-circle-o-notch,
     &:hover {
         color: $list-primary;
     }
 }
 
+.checklist-title {
+    display: inline-block;
+}
+
+.checklist h4 .fa-list,
+.checklist-title,
 .edit-checklist-input {
+    vertical-align: top;
+}
+
+.checklist-title,
+.edit-checklist-input {
+    line-height: 1.2;
     width: 85%;
+}
+
+.edit-checklist-input {
     border: 0;
     color: $list-primary;
     outline: none;
@@ -266,12 +293,18 @@ button.delete-item-btn {
 .checklist {
     height: 100%;
     @include desktop-overflow-y;
+
     .main-panel {
         height: 100%;
         @include desktop-overflow-y;
         .panel-heading {
             padding-bottom: 0;
         }
+    }
+
+    .side-panel {
+        @include desktop-overflow-y;
+        height: 100%;
     }
     .checklist-index-panel {
         height: 75%;
@@ -284,7 +317,6 @@ button.delete-item-btn {
         }
 
         .side-panel {
-            min-height: 100%;
             width: 100%;
         }
     }
@@ -297,9 +329,9 @@ button.delete-item-btn {
             .side-panel {
                 position: absolute;
                 top: 56px;
-                left: 0;
-                right: 0;
-                width: 100%;
+                left: 10px;
+                right: 10px;
+                width: auto;
             }
         }
 
@@ -353,7 +385,7 @@ button.delete-item-btn {
                 line-height: 1em;
             }
             @media(min-width:1400px){
-                width: 65%;
+                width: 60%;
             }
         }
 
@@ -375,9 +407,15 @@ button.delete-item-btn {
         border: 1px solid $list-primary;
     }
 
+    & > .position-relative {
+        height: inherit;
+        background: none;
+    }
+
 
     .sizing-buttons {
-        padding: 10px;
+        // padding: 10px;
+        padding: 0px;
         height: 25px;
         overflow: visible;
         @include clearfix;
@@ -406,12 +444,31 @@ button.delete-item-btn {
     }
 
     .panel-heading {
-        padding-bottom: 0;
+        padding-bottom: 10px;
         padding-top: 10px;
-
     }
     .panel-body {
-        padding-top: 0;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        @include desktop-overflow-y-scroll;
+        height: 75%;
+    }
+
+    .panel-footer {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        // background: rgba(255,255,255,0.8);
+        border: 0;
+        background: -webkit-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
+        background: -o-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
+        background: -moz-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
+        background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
+    }
+
+    .item-form-buttons {
+        background: transparent;
     }
 
     .manage-checklist-item-content-textarea {
@@ -474,8 +531,8 @@ button.delete-item-btn {
     }
 
     .edit-comments {
-        margin-top: 20px;
-        margin-bottom: 20px;
+        // margin-top: 20px;
+        // margin-bottom: 20px;
         textarea {
             border-bottom-right-radius: 2px;
             border-bottom-left-radius: 2px;

@@ -1,28 +1,16 @@
-@mixin desktop-overflow-y {
-    @media(min-width:768px){
-        overflow: hidden;
-    }
-}
-
-
 @import "breadcrumbs";
-@import "create_new";
 @import "checklists";
+@import "colors";
+@import "create_new";
 @import "index_all";
 @import "item_form";
-@import "main_layout";
 @import "main_menu";
+@import "main_layout";
 @import "move_to_folder";
 @import "navs";
-@import "colors";
 @import "search_form";
 @import "vendor_tooltip";
 @import "../../../../node_modules/pretty-checkbox/src/pretty.scss";
-
-// .top-padding {
-//     padding: 10px;
-// }
-
 
 .position-relative {
     position: relative;

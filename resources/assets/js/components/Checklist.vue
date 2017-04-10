@@ -4,7 +4,9 @@
       <div class="panel-heading">
           <h4>
             <i class="fa fa-fw fa-list" :class="{'list-color-scheme':isEditable}" aria-hidden="true"></i>
-            <span v-if="!isEditable" @click="toggleEditability(true)">{{checklist.title}}</span>
+            <span v-if="!isEditable" class="checklist-title" @click="toggleEditability(true)">
+              {{checklist.title}}
+            </span>
             <input
               type="text"
               class="edit-checklist-input"
@@ -15,13 +17,15 @@
               @keyup="debounceSaveChanges"
               @keydown="debounceSaveChanges"
               @change="debounceSaveChanges"
+              @blur="saveAndClose"
               v-focus
             />
-            <i class="fa fa-fw edit-checklist-icon" :class="inputIcon" aria-hidden="true" v-if="isEditable" @click="saveAndClose"></i>
-            <!-- <button type="button" class="btn btn-list btn-xs edit-checklist-btn" v-if="unsavedChanges" @click.prevent="debounceSaveChanges">
-              Save
-              <i class="fa fa-spinner fa-spin" aria-hidden="true"v-if="loading"></i>
-            </button> -->
+            <i class="fa fa-fw edit-checklist-icon"
+              :class="inputIcon"
+              aria-hidden="true"
+              v-if="isEditable"
+              @click="saveAndClose"
+            ></i>
           </h4>
 
           <div class="checklist-filters">

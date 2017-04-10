@@ -1,10 +1,24 @@
-@mixin top-menu-height {
-    height: 40px;
-}
+
 @mixin clearfix {
     &:after {
         display: inline-block;
         content:"";
         clear:both;
     }
+}
+
+@mixin desktop-overflow-y {
+    @media(min-width:768px){
+        overflow: hidden;
+    }
+}
+
+@mixin desktop-overflow-y-scroll {
+    @media(min-width:768px){
+        overflow: scroll;
+    }
+}
+
+@mixin top-menu-height {
+    height: 40px;
 }
