@@ -5,24 +5,23 @@
       class="btn btn-xs btn-list"
       @click.prevent="saveAndClose"
     >
-    <i class="fa" :class="saveButtonIcon" aria-hidden="true"></i>
-    Save &amp; Close
+      <i class="fa" :class="saveButtonIcon" aria-hidden="true"></i>
+      Save &amp; Close
     </button>
 
     <div class="delete-item-btn-container">
       <i
-        class="fa toggle-delete-item-btn"
+        class="fa fa-fw toggle-delete-item-btn"
         :class="deletabilityIcon"
         aria-hidden="true"
         @click="toggleDeletability"
       ></i>
-      <button type="button" v-if="isDeletable" class="delete-item-btn">
-        <i
-          class="fa fa-trash-o"
-          aria-hidden="true"
-          @click="deleteItem"
-        ></i> Delete
-      </button>
+      <i
+        v-if="isDeletable"
+        class="fa fa-fw fa-trash delete-item-btn"
+        aria-hidden="true"
+        @click="deleteItem"
+      ></i>
 
     </div>
   </div>

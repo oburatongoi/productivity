@@ -1,3 +1,8 @@
+
+@import 'checklists/show_item';
+@import 'checklists/checklist_filters';
+@import 'checklists/manage_checklist_item';
+
 .deadline-input {
     width: 150px;
     display: inline-block;
@@ -8,100 +13,6 @@
     }
 }
 
-.show-item {
-    @include desktop-overflow-y;
-    border-bottom: 1px solid lighten($base-border-color, 10%);
-    &.is-selected,
-    &:hover {
-        background: lighten($body-bg, 1%);
-
-        .fa-angle-down.toggle {
-            color: $list-primary;
-            -webkit-transform: rotate(-90deg);
-            -moz-transform: rotate(-90deg);
-            -ms-transform: rotate(-90deg);
-            -o-transform: rotate(-90deg);
-            transform: rotate(-90deg);
-        }
-    }
-
-    &.is-selected {
-        border: 1px solid $list-primary;
-        border-radius: 2px;
-        padding-left: 10px;
-        color: black;
-    }
-
-    p, i {
-        display: inline-block;
-        margin:0;
-        vertical-align: middle;
-    }
-    p {
-        cursor: pointer;
-        @media(min-width:992px){
-            white-space: nowrap;
-            @include desktop-overflow-y;
-            text-overflow: ellipsis;
-        }
-    }
-    i {
-        font-size: 1.8em;
-        line-height: 1em;
-        margin: 0;
-        padding: 0;
-    }
-
-    .show-item-content {
-        width: 60%;
-        @media(min-width:768px){
-            width: 75%;
-            padding: 5px 0;
-            font-size: 1em;
-            line-height: 0.7em;
-        }
-        @media(min-width:992px){
-            width: 75%;
-            padding: 7px 0;
-            white-space: nowrap;
-            @include desktop-overflow-y;
-            text-overflow: ellipsis;
-        }
-        @media(min-width:1200px){
-            width: 80%;
-            padding: 10px 0;
-            font-size: 1.1em;
-            line-height: 1em;
-        }
-    }
-
-    .preview-deadline,
-    .toggle {
-        float: right;
-        margin-top: 5px;
-        margin-right: 5px;
-        cursor: pointer;
-    }
-    .toggle {
-        font-size: 16px;
-        padding: 7px;
-        &:hover {
-            color: $list-primary;
-        }
-    }
-    .preview-deadline {
-        font-size: 0.75em;
-        margin-top: 10px;
-        color: darken($base-border-color, 20%);
-        .fa {
-            font-size: 1.2em;
-        }
-        span {
-            margin-right: 5px;
-        }
-    }
-
-}
 .edit-item-form {
     padding: 10px;
     background: $body-bg;
@@ -109,44 +20,6 @@
     border-radius: 3px;
     margin-bottom: 10px;
     position: relative;
-}
-.delete-item-btn-container {
-    & > button,
-    & > i {
-        position: absolute;
-        bottom: 10px;
-    }
-    & > button {
-        left: 10px;
-    }
-
-    & > i {
-        right: 10px;
-    }
-
-    right: 10px;
-    @include desktop-overflow-y;
-    margin: 0;
-    padding: 0;
-}
-.toggle-delete-item-btn,
-.delete-item-btn {
-    cursor: pointer;
-    display: inline;
-    float: right;
-    padding: 2px;
-    vertical-align: middle;
-}
-.delete-item-btn {
-    color: $brand-danger;
-    background: white;
-    border-radius: 3px;
-    border: 1px solid $brand-danger;
-    margin-right: 7px;
-    padding: 2px 4px;
-}
-button.delete-item-btn {
-    font-size: 0.9em;
 }
 
 .datepicker-container {
@@ -174,107 +47,11 @@ button.delete-item-btn {
     }
 }
 
-.edit-checklist-btn,
-.edit-checklist-icon {
-    float: right;
-}
-.edit-checklist-btn {
-    margin-top: 5px;
-}
 
-.edit-checklist-icon {
-    margin-top: 8px;
-    margin-left: 5px;
-    font-size: 0.6em;
-    cursor: pointer;
-    color: $input-border;
-    &.fa-circle-o-notch,
-    &:hover {
-        color: $list-primary;
-    }
-}
 
-.checklist-title {
-    display: inline-block;
-}
 
-.checklist h4 .fa-list,
-.checklist-title,
-.edit-checklist-input {
-    vertical-align: top;
-}
 
-.checklist-title,
-.edit-checklist-input {
-    line-height: 1.2;
-    width: 85%;
-}
-
-.edit-checklist-input {
-    border: 0;
-    color: $list-primary;
-    outline: none;
-}
-
-.checklist-filters {
-    margin-bottom: 10px;
-    @include clearfix;
-
-    .checked-filter {
-        ul {
-            left: 0;
-        }
-    }
-    .priority-filter {
-        ul {
-            right: 0;
-        }
-    }
-
-    .checked-filter,
-    .priority-filter {
-        position: relative;
-        display: inline-block;
-        min-width: 100px;
-        cursor: pointer;
-        font-size: 0.9em;
-
-        ul {
-            position: absolute;
-            top: 0;
-            margin: 0;
-            padding: 3px 6px;
-            list-style: none;
-            border-radius: $base-border-radius;
-            min-width: 175px;
-
-            &.open {
-                border: 1px solid $base-border-color;
-                z-index: 1000;
-                background: white;
-            }
-
-            li {
-                display: block;
-                padding: 2px;
-                border-radius: 2px;
-
-                i.fa {
-                    color: darken($base-border-color, 20%);
-                }
-                &:hover {
-                    background: rgba(224,224,224,0.3);
-                }
-
-                &:not(:last-child) {
-                    margin-bottom: 5px;
-                }
-            }
-        }
-    }
-}
-
-.item-form-comments {
+.add-item-form-comments {
     .comments-label {
         display: block;
         margin: 10px 0 0;
@@ -394,204 +171,52 @@ button.delete-item-btn {
             outline: none;
         }
     }
+
+    .edit-checklist-btn,
+    .edit-checklist-icon {
+        float: right;
+    }
+    .edit-checklist-btn {
+        margin-top: 5px;
+    }
+
+    .edit-checklist-icon {
+        margin-top: 8px;
+        margin-left: 5px;
+        font-size: 0.6em;
+        cursor: pointer;
+        color: $input-border;
+        &.fa-circle-o-notch,
+        &:hover {
+            color: $list-primary;
+        }
+    }
+
+    .checklist-title {
+        display: inline-block;
+    }
+
+    .checklist h4 .fa-list,
+    .checklist-title,
+    .edit-checklist-input {
+        vertical-align: middle;
+    }
+
+    .checklist-title,
+    .edit-checklist-input {
+        line-height: 1.2;
+        width: 85%;
+    }
+
+    .edit-checklist-input {
+        border: 0;
+        color: $list-primary;
+        outline: none;
+    }
 }
 
 .pretty {
     .fa {
         color: $list-primary;
-    }
-}
-
-.manage-checklist-item {
-    @media(min-width:769px){
-        border: 1px solid $list-primary;
-    }
-
-    & > .position-relative {
-        height: inherit;
-        background: none;
-    }
-
-
-    .sizing-buttons {
-        // padding: 10px;
-        padding: 0px;
-        height: 25px;
-        overflow: visible;
-        @include clearfix;
-        text-align: center;
-
-        .fa {
-            cursor: pointer;
-            color: $base-border-color;
-
-            & > &:hover {
-                color: $list-primary;
-            }
-        }
-
-        .fa-stack {
-            margin-top: -5px;
-            font-size: 0.75em;
-            .fa-flopy-o {
-                color: darken($base-border-color, 10%);
-            }
-            .fa-circle-o-notch {
-                color: $list-primary;
-                opacity: 0.6;
-            }
-        }
-    }
-
-    .panel-heading {
-        padding-bottom: 10px;
-        padding-top: 10px;
-    }
-    .panel-body {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        @include desktop-overflow-y-scroll;
-        height: 75%;
-    }
-
-    .panel-footer {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        // background: rgba(255,255,255,0.8);
-        border: 0;
-        background: -webkit-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
-        background: -o-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
-        background: -moz-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
-        background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
-    }
-
-    .item-form-buttons {
-        background: transparent;
-    }
-
-    .manage-checklist-item-content-textarea {
-        margin: 0;
-        padding: 0 0 3px 0;
-
-        .pretty {
-            vertical-align: text-top;
-            margin-top: 5px;
-        }
-    }
-
-
-    .edit-content,
-    .edit-comments {
-        textarea {
-            display: inline-block;
-            vertical-align: top;
-            border-radius: 2px;
-            outline-color: white;
-            outline-style: solid;
-            outline-width: 1px;
-            height: auto;
-            margin: 0;
-            resize: none;
-            &:focus {
-                outline-color: $list-primary;
-                color: black;
-            }
-        }
-    }
-
-    .edit-content {
-        textarea {
-            border: 0;
-            width: 85%;
-            // border: 0;
-            border: 1px solid white;
-            outline: none;
-            padding: 4px 4px 6px;
-            font-size: 0.9em;
-            &:focus {
-                // outline-color: $list-primary;
-                border: 1px dotted $list-primary;
-                color: black;
-            }
-            @media(max-width:768px){
-                width: 83%;
-            }
-            @media(min-width:1000px){
-                width: 81%;
-            }
-            @media(min-width:1200px){
-                width: 85%;
-            }
-            @media(min-width:1433px){
-                width: 90%;
-            }
-        }
-    }
-
-    .edit-comments {
-        // margin-top: 20px;
-        // margin-bottom: 20px;
-        textarea {
-            border-bottom-right-radius: 2px;
-            border-bottom-left-radius: 2px;
-            outline: none;
-            height: auto;
-            margin: 0;
-            resize: none;
-            padding: 2px;
-            border: 1px solid white;
-            border-top: 1px solid $base-border-color;
-            font-size: 1em;
-            width: 100%;
-            &:focus {
-                margin-left: 0;
-                border: 1px dotted $list-primary;
-                color: black;
-            }
-        }
-
-        .comments-label {
-            display: block;
-            margin: 0;
-            cursor: pointer;
-            color: darken($base-border-color, 20%);
-            font-size: 0.8em;
-            font-family: $font-family-sans-serif;
-            font-weight: 600;
-        }
-    }
-
-    .manage-item-form-meta {
-        background: lighten($body-bg, 1%);
-        padding: 3px;
-        border: 1px solid $base-border-color;
-        border-radius: 2px;
-        text-align: center;
-
-        .is-important,
-        .is-urgent,
-        .deadline {
-            display: inline-block;
-            margin: 0;
-            width: 32.5%;
-            color: darken($base-border-color, 20%);
-
-            label {
-                display: block;
-                margin: 0;
-                font-size: 0.8em;
-            }
-
-            .fa {
-                font-size: 1.1em;
-                cursor: pointer;
-            }
-            &:nth-child(2) {
-                border-left: 1px solid $base-border-color;
-                border-right: 1px solid $base-border-color;
-            }
-        }
     }
 }

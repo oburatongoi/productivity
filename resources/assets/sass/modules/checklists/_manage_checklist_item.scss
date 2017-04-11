@@ -1,0 +1,222 @@
+.manage-checklist-item {
+    @media(min-width:769px){
+        border: 1px solid $list-primary;
+    }
+
+    & > .position-relative {
+        height: inherit;
+        background: none;
+    }
+
+
+    .sizing-buttons {
+        // padding: 10px;
+        padding: 0px;
+        height: 25px;
+        overflow: visible;
+        @include clearfix;
+        text-align: center;
+
+        .fa {
+            cursor: pointer;
+            color: $base-border-color;
+
+            & > &:hover {
+                color: $list-primary;
+            }
+        }
+
+        .fa-stack {
+            margin-top: -5px;
+            font-size: 0.75em;
+            .fa-flopy-o {
+                color: darken($base-border-color, 10%);
+            }
+            .fa-circle-o-notch {
+                color: $list-primary;
+                opacity: 0.6;
+            }
+        }
+    }
+
+    .panel-heading {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    .panel-body {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        @include desktop-overflow-y-scroll;
+        height: 75%;
+    }
+
+    .panel-footer {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        border: 0;
+        background: -webkit-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
+        background: -o-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
+        background: -moz-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
+        background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
+    }
+
+    .item-form-buttons {
+        background: transparent;
+        @include clearfix;
+        & > button {
+            float: left;
+        }
+
+        .delete-item-btn-container {
+            @include clearfix;
+            @include desktop-overflow-y;
+            float: right;
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+
+            & > i.toggle-delete-item-btn,
+            & > i.delete-item-btn {
+                cursor: pointer;
+                display: inline;
+                float: right;
+                vertical-align: middle;
+                line-height: 1.4;
+                font-size: 16px;
+            }
+
+            & > i.delete-item-btn {
+                color: $brand-danger;
+                background: white;
+                margin-right: 10px;
+            }
+
+        }
+    }
+
+    .manage-checklist-item-content-textarea {
+        margin: 0;
+        padding: 0 0 3px 0;
+
+        .pretty {
+            vertical-align: text-top;
+            margin-top: 5px;
+        }
+    }
+
+
+    .edit-content,
+    .edit-comments {
+        textarea {
+            display: inline-block;
+            vertical-align: top;
+            border-radius: 2px;
+            outline-color: white;
+            outline-style: solid;
+            outline-width: 1px;
+            height: auto;
+            margin: 0;
+            resize: none;
+            &:focus {
+                outline-color: $list-primary;
+                color: black;
+            }
+        }
+    }
+
+    .edit-content {
+        textarea {
+            border: 0;
+            width: 85%;
+            // border: 0;
+            border: 1px solid white;
+            outline: none;
+            padding: 4px 4px 6px;
+            font-size: 0.9em;
+            &:focus {
+                // outline-color: $list-primary;
+                border: 1px dotted $list-primary;
+                color: black;
+            }
+            @media(max-width:768px){
+                width: 83%;
+            }
+            @media(min-width:1000px){
+                width: 81%;
+            }
+            @media(min-width:1200px){
+                width: 85%;
+            }
+            @media(min-width:1433px){
+                width: 90%;
+            }
+        }
+    }
+
+    .edit-comments {
+        // margin-top: 20px;
+        // margin-bottom: 20px;
+        textarea {
+            border-bottom-right-radius: 2px;
+            border-bottom-left-radius: 2px;
+            outline: none;
+            height: auto;
+            margin: 0;
+            resize: none;
+            padding: 2px;
+            border: 1px solid white;
+            border-top: 1px solid $base-border-color;
+            font-size: 1em;
+            width: 100%;
+            &:focus {
+                margin-left: 0;
+                border: 1px dotted $list-primary;
+                color: black;
+            }
+        }
+
+        .comments-label {
+            display: block;
+            margin: 0;
+            cursor: pointer;
+            color: darken($base-border-color, 20%);
+            font-size: 0.8em;
+            font-family: $font-family-sans-serif;
+            font-weight: 600;
+        }
+    }
+
+    .manage-item-form-meta {
+        background: lighten($body-bg, 1%);
+        padding: 3px;
+        border: 1px solid $base-border-color;
+        border-radius: 2px;
+        text-align: center;
+
+        .is-important,
+        .is-urgent,
+        .deadline {
+            display: inline-block;
+            margin: 0;
+            width: 32.5%;
+            color: darken($base-border-color, 20%);
+
+            label {
+                display: block;
+                margin: 0;
+                font-size: 0.8em;
+            }
+
+            .fa {
+                font-size: 1.1em;
+                cursor: pointer;
+            }
+            &:nth-child(2) {
+                border-left: 1px solid $base-border-color;
+                border-right: 1px solid $base-border-color;
+            }
+        }
+    }
+}

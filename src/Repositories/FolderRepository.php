@@ -4,13 +4,13 @@ namespace Oburatongoi\Productivity\Repositories;
 
 use App\User;
 use Oburatongoi\Productivity\Folder;
+// use DB;
 
 class FolderRepository {
 
     public function forUser(User $user)
     {
-        // return $user->folders()->with('checklists', 'goals', 'notes', 'subfolders')->orderBy('name', 'desc')->get();
-        return $user->folders()->with('checklists', 'subfolders')->orderBy('name', 'desc')->get();
+        return $user->folders()->with('checklists', 'subfolders')->orderBy('name', 'asc')->get();
     }
 
     public function rootForUser(User $user)

@@ -84,7 +84,7 @@ export default {
       this.saveCurrentEditableItem().then(
         () => this.savingChanges = false
       ).catch(
-        () => alert('An Error Occured. Please copy your changes and refresh this page')
+        (error) => alert(error)
       )
     },
     checkItem: function() {
@@ -122,7 +122,7 @@ export default {
       autosize(document.querySelector('.content-textarea'));
       autosize(document.querySelector('.comments-textarea'));
     })
-  }
+  },
 }
 </script>
 

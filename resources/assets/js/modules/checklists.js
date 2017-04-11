@@ -265,7 +265,7 @@ const actions = {
     },
     saveCurrentEditableItem({commit}, item = null) {
         return new Promise((resolve, reject) => {
-            if (!item) {
+            if (item == null) {
                 item = state.currentEditableItem ? state.currentEditableItem : reject('There is no item or currently editable item')
             }
             commit(ADD_UNFILTERED, item)

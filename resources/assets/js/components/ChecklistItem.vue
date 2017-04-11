@@ -65,7 +65,8 @@ export default {
             )
       },
       toggleEditability: function() {
-        return this.itemIsCurrentlyEditable ? this.removeCurrentlyEditable() : this.addCurrentlyEditable(this.item)
+        // return this.itemIsCurrentlyEditable ? this.removeCurrentlyEditable() : this.addCurrentlyEditable(this.item)
+        return ! this.itemIsCurrentlyEditable ? this.addCurrentlyEditable(this.item): true
       }
     },
     computed: {

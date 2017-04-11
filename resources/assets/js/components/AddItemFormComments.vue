@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="item-form-comments form-group">
+  <div class="add-item-form-comments form-group">
     <template v-if="!showComments">
       <div class="comments-label" v-if="hasComments" @click="toggleComments">
         <i class="fa fa-chevron-down" aria-hidden="true"></i>

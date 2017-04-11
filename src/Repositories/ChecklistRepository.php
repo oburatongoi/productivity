@@ -11,23 +11,23 @@ class ChecklistRepository {
 
     public function forUser(User $user)
     {
-        return $user->checklists()->latest()->withCount(['items' => function($query) {
+        return $user->checklists()->withCount(['items' => function($query) {
             $query->where('checked_at', null);
-        }])->get();
+        }])->orderBy('title', 'asc')->get();
     }
 
     public function rootForUser(User $user)
     {
-        return $user->checklists()->whereNull('folder_id')->latest()->withCount(['items' => function($query) {
+        return $user->checklists()->whereNull('folder_id')->withCount(['items' => function($query) {
             $query->where('checked_at', null);
-        }])->get();
+        }])->orderBy('title', 'asc')->get();
     }
 
     public function forFolder(Folder $folder)
     {
-        return $folder->checklists()->latest()->withCount(['items' => function($query) {
+        return $folder->checklists()->withCount(['items' => function($query) {
             $query->where('checked_at', null);
-        }])->get();
+        }])->orderBy('title', 'asc')->get();
     }
 
     public function missingFakeId()
