@@ -32,6 +32,11 @@
 
         <manage-item-form-meta></manage-item-form-meta>
 
+        <div class="comments-label">
+          <i class="fa fa-note" aria-hidden="true"></i>
+          Notes
+        </div>
+        
         <!-- <div id="quill-toolbar"></div> -->
       </div>
 

@@ -1,9 +1,9 @@
 <template lang="html">
   <div class="edit-comments" id="quill-boundary">
-    <div class="comments-label">
+    <!-- <div class="comments-label">
       <i class="fa fa-note" aria-hidden="true"></i>
       Notes
-    </div>
+    </div> -->
 
     <quill-editor class="quill-editor"
                   :content="currentEditableItem.comments"

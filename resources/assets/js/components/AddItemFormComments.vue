@@ -3,11 +3,11 @@
     <template v-if="!showComments">
       <div class="comments-label" v-if="hasComments" @click="toggleComments">
         <i class="fa fa-chevron-down" aria-hidden="true"></i>
-        <p>Show Comments</p>
+        <p>Preview Comments</p>
       </div>
       <div class="comments-label" v-if="!hasComments" @click="toggleComments">
         <i class="fa fa-plus" aria-hidden="true"></i>
-        <p>Add Comments</p>
+        <p>Quick Add Comments</p>
       </div>
     </template>
 
