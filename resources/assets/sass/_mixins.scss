@@ -14,8 +14,9 @@
 }
 
 @mixin desktop-overflow-y-scroll {
+    overflow-y: visible;
     @media(min-width:768px){
-        overflow: scroll;
+        overflow-y: scroll;
     }
 }
 

@@ -13,6 +13,9 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <script src="//cdn.quilljs.com/1.2.3/quill.min.js"></script>
+        <link href="//cdn.quilljs.com/1.2.3/quill.bubble.css" rel="stylesheet">
+
         {{-- <link rel="stylesheet" href="/vendor/productivity/css/font-awesome-4.7.0/css/font-awesome.min.css"> --}}
         <link rel="stylesheet" href="/vendor/productivity/css/productivity.css">
 

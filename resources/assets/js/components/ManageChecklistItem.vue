@@ -29,7 +29,10 @@
             ></textarea>
           </h4>
         </div>
+
         <manage-item-form-meta></manage-item-form-meta>
+
+        <!-- <div id="quill-toolbar"></div> -->
       </div>
 
       <div class="panel-body">
