@@ -64,44 +64,32 @@ li.listing {
     &.folder-color-scheme {
         &.selected {
             border: 1px solid $folder-primary !important;
-            background: $folder-primary;
+            // background: $folder-primary;
+            background: $folder-background;
             color: white;
         }
         .go-to-listing {
-            color: $folder-primary;
-        }
-    }
-
-    &.note-color-scheme {
-        &.selected {
-            border: 1px solid $note-primary !important;
-            background: $note-primary;
-            color: white;
-        }
-        .go-to-listing {
-            color: $note-primary;
-        }
-    }
-
-    &.goal-color-scheme {
-        &.selected {
-            border: 1px solid $goal-primary !important;
-            background: $goal-primary;
-            color: white;
-        }
-        .go-to-listing {
-            color: $goal-primary;
+            // color: $folder-primary;
+            color: darken($folder-primary, 10%);
+            &:hover {
+                color: white;
+            }
         }
     }
 
     &.list-color-scheme {
         &.selected {
             border: 1px solid $list-primary !important;
-            background: $list-primary;
+            // background: $list-primary;
+            background: $list-background;
             color: white;
         }
         .go-to-listing {
-            color: $list-primary;
+            // color: $list-primary;
+            color: darken($list-primary, 10%);
+            &:hover {
+                color: white;
+            }
         }
     }
     .item-count-tag {

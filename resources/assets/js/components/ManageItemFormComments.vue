@@ -1,9 +1,5 @@
 <template lang="html">
   <div class="edit-comments" id="quill-boundary">
-    <!-- <div class="comments-label">
-      <i class="fa fa-note" aria-hidden="true"></i>
-      Notes
-    </div> -->
 
     <quill-editor class="quill-editor"
                   :content="currentEditableItem.comments"
@@ -36,17 +32,12 @@ export default {
     return {
       quillOptions: {
         modules: {
-          toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            [{ 'script': 'sub'}, { 'script': 'super' }],
-            [{ 'indent': '-1'}, { 'indent': '+1' }],
-            ['link', 'code-block']
-          ]
+          toolbar: '#quill-toolbar'
         },
         scrollingContainer: '#quill-boundary',
         placeholder: 'Add a note...',
-        theme: 'bubble',
+        // theme: 'bubble',
+        theme: 'snow',
         bounds: '#comments-textarea'
       }
     }

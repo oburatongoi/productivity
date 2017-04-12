@@ -11,12 +11,18 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,600" rel="stylesheet" type="text/css">
 
+        {{-- <link rel="stylesheet" href="/vendor/productivity/css/font-awesome-4.7.0/css/font-awesome.min.css"> --}}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <script src="//cdn.quilljs.com/1.2.3/quill.min.js"></script>
-        <link href="//cdn.quilljs.com/1.2.3/quill.bubble.css" rel="stylesheet">
+        {{-- <link rel="stylesheet" href="/vendor/productivity/css/highlight-js/styles/tomorrow-night-blue.css"> --}}
+        {{-- <script src="/vendor/productivity/css/highlight-js/highlight.pack.js"></script> --}}
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/tomorrow-night-blue.min.css">
+        <script src="//cdn.jsdelivr.net/highlight.js/9.10.0/highlight.min.js"></script>
 
-        {{-- <link rel="stylesheet" href="/vendor/productivity/css/font-awesome-4.7.0/css/font-awesome.min.css"> --}}
+        <script src="//cdn.quilljs.com/1.2.3/quill.min.js"></script>
+        <link href="//cdn.quilljs.com/1.2.3/quill.snow.css" rel="stylesheet">
+
+
         <link rel="stylesheet" href="/vendor/productivity/css/productivity.css">
 
         <script>

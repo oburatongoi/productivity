@@ -53,6 +53,7 @@ export default {
           self.options.placeholder = self.options.placeholder || 'Insert text here ...'
           self.options.readOnly = self.options.readOnly !== undefined ? self.options.readOnly : false
           self.options.modules.toolbar = self.options.modules.toolbar || defaultOptions.modules.toolbar
+          self.options.modules.syntax = true
           self.quill = new Quill(self.$el, self.options)
           // set editor content
           if (self.value || self.content) {
