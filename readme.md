@@ -12,11 +12,16 @@ Next, add the service provider to the provider array in the `app/config.app` fil
 
 In your .env file, add the following variables:
 
+`SESSION_DOMAIN=.your-domain.com` Note the `'.'` before the domain name.
+
 `PRODUCTIVITY_DOMAIN=your-domain.com`
+
 `PRODUCTIVITY_SUBDOMAIN=productivity`
 
 If using Scout with Algolia, set the following environment variables
+
 `FOLDER_INDEX_NAME=the-name-of-your-folder-index` defaults to  `prod_FOLDERS`
+
 `CHECKLIST_INDEX_NAME=the-name-of-your-folder-index` defaults to  `prod_CHECKLISTS`
 
 Be sure to update your DNS 'A' or 'CNAME' settings to include the new name and add SSL encryption for your desired subdomain if you do not have wildcard subdomain encryption.
@@ -53,3 +58,4 @@ When adding Productivity to a fresh Laravel installation, consider doing the fol
 * Change app name in config/app
 * Install Bugsnag
 * Install and Configure Algolia
+* Install and Configure Redis
