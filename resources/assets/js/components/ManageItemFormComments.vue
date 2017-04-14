@@ -1,8 +1,7 @@
 <template lang="html">
   <div class="edit-comments" id="quill-boundary">
 
-    <quill-editor class="quill-editor"
-                  :content="currentEditableItem.comments"
+    <quill-editor :content="currentEditableItem.comments"
                   :options="quillOptions"
                   @change="onEditorChange($event)">
     </quill-editor>
