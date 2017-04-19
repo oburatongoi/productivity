@@ -6,8 +6,9 @@ namespace Oburatongoi\Productivity\Repositories;
 use App\User;
 use Oburatongoi\Productivity\Folder;
 use Oburatongoi\Productivity\Checklist;
+use Oburatongoi\Productivity\Interfaces\ChecklistsInterface;
 
-class ChecklistRepository {
+class Checklists implements ChecklistsInterface {
 
     public function forUser(User $user)
     {
@@ -23,7 +24,7 @@ class ChecklistRepository {
         }])->orderBy('title', 'asc')->get();
     }
 
-    public function forFolder(Folder $folder)
+    public function forFolder(User $user, Folder $folder)
     {
         return $folder->checklists()->withCount(['items' => function($query) {
             $query->where('checked_at', null);

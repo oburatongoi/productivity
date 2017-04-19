@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
 
-use Oburatongoi\Productivity\Repositories\FolderRepository;
-use Oburatongoi\Productivity\Repositories\ChecklistRepository;
+use Oburatongoi\Productivity\Repositories\Decorators\CacheableFolders as Folders;
+use Oburatongoi\Productivity\Repositories\Decorators\CacheableChecklists as Checklists;
 use Oburatongoi\Productivity\Folder;
+
+// use Illuminate\Support\Facades\Cache;
 
 use JavaScript;
 
@@ -19,8 +21,8 @@ class FolderController extends Controller
     protected $checklists;
 
     public function __construct(
-        FolderRepository $folders,
-        ChecklistRepository $checklists
+        Folders $folders,
+        Checklists $checklists
     ) {
         $this->middleware('web');
         $this->middleware('auth');
@@ -63,6 +65,9 @@ class FolderController extends Controller
         && $parent = Folder::find($request->input('folder.folder_id'))
         ) {
             $parent->appendNode($folder);
+            // Cache::forget('user.'.$request->user()->id.'.folder.'.$folder->id.'.subFolders');
+        } else {
+            // Cache::forget('user.'.$request->user()->id.'.rootFolders');
         }
 
         return response()->json([
@@ -82,9 +87,9 @@ class FolderController extends Controller
 
         JavaScript::put([
             'user' => $request->user(),
-            'folders' => $this->folders->rootForFolder($folder),
+            'folders' => $this->folders->rootForFolder($request->user(), $folder),
             'currentFolder' => $folder->load('folder', 'subfolders'),
-            'checklists' => $this->checklists->forFolder($folder),
+            'checklists' => $this->checklists->forFolder($request->user(), $folder),
             'ancestors' => $folder->getAncestors(),
             'model' => 'folder',
         ]);

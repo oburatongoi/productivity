@@ -4,8 +4,8 @@ namespace Oburatongoi\Productivity\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
-use Oburatongoi\Productivity\Repositories\ChecklistRepository;
-use Oburatongoi\Productivity\Repositories\FolderRepository;
+use Oburatongoi\Productivity\Repositories\Checklists;
+use Oburatongoi\Productivity\Repositories\Folders;
 
 
 class MissingFakeIdController extends Controller
@@ -14,7 +14,7 @@ class MissingFakeIdController extends Controller
     protected $checklists;
     protected $folders;
 
-    public function __construct(ChecklistRepository $checklists, FolderRepository $folders)
+    public function __construct(Checklists $checklists, Folders $folders)
     {
         $this->middleware('web');
         $this->middleware('auth');

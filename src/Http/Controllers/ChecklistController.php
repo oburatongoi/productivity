@@ -5,7 +5,7 @@ namespace Oburatongoi\Productivity\Http\Controllers;
 use Illuminate\Http\Request;
 use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
 
-use Oburatongoi\Productivity\Repositories\ChecklistRepository;
+use Oburatongoi\Productivity\Repositories\Checklists;
 use Oburatongoi\Productivity\Checklist;
 use JavaScript;
 
@@ -14,7 +14,7 @@ class ChecklistController extends Controller
 
     protected $checklists;
 
-    public function __construct(ChecklistRepository $checklists)
+    public function __construct(Checklists $checklists)
     {
         $this->middleware('web');
         $this->middleware('auth');

@@ -4,7 +4,7 @@ namespace Oburatongoi\Productivity\Repositories;
 
 use Oburatongoi\Productivity\Checklist;
 
-class ChecklistItemRepository {
+class ChecklistItems {
 
     public function forChecklist(Checklist $checklist)
     {

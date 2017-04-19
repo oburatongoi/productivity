@@ -41,7 +41,7 @@ class Folder extends Model
      */
     public function searchableAs()
     {
-        return config('productivity.folder_index_name', 'folders');
+        return config('productivity.folder_index_name', 'prod_FOLDERS');
     }
 
     /**
