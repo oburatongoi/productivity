@@ -146,6 +146,7 @@
         padding: 0;
         padding-bottom: 50px !important;
         #comments-textarea.ql-container.ql-snow {
+            font-family: $paragraph-font-family-sans-serif !important;
             display: inline-block;
             vertical-align: top;
             border-top-right-radius: 0;
@@ -167,6 +168,10 @@
             padding: 10px;
             .ql-editor {
                 padding: 0;
+
+                a {
+                    color: $list-primary !important;
+                }
             }
         }
     }
