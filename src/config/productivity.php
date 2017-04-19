@@ -30,7 +30,7 @@ return [
     | Specify which index you would like Productivity to use
     |
     */
-    'folder_index_name' => env('FOLDER_INDEX_NAME', 'prod_FOLDERS'),
+    'folder_index_name' => env('FOLDER_INDEX_NAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,6 +40,6 @@ return [
     | Specify which index you would like Productivity to use
     |
     */
-    'checklist_index_name' => env('CHECKLIST_INDEX_NAME', 'prod_CHECKLISTS'),
+    'checklist_index_name' => env('CHECKLIST_INDEX_NAME'),
 
 ];

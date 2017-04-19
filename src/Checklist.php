@@ -37,8 +37,7 @@ class Checklist extends Model
      */
     public function searchableAs()
     {
-        // return env('CHECKLIST_INDEX_NAME', 'dev_CHECKLISTS');
-        return config('productivity.checklist_index_name', 'checklists');
+        return config('productivity.checklist_index_name', 'prod_CHECKLISTS');
     }
 
     /**
