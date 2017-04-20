@@ -14,6 +14,8 @@ In your .env file, add the following variables:
 
 `SESSION_DOMAIN=.your-domain.com` Note the `'.'` before the domain name.
 
+`PRODUCTIVITY_LOGO=logo-text` defaults to 'Productivity'
+
 `PRODUCTIVITY_DOMAIN=your-domain.com`
 
 `PRODUCTIVITY_SUBDOMAIN=productivity`

@@ -9,6 +9,17 @@ return [
     |
     */
 
+    'logo' => env('PRODUCTIVITY_LOGO', 'Productivity'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Subdomain Prefix
+    |--------------------------------------------------------------------------
+    |
+    | Specify which domain you would like Productivity to use
+    |
+    */
+
     'domain' => env('PRODUCTIVITY_DOMAIN', ''),
 
     /*

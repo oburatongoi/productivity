@@ -5,7 +5,7 @@
     <div class="main-logo">
       <!-- <i class="fa fa-bars" aria-hidden="true"></i> -->
         <a href="/">
-            Productivity
+            {{logoText}}
         </a>
     </div>
 
@@ -55,6 +55,9 @@ import Search from './Search.vue'
 
 export default {
     name: 'main-menu',
+    props: [
+      'logo'
+    ],
     data () {
       return {
         showNestedOptions: false
@@ -67,6 +70,9 @@ export default {
       ]),
       showNestedOptionsClass: function() {
         return this.showNestedOptions ? 'fa-caret-up' : 'fa-caret-down'
+      },
+      logoText: function() {
+        return this.logo ? this.logo : 'Productivity'
       }
     },
     methods: {
