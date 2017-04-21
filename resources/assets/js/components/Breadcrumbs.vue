@@ -15,14 +15,14 @@
         </a>
       </li>
       <li v-if="currentFolder.id" class="current-folder">
-        <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
         <template v-if="model=='folder'">
-          <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
+          <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
+          <i class="fa fa-fw fa-folder-open" aria-hidden="true"></i>
           {{currentFolder.name}}
         </template>
       </li>
 
-      <li v-if="currentView&&currentView.length" class="current-view">
+      <li v-if="hasCurrentView" class="current-view">
         <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
         <template v-if="currentView=='foldersIndex'">
           <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
@@ -49,7 +49,13 @@ export default {
       'checklist',
       'model',
       'currentView'
-    ])
+    ]),
+    hasCurrentView: function() {
+      if (this.currentView) {
+        return ! _.isEmpty(this.currentView)
+      }
+      return false
+    }
   }
 }
 </script>

@@ -15,7 +15,7 @@ const state = {
     showCreatingNewButtons: false,
     ancestors: Productivity.ancestors ? Productivity.ancestors : {},
     model: Productivity.model ? Productivity.model : {},
-    currentView: Productivity.currentView ? Productivity.currentView : {},
+    currentView: Productivity.currentView ? Productivity.currentView : undefined,
     selected: {
         id: undefined,
         model: undefined,
