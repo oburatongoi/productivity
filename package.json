@@ -5,6 +5,8 @@
     "dev": "gulp watch"
   },
   "devDependencies": {
+    "ava": "^0.19.1",
+    "babel-register": "^6.24.1",
     "bootstrap-sass": "^3.3.7",
     "gulp": "^3.9.1",
     "jquery": "^3.1.0",
@@ -27,5 +29,12 @@
     "v-tooltip": "^1.1.2",
     "vuejs-datepicker": "^0.5.5",
     "vuex": "^2.2.1"
-  }
+},
+"ava": {
+    "require": ["babel-register"]
+},
+"babel": {
+    "presets": ["es2015"]
+}
+
 }
