@@ -28,7 +28,7 @@
     </ul>
 
     <p v-if="search.errorMessage" class="error-message">{{search.errorMessage}}</p>
-    <p v-if="search.query&&!search.isSearching&&!hasSearchResults" class="info-message">There were no files or folders matching your search.</p>
+    <!-- <p v-if="search.query&&!search.isSearching&&!hasSearchResults" class="info-message">There were no files or folders matching your search.</p> -->
 
     <div class="algolia-image">
       powered by <img src="/vendor/productivity/images/Algolia_logo_bg-white.jpg" alt="Powered by Algolia">

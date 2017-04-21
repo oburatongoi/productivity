@@ -81,7 +81,7 @@
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
     padding: 10px 6px;
     border-radius: 3px;
-    font-weight: bold;
+    font-weight: $font-weight-bold;;
 
     @media(min-width:768px){
         padding: 0px 100px 20px;
@@ -89,6 +89,11 @@
 
     @media(min-width:1200px){
         padding: 0px 200px 20px;
+    }
+
+    .secondary-search-input,
+    .error-message {
+        font-weight: $font-weight-normal;
     }
 
     ul {

@@ -88,6 +88,10 @@
         overflow-y: scroll;
         padding-top: 0;
     }
+    .show-item-content-input,
+    .show-item-content {
+        font-weight: $font-weight-light;
+    }
     &.has-expanded-editable-item {
         .main-panel {
             display: none;
@@ -199,13 +203,15 @@
     .checklist h4 .fa-list,
     .checklist-title,
     .edit-checklist-input {
-        vertical-align: middle;
+        vertical-align: text-top;
     }
 
     .checklist-title,
     .edit-checklist-input {
-        line-height: 1.2;
+        // line-height: 1.2;
+        font-size: 1em;
         width: 85%;
+        font-weight: $font-weight-normal;
     }
 
     .edit-checklist-input {

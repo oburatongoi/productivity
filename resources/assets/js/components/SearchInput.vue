@@ -27,11 +27,8 @@ export default {
     debounceSearch: _.debounce(function() {
       this.setSearchErrorMessage()
       this.setIsSearching(true)
-      if (this.search.query) {
-        this.triggerSearch()
-      } else {
-        this.setIsSearching(false)
-      }
+      if (this.search.query) { this.triggerSearch() }
+      else { this.setIsSearching(false) }
     }, 500),
     triggerSearch: function() {
       axios.post('/search', {currentFolderId: this.currentFolder.id, query: this.search.query})
@@ -40,25 +37,19 @@ export default {
           if (response.data.tokenMismatch) {
              Vue.handleTokenMismatch(response.data).then(
                  (response) => {
-                     if (response) {
-                         this.handleSuccessfulSearch(response)
-                     } else if (response.data.error) {
-                         this.handleSearchError(response.data.error)
-                     }
+                     if (response) { this.handleSuccessfulSearch(response) }
+                     else if (response.data.error) { this.handleSearchError(response.data.error) }
                  }).catch(
                  (error) => this.handleSearchError(error)
                )
-          } else if (response) {
-            this.handleSuccessfulSearch(response)
-          } else if (response.data.error) {
-            this.handleSearchError(response.data.error)
-          }
+          } else if (response) { this.handleSuccessfulSearch(response)}
+            else if (response.data.error) { this.handleSearchError(response.data.error)}
     }).catch(
       (error) => this.handleSearchError(error)
     )},
     handleSuccessfulSearch: function(response) {
       this.setIsSearching(false)
-      response.data.results ? this.setSearchResults(response.data.results) : this.clearSearchResults()
+      _.isEmpty(response.data.results.folders) && _.isEmpty(response.data.results.checklists) ? this.handleEmptySearchResults() : this.setSearchResults(response.data.results)
       var markSearchResults = new Mark(document.querySelector(".search-results"));
       var keyword = this.search.query,
           options = {};
@@ -69,6 +60,11 @@ export default {
           }
         })
       })
+    },
+    handleEmptySearchResults: function() {
+      this.setIsSearching(false)
+      this.clearSearchResults()
+      this.setSearchErrorMessage("There were no files or folders matching your search.")
     },
     handleSearchError: function(response) {
       this.setIsSearching(false)

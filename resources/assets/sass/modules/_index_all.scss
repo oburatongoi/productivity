@@ -49,7 +49,7 @@ li.listing {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        font-weight: bold;
+        font-weight: $font-weight-bold;
     }
     a {
         text-decoration: none;
