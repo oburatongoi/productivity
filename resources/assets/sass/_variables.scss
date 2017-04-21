@@ -29,10 +29,14 @@ $list-primary: #41C15F;
 $goal-primary: #EF4548;
 
 // Typography
-$font-family-sans-serif: "Raleway", sans-serif;
+// $font-family-sans-serif: "Raleway", sans-serif;
+$font-family-sans-serif: "Rubik", sans-serif;
 $paragraph-font-family-sans-serif: "Rubik", sans-serif;
 $logo-font: "Oleo Script Swash Caps", "Rubik", sans-serif;
 $font-size-base: 14px;
+$font-weight-normal: 400;
+$font-weight-bold: 500;
+$font-weight-light: 300;
 $line-height-base: 1.6;
 $text-color: #636b6f;
 $blue-text-color: $brand-primary;
