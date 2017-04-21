@@ -210,8 +210,9 @@ export default {
     },
     refreshFolders: function(freshFolders) {
       this.isLoading = false
+      this.resetInfoMessage()
       freshFolders ? this.folders = freshFolders : this.folders = {}
-      if (!freshFolders.length) this.setInfoMessage('This folder has no subfolders', 'info')
+      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no subfolders', 'info')
     },
     refreshCurrentFolder: function(folder) {
       return folder.id ? this.currentFolder = folder : this.setInfoMessage('The folder could not be retrieved', 'error')

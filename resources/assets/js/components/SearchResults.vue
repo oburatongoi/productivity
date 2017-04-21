@@ -1,8 +1,11 @@
 <template lang="html">
-  <div class="search-results" v-if="search.query&&hasSearchResults||search.isSearching">
-    <i class="fa fa-times" aria-hidden="true" @click="cancel"></i>
+  <div class="search-results" v-if="search.isSearching||search.query">
 
-    <h5>Searching for: {{search.query}}</h5>
+    <div class="secondary-search-input">
+      <i class="fa fa-search" aria-hidden="true"></i>
+      <search-input></search-input>
+      <i class="fa fa-times" aria-hidden="true" @click="cancel"></i>
+    </div>
 
     <i class="fa fa-spinner fa-spin" aria-hidden="true" v-if="search.isSearching"></i>
 
@@ -25,6 +28,7 @@
     </ul>
 
     <p v-if="search.errorMessage" class="error-message">{{search.errorMessage}}</p>
+    <p v-if="search.query&&!search.isSearching&&!hasSearchResults" class="info-message">There were no files or folders matching your search.</p>
 
     <div class="algolia-image">
       powered by <img src="/vendor/productivity/images/Algolia_logo_bg-white.jpg" alt="Powered by Algolia">
@@ -34,6 +38,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import SearchInput from './SearchInput.vue'
 
 export default {
   name: 'search-results',
@@ -57,6 +62,9 @@ export default {
       'search',
       'hasSearchResults'
     ])
+  },
+  components: {
+    SearchInput
   }
 }
 </script>

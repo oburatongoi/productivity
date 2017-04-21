@@ -36,10 +36,10 @@ export default {
       'selectedIsMovable'
     ]),
     hasFolders: function() {
-      return this.folders.length
+      return this.folders && ! _.isEmpty(this.folders)
     },
     hasFiles: function() {
-      return this.checklists && this.checklists.length
+      return this.checklists && ! _.isEmpty(this.checklists)
     },
     isEmpty: function() {
       return ! this.hasFolders && ! this.hasFiles

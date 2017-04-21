@@ -79,11 +79,13 @@ const actions = {
 const getters = {
     search: state => state.search,
     hasSearchResults: state => {
-      return state.search.results
+      if( state.search.results
           && (
-            (state.search.results.folders && state.search.results.folders.length)
-            || (state.search.results.checklists && state.search.results.checklists.length)
+            (state.search.results.folders && !_.isEmpty(state.search.results.folders))
+            || (state.search.results.checklists && !_.isEmpty(state.search.results.checklists))
           )
+      ) return true
+      return false
     }
 }
 
