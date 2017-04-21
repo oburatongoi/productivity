@@ -36,12 +36,26 @@ export default {
     triggerSearch: function() {
       axios.post('/search', {currentFolderId: this.currentFolder.id, query: this.search.query})
       .then(
-        (response) => this.handleSuccessfulSearch(response)
-      )
-      .catch(
-        (response) => this.handleSearchError(response)
-      )
-    },
+        (response) => {
+          if (response.data.tokenMismatch) {
+             Vue.handleTokenMismatch(response.data).then(
+                 (response) => {
+                     if (response) {
+                         this.handleSuccessfulSearch(response)
+                     } else if (response.data.error) {
+                         this.handleSearchError(response.data.error)
+                     }
+                 }).catch(
+                 (error) => this.handleSearchError(error)
+               )
+          } else if (response) {
+            this.handleSuccessfulSearch(response)
+          } else if (response.data.error) {
+            this.handleSearchError(response.data.error)
+          }
+    }).catch(
+      (error) => this.handleSearchError(error)
+    )},
     handleSuccessfulSearch: function(response) {
       this.setIsSearching(false)
       response.data.results ? this.setSearchResults(response.data.results) : this.clearSearchResults()
