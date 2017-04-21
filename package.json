@@ -8,6 +8,7 @@
     "ava": "^0.19.1",
     "babel-register": "^6.24.1",
     "bootstrap-sass": "^3.3.7",
+    "browser-env": "^2.0.30",
     "gulp": "^3.9.1",
     "jquery": "^3.1.0",
     "laravel-elixir": "^6.0.0-14",
@@ -29,12 +30,16 @@
     "v-tooltip": "^1.1.2",
     "vuejs-datepicker": "^0.5.5",
     "vuex": "^2.2.1"
-},
-"ava": {
-    "require": ["babel-register"]
-},
-"babel": {
-    "presets": ["es2015"]
-}
-
+  },
+  "ava": {
+    "require": [
+      "babel-register",
+      "./resources/assets/js/test/helpers/setup-browser-env.js"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  }
 }

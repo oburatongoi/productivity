@@ -24,6 +24,7 @@
     padding: 6px 8px;
     border-radius: 18px;
     border: 1px solid rgba(255,255,255,0);
+    font-weight: $font-weight-light;
     &.has-query {
         border: 1px solid rgba(255,255,255,0.4);
     }
