@@ -31,19 +31,14 @@
             display: block;
             width: 100%;
             padding: 8px;
+            text-shadow: $folder-text-shadow;
+            text-decoration: none;
         }
         button {
             background: transparent;
             outline: none;
             border: 0;
             text-align: left;
-
-            // .fa-caret-down {
-            //     margin-top: 5px;
-            // }
-            // .fa-caret-up {
-            //     margin-top: 4px;
-            // }
         }
         &.open,
         &:hover {
@@ -77,6 +72,7 @@
     font-size: 0.9em;
     color: rgba(255,255,255,0.7);
     cursor: pointer;
+    text-shadow: $folder-text-shadow;
     &:hover {
         color: rgba(255,255,255,1);
     }
