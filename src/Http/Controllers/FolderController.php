@@ -36,6 +36,24 @@ class FolderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function home($account, Request $request)
+    {
+        JavaScript::put([
+            'folders' => $this->folders->rootForUser($request->user()),
+            'checklists' => $this->checklists->rootForUser($request->user()),
+            'model' => 'folders',
+            'currentView' => 'foldersIndex'
+        ]);
+
+        return view('productivity::home.index')
+                ->withTitle('Folders - Productivity - ' . config('app.name'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index($account, Request $request)
     {
         JavaScript::put([

@@ -1,0 +1,95 @@
+.home {
+  &,
+  .wraps-split {
+      height: 100%;
+      width: 100%;
+  }
+
+  position: relative;
+  padding: 25px;
+
+  .important,
+  .not-important,
+  .urgent,
+  .not-urgent {
+    float: left;
+    background: rgba(255,255,255, 0.2);
+  }
+
+  .important {
+    width: 50%;
+    height: 100%;
+    border-right: 1px solid $folder-primary;
+  }
+
+  .not-important {
+    width: 50%;
+    height: 100%;
+  }
+
+  .urgent {
+    height: 60%;
+    width: 100%;
+    border-bottom: 1px solid $brand-primary;
+  }
+
+  .not-urgent {
+    height: 40%;
+    width: 100%;
+  }
+
+  .urgent,
+  .not-urgent {
+    position: relative;
+
+    .toggle-size {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        color: $base-border-color;
+        &:hover {
+            color: $brand-primary;
+        }
+    }
+
+  }
+
+  .priority-label {
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      color: $brand-primary;
+
+      &.priority-label-important {
+          top: 40%;
+          left: 0;
+          -webkit-transform: rotate(-90deg); /* Safari */
+          -moz-transform: rotate(-90deg);  /* Firefox */
+          -ms-transform: rotate(-90deg); /* IE */
+          -o-transform: rotate(-90deg); /* Opera */
+          filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /* Internet Explorer */
+      }
+
+      &.priority-label-not-important {
+          top: 40%;
+          right: 0;
+          -webkit-transform: rotate(90deg); /* Safari */
+          -moz-transform: rotate(90deg);  /* Firefox */
+          -ms-transform: rotate(90deg); /* IE */
+          -o-transform: rotate(90deg); /* Opera */
+          filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); /* Internet Explorer */
+      }
+
+      &.priority-label-urgent {
+          top: 0;
+          right: 45%;
+      }
+
+      &.priority-label-not-urgent {
+          bottom: 0;
+          right: 45%;
+      }
+  }
+
+}
