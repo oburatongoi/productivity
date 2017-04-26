@@ -15,6 +15,7 @@ require('./bootstrap');
 
 Vue.component('TopNav', require('./components/TopNav.vue'));
 Vue.component('SearchResults', require('./components/SearchResults.vue'));
+Vue.component('Home', require('./components/Home.vue'));
 Vue.component('MainMenu', require('./components/MainMenu.vue'));
 Vue.component('Folders', require('./components/Folders.vue'));
 Vue.component('Folder', require('./components/Folder.vue'));

@@ -4,12 +4,12 @@
       <label for="is-important">Important</label>
       <i v-if="!currentEditableItem.is_important"
          @click="toggleImportance"
-         :class="{'list-color-scheme':currentEditableItem.is_important}"
+         :class="{'folder-color-scheme':currentEditableItem.is_important}"
          class="fa fa-fw fa-star-o"
          aria-hidden="true"></i>
       <i v-if="currentEditableItem.is_important"
          @click="toggleImportance"
-         :class="{'list-color-scheme':currentEditableItem.is_important, 'fa-spin':importanceIsLoading}"
+         :class="{'folder-color-scheme':currentEditableItem.is_important, 'fa-spin':importanceIsLoading}"
          class="fa fa-fw fa-star"
          aria-hidden="true"></i>
     </span>
@@ -17,7 +17,7 @@
     <span class="is-urgent">
       <label for="is-urgent">Urgent</label>
       <i  @click="toggleUrgency"
-          :class="{'list-color-scheme':currentEditableItem.is_urgent, 'fa-spin':urgencyIsLoading}"
+          :class="{'folder-color-scheme':currentEditableItem.is_urgent, 'fa-spin':urgencyIsLoading}"
           class="fa fa-fw fa-clock-o"
           aria-hidden="true"></i>
     </span>
@@ -25,7 +25,7 @@
     <span class="deadline">
       <label for="deadline">{{deadlinePlaceholder}}</label>
       <i  @click="showDatePicker"
-        :class="{'list-color-scheme':currentEditableItem.deadline, 'fa-spin':deadlineIsLoading}"
+        :class="{'folder-color-scheme':currentEditableItem.deadline, 'fa-spin':deadlineIsLoading}"
         class="fa fa-fw fa-calendar-o"
         aria-hidden="true"></i>
 

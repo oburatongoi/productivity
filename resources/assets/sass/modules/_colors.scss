@@ -16,6 +16,12 @@
         color: $list-primary;
     }
 }
+.black-color-scheme {
+    &,
+    a {
+        color: black;
+    }
+}
 .goal-color-scheme {
     &,
     a {

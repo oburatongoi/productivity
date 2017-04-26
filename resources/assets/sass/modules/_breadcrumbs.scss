@@ -33,4 +33,8 @@
     li {
         display: inline-block;
     }
+
+    .fa-angle-right {
+        color: darken($base-border-color, 10%);
+    }
 }

@@ -73,7 +73,6 @@ li.listing {
             }
         }
         .go-to-listing {
-            // color: $folder-primary;
             color: darken($folder-primary, 10%);
             &:hover {
                 color: white;
@@ -84,12 +83,14 @@ li.listing {
     &.list-color-scheme {
         &.selected {
             border: 1px solid $list-primary !important;
-            // background: $list-primary;
             background: $list-background;
             color: white;
+
+            h5 {
+                text-shadow: $list-text-shadow;
+            }
         }
         .go-to-listing {
-            // color: $list-primary;
             color: darken($list-primary, 10%);
             &:hover {
                 color: white;
@@ -103,7 +104,7 @@ li.listing {
         font-size: 0.7em;
         background: white;
         color: darken($base-border-color, 15%);
-        font-weight: bold;
+        font-weight: $font-weight-bold;
         border: 1px solid $base-border-color;
         border-radius: 50%;
         min-width: 22px;
@@ -119,10 +120,7 @@ li.listing {
     }
     &.selected {
         .item-count-tag {
-            // border: 1px solid $list-primary;
             border: 1px solid $body-bg;
-            // color: $list-primary;
-            // background: $list-primary;
             background: $list-background;
             color: white !important;
         }

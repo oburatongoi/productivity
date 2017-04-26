@@ -6,7 +6,8 @@ Route::group(['domain' => '{'.(string)(config('productivity.subdomain')).'}.'.(s
     Route::fakeIdModel('/lists', 'Oburatongoi\Productivity\Checklist');
 
     Route::group(['namespace' => 'Oburatongoi\Productivity\Http\Controllers'], function () {
-        Route::get('/', 'FolderController@index');
+        // Route::name('productivity')->get('/', 'FolderController@home');
+        Route::name('productivity')->get('/', 'FolderController@index'); //Temporary as I work on home functionality
         Route::post('/search', 'SearchController@search');
 
         Route::post('/lists/{list}/add-item', 'ChecklistItemController@store');

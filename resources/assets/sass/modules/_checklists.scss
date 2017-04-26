@@ -90,7 +90,10 @@
     }
     .show-item-content-input,
     .show-item-content {
-        font-weight: $font-weight-light;
+        // font-weight: $font-weight-light;
+        font-weight: $font-weight-normal;
+        // font-weight: $font-weight-bold;
+        color: $grey-text-color;
     }
     &.has-expanded-editable-item {
         .main-panel {
@@ -196,33 +199,52 @@
         }
     }
 
-    .checklist-title {
-        display: inline-block;
-    }
-
-    .checklist h4 .fa-list,
-    .checklist-title,
+    .checklist-title span,
+    .checklist-title .fa-list,
     .edit-checklist-input {
         vertical-align: text-top;
     }
 
     .checklist-title,
     .edit-checklist-input {
-        // line-height: 1.2;
-        font-size: 1em;
-        width: 85%;
+        // font-weight: $font-weight-bold;
         font-weight: $font-weight-normal;
+        font-family: $title-font-family;
+    }
+    .checklist-title span,
+    .checklist-title .fa-list,
+    .edit-checklist-input {
+        line-height: 1.2;
+        font-size: 1.25em;
+    }
+    .checklist-title span,
+    .edit-checklist-input {
+        width: 85%;
+        padding: 0;
+        margin:0;
+    }
+
+
+    .checklist-title  span{
+        display: inline-block;
+    }
+
+    .checklist-title {
+        color: $blue-text-color;
+        // color: black;
     }
 
     .edit-checklist-input {
         border: 0;
-        color: $list-primary;
+        // color: $list-primary;
+        color: black;
         outline: none;
     }
 }
 
 .pretty {
     .fa {
-        color: $list-primary;
+        // color: $list-primary;
+        color: $brand-primary;
     }
 }

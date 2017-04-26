@@ -2,7 +2,7 @@
   <div class="item-form-buttons">
     <button
       type="button"
-      class="btn btn-xs btn-list"
+      class="btn btn-sm btn-folder"
       @click.prevent="saveAndClose"
     >
       <i class="fa" :class="saveButtonIcon" aria-hidden="true"></i>

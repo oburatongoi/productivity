@@ -2,9 +2,10 @@
   <div class="checklist" :class="checklistClass">
     <div class="panel main-panel">
       <div class="panel-heading">
-          <h4>
-            <i class="fa fa-fw fa-list" :class="{'list-color-scheme':isEditable}" aria-hidden="true"></i>
-            <span v-if="!isEditable" class="checklist-title" @click="toggleEditability(true)">
+          <h4 class="checklist-title">
+            <!-- <i class="fa fa-fw fa-list" :class="{'list-color-scheme':isEditable}" aria-hidden="true"></i> -->
+            <i class="fa fa-fw fa-list" :class="{'black-color-scheme':isEditable}" aria-hidden="true"></i>
+            <span v-if="!isEditable" @click="toggleEditability(true)">
               {{checklist.title}}
             </span>
             <input

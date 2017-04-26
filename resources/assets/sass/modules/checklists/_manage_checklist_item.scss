@@ -1,6 +1,6 @@
 .manage-checklist-item {
     @media(min-width:769px){
-        border: 1px solid $list-primary;
+        border: 1px solid $brand-primary;
     }
 
     & > .position-relative {
@@ -20,11 +20,12 @@
         .fa {
             cursor: pointer;
             color: $base-border-color;
-
-            & > &:hover {
-                color: $list-primary;
+            &:hover {
+                color: $brand-primary;
             }
         }
+
+
 
         .fa-stack {
             margin-top: -5px;
@@ -33,7 +34,7 @@
                 color: darken($base-border-color, 10%);
             }
             .fa-circle-o-notch {
-                color: $list-primary;
+                color: $brand-primary;
                 opacity: 0.6;
             }
         }
@@ -121,9 +122,10 @@
             outline: none;
             padding: 4px 4px 6px;
             font-size: 0.9em;
-            font-weight: $font-weight-light;
+            // font-weight: $font-weight-light;
+            font-weight: $font-weight-bold;
             &:focus {
-                border: 1px dotted $list-primary;
+                border: 1px dotted $brand-primary;
                 color: black;
             }
             @media(max-width:768px){
@@ -171,7 +173,7 @@
                 padding: 0;
 
                 a {
-                    color: $list-primary !important;
+                    color: $brand-primary !important;
                 }
             }
         }
@@ -240,7 +242,7 @@ pre.ql-syntax {
     // background: transparent;
     button.ql-active {
         .ql-stroke {
-            color: $list-primary !important;
+            color: $brand-primary !important;
         }
     }
 }
@@ -269,6 +271,6 @@ pre.ql-syntax {
 .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
 .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
 .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
-    color: $list-primary;
-    stroke: $list-primary;
+    color: $brand-primary;
+    stroke: $brand-primary;
 }

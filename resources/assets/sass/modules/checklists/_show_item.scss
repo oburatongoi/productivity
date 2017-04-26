@@ -1,12 +1,13 @@
 .show-item {
     @include desktop-overflow-y;
     border-bottom: 1px solid lighten($base-border-color, 10%);
+    font-family: $paragraph-font-family-sans-serif;
     &.is-selected,
     &:hover {
         background: lighten($body-bg, 1%);
 
         .fa-angle-down.toggle {
-            color: $list-primary;
+            color: $brand-primary;
             -webkit-transform: rotate(-90deg);
             -moz-transform: rotate(-90deg);
             -ms-transform: rotate(-90deg);
@@ -16,10 +17,13 @@
     }
 
     &.is-selected {
-        border: 1px solid $list-primary;
+        border: 1px solid $brand-primary;
         border-radius: 2px;
         padding-left: 10px;
-        color: black;
+        // color: black;
+        .show-item-content {
+            color: $brand-primary;
+        }
     }
 
     p, i {
@@ -76,7 +80,7 @@
         font-size: 16px;
         padding: 7px;
         &:hover {
-            color: $list-primary;
+            color: $brand-primary;
         }
     }
     .preview-deadline {

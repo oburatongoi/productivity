@@ -19,9 +19,9 @@
         <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/tomorrow-night-blue.min.css">
         <script src="//cdn.jsdelivr.net/highlight.js/9.10.0/highlight.min.js"></script>
 
+        <!-- Quill text editor styles and JavaScript -->
         <script src="//cdn.quilljs.com/1.2.3/quill.min.js"></script>
         <link href="//cdn.quilljs.com/1.2.3/quill.snow.css" rel="stylesheet">
-
 
         <link rel="stylesheet" href="/vendor/productivity/css/productivity.css">
 
