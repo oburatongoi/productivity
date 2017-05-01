@@ -1,10 +1,8 @@
 <template>
   <div v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsCurrentlyEditable}" @click.self="toggleEditability">
-
-    <div class="pretty inline outline-success plain smooth" @click="checkItem">
-      <input type="checkbox" :checked="item.checked_at"/>
-      <label><i class="fa" :class="checkboxClass"></i></label>
-    </div>
+    <span class="checkbox-container">
+      <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem"></i>
+    </span>
 
     <p class="show-item-content" @click="toggleEditability" @dblclick="toggleEditability">{{ item.content }}</p>
 
@@ -40,7 +38,7 @@ export default {
     props: ['item'],
     data () {
       return {
-          checkboxClass: 'fa-check'
+          checkboxClassOverride: null
       }
     },
     methods: {
@@ -50,7 +48,7 @@ export default {
         'removeCurrentlyEditable'
       ]),
       checkItem: function() {
-        this.checkboxClass = 'fa-check fa-spin'
+        this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
         if (this.item.checked_at) {
           this.item.checked_at = null
         } else {
@@ -58,10 +56,10 @@ export default {
         }
         this.saveCurrentEditableItem(this.item)
             .then(
-              () => {this.checkboxClass = 'fa-check'}
+              () => {this.checkboxClassOverride = null}
             )
             .catch(
-              () => {this.checkboxClass = 'fa-check'}
+              () => {this.checkboxClassOverride = null}
             )
       },
       toggleEditability: function() {
@@ -77,6 +75,9 @@ export default {
         'deletedItems',
         'filters'
       ]),
+      checkboxClass: function() {
+        return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-circle-thin'
+      },
       itemIsUnfiltered: function() {
         return this.unfilteredItems.indexOf(this.item.id) !== -1
       },

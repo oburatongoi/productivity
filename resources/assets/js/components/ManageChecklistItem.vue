@@ -13,10 +13,9 @@
 
         <div class="edit-content">
           <h4 class="manage-checklist-item-content-textarea">
-            <div class="pretty inline outline-success plain smooth">
-              <input type="checkbox" :checked="currentEditableItem.checked_at" @click="checkItem"/>
-              <label><i class="fa" :class="checkboxClass"></i></label>
-            </div>
+            <span class="checkbox-container">
+              <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem"></i>
+            </span>
 
             <textarea
               v-model="currentEditableItem.content"
@@ -92,7 +91,7 @@ export default {
   data () {
     return {
       savingChanges: false,
-      checkboxClass: 'fa-check'
+      checkboxClassOverride: null
     }
   },
   methods: {
@@ -117,7 +116,7 @@ export default {
       )
     },
     checkItem: function() {
-      this.checkboxClass = 'fa-check fa-spin'
+      this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
       if (this.currentEditableItem.checked_at) {
         this.currentEditableItem.checked_at = null
       } else {
@@ -125,10 +124,10 @@ export default {
       }
       this.saveCurrentEditableItem(this.currentEditableItem)
           .then(
-            () => {this.checkboxClass = 'fa-check'}
+            () => {this.checkboxClassOverride = null}
           )
           .catch(
-            () => {this.checkboxClass = 'fa-check'}
+            () => {this.checkboxClassOverride = null}
           )
     }
   },
@@ -137,6 +136,9 @@ export default {
       'currentEditableItem',
       'currentEditableItemIsExpanded'
     ]),
+    checkboxClass: function() {
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.currentEditableItem.checked_at ? 'fa-check' : 'fa-circle-thin'
+    },
     toggleExpansionClass: function() {
       return this.currentEditableItemIsExpanded ? 'fa-compress' : 'fa-expand'
     }

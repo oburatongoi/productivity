@@ -96,3 +96,28 @@
     }
 
 }
+
+.checkbox-container {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+
+    .fa {
+        cursor: pointer;
+    }
+
+    .fa-circle-thin {
+        color: $input-border;
+        font-size: 1.5em;
+    }
+
+    .fa-circle-o-notch {
+        color: $input-border;
+        font-size: 1em;
+    }
+
+    .fa-check {
+        color: $brand-primary;
+        font-size: 1em;
+    }
+}
