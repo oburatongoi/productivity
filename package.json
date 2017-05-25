@@ -25,7 +25,6 @@
     "es6-promise": "^4.1.0",
     "highlight.js": "^9.10.0",
     "moment": "^2.17.1",
-    "pretty-checkbox": "^2.2.0",
     "quill": "^1.2.3",
     "v-tooltip": "^1.1.2",
     "vuejs-datepicker": "^0.5.5",

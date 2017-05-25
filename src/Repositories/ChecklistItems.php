@@ -2,9 +2,21 @@
 
 namespace Oburatongoi\Productivity\Repositories;
 
+use App\User;
 use Oburatongoi\Productivity\Checklist;
+use Oburatongoi\Productivity\Interfaces\ChecklistItemsInterface;
 
-class ChecklistItems {
+class ChecklistItems implements ChecklistItemsInterface {
+
+    public function forUser(User $user)
+    {
+        return $user->items()->get();
+    }
+
+    public function uncheckedForUser(User $user)
+    {
+        return $user->items()->where('checked_at', null)->get();
+    }
 
     public function forChecklist(Checklist $checklist)
     {

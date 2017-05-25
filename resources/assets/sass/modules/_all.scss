@@ -9,9 +9,10 @@
 @import "move_to_folder";
 @import "navs";
 @import "search_form";
-@import "vendor_tooltip";
+@import "vendor/tooltip";
+@import "vendor/quill_text_editor";
 @import "home/home";
-@import "../../../../node_modules/pretty-checkbox/src/pretty.scss";
+// @import "../../../../node_modules/pretty-checkbox/src/pretty.scss";
 
 .position-relative {
     position: relative;

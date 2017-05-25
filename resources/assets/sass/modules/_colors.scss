@@ -22,6 +22,12 @@
         color: black;
     }
 }
+.grey-color-scheme {
+    &,
+    a {
+        color: $grey-text-color;
+    }
+}
 .goal-color-scheme {
     &,
     a {

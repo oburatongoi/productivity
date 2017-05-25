@@ -3,8 +3,7 @@
     <div class="panel main-panel">
       <div class="panel-heading">
           <h4 class="checklist-title">
-            <!-- <i class="fa fa-fw fa-list" :class="{'list-color-scheme':isEditable}" aria-hidden="true"></i> -->
-            <i class="fa fa-fw fa-list" :class="{'black-color-scheme':isEditable}" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-list" :class="{'grey-color-scheme':isEditable}" aria-hidden="true"></i>
             <span v-if="!isEditable" @click="toggleEditability(true)">
               {{checklist.title}}
             </span>
@@ -182,17 +181,6 @@ export default {
         this.unsavedChanges = true
         this.saveChanges()
       }, 1000),
-      // checkForChanges: _.debounce(
-      //   function() {
-      //     console.log('checking for changes...');
-      //     let stringsMatch = this.checklist.title === this.localChecklist.title;
-      //     if (!stringsMatch) {
-      //       console.log('There are unsaved changes...');
-      //     }
-      //     return this.unsavedChanges = ! stringsMatch
-      //   },
-      //   500
-      // ),
       saveChanges: function() {
         this.inputIcon = 'fa-spin fa-circle-o-notch'
         this.saveChecklist(this.checklist)

@@ -8,6 +8,7 @@ use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Cont
 
 use Oburatongoi\Productivity\Repositories\Decorators\CacheableFolders as Folders;
 use Oburatongoi\Productivity\Repositories\Decorators\CacheableChecklists as Checklists;
+use Oburatongoi\Productivity\Repositories\Decorators\CacheableChecklistItems as ChecklistItems;
 use Oburatongoi\Productivity\Folder;
 
 // use Illuminate\Support\Facades\Cache;
@@ -19,16 +20,19 @@ class FolderController extends Controller
 
     protected $folders;
     protected $checklists;
+    protected $items;
 
     public function __construct(
         Folders $folders,
-        Checklists $checklists
+        Checklists $checklists,
+        ChecklistItems $items
     ) {
         $this->middleware('web');
         $this->middleware('auth');
 
         $this->folders = $folders;
         $this->checklists = $checklists;
+        $this->items = $items;
     }
 
     /**
@@ -41,6 +45,7 @@ class FolderController extends Controller
         JavaScript::put([
             'folders' => $this->folders->rootForUser($request->user()),
             'checklists' => $this->checklists->rootForUser($request->user()),
+            'pendingItems' => $this->items->uncheckedForUser($request->user()),
             'model' => 'folders',
             'currentView' => 'foldersIndex'
         ]);

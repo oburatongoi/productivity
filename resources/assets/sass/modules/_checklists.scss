@@ -90,9 +90,7 @@
     }
     .show-item-content-input,
     .show-item-content {
-        // font-weight: $font-weight-light;
         font-weight: $font-weight-normal;
-        // font-weight: $font-weight-bold;
         color: $grey-text-color;
     }
     &.has-expanded-editable-item {
@@ -195,7 +193,7 @@
         color: $input-border;
         &.fa-circle-o-notch,
         &:hover {
-            color: $list-primary;
+            color: $brand-primary;
         }
     }
 
@@ -207,7 +205,6 @@
 
     .checklist-title,
     .edit-checklist-input {
-        // font-weight: $font-weight-bold;
         font-weight: $font-weight-normal;
         font-family: $title-font-family;
     }
@@ -231,20 +228,11 @@
 
     .checklist-title {
         color: $blue-text-color;
-        // color: black;
     }
 
     .edit-checklist-input {
         border: 0;
-        // color: $list-primary;
-        color: black;
+        color: $grey-text-color;
         outline: none;
-    }
-}
-
-.pretty {
-    .fa {
-        // color: $list-primary;
-        color: $brand-primary;
     }
 }

@@ -1,59 +1,41 @@
 <template lang="html">
-  <div class="home">
-    <h3 class="priority-label priority-label-important">Important</h3>
-    <h3 class="priority-label priority-label-not-important">Not Important</h3>
-    <h3 class="priority-label priority-label-urgent">Urgent</h3>
-    <h3 class="priority-label priority-label-not-urgent">Not Urgent</h3>
-    <div class="wraps-split">
-      <div class="important">
+  <div class="home" :class="homeClass">
+    <div class="panel main-panel">
+      <div class="home-heading">
 
-        <div class="urgent">
-          <i class="fa fa-expand toggle-size" aria-hidden="true"></i>
-          # Important and Urgent
-        </div>
-
-        <div class="not-urgent">
-          <i class="fa fa-expand toggle-size" aria-hidden="true"></i>
-          # Important and not Urgent
-        </div>
       </div>
 
-      <div class="not-important">
-        <div class="urgent">
-          <i class="fa fa-expand toggle-size" aria-hidden="true"></i>
-          # Not important and urgent
-        </div>
-
-        <div class="not-urgent">
-          <i class="fa fa-expand toggle-size" aria-hidden="true"></i>
-          # Not important and not urgent
-        </div>
+      <div class="home-body panel-body">
+        <home-checklist-items></home-checklist-items>
       </div>
     </div>
+
+    <manage-checklist-item v-if="currentEditableItem.id"></manage-checklist-item>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import HomeChecklistItems from './HomeChecklistItems.vue'
+import ManageChecklistItem from './ManageChecklistItem.vue'
 
 export default {
   name: 'home',
-  // mounted: function() {
-  //   Split(['#important', '#not-important'], {
-  //     sizes: [60,40],
-  //     direction: 'horizontal'
-  //   })
-  //
-  //   Split(['#important-urgent', '#important-not-urgent'], {
-  //     sizes: [60,40],
-  //     direction: 'vertical'
-  //   })
-  //
-  //   Split(['#not-important-urgent', '#not-important-not-urgent'], {
-  //     sizes: [60,40],
-  //     direction: 'vertical'
-  //   })
-  // }
-
+  components: {
+      HomeChecklistItems,
+      ManageChecklistItem
+  },
+  computed: {
+    ...mapGetters([
+      'currentEditableItem',
+      'currentEditableItemIsExpanded'
+    ]),
+    homeClass: function() {
+      if (this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
+      if (this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
+      return null
+    },
+  }
 }
 </script>
 

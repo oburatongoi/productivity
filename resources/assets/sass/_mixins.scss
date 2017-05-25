@@ -23,3 +23,9 @@
 @mixin top-menu-height {
     height: 40px;
 }
+
+@mixin base-box-shadow {
+    -webkit-box-shadow: $base-box-shadow;
+    -moz-box-shadow: $base-box-shadow;
+    box-shadow: $base-box-shadow;
+}

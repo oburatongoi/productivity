@@ -105,7 +105,6 @@
 
         .checkbox-container {
             vertical-align: text-top;
-            margin-top: 5px;
         }
     }
 
@@ -223,54 +222,4 @@
             }
         }
     }
-}
-
-pre.ql-syntax {
-    background: #002451 !important;
-}
-
-.ql-toolbar.ql-snow {
-    padding: 5px 0;
-    border: 1px solid $base-border-color;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    // border-bottom: 0;
-    margin-bottom: -1px;
-    background: lighten($body-bg, 1%);
-    // background: transparent;
-    button.ql-active {
-        .ql-stroke {
-            color: $brand-primary !important;
-        }
-    }
-}
-
-.ql-snow.ql-toolbar button:hover .ql-stroke,
-.ql-snow .ql-toolbar button:hover .ql-stroke,
-.ql-snow.ql-toolbar button.ql-active .ql-stroke,
-.ql-snow .ql-toolbar button.ql-active .ql-stroke,
-.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
-.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
-.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
-.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
-.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
-.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
-.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
-.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
-.ql-snow.ql-toolbar button:hover .ql-stroke-miter,
-.ql-snow .ql-toolbar button:hover .ql-stroke-miter,
-.ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
-.ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
-.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
-.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
-.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
-.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
-.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
-.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
-.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
-.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
-    color: $brand-primary;
-    stroke: $brand-primary;
 }

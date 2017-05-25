@@ -14,13 +14,8 @@ trait Productive
         return $this->hasMany('Oburatongoi\Productivity\Checklist');
     }
 
-    public function notes()
+    public function items()
     {
-        return $this->hasMany('Oburatongoi\Productivity\Note');
-    }
-
-    public function goals()
-    {
-        return $this->hasMany('Oburatongoi\Productivity\Goal');
+      return $this->hasManyThrough('Oburatongoi\Productivity\ChecklistItem', 'Oburatongoi\Productivity\Checklist');
     }
 }
