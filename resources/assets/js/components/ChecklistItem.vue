@@ -1,7 +1,8 @@
 <template>
   <div v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsCurrentlyEditable}" @click.self="toggleEditability">
     <span class="checkbox-container">
-      <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem"></i>
+      <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="type&&type=='ch'||type=='ta'"></i>
+      <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'||type=='nu'"></i>
     </span>
 
     <p class="show-item-content" @click="toggleEditability" @dblclick="toggleEditability">{{ item.content }}</p>
@@ -35,7 +36,15 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
     name: 'checklist-item',
-    props: ['item'],
+    props: {
+      item: {
+        type: Object
+      },
+      type: {
+        type: String,
+        default: 'undefined'
+      }
+    },
     data () {
       return {
           checkboxClassOverride: null

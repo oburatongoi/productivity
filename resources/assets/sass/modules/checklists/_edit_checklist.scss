@@ -1,0 +1,33 @@
+.edit-checklist {
+    .list-type-option {
+        margin-bottom: 20px;
+        display: block;
+        border: 1px solid $base-border-color;
+        border-radius: $base-border-radius;
+        padding: 10px 10px 10px 15px;
+
+        input {
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+            // height: 50px;
+        }
+
+        & > span {
+            display: inline-block;
+            vertical-align: middle;
+            // height: 50px;
+            border-left: 1px solid $base-border-color;
+            padding-left: 10px;
+            margin-left: 0;
+            label {
+                margin-bottom: 0;
+            }
+            p {
+                margin-top: 0;
+                margin-bottom: 0;
+                color: $grey-text-color;
+            }
+        }
+    }
+}

@@ -8,7 +8,7 @@ interface ChecklistItemsInterface
 {
     public function forUser(User $user);
     
-    public function uncheckedForUser(User $user);
+    public function pendingForUser(User $user);
 
     public function forChecklist(Checklist $checklist);
 

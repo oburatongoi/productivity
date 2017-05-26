@@ -13,9 +13,9 @@ class ChecklistItems implements ChecklistItemsInterface {
         return $user->items()->get();
     }
 
-    public function uncheckedForUser(User $user)
+    public function pendingForUser(User $user)
     {
-        return $user->items()->where('checked_at', null)->get();
+        return $user->items()->where([['checked_at', null], ['list_type', 'ta']])->get();
     }
 
     public function forChecklist(Checklist $checklist)

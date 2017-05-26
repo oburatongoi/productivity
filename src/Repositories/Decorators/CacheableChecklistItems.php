@@ -21,9 +21,9 @@ class CacheableChecklistItems implements ChecklistItemsInterface {
         return $this->items->forUser($user);
     }
 
-    public function uncheckedForUser(User $user)
+    public function pendingForUser(User $user)
     {
-        return $this->items->uncheckedForUser($user);
+        return $this->items->pendingForUser($user);
     }
 
     public function forChecklist(Checklist $checklist)

@@ -17,7 +17,7 @@
               @keyup="debounceSaveChanges"
               @keydown="debounceSaveChanges"
               @change="debounceSaveChanges"
-              @blur="saveAndClose"
+              @blur="debounceSaveChanges"
               v-focus
             />
             <i class="fa fa-fw edit-checklist-icon"
@@ -81,11 +81,12 @@
               </div>
             </div>
           </div>
-          <add-item></add-item>
+          <add-item v-if="!isEditable"></add-item>
       </div>
 
       <div class="checklist-index-panel panel-body">
-          <checklist-items></checklist-items>
+          <checklist-items v-if="!isEditable"></checklist-items>
+          <edit-checklist v-if="isEditable" @close="saveAndClose"></edit-checklist>
       </div>
     </div>
 
@@ -99,6 +100,7 @@ import { mapActions, mapGetters } from 'vuex'
 import ChecklistItems from './ChecklistItems.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import AddItem from './AddItem.vue'
+import EditChecklist from './EditChecklist.vue'
 import ManageChecklistItem from './ManageChecklistItem.vue'
 
 export default {
@@ -116,6 +118,7 @@ export default {
         ChecklistItems,
         Breadcrumbs,
         AddItem,
+        EditChecklist,
         ManageChecklistItem
     },
     computed: {

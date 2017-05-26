@@ -45,13 +45,13 @@ class FolderController extends Controller
         JavaScript::put([
             'folders' => $this->folders->rootForUser($request->user()),
             'checklists' => $this->checklists->rootForUser($request->user()),
-            'pendingItems' => $this->items->uncheckedForUser($request->user()),
+            'pendingItems' => $this->items->pendingForUser($request->user()),
             'model' => 'folders',
             'currentView' => 'foldersIndex'
         ]);
 
         return view('productivity::home.index')
-                ->withTitle('Folders - Productivity - ' . config('app.name'));
+                ->withTitle('Home - Productivity - ' . config('app.name'));
     }
 
     /**

@@ -4,6 +4,7 @@
           v-if="checklist.items"
           v-for="item in checklist.items"
           :item="item"
+          :type="checklist.list_type"
         ></checklist-item>
     </ul>
 </template>

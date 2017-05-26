@@ -18,7 +18,7 @@
       >
         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
       </a>
-      <span class="item-count-tag" v-if="checklist.items_count">
+      <span class="item-count-tag" v-if="checklist.list_type=='ta'&&checklist.items_count">
         <span class="item-count">{{checklist.items_count}}</span>
       </span>
   </li>

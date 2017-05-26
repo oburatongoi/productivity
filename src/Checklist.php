@@ -20,7 +20,7 @@ class Checklist extends Model
     protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $fillable = [
-      'fake_id', 'user_id', 'folder_id', 'title', 'comments', 'visibility', 'published_at', 'created_at', 'updated_at', 'deleted_at',
+      'fake_id', 'user_id', 'folder_id', 'title', 'comments', 'list_type', 'visibility', 'published_at', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     protected $casts = [
