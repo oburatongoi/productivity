@@ -5,7 +5,9 @@
       <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'||type=='nu'"></i>
     </span>
 
-    <p class="show-item-content" @click="toggleEditability" @dblclick="toggleEditability">{{ item.content }}</p>
+    <p class="show-item-content" @click="toggleEditability" @dblclick="toggleEditability">
+      {{ item.content }}
+    </p>
 
     <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="toggleEditability" @dblclick="toggleEditability"></i>
 
@@ -27,6 +29,17 @@
       </span>
     </p>
 
+    <div v-if="itemIsCurrentlyEditable&&item.checklist" class="show-item-breadcrumbs">
+      <span v-if="item.checklist.folder">
+        <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
+        {{item.checklist.folder.name}}
+        <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
+      </span>
+
+      <span>
+        <i class="fa fa-fw fa-list" aria-hidden="true"></i> {{item.checklist.title}}
+      </span>
+    </div>
   </div>
 </template>
 

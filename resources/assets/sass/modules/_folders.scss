@@ -1,0 +1,25 @@
+.folder {
+    height: 100%;
+    overflow: hidden;
+
+    .index-tasks {
+        height: 93%;
+    }
+}
+
+.folder-nav {
+    display: block;
+    padding: 0;
+    margin-bottom: 20px;
+
+    li {
+        display: inline-block;
+        cursor: pointer;
+        &:not(:last-child) {
+            margin-right: 20px;
+        }
+        &.selected {
+            border-bottom: 2px solid $folder-primary;
+        }
+    }
+}

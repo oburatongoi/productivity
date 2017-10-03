@@ -34,7 +34,8 @@
     "require": [
       "babel-register",
       "./resources/assets/js/test/helpers/setup-browser-env.js"
-    ]
+    ],
+    "babel": "inherit"
   },
   "babel": {
     "presets": [

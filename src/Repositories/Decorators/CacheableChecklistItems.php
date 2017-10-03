@@ -3,6 +3,7 @@
 namespace Oburatongoi\Productivity\Repositories\Decorators;
 
 use App\User;
+use Oburatongoi\Productivity\Folder;
 use Oburatongoi\Productivity\Checklist;
 use Oburatongoi\Productivity\Repositories\ChecklistItems;
 use Oburatongoi\Productivity\Interfaces\ChecklistItemsInterface;
@@ -24,6 +25,11 @@ class CacheableChecklistItems implements ChecklistItemsInterface {
     public function pendingForUser(User $user)
     {
         return $this->items->pendingForUser($user);
+    }
+
+    public function pendingForFolder(Folder $folder)
+    {
+        return $this->items->pendingForFolder($folder);
     }
 
     public function forChecklist(Checklist $checklist)

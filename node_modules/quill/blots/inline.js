@@ -1,4 +1,3 @@
-import Embed from './embed';
 import Text from './text';
 import Parchment from 'parchment';
 
@@ -29,8 +28,8 @@ class Inline extends Parchment.Inline {
     }
   }
 
-  optimize() {
-    super.optimize();
+  optimize(context) {
+    super.optimize(context);
     if (this.parent instanceof Inline &&
         Inline.compare(this.statics.blotName, this.parent.statics.blotName) > 0) {
       let parent = this.parent.isolate(this.offset(), this.length());
@@ -39,12 +38,12 @@ class Inline extends Parchment.Inline {
     }
   }
 }
-Inline.allowedChildren = [Inline, Embed, Text];
+Inline.allowedChildren = [Inline, Parchment.Embed, Text];
 // Lower index means deeper in the DOM tree, since not found (-1) is for embeds
 Inline.order = [
   'cursor', 'inline',   // Must be lower
-  'code', 'underline', 'strike', 'italic', 'bold', 'script',
-  'link'                // Must be higher
+  'underline', 'strike', 'italic', 'bold', 'script',
+  'link', 'code'        // Must be higher
 ];
 
 

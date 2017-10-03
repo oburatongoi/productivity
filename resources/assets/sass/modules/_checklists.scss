@@ -236,4 +236,20 @@
         color: $grey-text-color;
         outline: none;
     }
+
+}
+
+.show-item-breadcrumbs {
+    margin: 0;
+    padding-left: 35px;
+    span {
+        font-size:0.8em;
+        color: $brand-primary;
+        .fa {
+            font-size: 0.8em;
+        }
+        .fa-angle-right {
+            color: $grey-text-color;
+        }
+    }
 }

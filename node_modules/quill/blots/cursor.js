@@ -1,10 +1,8 @@
 import Parchment from 'parchment';
-import Embed from './embed';
 import TextBlot from './text';
-import Emitter from '../core/emitter';
 
 
-class Cursor extends Embed {
+class Cursor extends Parchment.Embed {
   static value() {
     return undefined;
   }
@@ -58,8 +56,7 @@ class Cursor extends Embed {
   }
 
   restore() {
-    if (this.selection.composing) return;
-    if (this.parent == null) return;
+    if (this.selection.composing || this.parent == null) return;
     let textNode = this.textNode;
     let range = this.selection.getNativeRange();
     let restoreText, start, end;
@@ -84,21 +81,26 @@ class Cursor extends Embed {
       }
     }
     this.remove();
-    if (start == null) return;
-    this.selection.emitter.once(Emitter.events.SCROLL_OPTIMIZE, () => {
+    if (start != null) {
       [start, end] = [start, end].map(function(offset) {
         return Math.max(0, Math.min(restoreText.data.length, offset - 1));
       });
-      this.selection.setNativeRange(restoreText, start, restoreText, end);
-    });
+      return {
+        startNode: restoreText,
+        startOffset: start,
+        endNode: restoreText,
+        endOffset: end
+      };
+    }
   }
 
-  update(mutations) {
-    mutations.forEach((mutation) => {
-      if (mutation.type === 'characterData' && mutation.target === this.textNode) {
-        this.restore();
-      }
-    });
+  update(mutations, context) {
+    if (mutations.some((mutation) => {
+      return mutation.type === 'characterData' && mutation.target === this.textNode;
+    })) {
+      let range = this.restore();
+      if (range) context.range = range;
+    }
   }
 
   value() {

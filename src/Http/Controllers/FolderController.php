@@ -46,11 +46,11 @@ class FolderController extends Controller
             'folders' => $this->folders->rootForUser($request->user()),
             'checklists' => $this->checklists->rootForUser($request->user()),
             'pendingItems' => $this->items->pendingForUser($request->user()),
-            'model' => 'folders',
-            'currentView' => 'foldersIndex'
+            'currentView' => 'home'
         ]);
 
-        return view('productivity::home.index')
+        // return view('productivity::home.index')
+        return view('productivity::folders.show')
                 ->withTitle('Home - Productivity - ' . config('app.name'));
     }
 
@@ -114,6 +114,7 @@ class FolderController extends Controller
             'currentFolder' => $folder->load('folder', 'subfolders'),
             'checklists' => $this->checklists->forFolder($request->user(), $folder),
             'ancestors' => $folder->getAncestors(),
+            'pendingItems' => $this->items->pendingForFolder($folder),
             'model' => 'folder',
         ]);
 

@@ -73,6 +73,11 @@ class Folder extends Model
         return $this->hasMany('Oburatongoi\Productivity\Checklist');
     }
 
+    public function items()
+    {
+        return $this->hasManyThrough('Oburatongoi\Productivity\ChecklistItem', 'Oburatongoi\Productivity\Checklist');
+    }
+
     protected $touches = ['folder'];
     protected static function boot() {
     parent::boot();

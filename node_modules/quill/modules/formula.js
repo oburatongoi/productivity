@@ -10,16 +10,11 @@ class FormulaBlot extends Embed {
       window.katex.render(value, node);
       node.setAttribute('data-value', value);
     }
-    node.setAttribute('contenteditable', false);
     return node;
   }
 
   static value(domNode) {
     return domNode.getAttribute('data-value');
-  }
-
-  index() {
-    return 1;
   }
 }
 FormulaBlot.blotName = 'formula';
