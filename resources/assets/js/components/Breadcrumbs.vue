@@ -23,12 +23,13 @@
       </li>
 
       <li v-if="hasCurrentView" class="current-view">
-        <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
         <template v-if="currentView=='foldersIndex'">
+          <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
           <i class="fa fa-fw fa-folder-o" aria-hidden="true"></i>
           Folders
         </template>
         <template v-if="currentView=='checklistsIndex'">
+          <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
           <i class="fa fa-fw fa-list" aria-hidden="true"></i>
           Lists
         </template>
