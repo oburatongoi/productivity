@@ -21,7 +21,7 @@
           <button type="submit" class="btn btn-primary btn-sm">
             <i class="fa fa-fw fa-check" aria-hidden="true"></i>
           </button>
-          <button type="button" class="btn btn-default btn-sm" @click.prevent="toggleAddingFolder">
+          <button type="button" class="btn btn-default btn-sm" @click.prevent="toggleAddingFolder('false')">
             <i class="fa fa-fw fa-times" aria-hidden="true"></i>
           </button>
         </div>
@@ -137,9 +137,10 @@ export default {
 
       this.storeFolder(folder).then(
         (response) => {
-          this.folders.unshift(response.folder)
-          this.isLoading = false
+          // this.folders.unshift(response.folder)
+          // this.isLoading = false
           this.toggleAddingFolder('false')
+          this.fetchInitialFolders(this.currentFolder.id)
         },
         (response) => {
           this.isLoading = false
