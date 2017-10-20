@@ -80,22 +80,30 @@ class FolderController extends Controller
      */
     public function store($account, Request $request)
     {
+        try {
 
-        $folder = $request->user()->folders()->create($request->input('folder'));
+          $folder = $request->user()->folders()->create($request->input('folder'));
 
-        if (
-        $request->has('folder.folder_id')
-        && $parent = Folder::find($request->input('folder.folder_id'))
-        ) {
-            $parent->appendNode($folder);
-            // Cache::forget('user.'.$request->user()->id.'.folder.'.$folder->id.'.subFolders');
-        } else {
-            // Cache::forget('user.'.$request->user()->id.'.rootFolders');
+          if (
+          $request->has('folder.folder_id') // If folder id exists in the request...
+          && $parent = Folder::find($request->input('folder.folder_id')) // If the folder id matches an existing folder, retrieve it
+          ) {
+              $parent->appendNode($folder);
+              // Cache::forget('user.'.$request->user()->id.'.folder.'.$folder->id.'.subFolders');
+          } else {
+              // Cache::forget('user.'.$request->user()->id.'.rootFolders');
+          }
+
+          return response()->json([
+              'folder' => $folder
+          ]);
+
+        } catch (Exception $e) {
+
+          $this->handleException($e);
+
         }
 
-        return response()->json([
-            'folder' => $folder
-        ]);
     }
 
     /**
@@ -132,13 +140,22 @@ class FolderController extends Controller
      */
     public function update($account, Request $request, Folder $folder)
     {
-        $this->authorize('modify', $folder);
 
-        $folder->update($request->input('folder'));
+        try {
 
-        return response()->json([
-            'folder' => $folder
-        ]);
+          $this->authorize('modify', $folder);
+
+          $folder->update($request->input('folder'));
+
+          return response()->json([
+              'folder' => $folder
+          ]);
+
+        } catch (Exception $e) {
+
+          $this->handleException($e);
+
+        }
     }
 
     /**
@@ -149,17 +166,30 @@ class FolderController extends Controller
      */
     public function destroy($account, Request $request, Folder $folder)
     {
-        $this->authorize('modify', $folder);
 
-        $folder->delete();
+        try {
 
-        return response()->json([
-            'folder' => $folder
-        ]);
+          $this->authorize('modify', $folder);
+
+          $folder->delete();
+
+          return response()->json([
+              'folder' => $folder
+          ]);
+
+        } catch (Exception $e) {
+
+          $this->handleException($e);
+
+        }
+
     }
 
     public function fetchInitialTree($account, Request $request)
     {
+
+      try {
+
         $folders = Folder::select('name', 'fake_id', 'id')
                     ->where('folder_id', $request->input('folder_id'))
                     ->orderBy('name', 'asc')
@@ -169,19 +199,38 @@ class FolderController extends Controller
         return response()->json([
             'folders' => $folders
         ]);
+
+      } catch (Exception $e) {
+
+        $this->handleException($e);
+
+      }
+
     }
 
     public function fetchNewTree($account, Request $request, Folder $folder)
     {
+
+      try {
+
         $folder->load('folder', 'subfolders');
 
         return response()->json([
             'folder' => $folder
         ]);
+
+      } catch (Exception $e) {
+
+        $this->handleException($e);
+
+      }
+
     }
 
     public function moveToFolder($account, Request $request, Folder $folder)
     {
+
+      try {
 
         switch ($request->input('child.model')) {
             case 'folder':
@@ -198,33 +247,58 @@ class FolderController extends Controller
             'folder' => $folder,
             'child' => $child
         ]);
+
+      } catch (Exception $e) {
+
+        $this->handleException($e);
+
+      }
+
     }
 
     public function moveToHome($account, Request $request)
     {
 
-        switch ($request->input('child.model')) {
-            case 'folder':
-                $child = Folder::where('fake_id', $request->input('child.id'))->first();
-                break;
-            case 'checklist':
-                $child = \Oburatongoi\Productivity\Checklist::where('fake_id', $request->input('child.id'))->first();
-                break;
+        try {
+
+          switch ($request->input('child.model')) {
+              case 'folder':
+                  $child = Folder::where('fake_id', $request->input('child.id'))->first();
+                  break;
+              case 'checklist':
+                  $child = \Oburatongoi\Productivity\Checklist::where('fake_id', $request->input('child.id'))->first();
+                  break;
+          }
+
+          $child->moveToHome();
+
+          return response()->json([
+              'child' => $child
+          ]);
+
+        } catch (Exception $e) {
+
+          $this->handleException($e);
+
         }
 
-        $child->moveToHome();
-
-        return response()->json([
-            'child' => $child
-        ]);
     }
 
     public function fixTree()
     {
-        $tree = Folder::fixTree();
+        try {
 
-        return response()->json([
-            'fixed' => $tree
-        ]);
+          $tree = Folder::fixTree();
+
+          return response()->json([
+              'fixed' => $tree
+          ]);
+
+        } catch (Exception $e) {
+
+          $this->handleException($e);
+
+        }
+
     }
 }
