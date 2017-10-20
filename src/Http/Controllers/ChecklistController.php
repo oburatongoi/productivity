@@ -60,11 +60,8 @@ class ChecklistController extends Controller
 
             return $this->handleException($e);
 
-        } catch (\AlgoliaException $e) {
-
-            return $this->handleException($e);
-
         }
+
 
     }
 
