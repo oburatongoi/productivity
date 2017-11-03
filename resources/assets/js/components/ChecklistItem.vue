@@ -95,6 +95,7 @@ export default {
         'editableItems',
         'currentEditableItem',
         'deletedItems',
+        'delistedItems',
         'filters'
       ]),
       checkboxClass: function() {
@@ -105,6 +106,9 @@ export default {
       },
       itemIsDeleted: function() {
         return this.deletedItems.indexOf(this.item.id) !== -1
+      },
+      itemIsDelisted: function() {
+        return this.delistedItems.indexOf(this.item.id) !== -1
       },
       itemPassesCheckedFilter: function() {
         if (this.filters.checked == 'all') {
@@ -149,7 +153,7 @@ export default {
         return true
       },
       itemIsVisible: function() {
-        return this.itemIsUnfiltered || !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
+        return this.itemIsUnfiltered || !this.itemIsDelisted || !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
       },
       itemIsCurrentlyEditable: function() {
         return this.currentEditableItem.id && this.item.id == this.currentEditableItem.id

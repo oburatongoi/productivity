@@ -9,6 +9,7 @@ import {
     DELETE_EDITABLE,
     DELETE_UNFILTERED,
     DELETE_CHECKLIST_ITEM,
+    DELIST_CHECKLIST_ITEM,
     UPDATE_FILTERS,
     UPDATE_CHECKLIST,
     RESET_NEW_CHECKLIST_ITEM,
@@ -32,6 +33,7 @@ const state = {
         comments: null
     },
     deletedItems: [],
+    delistedItems: [],
     filters: {
         checked: 'unchecked',
         priority: 'none'
@@ -60,6 +62,9 @@ const mutations = {
     },
     [DELETE_CHECKLIST_ITEM] (state, id) {
         state.deletedItems.unshift(id)
+    },
+    [DELIST_CHECKLIST_ITEM] (state, id) {
+        state.delistedItems.unshift(id)
     },
     [DELETE_CURRENTLY_EDITABLE] (state) {
         state.currentEditableItem = {}
@@ -108,6 +113,12 @@ const actions = {
     delistChecklist({ commit }, checklist) {
       return new Promise((resolve, reject) => {
           commit(DELETE_CHECKLIST, checklist)
+          resolve()
+      })
+    },
+    delistChecklistItem({ commit }, checklistItem) {
+      return new Promise((resolve, reject) => {
+          commit(DELIST_CHECKLIST_ITEM, checklistItem.id)
           resolve()
       })
     },
@@ -364,6 +375,7 @@ const getters = {
     editableItems: state => state.editableItems,
     unfilteredItems: state => state.unfilteredItems,
     deletedItems: state => state.deletedItems,
+    delistedItems: state => state.delistedItems,
     filters: state => state.filters,
     newChecklistItem: state => state.newChecklistItem,
     currentEditableItem: state => state.currentEditableItem,

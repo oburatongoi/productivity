@@ -13,7 +13,7 @@ use Oburatongoi\Productivity\Folder;
 
 // use Illuminate\Support\Facades\Cache;
 
-use JavaScript;
+use JavaScript, Bugsnag;
 
 class FolderController extends Controller
 {
@@ -252,6 +252,10 @@ class FolderController extends Controller
 
         $this->handleException($e);
 
+      } catch (\AlgoliaException $e) {
+
+        Bugsnag::notifyException($e);
+        
       }
 
     }

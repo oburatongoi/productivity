@@ -21,7 +21,7 @@ Route::group(['domain' => '{'.(string)(config('productivity.subdomain')).'}.'.(s
         Route::post('/fetch-initial-tree', 'FolderController@fetchInitialTree');
         Route::post('/{folder}/fetch-new-tree', 'FolderController@fetchNewTree');
 
-        Route::patch('/move-to/{folder}', 'FolderController@moveToFolder');
+        Route::patch('/move-to-folder/{folder}', 'FolderController@moveToFolder');
         Route::patch('/move-to-home', 'FolderController@moveToHome');
         Route::get('/fix-folder-tree', 'FolderController@fixTree');
 

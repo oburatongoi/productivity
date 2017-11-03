@@ -137,8 +137,6 @@ export default {
 
       this.storeFolder(folder).then(
         (response) => {
-          // this.folders.unshift(response.folder)
-          // this.isLoading = false
           this.toggleAddingFolder('false')
           this.fetchInitialFolders(this.currentFolder.id)
         },
@@ -192,9 +190,9 @@ export default {
       return folder.id ? this.selectedFolder = folder : this.selectedFolder = {}
     },
     moveTo: function(folder) {
-      axios.patch('/move-to/'+folder.fake_id, { child:this.selected })
+      axios.patch('/move-to-folder/'+folder.fake_id, { child:this.selected })
       .then(
-        (response) => response.data.child ? this.handleSuccessfulMove() : alert('No child returned')
+        (response) => response.data.child || response.data.input.child ? this.handleSuccessfulMove() : alert('No child returned')
       )
       .catch(
         (response) => alert('Error moving '+this.selected.model)
@@ -203,7 +201,7 @@ export default {
     moveToHome: function(folder) {
       axios.patch('/move-to-home/', { child:this.selected })
       .then(
-        (response) => response.data.child ? this.handleSuccessfulMove() : alert('No child returned')
+        (response) => response.data.child || response.data.input.child ? this.handleSuccessfulMove() : alert('No child returned')
       )
       .catch(
         (response) => alert('Error moving '+this.selected.model)
