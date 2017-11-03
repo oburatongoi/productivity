@@ -50,6 +50,76 @@ class User extends Authenticatable
 }
 ```
 
+To properly address certain exceptions, add the following to your `app\Exceptions\Handler.php` file:
+
+```php
+use Illuminate\Session\TokenMismatchException as TokenMismatchException;
+use AlgoliaSearch\AlgoliaException as AlgoliaException;
+
+use Bugsnag;
+
+class Handler extends ExceptionHandler
+{
+    /**
+     * A list of the exception types that should not be reported.
+     *
+     * @var array
+     */
+    protected $dontReport = [
+        \Illuminate\Session\TokenMismatchException::class,
+        \AlgoliaSearch\AlgoliaException::class,
+    ];
+
+    /**
+     * Report or log an exception.
+     *
+     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+     *
+     * @param  \Exception  $exception
+     * @return void
+     */
+    public function report(Exception $exception)
+    {
+        Bugsnag::notifyException($exception);
+        parent::report($exception);
+    }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public function render($request, Exception $exception)
+    {
+
+        if ($exception instanceof TokenMismatchException) {
+            Bugsnag::notifyException($exception);
+
+            if ($request->expectsJson()) return response()->json([
+                'tokenMismatch' => true,
+                'input' => $request->except(['password']),
+                'url' => $request->fullUrl(),
+                'method' => $request->method(),
+                'token' => csrf_token()
+            ]);
+        }
+
+        if ($exception instanceof AlgoliaException) {
+            Bugsnag::notifyException($exception);
+
+            if ($request->expectsJson()) return response()->json([
+                'algoliaException' => true,
+                'input' => $request->except(['password'])
+            ]);
+        }
+
+        return parent::render($request, $exception);
+    }
+
+```
+
 Finally, run the migration to add productivity's folders to the database. Note that productivity's tables all have the productivity_ prefix, so make sure you don't have any naming conflicts in your database:
 
 `$ php artisan migrate`
