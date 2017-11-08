@@ -1,32 +1,12 @@
-.move-to-folder {
-    position: fixed;
+.move-to-checklist {
     background: white;
     border: 1px solid $base-border-color;
     border-radius: 3px;
     padding: 0;
+    margin-top: 10px;
+    height: 100%;
 
-    @media(max-width:767px){
-        top: 10%;
-        left: 5%;
-        right: 5%;
-    }
-    @media(min-width:768px){
-        top: 10%;
-        left: 15%;
-        right: 15%;
-    }
-    @media(min-width:992px){
-        top: 10%;
-        left: 30%;
-        right: 30%;
-    }
-    @media(min-width:1200px){
-        top: 10%;
-        left: 30%;
-        right: 30%;
-    }
-
-    .move-to-folder-heading {
+    .move-to-checklist-heading {
         background: $body-bg;
         border-bottom: 1px solid $base-border-color;
         padding: 10px;
@@ -76,12 +56,12 @@
         }
 
     }
-    .move-to-folder-body {
-        height: 200px;
-        overflow-y: scroll;
+    .move-to-checklist-body {
+        height: 75%;
         overflow-x: hidden;
         padding: 10px 10px 10px 30px;
         position: relative;
+        @include desktop-overflow-y-scroll;
         .info-message {
             .fa-spin {
                 color: $folder-primary;
@@ -93,6 +73,7 @@
                 color: $brand-info;
             }
         }
+        .nested-checklist,
         .nested-folder {
             display: block;
             padding: 5px 5px 0px;
@@ -108,13 +89,6 @@
                     border: 1px solid;
                     border-radius: 3px;
                 }
-            }
-            .fa {
-                color: $folder-primary;
-            }
-            &.active {
-                color: $folder-primary;
-                border: 1px dotted $folder-primary;
             }
             &:hover {
                 background: lighten($body-bg, 0.5%);
@@ -134,17 +108,41 @@
             }
 
         }
+        .nested-folder {
+          cursor: pointer;
+            .fa {
+                color: $folder-primary;
+            }
+            &.active {
+                color: $folder-primary;
+                border: 1px dotted $folder-primary;
+            }
+        }
+        .nested-checklist {
+            .fa {
+                color: $list-primary;
+            }
+            &.active {
+                color: $list-primary;
+                border: 1px dotted $list-primary;
+            }
+        }
     }
-    .move-to-folder-footer {
-        border-top: 1px solid $base-border-color;
+    .move-to-checklist-footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        // border-top: 1px solid $base-border-color;
         padding: 10px;
+        @include transparent-linear-gradient;
         p {
             margin: 0;
             margin-left: 10px;
             font-size: 0.8em;
             display: inline-block;
             span.footer-text {
-                color: $folder-primary;
+                color: $list-primary;
                 font-weight: 600;
             }
         }

@@ -18,12 +18,13 @@ Route::group(['domain' => '{'.(string)(config('productivity.subdomain')).'}.'.(s
         Route::resource('/folders', 'FolderController', ['except' => ['create', 'edit']]);
         Route::resource('/lists', 'ChecklistController', ['except' => ['create', 'edit']]);
 
-        Route::post('/fetch-initial-tree', 'FolderController@fetchInitialTree');
-        Route::post('/{folder}/fetch-new-tree', 'FolderController@fetchNewTree');
+        Route::post('/fetch-initial-tree', 'MoverController@fetchInitialTree');
+        Route::post('/{folder}/fetch-new-tree', 'MoverController@fetchNewTree');
 
-        Route::patch('/move-to-folder/{folder}', 'FolderController@moveToFolder');
-        Route::patch('/move-to-home', 'FolderController@moveToHome');
-        Route::get('/fix-folder-tree', 'FolderController@fixTree');
+        Route::patch('/move-to-folder/{folder}', 'MoverController@moveToFolder');
+        Route::patch('/move-to-checklist/{list}/item/{item}', 'MoverController@moveToChecklist');
+        Route::patch('/move-to-home', 'MoverController@moveToHome');
+        Route::get('/fix-folder-tree', 'MoverController@fixTree');
 
         Route::get('/add-missing-fake-ids', 'MissingFakeIdController@addMissingFakeIds');
     });

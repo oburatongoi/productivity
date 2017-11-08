@@ -1,17 +1,17 @@
 <template>
-  <div v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsCurrentlyEditable}" @click.self="toggleEditability">
+  <div v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsCurrentlyEditable}" @click.self="toggleSelection">
     <span class="checkbox-container">
       <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="type&&type=='ch'||type=='ta'"></i>
       <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'||type=='nu'"></i>
     </span>
 
-    <p class="show-item-content" @click="toggleEditability" @dblclick="toggleEditability">
+    <p class="show-item-content" @click="toggleSelection" @dblclick="toggleSelection">
       {{ item.content }}
     </p>
 
-    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="toggleEditability" @dblclick="toggleEditability"></i>
+    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="toggleSelection" @dblclick="toggleSelection"></i>
 
-    <p class="preview-deadline" @click="toggleEditability" @dblclick="toggleEditability">
+    <p class="preview-deadline" @click="toggleSelection" @dblclick="toggleSelection">
       <span v-if="item.is_important">
         <i class="fa fa-fw fa-star" aria-hidden="true"></i>
       </span>
@@ -67,7 +67,9 @@ export default {
       ...mapActions([
         'saveCurrentEditableItem',
         'addCurrentlyEditable',
-        'removeCurrentlyEditable'
+        'removeCurrentlyEditable',
+        'selectListing',
+        'deselectListing'
       ]),
       checkItem: function() {
         this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
@@ -84,9 +86,16 @@ export default {
               () => {this.checkboxClassOverride = null}
             )
       },
-      toggleEditability: function() {
-        // return this.itemIsCurrentlyEditable ? this.removeCurrentlyEditable() : this.addCurrentlyEditable(this.item)
-        return ! this.itemIsCurrentlyEditable ? this.addCurrentlyEditable(this.item): true
+      selectChecklistItem: function(){
+        this.selectListing({model: 'checklist-item', id: this.item.id, listing: this.item})
+        return this.addCurrentlyEditable(this.item)
+      },
+      deselectChecklistItem: function(){
+        this.deselectListing()
+        return this.removeCurrentlyEditable()
+      },
+      toggleSelection: function() {
+        return ! this.itemIsCurrentlyEditable ? this.selectChecklistItem(): this.deselectChecklistItem()
       }
     },
     computed: {
@@ -101,7 +110,7 @@ export default {
       checkboxClass: function() {
         return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-circle-thin'
       },
-      itemIsUnfiltered: function() {
+      itemBypassesFilters: function() {
         return this.unfilteredItems.indexOf(this.item.id) !== -1
       },
       itemIsDeleted: function() {
@@ -153,7 +162,7 @@ export default {
         return true
       },
       itemIsVisible: function() {
-        return this.itemIsUnfiltered || !this.itemIsDelisted || !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
+        return this.itemBypassesFilters || !this.itemIsDelisted && !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
       },
       itemIsCurrentlyEditable: function() {
         return this.currentEditableItem.id && this.item.id == this.currentEditableItem.id

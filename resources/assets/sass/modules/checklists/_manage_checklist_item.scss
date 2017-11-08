@@ -10,8 +10,8 @@
 
 
     .sizing-buttons {
-        // padding: 10px;
-        padding: 0px;
+        padding: 10px;
+        padding-bottom: 0;
         height: 25px;
         overflow: visible;
         @include clearfix;
@@ -59,10 +59,7 @@
         right: 0;
         left: 0;
         border: 0;
-        background: -webkit-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
-        background: -o-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
-        background: -moz-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
-        background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
+        @include transparent-linear-gradient;
     }
 
     .item-form-buttons {

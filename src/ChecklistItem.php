@@ -40,4 +40,10 @@ class ChecklistItem extends Model
         return $this->checklist()->where('id', $this->checklist_id)->first();
     }
 
+    public function moveToChecklist(Checklist $checklist)
+    {
+      //WIP: Validate that user is authorized to edit the item and the list
+        return $this->checklist()->associate($checklist)->save();
+    }
+
 }
