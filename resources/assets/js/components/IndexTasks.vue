@@ -8,6 +8,7 @@
               v-for="item in items"
               :item="item"
               type="ta"
+              :key="item.id"
             ></checklist-item>
 
             <li v-if="!items.length">There are no pending tasks at this time.</li>

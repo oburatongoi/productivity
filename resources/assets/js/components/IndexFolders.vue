@@ -9,6 +9,7 @@
         @click="selectListing({model: 'folder', id: folder.fake_id, listing: folder})"
         @dblclick="goToListing('folder', folder.fake_id)"
         v-tooltip.bottom-left="folder.name"
+        :key="folder.fake_id"
       >
           <h5>
             <i class="fa fa-fw fa-folder" aria-hidden="true"></i>

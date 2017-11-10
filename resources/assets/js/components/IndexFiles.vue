@@ -4,6 +4,7 @@
         v-if="checklists"
         v-for="checklist in checklists"
         :checklist="checklist"
+        :key="checklist.fake_id"
       ></index-checklists>
   </ul>
 </template>
