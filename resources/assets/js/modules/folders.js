@@ -7,15 +7,12 @@ import {
 const namespaced = true;
 
 const state = {
-    folders: Productivity.folders ? Productivity.folders : {},
+    folders: Productivity.folders ? Productivity.folders : [],
     currentFolder: Productivity.currentFolder ? Productivity.currentFolder : {}
 }
 
 const mutations = {
     [ADD_FOLDER] (state, folder) {
-        // if (state.currentFolder.id && folder.folder_id && state.currentFolder.id == folder.folder_id) {
-        //     state.folders.unshift(folder)
-        // }
         state.folders.unshift(folder)
     },
     [DELETE_FOLDER] (state, folder) {

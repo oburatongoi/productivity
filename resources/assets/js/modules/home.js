@@ -13,10 +13,10 @@ const state = {
     user: Productivity.user,
     creatingNew: undefined,
     showCreatingNewButtons: false,
-    ancestors: Productivity.ancestors ? Productivity.ancestors : {},
+    ancestors: Productivity.ancestors ? Productivity.ancestors : [],
     model: Productivity.model ? Productivity.model : {},
     currentView: Productivity.currentView ? Productivity.currentView : undefined,
-    pendingItems: Productivity.pendingItems ? Productivity.pendingItems: {},
+    pendingItems: Productivity.pendingItems ? Productivity.pendingItems: [],
     selected: {
         id: undefined,
         model: undefined,
@@ -84,7 +84,7 @@ const getters = {
     selected: state => state.selected,
     pendingItems: state => state.pendingItems,
     selectedIsMovable: state => state.selected.model && state.selected.id && state.selected.movable,
-    listingIsActionable: state =>  state.selected.model && state.selected.id && !state.selected.movable
+    listingIsActionable: state =>  state.selected.model && state.selected.id && !state.selected.movable && state.selected.model !== 'checklist-item'
 }
 
 export default {

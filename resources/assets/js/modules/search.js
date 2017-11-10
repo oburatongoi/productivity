@@ -12,8 +12,8 @@ const state = {
     search: {
         query: undefined,
         results: {
-            folders: {},
-            checklists: {}
+            folders: [],
+            checklists: []
         },
         errorMessage: undefined,
         isSearching: false
