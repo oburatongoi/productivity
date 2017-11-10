@@ -15,7 +15,7 @@
 
       <form class="form-horizontal add-folder-form" v-if="addingFolder" @submit.prevent="createNewFolder">
         <div class="add-folder-form-input">
-          <input type="text" class="form-control input-sm" v-model="newFolder.name" placeholder="New Folder Name" maxlength="255">
+          <input type="text" class="form-control input-sm" v-focus v-model="newFolder.name" placeholder="New Folder Name" maxlength="255">
         </div>
         <div class="add-folder-form-buttons">
           <button type="submit" class="btn btn-primary btn-sm">
@@ -38,6 +38,9 @@
       </div>
 
       <ul class="list-unstyled" v-if="folders&&!isLoading">
+        <li v-if="isStoringFolder">
+          <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"></i>
+        </li>
         <li class="nested-folder"
             v-for="folder in folders"
             @click.prevent="openFolder(folder)"
@@ -114,11 +117,12 @@ export default {
       addingFolder: false,
       currentFolder: Productivity.currentFolder ? Productivity.currentFolder : {},
       destinationFolder: {},
-      folders: {},
-      checklists: {},
+      folders: [],
+      checklists: [],
       folderInfoMessage: { content: undefined, type: undefined },
       checklistInfoMessage: { content: undefined, type: undefined },
       isLoading: false,
+      isStoringFolder: false,
       newFolder: { name: undefined },
       selectedChecklist: {}
     }
@@ -138,7 +142,7 @@ export default {
       return this.toggleMovable()
     },
     createNewFolder: function() {
-      this.isLoading = true
+      this.isStoringFolder = true
       let folder = {
         name: this.newFolder.name,
         folder_id:this.currentFolder.id
@@ -146,17 +150,23 @@ export default {
 
       this.storeFolder(folder).then(
         (response) => {
-          this.toggleAddingFolder('false')
-          this.fetchInitialFoldersAndChecklists(this.currentFolder.id)
+          this.handleSuccessfulFolderCreation(response)
         },
         (response) => {
-          this.isLoading = false
-          alert('Error creating folder')
+          this.isStoringFolder = false
+          if (response.name) {
+            this.handleSuccessfulFolderCreation(response)
+          } else {
+            alert('Error creating folder')
+          }
         }
       )
     },
     fetchInitialFoldersAndChecklists: function(id = null) {
       this.isLoading = true
+      this.resetFolderInfoMessage()
+      this.resetChecklistInfoMessage()
+      this.resetSelectedChecklist()
       axios.post('/fetch-initial-tree', {folder_id: id, includeChecklists: true})
            .then(
               (response) => {
@@ -186,7 +196,11 @@ export default {
         (response) => this.setFolderInfoMessage('An error has occurred. Please refresh this page.', 'error')
       )
     },
-
+    handleSuccessfulFolderCreation: function(folder) {
+      this.toggleAddingFolder('false')
+      this.isStoringFolder = false
+      this.folders.unshift(folder)
+    },
     handleSuccessfulMove: function() {
       this.delistChecklistItem(this.selected.listing)
       this.deselectListing()

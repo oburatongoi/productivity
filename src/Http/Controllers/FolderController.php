@@ -13,7 +13,9 @@ use Oburatongoi\Productivity\Folder;
 
 // use Illuminate\Support\Facades\Cache;
 
-use JavaScript, Bugsnag;
+use AlgoliaSearch\AlgoliaException as AlgoliaException;
+
+use JavaScript, Bugsnag, Exception;
 
 class FolderController extends Controller
 {
@@ -80,29 +82,41 @@ class FolderController extends Controller
      */
     public function store($account, Request $request)
     {
-        try {
+      $parent = $folder = null;
 
-          $folder = $request->user()->folders()->create($request->input('folder'));
+      if ($request->has('folder.folder_id')) {
+        $parent = Folder::find($request->input('folder.folder_id'));
+      }
 
-          if (
-          $request->has('folder.folder_id') // If folder id exists in the request...
-          && $parent = Folder::find($request->input('folder.folder_id')) // If the folder id matches an existing folder, retrieve it
-          ) {
+      try {
+
+        $folder = $request->user()->folders()->create($request->input('folder'), $parent);
+
+      } catch (AlgoliaException $e) {
+
+        $folder = $request->user()->folders()->orderBy('created_at', 'desc')->first();
+
+        if ($folder->name === $request->input('folder.name')) {
+          Folder::withoutSyncingToSearch(function () use  ($parent, $folder) {
               $parent->appendNode($folder);
-              // Cache::forget('user.'.$request->user()->id.'.folder.'.$folder->id.'.subFolders');
-          } else {
-              // Cache::forget('user.'.$request->user()->id.'.rootFolders');
-          }
 
-          return response()->json([
-              'folder' => $folder
-          ]);
-
-        } catch (Exception $e) {
-
-          $this->handleException($e);
+              // To Do: Add to queue so that the change gets indexed
+          });
 
         }
+
+      } catch (Exception $e) {
+
+        if ($request->expectsJson()) return response()->json([
+            'input' => $request->except(['password']),
+            'exception' => $e->getMessage()
+        ]);
+
+      }
+
+      return response()->json([
+          'folder' => $folder
+      ]);
 
     }
 
@@ -173,15 +187,22 @@ class FolderController extends Controller
 
           $folder->delete();
 
-          return response()->json([
-              'folder' => $folder
-          ]);
+
+        } catch (AlgoliaException $e) {
+
+          // $folder = $request->user()->folders()->orderBy('deleted_at', 'desc')->first();
+
+          // To Do: Add to queue so that the change gets indexed
 
         } catch (Exception $e) {
 
           $this->handleException($e);
 
         }
+
+        return response()->json([
+            'folder' => $folder
+        ]);
 
     }
 
