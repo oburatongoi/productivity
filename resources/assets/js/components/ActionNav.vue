@@ -43,10 +43,11 @@ export default {
       this.selected.deletable ? this.deleteSelected() : this.toggleDeletable()
     },
     deleteSelected: function() {
-      if (!this.selected.items.length) {
-        return
-      }
-      this.selected.items.forEach(this.deleteItem());
+      alert('WIP: iterate through array and delete')
+      // if (!this.selected.items.length) {
+      //   return
+      // }
+      // this.selected.items.forEach(this.deleteItem());
     },
     deleteItem: function(item, index, array) {
       switch (item.model) {
@@ -97,12 +98,6 @@ export default {
 
       return 'btn-folder'
 
-      // switch (this.selected.items[0].model) {
-      // //   case 'checklist': return 'btn-list'
-      // //     break;
-      // //   default: return 'btn-folder'
-      // //
-      // // }
     }
   }
 }

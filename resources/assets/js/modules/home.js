@@ -2,8 +2,8 @@ import {
     CLEAR_SELECTED,
     SET_CREATING_NEW,
     TOGGLE_CREATING_NEW_BUTTONS,
-    SELECT_LISTING,
-    DESELECT_LISTING,
+    ADD_TO_SELECTED,
+    REMOVE_FROM_SELECTED,
     TOGGLE_DELETABLE,
     TOGGLE_MOVABLE
 } from '../mutations'
@@ -49,7 +49,7 @@ const mutations = {
     [TOGGLE_DELETABLE] (state) {
         state.selected.deletable = ! state.selected.deletable
     },
-    [SELECT_LISTING] (state, payload) {
+    [ADD_TO_SELECTED] (state, payload) {
       switch (payload.model) {
         case 'folder':
           state.selected.folders.unshift(payload.listing)
@@ -64,7 +64,7 @@ const mutations = {
 
       }
     },
-    [DESELECT_LISTING] (state, payload) {
+    [REMOVE_FROM_SELECTED] (state, payload) {
 
       if (payload && payload.model) {
         switch (payload.model) {
@@ -102,11 +102,91 @@ const actions = {
     toggleDeletable({ commit }) {
         commit(TOGGLE_DELETABLE)
     },
-    selectListing({ commit }, payload) {
-      commit(SELECT_LISTING, payload)
+    toggleSelection({ dispatch, commit, state }, payload) {
+      switch (payload.selection.model) {
+        case 'folder':
+          if (state.selected.folders.indexOf(payload.selection.listing) !== -1) {
+            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+              commit(REMOVE_FROM_SELECTED, payload.selection)
+            } else {
+              commit(CLEAR_SELECTED)
+              commit(ADD_TO_SELECTED, payload.selection)
+            }
+          } else {
+            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+              commit(ADD_TO_SELECTED, payload.selection)
+            } else {
+              commit(CLEAR_SELECTED)
+              commit(ADD_TO_SELECTED, payload.selection)
+            }
+          }
+          break;
+        case 'checklist':
+          if (state.selected.checklists.indexOf(payload.selection.listing) !== -1) {
+            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+              commit(REMOVE_FROM_SELECTED, payload.selection)
+            } else {
+              commit(CLEAR_SELECTED)
+              commit(ADD_TO_SELECTED, payload.selection)
+            }
+          } else {
+            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+              commit(ADD_TO_SELECTED, payload.selection)
+            } else {
+              commit(CLEAR_SELECTED)
+              commit(ADD_TO_SELECTED, payload.selection)
+            }
+          }
+          break;
+        case 'checklist-item':
+          if (state.selected.checklistItems.indexOf(payload.selection.listing) !== -1) {
+              dispatch('removeCurrentlyEditable', null, {root: true}).then(
+                () => {
+
+                  if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+                    commit(REMOVE_FROM_SELECTED, payload.selection)
+                  } else {
+                    commit(CLEAR_SELECTED)
+                    commit(ADD_TO_SELECTED, payload.selection)
+                  }
+
+                  if (state.selected.checklistItems.length == 1) { //If only one is left, make it editable
+                    dispatch('addCurrentlyEditable', state.selected.checklistItems[0], {root: true})
+                  } else {
+                    dispatch('removeCurrentlyEditable', null, {root: true})
+                  }
+                }
+              ).catch(
+                () => {console.log('error dispatching. home.js toggleSelection()');}
+              )
+
+          } else {
+
+            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+              commit(ADD_TO_SELECTED, payload.selection)
+            } else {
+              commit(CLEAR_SELECTED)
+              commit(ADD_TO_SELECTED, payload.selection)
+            }
+
+            if (state.selected.checklistItems.length == 1) {
+              dispatch('addCurrentlyEditable', payload.selection.listing, {root: true})
+            } else {
+              dispatch('removeCurrentlyEditable', null, {root: true})
+            }
+          }
+          break;
+      }
     },
-    deselectListing({ commit }, payload) {
-      commit(DESELECT_LISTING, payload)
+    addToSelected({ commit }, payload) {
+      commit(ADD_TO_SELECTED, payload)
+    },
+    removeFromSelected({ commit }, payload) {
+      commit(REMOVE_FROM_SELECTED, payload)
+    },
+    replaceSelected({ commit }, payload) {
+      commit(CLEAR_SELECTED)
+      commit(ADD_TO_SELECTED, payload)
     },
     clearSelected({ commit }) {
       commit(CLEAR_SELECTED)

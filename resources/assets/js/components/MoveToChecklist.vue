@@ -133,7 +133,7 @@ export default {
   methods: {
     ...mapActions([
       'delistChecklistItem',
-      'deselectListing',
+      'removeFromSelected',
       'removeCurrentlyEditable',
       'storeFolder',
       'toggleMovable'
@@ -203,7 +203,7 @@ export default {
     },
     handleSuccessfulMove: function() {
       this.delistChecklistItem(this.selected.listing)
-      this.deselectListing()
+      this.removeFromSelected()
       this.removeCurrentlyEditable()
       this.toggleMovable()
     },

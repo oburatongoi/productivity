@@ -23,17 +23,13 @@ export default {
   name: 'index-all',
   methods: {
     ...mapActions([
-      'selectListing',
       'clearSelected'
     ])
   },
   computed: {
     ...mapGetters([
-      'user',
       'folders',
-      'checklists',
-      'selected',
-      'selectedIsMovable'
+      'checklists'
     ]),
     hasFolders: function() {
       return this.folders && ! _.isEmpty(this.folders)

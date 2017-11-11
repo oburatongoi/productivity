@@ -11,7 +11,7 @@
         <i class="fa fa-fw pull-left" :class="toggleExpansionClass" aria-hidden="true" :title="toggleExpansionTitle" @click="toggleCurrentEditableItemExpansion"></i>
       </div>
 
-      <template v-if="!selectedIsMovable">
+      <template>
         <div class="panel-heading">
           <div class="edit-content">
             <h4 class="manage-checklist-item-content-textarea">
@@ -77,7 +77,6 @@
         </div>
       </template>
 
-      <move-to-checklist v-if="selectedIsMovable"></move-to-checklist>
     </div>
   </div>
 </template>
@@ -142,8 +141,7 @@ export default {
   computed: {
     ...mapGetters([
       'currentEditableItem',
-      'currentEditableItemIsExpanded',
-      'selectedIsMovable'
+      'currentEditableItemIsExpanded'
     ]),
     checkboxClass: function() {
       return this.checkboxClassOverride ? this.checkboxClassOverride : this.currentEditableItem.checked_at ? 'fa-check' : 'fa-circle-thin'

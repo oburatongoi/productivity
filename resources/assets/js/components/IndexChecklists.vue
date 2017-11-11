@@ -3,7 +3,7 @@
     class="listing list-color-scheme"
     :class="{selected: selected.checklists.indexOf(checklist) !== -1 }"
     draggable="true"
-    @click="toggleSelection({model:'checklist', listing: checklist})"
+    @click="toggleSelection({selection: {model:'checklist', listing: checklist}, event: $event})"
     @dblclick="goToListing('list', checklist.fake_id)"
     v-tooltip.bottom-left="checklist.title"
   >
@@ -33,15 +33,13 @@ export default {
   },
   methods: {
     ...mapActions([
-      'clearSelected',
-      'deselectListing',
-      'selectListing'
+      'toggleSelection'
     ]),
     goToListing: function(model, id) {
       return window.location = '/' + model + 's/' + id
     },
-    toggleSelection: function(payload) {
-      return this.selected.checklists.indexOf(payload.listing) !== -1 ? this.deselectListing(payload) : this.selectListing(payload)
+    isSelected: function(listing) {
+      return this.selected.checklists.indexOf(listing) !== -1
     }
   },
   computed: {

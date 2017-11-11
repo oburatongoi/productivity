@@ -13,7 +13,7 @@ use AlgoliaSearch\AlgoliaException as AlgoliaException;
 
 // use Illuminate\Support\Facades\Cache;
 
-use JavaScript, Bugsnag;
+use JavaScript, Bugsnag, Exception;
 
 class MoverController extends Controller
 {
@@ -37,7 +37,6 @@ class MoverController extends Controller
           $checklists = Checklist::select('title', 'fake_id', 'id')
                       ->where('folder_id', $request->input('folder_id'))
                       ->orderBy('title', 'asc')
-                      // ->with('folder')
                       ->get();
 
           return response()->json([
@@ -90,31 +89,53 @@ class MoverController extends Controller
 
     public function moveToFolder($account, Request $request, Folder $folder)
     {
+      $success = false;
 
-      try {
+      $selected = [];
 
-        switch ($request->input('child.model')) {
-            case 'folder':
-                $child = Folder::where('fake_id', $request->input('child.id'))->first();
-                break;
-            case 'checklist':
-                $child = Checklist::where('fake_id', $request->input('child.id'))->first();
-                break;
+      $folders = $request->has('selected.folders') ? $request->input('selected.folders') : [];
+      $checklists = $request->has('selected.checklists') ? $request->input('selected.checklists') : [];
+
+      foreach ($folders as $selectedFolder) {
+        $child = Folder::where('fake_id', $selectedFolder['fake_id'])->first();
+
+        try {
+          if($child) $child->moveToFolder($folder);
+          $success = true;
+        } catch (AlgoliaException $e) {
+          // WIP: Add to some sort of queue to sync to algolia
+          Bugsnag::notifyException($e);
+          $success = true;
+        } catch (Exception $e) {
+          Bugsnag::notifyException($e);
+          $this->handleException($e);
         }
 
-        $child->moveToFolder($folder);
-
-        return response()->json([
-            'folder' => $folder,
-            'child' => $child
-        ]);
-
-      } catch (Exception $e) {
-
-        Bugsnag::notifyException($e);
-        $this->handleException($e);
-
+        $selected['folders'][] = $child;
       }
+
+      foreach ($checklists as $selectedChecklist) {
+        $child = Checklist::where('fake_id', $selectedChecklist['fake_id'])->first();
+
+        try {
+          if($child) $child->moveToFolder($folder);
+          $success = true;
+        } catch (AlgoliaException $e) {
+          // WIP: Add to some sort of queue to sync to algolia
+          Bugsnag::notifyException($e);
+          $success = true;
+        } catch (Exception $e) {
+          Bugsnag::notifyException($e);
+          $this->handleException($e);
+        }
+
+        $selected['checklists'][] = $child;
+      }
+
+      return response()->json([
+          'success' => $success,
+          'selected' => $selected
+      ]);
 
     }
 
@@ -140,29 +161,53 @@ class MoverController extends Controller
 
     public function moveToHome($account, Request $request)
     {
+        $success = false;
 
-        try {
+        $selected = [];
 
-          switch ($request->input('child.model')) {
-              case 'folder':
-                  $child = Folder::where('fake_id', $request->input('child.id'))->first();
-                  break;
-              case 'checklist':
-                  $child = \Oburatongoi\Productivity\Checklist::where('fake_id', $request->input('child.id'))->first();
-                  break;
+        $folders = $request->has('selected.folders') ? $request->input('selected.folders') : [];
+        $checklists = $request->has('selected.checklists') ? $request->input('selected.checklists') : [];
+
+        foreach ($folders as $selectedFolder) {
+          $child = Folder::where('fake_id', $selectedFolder['fake_id'])->first();
+
+          try {
+            if($child) $child->moveToHome();
+            $success = true;
+          } catch (AlgoliaException $e) {
+            // WIP: Add to some sort of queue to sync to algolia
+            Bugsnag::notifyException($e);
+            $success = true;
+          } catch (Exception $e) {
+            Bugsnag::notifyException($e);
+            $this->handleException($e);
           }
 
-          $child->moveToHome();
-
-          return response()->json([
-              'child' => $child
-          ]);
-
-        } catch (Exception $e) {
-
-          $this->handleException($e);
-
+          $selected['folders'][] = $child;
         }
+
+        foreach ($checklists as $selectedChecklist) {
+          $child = Checklist::where('fake_id', $selectedChecklist['fake_id'])->first();
+
+          try {
+            if($child) $child->moveToHome();
+            $success = true;
+          } catch (AlgoliaException $e) {
+            // WIP: Add to some sort of queue to sync to algolia
+            Bugsnag::notifyException($e);
+            $success = true;
+          } catch (Exception $e) {
+            Bugsnag::notifyException($e);
+            $this->handleException($e);
+          }
+
+          $selected['checklists'][] = $child;
+        }
+
+        return response()->json([
+            'success' => $success,
+            'selected' => $selected
+        ]);
 
     }
 

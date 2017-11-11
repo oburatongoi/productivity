@@ -122,15 +122,16 @@ export default {
   },
   methods: {
     ...mapActions([
+      'clearSelected',
       'delistChecklist',
       'delistFolder',
       'storeFolder',
-      'deselectListing',
+      'removeFromSelected',
       'toggleMovable'
     ]),
     cancel: function() {
       this.toggleMovable()
-      return this.deselectListing()
+      return this.removeFromSelected()
     },
     createNewFolder: function() {
       this.isStoringFolder = true
@@ -187,6 +188,8 @@ export default {
       this.folders.unshift(folder)
     },
     handleSuccessfulMove: function() {
+      // WIP: iterate through response and delete only ones that match selected array
+
       for (var i = 0; i < this.selected.folders.length; i++) {
         this.delistFolder(this.selected.folders[i])
       }
@@ -194,31 +197,25 @@ export default {
       for (var i = 0; i < this.selected.checklists.length; i++) {
         this.delistChecklist(this.selected.checklists[i])
       }
-      this.toggleMovable()
+      this.clearSelected()
     },
     highlightFolder: function(folder) {
       this.toggleAddingFolder('false')
       return folder.id ? this.selectedFolder = folder : this.selectedFolder = {}
     },
     moveTo: function(folder) {
-      alert('WIP: send all selected to server');
-      // axios.patch('/move-to-folder/'+folder.fake_id, { child:this.selected })
-      // .then(
-      //   (response) => response.data.child || response.data.input.child ? this.handleSuccessfulMove() : alert('No child returned')
-      // )
-      // .catch(
-      //   (response) => alert('Error moving '+this.selected.model)
-      // )
+      axios.patch('/move-to-folder/'+folder.fake_id, { selected:this.selected }).then(
+        (response) => response.data.success ? this.handleSuccessfulMove() : alert('Error moving selected item(s)')
+      ).catch(
+        (response) => response.data.success ? this.handleSuccessfulMove() : alert('WIP: handle error at moveToFolder')
+      )
     },
     moveToHome: function(folder) {
-      alert('WIP: send all selected to server');
-      // axios.patch('/move-to-home/', { child:this.selected })
-      // .then(
-      //   (response) => response.data.child || response.data.input.child ? this.handleSuccessfulMove() : alert('No child returned')
-      // )
-      // .catch(
-      //   (response) => alert('Error moving '+this.selected.model)
-      // )
+      axios.patch('/move-to-home/', { selected:this.selected }).then(
+        (response) => response.data.success ? this.handleSuccessfulMove() : alert('Error moving selected item(s)')
+      ).catch(
+        (response) => response.data.success ? this.handleSuccessfulMove() : alert('WIP: handle error at moveToHome')
+      )
     },
     refreshFolders: function(freshFolders) {
       this.isLoading = false

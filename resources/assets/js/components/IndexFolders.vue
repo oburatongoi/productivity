@@ -6,7 +6,7 @@
         class="listing folder-color-scheme"
         :class="{selected: selected.folders.indexOf(folder) !== -1 }"
         draggable="true"
-        @click="toggleSelection({model: 'folder', listing: folder})"
+        @click="toggleSelection({selection: {model: 'folder', listing: folder}, event: $event})"
         @dblclick="goToListing('folder', folder.fake_id)"
         v-tooltip.bottom-left="folder.name"
         :key="folder.fake_id"
@@ -33,14 +33,13 @@ export default {
   methods: {
     ...mapActions([
       'clearSelected',
-      'selectListing',
-      'deselectListing'
+      'toggleSelection'
     ]),
     goToListing: function(model, id) {
       return window.location = '/' + model + 's/' + id
     },
-    toggleSelection: function(payload) {
-      return this.selected.folders.indexOf(payload.listing) !== -1 ? this.deselectListing(payload) : this.selectListing(payload)
+    isSelected: function(listing) {
+      return this.selected.folders.indexOf(listing) !== -1
     }
   },
   computed: {
@@ -48,7 +47,7 @@ export default {
       'folders',
       'selected'
     ])
-  },
+  }
 }
 </script>
 
