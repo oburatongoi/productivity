@@ -102,6 +102,7 @@ export default {
   },
   methods: {
     ...mapActions([
+      'clearSelected',
       'toggleCurrentEditableItemExpansion',
       'saveCurrentEditableItem',
       'removeCurrentlyEditable',
@@ -110,6 +111,7 @@ export default {
     saveAndClose: function() {
       this.saveChanges()
       this.removeCurrentlyEditable()
+      this.clearSelected()
     },
     debounceSaveChanges: _.debounce(function() {
       this.saveChanges()

@@ -143,17 +143,16 @@ const actions = {
               dispatch('removeCurrentlyEditable', null, {root: true}).then(
                 () => {
 
-                  if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+                  if ((payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) || state.selected.checklistItems.length === 1) {
+                    // if either a modifier key was used or there is only one selected item
                     commit(REMOVE_FROM_SELECTED, payload.selection)
-                  } else {
+                  } else { // if there are mulitple items and a modifier key was not used
                     commit(CLEAR_SELECTED)
                     commit(ADD_TO_SELECTED, payload.selection)
                   }
 
-                  if (state.selected.checklistItems.length == 1) { //If only one is left, make it editable
+                  if (state.selected.checklistItems.length === 1) { //If only one is left, make it editable
                     dispatch('addCurrentlyEditable', state.selected.checklistItems[0], {root: true})
-                  } else {
-                    dispatch('removeCurrentlyEditable', null, {root: true})
                   }
                 }
               ).catch(

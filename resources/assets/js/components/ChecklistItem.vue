@@ -151,7 +151,7 @@ export default {
         return this.itemBypassesFilters || !this.itemIsDelisted && !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
       },
       itemIsCurrentlyEditable: function() {
-        return this.currentEditableItem.id && this.item.id == this.currentEditableItem.id
+        return this.currentEditableItem && this.currentEditableItem.id && this.item.id == this.currentEditableItem.id
       },
       itemIsSelected: function() {
         return this.selected.checklistItems.indexOf(this.item) !== -1

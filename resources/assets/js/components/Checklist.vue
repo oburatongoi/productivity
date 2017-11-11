@@ -134,8 +134,8 @@ export default {
         'filters'
       ]),
       checklistClass: function() {
-        if (this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
-        if (this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
+        if (this.currentEditableItem && this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
+        if (this.currentEditableItem && this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
         return null
       },
       checkedFilterText: function() {
