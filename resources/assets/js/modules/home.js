@@ -1,4 +1,5 @@
 import {
+    CLEAR_SELECTED,
     SET_CREATING_NEW,
     TOGGLE_CREATING_NEW_BUTTONS,
     SELECT_LISTING,
@@ -18,15 +19,24 @@ const state = {
     currentView: Productivity.currentView ? Productivity.currentView : undefined,
     pendingItems: Productivity.pendingItems ? Productivity.pendingItems: [],
     selected: {
-        id: undefined,
-        model: undefined,
-        listing: {},
+        folders: [],
+        checklists: [],
+        checklistItems: [],
         movable: false,
         deletable: false
     }
 }
 
 const mutations = {
+    [CLEAR_SELECTED] (state) {
+        state.selected = {
+            folders: [],
+            checklists: [],
+            checklistItems: [],
+            movable: false,
+            deletable: false
+        }
+    },
     [SET_CREATING_NEW] (state, model) {
         state.creatingNew = model
     },
@@ -40,17 +50,43 @@ const mutations = {
         state.selected.deletable = ! state.selected.deletable
     },
     [SELECT_LISTING] (state, payload) {
-        state.selected.model = payload.model
-        state.selected.id = payload.id
-        state.selected.listing = payload.listing
+      switch (payload.model) {
+        case 'folder':
+          state.selected.folders.unshift(payload.listing)
+          break;
+        case 'checklist':
+          state.selected.checklists.unshift(payload.listing)
+          break;
+        case 'checklist-item':
+          state.selected.checklistItems.unshift(payload.listing)
+          break;
+        default: return
+
+      }
     },
-    [DESELECT_LISTING] (state) {
-        state.selected.model = undefined
-        state.selected.id = undefined
-        state.selected.listing = {}
-        state.selected.movable = false,
-        state.selected.deletable = false
-    },
+    [DESELECT_LISTING] (state, payload) {
+
+      if (payload && payload.model) {
+        switch (payload.model) {
+          case 'folder':
+            var i = state.selected.folders.indexOf(payload.listing);
+            state.selected.folders.splice(i,1)
+            break;
+          case 'checklist':
+            var i = state.selected.checklists.indexOf(payload.listing);
+            state.selected.checklists.splice(i,1)
+            break;
+          case 'checklist-item':
+            var i = state.selected.checklistItems.indexOf(payload.listing);
+            state.selected.checklistItems.splice(i,1)
+            break;
+          default:
+
+        }
+      }
+      state.selected.movable = false,
+      state.selected.deletable = false
+    }
 }
 
 const actions = {
@@ -69,8 +105,11 @@ const actions = {
     selectListing({ commit }, payload) {
       commit(SELECT_LISTING, payload)
     },
-    deselectListing({ commit }) {
-      commit(DESELECT_LISTING)
+    deselectListing({ commit }, payload) {
+      commit(DESELECT_LISTING, payload)
+    },
+    clearSelected({ commit }) {
+      commit(CLEAR_SELECTED)
     },
 }
 
@@ -83,8 +122,8 @@ const getters = {
     currentView: state => state.currentView,
     selected: state => state.selected,
     pendingItems: state => state.pendingItems,
-    selectedIsMovable: state => state.selected.model && state.selected.id && state.selected.movable,
-    listingIsActionable: state =>  state.selected.model && state.selected.id && !state.selected.movable && state.selected.model !== 'checklist-item'
+    selectedIsMovable: state => state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length),
+    listingIsActionable: state => !state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length)
 }
 
 export default {

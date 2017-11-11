@@ -69,7 +69,7 @@ export default {
         'addCurrentlyEditable',
         'removeCurrentlyEditable',
         'selectListing',
-        'deselectListing'
+        'clearSelected'
       ]),
       checkItem: function() {
         this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
@@ -87,11 +87,11 @@ export default {
             )
       },
       selectChecklistItem: function(){
-        this.selectListing({model: 'checklist-item', id: this.item.id, listing: this.item})
+        this.selectListing({model: 'checklist-item', listing: this.item})
         return this.addCurrentlyEditable(this.item)
       },
       deselectChecklistItem: function(){
-        this.deselectListing()
+        this.clearSelected()
         return this.removeCurrentlyEditable()
       },
       toggleSelection: function() {

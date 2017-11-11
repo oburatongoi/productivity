@@ -9856,6 +9856,7 @@ body,
 }
 
 .toggle-delete-btn.delete-armed {
+  margin-right: 30px;
   color: #FF2A74;
   border: 1px solid #FF2A74;
 }

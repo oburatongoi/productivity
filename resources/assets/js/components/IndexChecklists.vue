@@ -1,9 +1,9 @@
 <template lang="html">
   <li
     class="listing list-color-scheme"
-    :class="{selected: selected.id==checklist.fake_id&&selected.model=='checklist'}"
+    :class="{selected: selected.checklists.indexOf(checklist) !== -1 }"
     draggable="true"
-    @click="selectListing({model:'checklist', id:checklist.fake_id, listing: checklist})"
+    @click="toggleSelection({model:'checklist', listing: checklist})"
     @dblclick="goToListing('list', checklist.fake_id)"
     v-tooltip.bottom-left="checklist.title"
   >
@@ -14,7 +14,7 @@
 
       <a :href="'/lists/' + checklist.fake_id"
           class="go-to-listing"
-          v-if="selected.id==checklist.fake_id&&selected.model=='checklist'"
+          v-if="selected.checklists.indexOf(checklist) !== -1"
       >
         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
       </a>
@@ -33,10 +33,15 @@ export default {
   },
   methods: {
     ...mapActions([
+      'clearSelected',
+      'deselectListing',
       'selectListing'
     ]),
     goToListing: function(model, id) {
       return window.location = '/' + model + 's/' + id
+    },
+    toggleSelection: function(payload) {
+      return this.selected.checklists.indexOf(payload.listing) !== -1 ? this.deselectListing(payload) : this.selectListing(payload)
     }
   },
   computed: {

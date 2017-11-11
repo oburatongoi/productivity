@@ -33,10 +33,10 @@ export default {
   },
   methods: {
     ...mapActions([
-      'deselectListing'
+      'clearSelected'
     ]),
     setView: function(view) {
-      this.deselectListing()
+      this.clearSelected()
       return this.view = view
     }
   },

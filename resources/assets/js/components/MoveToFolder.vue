@@ -187,12 +187,12 @@ export default {
       this.folders.unshift(folder)
     },
     handleSuccessfulMove: function() {
-      switch (this.selected.model) {
-        case 'folder': this.delistFolder(this.selected.listing)
-          break;
-        case 'checklist': this.delistChecklist(this.selected.listing)
-          break;
-        default: console.log('Could not find selected model');
+      for (var i = 0; i < this.selected.folders.length; i++) {
+        this.delistFolder(this.selected.folders[i])
+      }
+
+      for (var i = 0; i < this.selected.checklists.length; i++) {
+        this.delistChecklist(this.selected.checklists[i])
       }
       this.toggleMovable()
     },
@@ -201,22 +201,24 @@ export default {
       return folder.id ? this.selectedFolder = folder : this.selectedFolder = {}
     },
     moveTo: function(folder) {
-      axios.patch('/move-to-folder/'+folder.fake_id, { child:this.selected })
-      .then(
-        (response) => response.data.child || response.data.input.child ? this.handleSuccessfulMove() : alert('No child returned')
-      )
-      .catch(
-        (response) => alert('Error moving '+this.selected.model)
-      )
+      alert('WIP: send all selected to server');
+      // axios.patch('/move-to-folder/'+folder.fake_id, { child:this.selected })
+      // .then(
+      //   (response) => response.data.child || response.data.input.child ? this.handleSuccessfulMove() : alert('No child returned')
+      // )
+      // .catch(
+      //   (response) => alert('Error moving '+this.selected.model)
+      // )
     },
     moveToHome: function(folder) {
-      axios.patch('/move-to-home/', { child:this.selected })
-      .then(
-        (response) => response.data.child || response.data.input.child ? this.handleSuccessfulMove() : alert('No child returned')
-      )
-      .catch(
-        (response) => alert('Error moving '+this.selected.model)
-      )
+      alert('WIP: send all selected to server');
+      // axios.patch('/move-to-home/', { child:this.selected })
+      // .then(
+      //   (response) => response.data.child || response.data.input.child ? this.handleSuccessfulMove() : alert('No child returned')
+      // )
+      // .catch(
+      //   (response) => alert('Error moving '+this.selected.model)
+      // )
     },
     refreshFolders: function(freshFolders) {
       this.isLoading = false
@@ -258,16 +260,22 @@ export default {
       return this.currentFolder.name ? this.currentFolder.name : 'Choose a folder'
     },
     isAlreadyInFolder: function() {
-      return this.isInSelectedFolder || ! this.selectedFolder.id && this.isInCurrentFolder
+      return this.isInSelectedFolder || ! this.selectedFolder.id && this.isOnlyChildOfCurrentFolder
     },
     isCurrentFolder: function() {
-      return this.selected.model == 'folder' && (this.selected.listing.id == this.currentFolder.id || this.selected.listing.id == this.selectedFolder.id)
+      return this.selected.folders.length == 1 && this.selected.folders.indexOf(this.currentFolder) !== -1 || this.selected.folders.indexOf(this.selectedFolder) !== -1
     },
-    isInCurrentFolder: function() {
-      return this.currentFolder.id && this.selected.listing.folder_id && this.currentFolder.id == this.selected.listing.folder_id ? true : false
+    checklistIsOnlyChildOfCurrentFolder: function() {
+      return this.currentFolder.id && this.selected.checklists.length == 1 && this.selected.checklists[0].folder_id == this.currentFolder.id ? true : false
+    },
+    folderIsOnlyChildOfCurrentFolder: function() {
+      return this.currentFolder.id && this.selected.folders.length == 1 && this.selected.folders[0].folder_id == this.currentFolder.id ? true : false
+    },
+    isOnlyChildOfCurrentFolder: function() {
+      return this.folderIsOnlyChildOfCurrentFolder || this.checklistIsOnlyChildOfCurrentFolder ? true : false
     },
     isInSelectedFolder: function() {
-      return this.selectedFolder.id && this.selected.listing.folder_id && this.selectedFolder.id == this.selected.listing.folder_id ? true : false
+      return this.selectedFolder && this.selected.folders.indexOf(this.selectedFolder) !== -1 ? true : false
     },
     showInfoMessage: function() {
       return this.isLoading || this.infoMessage.content && this.infoMessage.type
