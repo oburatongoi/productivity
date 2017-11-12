@@ -1,8 +1,9 @@
 import {
+    CLEAR_SELECTED,
     SET_CREATING_NEW,
     TOGGLE_CREATING_NEW_BUTTONS,
-    SELECT_LISTING,
-    DESELECT_LISTING,
+    ADD_TO_SELECTED,
+    REMOVE_FROM_SELECTED,
     TOGGLE_DELETABLE,
     TOGGLE_MOVABLE
 } from '../mutations'
@@ -18,15 +19,24 @@ const state = {
     currentView: Productivity.currentView ? Productivity.currentView : undefined,
     pendingItems: Productivity.pendingItems ? Productivity.pendingItems: [],
     selected: {
-        id: undefined,
-        model: undefined,
-        listing: {},
+        folders: [],
+        checklists: [],
+        checklistItems: [],
         movable: false,
         deletable: false
     }
 }
 
 const mutations = {
+    [CLEAR_SELECTED] (state) {
+        state.selected = {
+            folders: [],
+            checklists: [],
+            checklistItems: [],
+            movable: false,
+            deletable: false
+        }
+    },
     [SET_CREATING_NEW] (state, model) {
         state.creatingNew = model
     },
@@ -39,18 +49,44 @@ const mutations = {
     [TOGGLE_DELETABLE] (state) {
         state.selected.deletable = ! state.selected.deletable
     },
-    [SELECT_LISTING] (state, payload) {
-        state.selected.model = payload.model
-        state.selected.id = payload.id
-        state.selected.listing = payload.listing
+    [ADD_TO_SELECTED] (state, payload) {
+      switch (payload.model) {
+        case 'folder':
+          state.selected.folders.unshift(payload.listing)
+          break;
+        case 'checklist':
+          state.selected.checklists.unshift(payload.listing)
+          break;
+        case 'checklist-item':
+          state.selected.checklistItems.unshift(payload.listing)
+          break;
+        default: return
+
+      }
     },
-    [DESELECT_LISTING] (state) {
-        state.selected.model = undefined
-        state.selected.id = undefined
-        state.selected.listing = {}
-        state.selected.movable = false,
-        state.selected.deletable = false
-    },
+    [REMOVE_FROM_SELECTED] (state, payload) {
+
+      if (payload && payload.model) {
+        switch (payload.model) {
+          case 'folder':
+            var i = state.selected.folders.indexOf(payload.listing);
+            state.selected.folders.splice(i,1)
+            break;
+          case 'checklist':
+            var i = state.selected.checklists.indexOf(payload.listing);
+            state.selected.checklists.splice(i,1)
+            break;
+          case 'checklist-item':
+            var i = state.selected.checklistItems.indexOf(payload.listing);
+            state.selected.checklistItems.splice(i,1)
+            break;
+          default:
+
+        }
+      }
+      state.selected.movable = false,
+      state.selected.deletable = false
+    }
 }
 
 const actions = {
@@ -66,11 +102,157 @@ const actions = {
     toggleDeletable({ commit }) {
         commit(TOGGLE_DELETABLE)
     },
-    selectListing({ commit }, payload) {
-      commit(SELECT_LISTING, payload)
+    toggleSelection({ dispatch, commit, state }, payload) {
+      switch (payload.selection.model) {
+        case 'folder':
+          if (state.selected.folders.indexOf(payload.selection.listing) !== -1) {
+            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+              commit(REMOVE_FROM_SELECTED, payload.selection)
+            } else {
+              commit(CLEAR_SELECTED)
+              commit(ADD_TO_SELECTED, payload.selection)
+            }
+          } else {
+            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+              commit(ADD_TO_SELECTED, payload.selection)
+            } else {
+              commit(CLEAR_SELECTED)
+              commit(ADD_TO_SELECTED, payload.selection)
+            }
+          }
+          break;
+        case 'checklist':
+          if (state.selected.checklists.indexOf(payload.selection.listing) !== -1) {
+            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+              commit(REMOVE_FROM_SELECTED, payload.selection)
+            } else {
+              commit(CLEAR_SELECTED)
+              commit(ADD_TO_SELECTED, payload.selection)
+            }
+          } else {
+            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+              commit(ADD_TO_SELECTED, payload.selection)
+            } else {
+              commit(CLEAR_SELECTED)
+              commit(ADD_TO_SELECTED, payload.selection)
+            }
+          }
+          break;
+        case 'checklist-item':
+          if (state.selected.checklistItems.indexOf(payload.selection.listing) !== -1) {
+              dispatch('removeCurrentlyEditable', null, {root: true}).then(
+                () => {
+
+                  if ((payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) || state.selected.checklistItems.length === 1) {
+                    // if either a modifier key was used or there is only one selected item
+                    commit(REMOVE_FROM_SELECTED, payload.selection)
+                  } else { // if there are mulitple items and a modifier key was not used
+                    commit(CLEAR_SELECTED)
+                    commit(ADD_TO_SELECTED, payload.selection)
+                  }
+
+                  if (state.selected.checklistItems.length === 1) { //If only one is left, make it editable
+                    dispatch('addCurrentlyEditable', state.selected.checklistItems[0], {root: true})
+                  }
+                }
+              ).catch(
+                () => {console.log('error dispatching. home.js toggleSelection()');}
+              )
+
+          } else {
+
+            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
+              commit(ADD_TO_SELECTED, payload.selection)
+            } else {
+              commit(CLEAR_SELECTED)
+              commit(ADD_TO_SELECTED, payload.selection)
+            }
+
+            if (state.selected.checklistItems.length == 1) {
+              dispatch('addCurrentlyEditable', payload.selection.listing, {root: true})
+            } else {
+              dispatch('removeCurrentlyEditable', null, {root: true})
+            }
+          }
+          break;
+      }
     },
-    deselectListing({ commit }) {
-      commit(DESELECT_LISTING)
+    deleteSelection({ dispatch, commit, state }) {
+      return new Promise((resolve, reject) => {
+
+        axios.post('/selection', {selected: state.selected}).then(function(response) {
+            if (response.data.tokenMismatch) {
+                Vue.handleTokenMismatch(response.data).then(
+                    (response) => {
+
+                        if (response.data.selected) {
+                          dispatch('handleSuccessfulDelete', response.data.selected).then(
+                            (response) => resolve(response)
+                          ).catch(
+                            (error) => reject(error)
+                          )
+                        } else if (response.data.error) {
+                            reject(response.data.error)
+                        } else {
+                            reject()
+                        }
+                    }
+                ).catch( (error) => reject(error) )
+
+            } else if (response.data.success && response.data.selected) {
+
+              dispatch('handleSuccessfulDelete', response.data.selected).then(
+                (response) => resolve(response)
+              ).catch( (error) => reject(error) )
+
+          } else if (response.data.error) {
+              reject(response.data.error)
+          } else {
+              reject()
+          }
+        }).catch( (error) => reject(error) )
+
+      })
+    },
+    addToSelected({ commit }, payload) {
+      commit(ADD_TO_SELECTED, payload)
+    },
+    removeFromSelected({ commit }, payload) {
+      commit(REMOVE_FROM_SELECTED, payload)
+    },
+    replaceSelected({ commit }, payload) {
+      commit(CLEAR_SELECTED)
+      commit(ADD_TO_SELECTED, payload)
+    },
+    clearSelected({ commit }) {
+      commit(CLEAR_SELECTED)
+    },
+    handleSuccessfulDelete({ dispatch, commit, state }, selected) {
+      return new Promise((resolve, reject) => {
+
+        // Note: selected represents data passed down from the server response
+
+        if (state.selected.folders && state.selected.folders.length) {
+          for (var i = 0; i < state.selected.folders.length; i++) {
+            dispatch('delistFolder', state.selected.folders[i], { root: true })
+          }
+        }
+
+        if (state.selected.checklists && state.selected.checklists.length) {
+          for (var i = 0; i < state.selected.checklists.length; i++) {
+            dispatch('delistChecklist', state.selected.checklists[i], { root: true })
+          }
+        }
+
+        if (state.selected.checklistItems && state.selected.checklistItems.length) {
+          for (var i = 0; i < state.selected.checklistItems.length; i++) {
+            dispatch('delistChecklistItem', state.selected.checklistItems[i], { root: true })
+          }
+        }
+
+        resolve(selected) // return the items passed down from the server
+
+      })
     },
 }
 
@@ -83,8 +265,8 @@ const getters = {
     currentView: state => state.currentView,
     selected: state => state.selected,
     pendingItems: state => state.pendingItems,
-    selectedIsMovable: state => state.selected.model && state.selected.id && state.selected.movable,
-    listingIsActionable: state =>  state.selected.model && state.selected.id && !state.selected.movable && state.selected.model !== 'checklist-item'
+    selectedIsMovable: state => state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length),
+    listingIsActionable: state => !state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length)
 }
 
 export default {

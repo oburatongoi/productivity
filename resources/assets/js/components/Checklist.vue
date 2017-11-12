@@ -1,5 +1,5 @@
 <template>
-  <div class="checklist" :class="checklistClass">
+  <div class="checklist position-relative" :class="checklistClass">
     <div class="panel main-panel">
       <div class="panel-heading">
           <h4 class="checklist-title">
@@ -90,7 +90,9 @@
       </div>
     </div>
 
-    <manage-checklist-item v-if="currentEditableItem.id"></manage-checklist-item>
+    <manage-checklist-item v-if="!selectedIsMovable && currentEditableItem.id"></manage-checklist-item>
+
+    <move-to-checklist v-if="selectedIsMovable"></move-to-checklist>
   </div>
 </template>
 
@@ -102,6 +104,7 @@ import Breadcrumbs from './Breadcrumbs.vue'
 import AddItem from './AddItem.vue'
 import EditChecklist from './EditChecklist.vue'
 import ManageChecklistItem from './ManageChecklistItem.vue'
+import MoveToChecklist from './MoveToChecklist.vue'
 
 export default {
     name: 'checklist',
@@ -119,18 +122,20 @@ export default {
         Breadcrumbs,
         AddItem,
         EditChecklist,
-        ManageChecklistItem
+        ManageChecklistItem,
+        MoveToChecklist
     },
     computed: {
       ...mapGetters([
         'checklist',
         'currentEditableItem',
         'currentEditableItemIsExpanded',
+        'selectedIsMovable',
         'filters'
       ]),
       checklistClass: function() {
-        if (this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
-        if (this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
+        if (this.currentEditableItem && this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
+        if (this.currentEditableItem && this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
         return null
       },
       checkedFilterText: function() {

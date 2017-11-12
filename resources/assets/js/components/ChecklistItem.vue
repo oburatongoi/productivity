@@ -1,17 +1,17 @@
 <template>
-  <div v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsCurrentlyEditable}" @click.self="toggleSelection">
+  <div v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsSelected}" @click.self="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})">
     <span class="checkbox-container">
       <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="type&&type=='ch'||type=='ta'"></i>
       <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'||type=='nu'"></i>
     </span>
 
-    <p class="show-item-content" @click="toggleSelection" @dblclick="toggleSelection">
+    <p class="show-item-content" @click="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" @dblclick="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})">
       {{ item.content }}
     </p>
 
-    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="toggleSelection" @dblclick="toggleSelection"></i>
+    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" @dblclick="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})"></i>
 
-    <p class="preview-deadline" @click="toggleSelection" @dblclick="toggleSelection">
+    <p class="preview-deadline" @click="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" @dblclick="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})">
       <span v-if="item.is_important">
         <i class="fa fa-fw fa-star" aria-hidden="true"></i>
       </span>
@@ -66,10 +66,7 @@ export default {
     methods: {
       ...mapActions([
         'saveCurrentEditableItem',
-        'addCurrentlyEditable',
-        'removeCurrentlyEditable',
-        'selectListing',
-        'deselectListing'
+        'toggleSelection'
       ]),
       checkItem: function() {
         this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
@@ -85,23 +82,12 @@ export default {
             .catch(
               () => {this.checkboxClassOverride = null}
             )
-      },
-      selectChecklistItem: function(){
-        this.selectListing({model: 'checklist-item', id: this.item.id, listing: this.item})
-        return this.addCurrentlyEditable(this.item)
-      },
-      deselectChecklistItem: function(){
-        this.deselectListing()
-        return this.removeCurrentlyEditable()
-      },
-      toggleSelection: function() {
-        return ! this.itemIsCurrentlyEditable ? this.selectChecklistItem(): this.deselectChecklistItem()
       }
     },
     computed: {
       ...mapGetters([
+        'selected',
         'unfilteredItems',
-        'editableItems',
         'currentEditableItem',
         'deletedItems',
         'delistedItems',
@@ -165,7 +151,10 @@ export default {
         return this.itemBypassesFilters || !this.itemIsDelisted && !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
       },
       itemIsCurrentlyEditable: function() {
-        return this.currentEditableItem.id && this.item.id == this.currentEditableItem.id
+        return this.currentEditableItem && this.currentEditableItem.id && this.item.id == this.currentEditableItem.id
+      },
+      itemIsSelected: function() {
+        return this.selected.checklistItems.indexOf(this.item) !== -1
       },
       deadlinePlaceholder: function () {
         return this.item.deadline ? moment(this.item.deadline).format('MMM DD') : undefined

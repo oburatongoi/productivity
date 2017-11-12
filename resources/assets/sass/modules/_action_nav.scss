@@ -34,6 +34,7 @@
         background: transparent;
     }
     &.delete-armed {
+      margin-right: 30px;
         color: $brand-danger;
         border: 1px solid $brand-danger;
         &:hover {

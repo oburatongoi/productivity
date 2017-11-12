@@ -1,11 +1,11 @@
 <template lang="html">
-  <div class="index-all" @click.self="deselectListing">
-    <div class="index-folders" v-if="hasFolders" @click.self="deselectListing">
+  <div class="index-all" @click.self="clearSelected">
+    <div class="index-folders" v-if="hasFolders" @click.self="clearSelected">
       <h5>Folders</h5>
       <index-folders></index-folders>
     </div>
 
-    <div class="index-files" v-if="hasFiles" @click.self="deselectListing">
+    <div class="index-files" v-if="hasFiles" @click.self="clearSelected">
       <h5>Files</h5>
       <index-files></index-files>
     </div>
@@ -23,17 +23,13 @@ export default {
   name: 'index-all',
   methods: {
     ...mapActions([
-      'selectListing',
-      'deselectListing'
+      'clearSelected'
     ])
   },
   computed: {
     ...mapGetters([
-      'user',
       'folders',
-      'checklists',
-      'selected',
-      'selectedIsMovable'
+      'checklists'
     ]),
     hasFolders: function() {
       return this.folders && ! _.isEmpty(this.folders)

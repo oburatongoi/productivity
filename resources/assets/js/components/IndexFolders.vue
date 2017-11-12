@@ -1,12 +1,12 @@
 <template lang="html">
-  <ul class="list-unstyled" @click.self="deselectListing">
+  <ul class="list-unstyled" @click.self="clearSelected">
       <li
         v-if="folders"
         v-for="folder in folders"
         class="listing folder-color-scheme"
-        :class="{selected: selected.id==folder.fake_id&&selected.model=='folder'}"
+        :class="{selected: selected.folders.indexOf(folder) !== -1 }"
         draggable="true"
-        @click="selectListing({model: 'folder', id: folder.fake_id, listing: folder})"
+        @click="toggleSelection({selection: {model: 'folder', listing: folder}, event: $event})"
         @dblclick="goToListing('folder', folder.fake_id)"
         v-tooltip.bottom-left="folder.name"
         :key="folder.fake_id"
@@ -18,7 +18,7 @@
 
           <a :href="'/folders/' + folder.fake_id"
               class="go-to-listing"
-              v-if="selected.id==folder.fake_id&&selected.model=='folder'"
+              v-if="selected.folders.indexOf(folder) !== -1"
           >
             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
           </a>
@@ -32,11 +32,14 @@ export default {
   name: 'index-folders',
   methods: {
     ...mapActions([
-      'selectListing',
-      'deselectListing'
+      'clearSelected',
+      'toggleSelection'
     ]),
     goToListing: function(model, id) {
       return window.location = '/' + model + 's/' + id
+    },
+    isSelected: function(listing) {
+      return this.selected.folders.indexOf(listing) !== -1
     }
   },
   computed: {
@@ -44,7 +47,7 @@ export default {
       'folders',
       'selected'
     ])
-  },
+  }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template lang="html">
-  <ul class="list-unstyled" @click.self="deselectListing">
+  <ul class="list-unstyled" @click.self="clearSelected">
       <index-checklists
         v-if="checklists"
         v-for="checklist in checklists"
@@ -17,7 +17,7 @@ export default {
   name: 'index-files',
   methods: {
     ...mapActions([
-      'deselectListing'
+      'clearSelected'
     ])
   },
   computed: {

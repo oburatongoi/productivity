@@ -9388,9 +9388,12 @@ body,
 
 .move-to-checklist {
   background: white;
-  border-top: 1px solid #d3e0e9;
+  border: 1px solid #d3e0e9;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 0;
-  margin-top: 10px;
   height: 100%;
 }
 
@@ -9455,7 +9458,7 @@ body,
 }
 
 .move-to-checklist .move-to-checklist-body {
-  height: 75%;
+  height: 85%;
   overflow-x: hidden;
   padding: 10px 10px 10px 30px;
   position: relative;
@@ -9856,6 +9859,7 @@ body,
 }
 
 .toggle-delete-btn.delete-armed {
+  margin-right: 30px;
   color: #FF2A74;
   border: 1px solid #FF2A74;
 }

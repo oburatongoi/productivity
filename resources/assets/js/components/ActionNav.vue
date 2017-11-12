@@ -4,6 +4,7 @@
       <button type="button"
         class="btn btn-sm toggle-move-btn"
         :class="moveButtonClass"
+        v-if="!selected.deletable"
         @click.prevent="toggleMovable"
       >Move</button>
       <button type="button"
@@ -16,6 +17,11 @@
         v-if="selected.deletable"
         @click.once="toggleDeletable"
       ><i class="fa fa-times" aria-hidden="true"></i></button>
+      <button type="button"
+        class="btn btn-sm btn-default"
+        v-if="!selected.deletable"
+        @click.prevent="clearSelected"
+      ><i class="fa fa-times" aria-hidden="true"></i></button>
     </div>
   </nav>
 </template>
@@ -27,51 +33,13 @@ export default {
   name: 'action-nav',
   methods: {
     ...mapActions([
-      'deleteChecklist',
-      'deleteFolder',
-      'deselectListing',
+      'deleteSelection',
+      'clearSelected',
       'toggleDeletable',
       'toggleMovable'
     ]),
     confirmOrDelete: function() {
-      this.selected.deletable ? this.delete() : this.toggleDeletable()
-    },
-    delete: function() {
-      switch (this.selected.model) {
-        case 'folder':
-          this.deleteFolder(this.selected.listing)
-          .then(
-            (response) => this.handleSuccessfulDelete()
-          )
-          .catch(
-            (error) => this.handleDeleteError(error)
-          )
-          break;
-        case 'checklist':
-          this.deleteChecklist(this.selected.listing)
-          .then(
-            (response) => this.handleSuccessfulDelete()
-          )
-          .catch(
-            (error) => this.handleDeleteError(error)
-          )
-          break;
-        default: console.log('Selected model not set.');
-
-      }
-    },
-    handleSuccessfulDelete: function() {
-      this.toggleDeletable('false')
-      this.deselectListing()
-    },
-    handleDeleteError: function(error) {
-      if ( error.status === 420 && error.message.includes("Hosts unreachable")) {
-        console.log('There was a problem reaching the Algolia Server, either because you are offline, or because your access is blocked by a firewall.');
-        this.toggleDeletable('false')
-        this.deselectListing()
-      } else {
-        console.log(error);
-      }
+      this.selected.deletable ? this.deleteSelection() : this.toggleDeletable()
     }
   },
   computed: {
@@ -79,12 +47,12 @@ export default {
       'selected'
     ]),
     moveButtonClass: function() {
-      switch (this.selected.model) {
-        case 'checklist': return 'btn-list'
-          break;
-        default: return 'btn-folder'
-
+      if (!this.selected.folders.length && this.selected.checklists.length || this.selected.checklistItems.length) {
+        return 'btn-list'
       }
+
+      return 'btn-folder'
+
     }
   }
 }

@@ -5,6 +5,7 @@
           v-for="item in checklist.items"
           :item="item"
           :type="checklist.list_type"
+          :key="item.id"
         ></checklist-item>
     </ul>
 </template>

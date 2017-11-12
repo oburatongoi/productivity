@@ -1,12 +1,10 @@
 import {
     ADD_CHECKLIST,
-    ADD_EDITABLE,
     ADD_CURRENTLY_EDITABLE,
     ADD_UNFILTERED,
     ADD_ITEM_TO_CHECKLIST,
     DELETE_CHECKLIST,
     DELETE_CURRENTLY_EDITABLE,
-    DELETE_EDITABLE,
     DELETE_UNFILTERED,
     DELETE_CHECKLIST_ITEM,
     DELIST_CHECKLIST_ITEM,
@@ -21,7 +19,6 @@ const namespaced = true;
 const state = {
     checklists: Productivity.checklists,
     checklist: Productivity.checklist,
-    editableItems: [],
     unfilteredItems: [],
     currentEditableItem: {},
     currentEditableItemIsExpanded: false,
@@ -44,9 +41,6 @@ const mutations = {
     [ADD_CHECKLIST] (state, checklist) {
         state.checklists.unshift(checklist)
     },
-    [ADD_EDITABLE] (state, item) {
-        state.editableItems.unshift(item.id)
-    },
     [ADD_CURRENTLY_EDITABLE] (state, item) {
         state.currentEditableItem = item
     },
@@ -68,10 +62,6 @@ const mutations = {
     },
     [DELETE_CURRENTLY_EDITABLE] (state) {
         state.currentEditableItem = {}
-    },
-    [DELETE_EDITABLE] (state, item) {
-        let i = state.editableItems.indexOf(item.id);
-        ~ i && state.editableItems.splice(i,1)
     },
     [DELETE_UNFILTERED] (state, item = null) {
         if (item) {
@@ -372,7 +362,6 @@ const actions = {
 const getters = {
     checklists: state => state.checklists,
     checklist: state => state.checklist,
-    editableItems: state => state.editableItems,
     unfilteredItems: state => state.unfilteredItems,
     deletedItems: state => state.deletedItems,
     delistedItems: state => state.delistedItems,
