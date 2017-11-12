@@ -15,7 +15,7 @@ use AlgoliaSearch\AlgoliaException as AlgoliaException;
 
 use JavaScript, Bugsnag, Exception;
 
-class MoverController extends Controller
+class SelectionController extends Controller
 {
     public function __construct() {
         $this->middleware('web');
@@ -191,6 +191,62 @@ class MoverController extends Controller
 
           try {
             if($child) $child->moveToHome();
+            $success = true;
+          } catch (AlgoliaException $e) {
+            // WIP: Add to some sort of queue to sync to algolia
+            Bugsnag::notifyException($e);
+            $success = true;
+          } catch (Exception $e) {
+            Bugsnag::notifyException($e);
+            $this->handleException($e);
+          }
+
+          $selected['checklists'][] = $child;
+        }
+
+        return response()->json([
+            'success' => $success,
+            'selected' => $selected
+        ]);
+
+    }
+
+    public function delete($account, Request $request)
+    {
+        $success = false;
+
+        $selected = [];
+
+        $folders = $request->has('selected.folders') ? $request->input('selected.folders') : [];
+        $checklists = $request->has('selected.checklists') ? $request->input('selected.checklists') : [];
+
+        foreach ($folders as $selectedFolder) {
+          $child = Folder::where('fake_id', $selectedFolder['fake_id'])->first();
+
+          $this->authorize('modify', $child);
+
+          try {
+            if($child) $child->delete();
+            $success = true;
+          } catch (AlgoliaException $e) {
+            // WIP: Add to some sort of queue to sync to algolia
+            Bugsnag::notifyException($e);
+            $success = true;
+          } catch (Exception $e) {
+            Bugsnag::notifyException($e);
+            $this->handleException($e);
+          }
+
+          $selected['folders'][] = $child;
+        }
+
+        foreach ($checklists as $selectedChecklist) {
+          $child = Checklist::where('fake_id', $selectedChecklist['fake_id'])->first();
+
+          $this->authorize('modify', $child);
+
+          try {
+            if($child) $child->delete();
             $success = true;
           } catch (AlgoliaException $e) {
             // WIP: Add to some sort of queue to sync to algolia

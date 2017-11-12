@@ -177,6 +177,43 @@ const actions = {
           break;
       }
     },
+    deleteSelection({ dispatch, commit, state }) {
+      return new Promise((resolve, reject) => {
+
+        axios.post('/selection', {selected: state.selected}).then(function(response) {
+            if (response.data.tokenMismatch) {
+                Vue.handleTokenMismatch(response.data).then(
+                    (response) => {
+
+                        if (response.data.selected) {
+                          dispatch('handleSuccessfulDelete', response.data.selected).then(
+                            (response) => resolve(response)
+                          ).catch(
+                            (error) => reject(error)
+                          )
+                        } else if (response.data.error) {
+                            reject(response.data.error)
+                        } else {
+                            reject()
+                        }
+                    }
+                ).catch( (error) => reject(error) )
+
+            } else if (response.data.success && response.data.selected) {
+
+              dispatch('handleSuccessfulDelete', response.data.selected).then(
+                (response) => resolve(response)
+              ).catch( (error) => reject(error) )
+
+          } else if (response.data.error) {
+              reject(response.data.error)
+          } else {
+              reject()
+          }
+        }).catch( (error) => reject(error) )
+
+      })
+    },
     addToSelected({ commit }, payload) {
       commit(ADD_TO_SELECTED, payload)
     },
@@ -189,6 +226,33 @@ const actions = {
     },
     clearSelected({ commit }) {
       commit(CLEAR_SELECTED)
+    },
+    handleSuccessfulDelete({ dispatch, commit, state }, selected) {
+      return new Promise((resolve, reject) => {
+
+        // Note: selected represents data passed down from the server response
+
+        if (state.selected.folders && state.selected.folders.length) {
+          for (var i = 0; i < state.selected.folders.length; i++) {
+            dispatch('delistFolder', state.selected.folders[i], { root: true })
+          }
+        }
+
+        if (state.selected.checklists && state.selected.checklists.length) {
+          for (var i = 0; i < state.selected.checklists.length; i++) {
+            dispatch('delistChecklist', state.selected.checklists[i], { root: true })
+          }
+        }
+
+        if (state.selected.checklistItems && state.selected.checklistItems.length) {
+          for (var i = 0; i < state.selected.checklistItems.length; i++) {
+            dispatch('delistChecklistItem', state.selected.checklistItems[i], { root: true })
+          }
+        }
+
+        resolve(selected) // return the items passed down from the server
+
+      })
     },
 }
 

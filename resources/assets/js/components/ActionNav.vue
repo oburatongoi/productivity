@@ -33,58 +33,13 @@ export default {
   name: 'action-nav',
   methods: {
     ...mapActions([
-      'deleteChecklist',
-      'deleteFolder',
+      'deleteSelection',
       'clearSelected',
       'toggleDeletable',
       'toggleMovable'
     ]),
     confirmOrDelete: function() {
-      this.selected.deletable ? this.deleteSelected() : this.toggleDeletable()
-    },
-    deleteSelected: function() {
-      alert('WIP: iterate through array and delete')
-      // if (!this.selected.items.length) {
-      //   return
-      // }
-      // this.selected.items.forEach(this.deleteItem());
-    },
-    deleteItem: function(item, index, array) {
-      switch (item.model) {
-        case 'folder':
-          this.deleteFolder(item.listing)
-          .then(
-            (response) => this.handleSuccessfulDelete()
-          )
-          .catch(
-            (error) => this.handleDeleteError(error)
-          )
-          break;
-        case 'checklist':
-          this.deleteChecklist(item.listing)
-          .then(
-            (response) => this.handleSuccessfulDelete()
-          )
-          .catch(
-            (error) => this.handleDeleteError(error)
-          )
-          break;
-        default: console.log('Selected model not set.');
-
-      }
-    },
-    handleSuccessfulDelete: function() {
-      this.toggleDeletable('false')
-      this.clearSelected()
-    },
-    handleDeleteError: function(error) {
-      if ( error.status === 420 && error.message.includes("Hosts unreachable")) {
-        console.log('There was a problem reaching the Algolia Server, either because you are offline, or because your access is blocked by a firewall.');
-        this.toggleDeletable('false')
-        this.clearSelected()
-      } else {
-        console.log(error);
-      }
+      this.selected.deletable ? this.deleteSelection() : this.toggleDeletable()
     }
   },
   computed: {
