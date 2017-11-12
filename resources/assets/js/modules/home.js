@@ -217,8 +217,11 @@ const actions = {
     addToSelected({ commit }, payload) {
       commit(ADD_TO_SELECTED, payload)
     },
-    removeFromSelected({ commit }, payload) {
-      commit(REMOVE_FROM_SELECTED, payload)
+    deselect({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        commit(REMOVE_FROM_SELECTED, payload)
+        resolve(payload)
+      })
     },
     replaceSelected({ commit }, payload) {
       commit(CLEAR_SELECTED)

@@ -126,12 +126,12 @@ export default {
       'delistChecklist',
       'delistFolder',
       'storeFolder',
-      'removeFromSelected',
+      'deselect',
       'toggleMovable'
     ]),
     cancel: function() {
       this.toggleMovable()
-      return this.removeFromSelected()
+      return this.deselect()
     },
     createNewFolder: function() {
       this.isStoringFolder = true

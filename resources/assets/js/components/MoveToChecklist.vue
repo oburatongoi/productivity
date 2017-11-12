@@ -82,7 +82,7 @@
                 class="btn btn-sm"
                 :class="moveButtonClass"
                 v-if="selectedChecklist.id"
-                @click.prevent="moveTo(selectedChecklist)"
+                @click.prevent="moveTo"
         >Move</button>
       </template>
 
@@ -133,7 +133,7 @@ export default {
   methods: {
     ...mapActions([
       'delistChecklistItem',
-      'removeFromSelected',
+      'deselect',
       'removeCurrentlyEditable',
       'storeFolder',
       'toggleMovable'
@@ -202,22 +202,29 @@ export default {
       this.folders.unshift(folder)
     },
     handleSuccessfulMove: function() {
-      this.delistChecklistItem(this.selected.listing)
-      this.removeFromSelected()
-      this.removeCurrentlyEditable()
-      this.toggleMovable()
+      if (this.selected.checklistItems && this.selected.checklistItems.length) {
+        for (var i = 0; i < this.selected.checklistItems.length; i++) {
+          this.delistChecklistItem(this.selected.checklistItems[i]).then(
+            (checklistItem) => this.deselect( {model: 'checklist-item', listing: checklistItem })
+          ).catch(
+            (response) => {console.log('error delisting item');console.log(response);}
+          )
+
+          this.removeCurrentlyEditable()
+        }
+      }
     },
     highlightChecklist: function(checklist) {
       this.toggleAddingFolder('false')
       return checklist.id ? this.selectedChecklist = checklist : this.selectedChecklist = {}
     },
-    moveTo: function(checklist) {
-      axios.patch('/move-to-checklist/'+checklist.fake_id+'/item/'+this.selected.id)
+    moveTo: function() {
+      axios.patch('/move-to-checklist/'+this.selectedChecklist.fake_id, {selected: {checklistItems: this.selected.checklistItems} })
       .then(
-        (response) => response.data.child || response.data.input.child ? this.handleSuccessfulMove() : alert('No child returned')
+        (response) => response.data.success ? this.handleSuccessfulMove() : alert('Error moving (1)')
       )
       .catch(
-        (response) => response.data.child || response.data.input.child ? this.handleSuccessfulMove() : alert('Error moving '+this.selected.model)
+        (response) => response.data.selected.checklistItems ? this.handleSuccessfulMove() : alert('Error moving (2)')
       )
     },
     refreshFolders: function(freshFolders) {

@@ -139,23 +139,42 @@ class SelectionController extends Controller
 
     }
 
-    public function moveToChecklist($account, Request $request, Checklist $checklist, ChecklistItem $item)
+    public function moveToChecklist($account, Request $request, Checklist $checklist)
     {
 
-      try {
+      $this->authorize('modify', $checklist);
 
-        $item->moveToChecklist($checklist);
+      $success = false;
 
-        return response()->json([
-            'checklist' => $checklist,
-            'child' => $item
-        ]);
+      $selected = [];
 
-      } catch (Exception $e) {
+      $checklistItems = $request->has('selected.checklistItems') ? $request->input('selected.checklistItems') : [];
 
-        $this->handleException($e);
+      foreach ($checklistItems as $item) {
+        $child = ChecklistItem::where('id', $item['id'])->first();
 
+        // $this->authorize('modify', $child); WIP: find a way to do this
+
+        try {
+          if($child) $child->moveToChecklist($checklist);
+          $success = true;
+        } catch (AlgoliaException $e) {
+          // WIP: Add to some sort of queue to sync to algolia
+          Bugsnag::notifyException($e);
+          $success = true;
+        } catch (Exception $e) {
+          Bugsnag::notifyException($e);
+          $this->handleException($e);
+        }
+
+        $selected['checklistItems'][] = $child;
       }
+
+      return response()->json([
+          'success' => $success,
+          'checklist' => $checklist,
+          'selected' => $selected
+      ]);
 
     }
 

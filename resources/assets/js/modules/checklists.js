@@ -109,7 +109,7 @@ const actions = {
     delistChecklistItem({ commit }, checklistItem) {
       return new Promise((resolve, reject) => {
           commit(DELIST_CHECKLIST_ITEM, checklistItem.id)
-          resolve()
+          resolve(checklistItem)
       })
     },
     toggleCurrentEditableItemExpansion({ commit }) {
