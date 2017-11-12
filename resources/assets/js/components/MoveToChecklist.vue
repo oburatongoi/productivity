@@ -278,7 +278,7 @@ export default {
       return this.isInSelectedChecklist
     },
     isInSelectedChecklist: function() {
-      return this.selectedChecklist.id && this.selected.listing.checklist_id && this.selectedChecklist.id == this.selected.listing.checklist_id ? true : false
+      return this.selectedChecklist.id && this.selected.listing && this.selected.listing.checklist_id && this.selectedChecklist.id == this.selected.listing.checklist_id ? true : false
     },
     showFolderInfoMessage: function() {
       return this.isLoading || this.folderInfoMessage.content && this.folderInfoMessage.type
