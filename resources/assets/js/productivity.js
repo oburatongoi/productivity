@@ -21,6 +21,7 @@ Vue.component('Folders', require('./components/Folders.vue'));
 Vue.component('Folder', require('./components/Folder.vue'));
 Vue.component('Checklists', require('./components/Checklists.vue'));
 Vue.component('Checklist', require('./components/Checklist.vue'));
+Vue.component('Notices', require('./components/Notices.vue'));
 
 // v-focus global directive
 Vue.directive('focus', {

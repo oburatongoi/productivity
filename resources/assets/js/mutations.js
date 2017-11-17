@@ -37,3 +37,6 @@ export const UPDATE_QUERY = 'search/UPDATE_QUERY'
 export const UPDATE_RESULTS = 'search/UPDATE_RESULTS'
 export const UPDATE_ERROR_MESSAGE = 'search/UPDATE_ERROR_MESSAGE'
 export const UPDATE_IS_SEARCHING = 'search/UPDATE_IS_SEARCHING'
+
+export const ADD_NOTICE = 'notices/ADD_NOTE'
+export const DELETE_NOTICE = 'notices/DELETE_NOTICE'
