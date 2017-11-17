@@ -69,15 +69,15 @@ const mutations = {
       if (payload && payload.model) {
         switch (payload.model) {
           case 'folder':
-            var i = state.selected.folders.indexOf(payload.listing);
+            var i = _.findIndex(state.selected.folders, payload.listing);
             state.selected.folders.splice(i,1)
             break;
           case 'checklist':
-            var i = state.selected.checklists.indexOf(payload.listing);
+            var i = _.findIndex(state.selected.checklists, payload.listing);
             state.selected.checklists.splice(i,1)
             break;
           case 'checklist-item':
-            var i = state.selected.checklistItems.indexOf(payload.listing);
+            var i = _.findIndex(state.selected.checklists, payload.listing);
             state.selected.checklistItems.splice(i,1)
             break;
           default:
@@ -105,7 +105,7 @@ const actions = {
     toggleSelection({ dispatch, commit, state }, payload) {
       switch (payload.selection.model) {
         case 'folder':
-          if (state.selected.folders.indexOf(payload.selection.listing) !== -1) {
+          if ((_.findIndex(state.selected.folders, payload.selection.listing)) !== -1) {
             if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
               commit(REMOVE_FROM_SELECTED, payload.selection)
             } else {
@@ -122,7 +122,7 @@ const actions = {
           }
           break;
         case 'checklist':
-          if (state.selected.checklists.indexOf(payload.selection.listing) !== -1) {
+          if (_.findIndex(state.selected.checklists, payload.selection.listing) !== -1) {
             if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
               commit(REMOVE_FROM_SELECTED, payload.selection)
             } else {
@@ -139,7 +139,7 @@ const actions = {
           }
           break;
         case 'checklist-item':
-          if (state.selected.checklistItems.indexOf(payload.selection.listing) !== -1) {
+          if (_.findIndex(state.selected.checklistItems, payload.selection.listing) !== -1) {
               dispatch('removeCurrentlyEditable', null, {root: true}).then(
                 () => {
 

@@ -16,11 +16,11 @@ const mutations = {
         state.folders.unshift(folder)
     },
     [DELETE_FOLDER] (state, folder) {
-        let i = state.folders.indexOf(folder);
+        let i = _.findIndex(state.folders, folder);
         state.folders.splice(i,1)
     },
     [UPDATE_FOLDER] (state, payload) {
-        let i = state.folders.indexOf(payload.folder);
+        let i = _.findIndex(state.folders, payload.folder);
         state.folders.splice(i,1,payload.updatedFolder)
     },
 }

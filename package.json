@@ -1,45 +1,38 @@
 {
-  "private": true,
-  "scripts": {
-    "prod": "gulp --production",
-    "dev": "gulp watch"
-  },
-  "devDependencies": {
-    "ava": "^0.19.1",
-    "babel-register": "^6.24.1",
-    "bootstrap-sass": "^3.3.7",
-    "browser-env": "^2.0.30",
-    "gulp": "^3.9.1",
-    "jquery": "^3.1.0",
-    "laravel-elixir": "^6.0.0-14",
-    "laravel-elixir-vue-2": "^0.2.0",
-    "laravel-elixir-webpack-official": "^1.0.2",
-    "lodash": "^4.16.2",
-    "mark.js": "github:julmot/mark.js",
-    "vue": "^2.4.4"
-  },
-  "dependencies": {
-    "autosize": "^3.0.20",
-    "axios": "^0.15.3",
-    "babel-polyfill": "^6.23.0",
-    "es6-promise": "^4.1.0",
-    "highlight.js": "^9.10.0",
-    "moment": "^2.17.1",
-    "quill": "^1.2.3",
-    "v-tooltip": "^1.1.2",
-    "vuejs-datepicker": "^0.5.5",
-    "vuex": "^2.2.1"
-  },
-  "ava": {
-    "require": [
-      "babel-register",
-      "./resources/assets/js/test/helpers/setup-browser-env.js"
-    ],
-    "babel": "inherit"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  }
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "devDependencies": {
+        "axios": "^0.17",
+        "bootstrap-sass": "^3.3.7",
+        "cross-env": "^5.1",
+        "jquery": "^3.2",
+        "laravel-mix": "^1.2.0",
+        "lodash": "^4.17.4",
+        "mark.js": "github:julmot/mark.js",
+        "node-sass": "^4.6.1",
+        "sass-loader": "^6.0.6",
+        "sass-resources-loader": "^1.3.1",
+        "vue": "^2.4.4",
+        "webpack-shell-plugin": "^0.5.0"
+    },
+    "dependencies": {
+        "autosize": "^3.0.20",
+        "axios": "^0.17",
+        "babel-polyfill": "^6.23.0",
+        "es6-promise": "^4.1.0",
+        "highlight.js": "^9.10.0",
+        "moment": "^2.17.1",
+        "quill": "^1.2.3",
+        "v-tooltip": "^1.1.2",
+        "vuejs-datepicker": "^0.5.5",
+        "vuex": "^2.2.1"
+    }
 }
