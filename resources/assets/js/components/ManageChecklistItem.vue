@@ -88,8 +88,6 @@ import ManageItemFormMeta from './ManageItemFormMeta.vue'
 import ManageItemFormComments from './ManageItemFormComments.vue'
 import ManageItemFormButtons from './ManageItemFormButtons.vue'
 
-import MoveToChecklist from './MoveToChecklist.vue'
-
 import autosize from 'autosize';
 
 export default {
@@ -158,8 +156,7 @@ export default {
   components: {
       ManageItemFormMeta,
       ManageItemFormComments,
-      ManageItemFormButtons,
-      MoveToChecklist
+      ManageItemFormButtons
   },
   created: function() {
     this.$nextTick(function() {
