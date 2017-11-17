@@ -51,7 +51,7 @@ const mutations = {
         state.checklist.items.unshift(item)
     },
     [DELETE_CHECKLIST] (state, checklist) {
-        let i = state.checklists.indexOf(checklist);
+        let i = _.findIndex(state.checklists, checklist);
         state.checklists.splice(i,1)
     },
     [DELETE_CHECKLIST_ITEM] (state, id) {
@@ -65,7 +65,7 @@ const mutations = {
     },
     [DELETE_UNFILTERED] (state, item = null) {
         if (item) {
-            let i = state.unfilteredItems.indexOf(item.id);
+            let i = _.findIndex(state.unfilteredItems, item.id);
             ~ i && state.unfilteredItems.splice(i,1)
         }
         state.unfilteredItems = []
