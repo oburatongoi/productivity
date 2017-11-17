@@ -11,20 +11,6 @@ plugins.push(new WebpackShellPlugin({
   onBuildExit:['echo vendor-pub && echo "Vendor files have been published"']
 }));
 
-// // This plugin short-circuits all Vue.js warning code
-// plugins.push(new webpack.DefinePlugin({
-//   'process.env': {
-//     NODE_ENV: '"production"'
-//   }
-// }));
-//
-// // This plugin minifies with dead-code elimination
-// plugins.push(new webpack.optimize.UglifyJsPlugin({
-//   compress: {
-//     warnings: false
-//   }
-// }));
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -46,9 +32,4 @@ mix.js('resources/assets/js/productivity.js', 'public/js')
    .options({
      extractVueStyles: true, // Extract .vue component styling to file, rather than inline.
      globalVueStyles: path.resolve('resources/assets/sass/_vue_global.scss'), // Variables file to be imported in every component.
-     uglify: {
-       compress: {
-         warnings: false
-       }
-     }, // Uglify-specific options. https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
   });
