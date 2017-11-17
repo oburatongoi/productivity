@@ -10,6 +10,7 @@ import {
     DELIST_CHECKLIST_ITEM,
     UPDATE_FILTERS,
     UPDATE_CHECKLIST,
+    REPLACE_PENDING_TASK,
     RESET_NEW_CHECKLIST_ITEM,
     TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION
 } from '../mutations'
@@ -31,6 +32,7 @@ const state = {
     },
     deletedItems: [],
     delistedItems: [],
+    pendingTasks: Productivity.pendingTasks ? Productivity.pendingTasks: [],
     filters: {
         checked: 'unchecked',
         priority: 'none'
@@ -57,8 +59,8 @@ const mutations = {
     [DELETE_CHECKLIST_ITEM] (state, id) {
         state.deletedItems.unshift(id)
     },
-    [DELIST_CHECKLIST_ITEM] (state, id) {
-        state.delistedItems.unshift(id)
+    [DELIST_CHECKLIST_ITEM] (state, checklistItem) {
+        state.delistedItems.unshift(checklistItem.id)
     },
     [DELETE_CURRENTLY_EDITABLE] (state) {
         state.currentEditableItem = {}
@@ -85,6 +87,10 @@ const mutations = {
             state.checklist.title = updatedChecklist.title
         }
     },
+    [REPLACE_PENDING_TASK] (state, payload) {
+        let i = _.findIndex(state.pendingTasks, payload.old);
+        state.pendingTasks.splice(i,1,payload.new)
+    },
     [RESET_NEW_CHECKLIST_ITEM] (state) {
         state.newChecklistItem = {
             content: undefined,
@@ -108,7 +114,7 @@ const actions = {
     },
     delistChecklistItem({ commit }, checklistItem) {
       return new Promise((resolve, reject) => {
-          commit(DELIST_CHECKLIST_ITEM, checklistItem.id)
+          commit(DELIST_CHECKLIST_ITEM, checklistItem)
           resolve(checklistItem)
       })
     },
@@ -342,6 +348,12 @@ const actions = {
             resolve()
         })
     },
+    replacePendingTask({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+          commit(REPLACE_PENDING_TASK, payload)
+          resolve(payload)
+      })
+    },
     resetNewChecklistItem({commit}) {
         return new Promise((resolve, reject) => {
             commit(RESET_NEW_CHECKLIST_ITEM)
@@ -368,6 +380,7 @@ const getters = {
     filters: state => state.filters,
     newChecklistItem: state => state.newChecklistItem,
     currentEditableItem: state => state.currentEditableItem,
+    pendingTasks: state => state.pendingTasks,
     currentEditableItemIsExpanded: state => state.currentEditableItemIsExpanded
 }
 

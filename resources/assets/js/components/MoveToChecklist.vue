@@ -112,6 +112,12 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'move-to-checklist',
+  props: {
+    replaceAfterMove: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       addingFolder: false,
@@ -135,6 +141,7 @@ export default {
       'delistChecklistItem',
       'deselect',
       'removeCurrentlyEditable',
+      'replacePendingTask',
       'storeFolder',
       'toggleMovable'
     ]),
@@ -201,18 +208,33 @@ export default {
       this.isStoringFolder = false
       this.folders.unshift(folder)
     },
-    handleSuccessfulMove: function() {
-      if (this.selected.checklistItems && this.selected.checklistItems.length) {
-        for (var i = 0; i < this.selected.checklistItems.length; i++) {
-          this.delistChecklistItem(this.selected.checklistItems[i]).then(
-            (checklistItem) => this.deselect( {model: 'checklist-item', listing: checklistItem })
-          ).catch(
-            (response) => {console.log('error delisting item');console.log(response);}
-          )
+    handleSuccessfulMove: function(response) {
+      if (this.replaceAfterMove) {
+        if (response.selected && response.selected.checklistItems && response.selected.checklistItems.length) {
+          for (var i = 0; i < response.selected.checklistItems.length; i++) {
 
-          this.removeCurrentlyEditable()
+            this.replacePendingTask(response.selected.checklistItems[i]).then(
+              (checklistItem) => this.deselect( {model: 'checklist-item', listing: checklistItem.old })
+            ).catch( (response) => console.log(response) )
+          }
         }
+
+      } else {
+        console.log('delisting');
+
+        if (this.selected.checklistItems && this.selected.checklistItems.length) {
+          for (var i = 0; i < this.selected.checklistItems.length; i++) {
+            this.delistChecklistItem(this.selected.checklistItems[i]).then(
+              (checklistItem) => this.deselect( {model: 'checklist-item', listing: checklistItem })
+            ).catch(
+              (response) => {console.log('error delisting item');console.log(response);}
+            )
+          }
+        }
+
       }
+
+      this.removeCurrentlyEditable()
     },
     highlightChecklist: function(checklist) {
       this.toggleAddingFolder('false')
@@ -221,10 +243,11 @@ export default {
     moveTo: function() {
       axios.patch('/move-to-checklist/'+this.selectedChecklist.fake_id, {selected: {checklistItems: this.selected.checklistItems} })
       .then(
-        (response) => response.data.success ? this.handleSuccessfulMove() : alert('Error moving (1)')
+        (response) => response.data.success ? this.handleSuccessfulMove(response.data) : alert('Error moving (1)')
       )
       .catch(
-        (response) => response.data.selected.checklistItems ? this.handleSuccessfulMove() : alert('Error moving (2)')
+        // (response) => response.data.selected.checklistItems ? this.handleSuccessfulMove(response) : alert('Error moving (2)')
+        (response) => console.log(response)
       )
     },
     refreshFolders: function(freshFolders) {

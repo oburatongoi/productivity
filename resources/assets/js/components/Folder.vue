@@ -5,11 +5,15 @@
       <li :class="{ selected: view=='tasks' }" @click="setView('tasks')">Tasks</li>
     </ul>
 
-    <index-all v-if="view=='files'"></index-all>
+    <template v-if="view=='files'">
+      <index-all></index-all>
+      <move-to-folder v-if="selectedIsMovable"></move-to-folder>
+    </template>
 
-    <index-tasks v-if="view=='tasks'"></index-tasks>
-
-    <move-to-folder v-if="selectedIsMovable"></move-to-folder>
+    <template v-if="view=='tasks'">
+      <index-tasks></index-tasks>
+      <move-to-checklist v-if="selectedIsMovable" :replace-after-move="true"></move-to-checklist>
+    </template>
   </div>
 </template>
 
@@ -18,6 +22,7 @@ import { mapActions, mapGetters } from 'vuex'
 import IndexAll from './IndexAll.vue'
 import IndexTasks from './IndexTasks.vue'
 import MoveToFolder from './MoveToFolder.vue'
+import MoveToChecklist from './MoveToChecklist.vue'
 
 export default {
   name: 'folder',
@@ -43,7 +48,8 @@ export default {
   components: {
     IndexAll,
     IndexTasks,
-    MoveToFolder
+    MoveToFolder,
+    MoveToChecklist
   }
 }
 </script>

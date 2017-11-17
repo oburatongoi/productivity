@@ -47,7 +47,7 @@ class FolderController extends Controller
         JavaScript::put([
             'folders' => $this->folders->rootForUser($request->user()),
             'checklists' => $this->checklists->rootForUser($request->user()),
-            'pendingItems' => $this->items->pendingForUser($request->user()),
+            'pendingTasks' => $this->items->pendingForUser($request->user()),
             'currentView' => 'home'
         ]);
 
@@ -136,7 +136,7 @@ class FolderController extends Controller
             'currentFolder' => $folder->load('folder', 'subfolders'),
             'checklists' => $this->checklists->forFolder($request->user(), $folder),
             'ancestors' => $folder->getAncestors(),
-            'pendingItems' => $this->items->pendingForFolder($folder),
+            'pendingTasks' => $this->items->pendingForFolder($folder),
             'model' => 'folder',
         ]);
 

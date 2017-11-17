@@ -30,7 +30,7 @@ export default {
     name: 'index-tasks',
     computed: {
       ...mapGetters({
-        items: 'pendingItems',
+        items: 'pendingTasks',
         currentEditableItem: 'currentEditableItem',
         currentEditableItemIsExpanded: 'currentEditableItemIsExpanded'
       }),

@@ -167,7 +167,10 @@ class SelectionController extends Controller
           $this->handleException($e);
         }
 
-        $selected['checklistItems'][] = $child;
+        $selected['checklistItems'][] = [
+          'old' => $item,
+          'new' => $child
+        ];
       }
 
       return response()->json([
