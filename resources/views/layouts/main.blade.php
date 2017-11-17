@@ -24,6 +24,7 @@
         <link href="//cdn.quilljs.com/1.2.3/quill.snow.css" rel="stylesheet">
 
         <link rel="stylesheet" href="/vendor/productivity/css/productivity.css">
+        {{-- <link rel="stylesheet" href="{{ mix('/vendor/productivity/css/productivity.css') }}"> --}}
 
         <script>
             window.Laravel =
@@ -62,6 +63,7 @@
                     <div class="content-wrapper">
                         @yield('content')
                         <search-results></search-results>
+                        <notices></notices>
                     </div>
                 </div>
             </div>
@@ -70,5 +72,6 @@
         @include('productivity::javascript')
 
         <script src="/vendor/productivity/js/productivity.js"></script>
+        {{-- <script src="{{ mix('/vendor/productivity/js/productivity.js') }}"></script> --}}
     </body>
 </html>
