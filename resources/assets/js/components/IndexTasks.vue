@@ -30,7 +30,7 @@ export default {
     name: 'index-tasks',
     computed: {
       ...mapGetters({
-        items: 'pendingTasks',
+        items: 'checklistAlias',
         currentEditableItem: 'currentEditableItem',
         currentEditableItemIsExpanded: 'currentEditableItemIsExpanded'
       }),

@@ -209,7 +209,8 @@ export default {
       this.folders.unshift(folder)
     },
     handleSuccessfulMove: function(response) {
-      if (this.replaceAfterMove) {
+      if (this.replaceAfterMove) { // if replace-after-move prop is set
+
         if (response.selected && response.selected.checklistItems && response.selected.checklistItems.length) {
           for (var i = 0; i < response.selected.checklistItems.length; i++) {
 
@@ -220,7 +221,6 @@ export default {
         }
 
       } else {
-        console.log('delisting');
 
         if (this.selected.checklistItems && this.selected.checklistItems.length) {
           for (var i = 0; i < this.selected.checklistItems.length; i++) {

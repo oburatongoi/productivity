@@ -248,7 +248,7 @@ const actions = {
 
         if (state.selected.checklistItems && state.selected.checklistItems.length) {
           for (var i = 0; i < state.selected.checklistItems.length; i++) {
-            dispatch('delistChecklistItem', state.selected.checklistItems[i], { root: true })
+            dispatch('deleteChecklistItem', state.selected.checklistItems[i], { root: true })
           }
         }
 

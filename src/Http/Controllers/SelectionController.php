@@ -153,7 +153,7 @@ class SelectionController extends Controller
       foreach ($checklistItems as $item) {
         $child = ChecklistItem::where('id', $item['id'])->first();
 
-        // $this->authorize('modify', $child); WIP: find a way to do this
+        $this->authorize('modify', $child);
 
         try {
           if($child) $child->moveToChecklist($checklist);
@@ -241,6 +241,7 @@ class SelectionController extends Controller
 
         $folders = $request->has('selected.folders') ? $request->input('selected.folders') : [];
         $checklists = $request->has('selected.checklists') ? $request->input('selected.checklists') : [];
+        $checklistItems = $request->has('selected.checklistItems') ? $request->input('selected.checklistItems') : [];
 
         foreach ($folders as $selectedFolder) {
           $child = Folder::where('fake_id', $selectedFolder['fake_id'])->first();
@@ -280,6 +281,26 @@ class SelectionController extends Controller
           }
 
           $selected['checklists'][] = $child;
+        }
+
+        foreach ($checklistItems as $item) {
+          $child = ChecklistItem::where('id', $item['id'])->first();
+
+          $this->authorize('modify', $child);
+
+          try {
+            if($child) $child->delete();
+            $success = true;
+          } catch (AlgoliaException $e) {
+            // WIP: Add to some sort of queue to sync to algolia
+            Bugsnag::notifyException($e);
+            $success = true;
+          } catch (Exception $e) {
+            Bugsnag::notifyException($e);
+            $this->handleException($e);
+          }
+
+          $selected['checklistItems'][] = $child;
         }
 
         return response()->json([

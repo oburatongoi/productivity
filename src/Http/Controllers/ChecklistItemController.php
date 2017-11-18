@@ -71,37 +71,4 @@ class ChecklistItemController extends Controller
             'item' => $item
         ]);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($account, Request $request, ChecklistItem $item)
-    {
-        $this->authorize('modify', $item->checklistById());
-
-        // $item->delete();
-        //
-        // return response()->json([
-        //     'item' => $item
-        // ]);
-
-        try {
-
-            $item->delete();
-
-            return response()->json([
-                'item' => $item
-            ]);
-
-        } catch (Exception $e) {
-
-            return response()->json([
-                'error' => $e
-            ]);
-
-        }
-    }
 }

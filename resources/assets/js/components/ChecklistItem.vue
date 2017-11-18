@@ -89,7 +89,6 @@ export default {
         'selected',
         'unfilteredItems',
         'currentEditableItem',
-        'deletedItems',
         'delistedItems',
         'filters'
       ]),
@@ -98,9 +97,6 @@ export default {
       },
       itemBypassesFilters: function() {
         return this.unfilteredItems.indexOf(this.item.id) !== -1
-      },
-      itemIsDeleted: function() {
-        return this.deletedItems.indexOf(this.item.id) !== -1
       },
       itemIsDelisted: function() {
         return this.delistedItems.indexOf(this.item.id) !== -1

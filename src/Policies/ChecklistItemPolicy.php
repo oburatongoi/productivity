@@ -4,6 +4,7 @@ namespace Oburatongoi\Productivity\Policies;
 
 use App\User;
 use Oburatongoi\Productivity\Checklist;
+use Oburatongoi\Productivity\ChecklistItem;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ChecklistItemPolicy
@@ -27,9 +28,9 @@ class ChecklistItemPolicy
      * @param  Checklist  $checklist
      * @return bool
      */
-    public function modify(User $user, Checklist $checklist)
+    public function modify(User $user, ChecklistItem $item)
     {
-      return $user->id === $checklist->user_id;
+      return $user->id === $item->checklist->user_id;
 
     }
 }
