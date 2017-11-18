@@ -3,7 +3,9 @@
     <div class="panel main-panel">
       <div class="panel-heading">
           <h4 class="checklist-title">
-            <i class="fa fa-fw fa-list" :class="{'grey-color-scheme':isEditable}" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-list"
+              :class="[{'grey-color-scheme':isEditable}, checklistIconClass]"
+              aria-hidden="true"></i>
             <span v-if="!isEditable" @click="toggleEditability(true)">
               {{checklist.title}}
             </span>
@@ -133,9 +135,19 @@ export default {
         'filters'
       ]),
       checklistClass: function() {
-        if (this.currentEditableItem && this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
-        if (this.currentEditableItem && this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
-        return null
+        // if (this.currentEditableItem && this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
+        // if (this.currentEditableItem && this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
+        // return null
+        return ! this.currentEditableItem || ! this.currentEditableItem.id ? null :
+               this.currentEditableItemIsExpanded ? 'has-expanded-editable-item' : 'has-editable-item'
+      },
+      checklistIconClass: function() {
+      return ! this.checklist.list_type         ? 'fa-list'         :
+               this.checklist.list_type == 'ch' ? 'fa-list'         :
+               this.checklist.list_type == 'ta' ? 'fa-check-square' :
+               this.checklist.list_type == 'bu' ? 'fa-list-ul'      :
+               this.checklist.list_type == 'nu' ? 'fa-list-ol'      :
+                                                  'fa-list'         ;
       },
       checkedFilterText: function() {
         var text

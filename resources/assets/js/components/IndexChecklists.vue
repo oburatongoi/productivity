@@ -8,7 +8,7 @@
     v-tooltip.bottom-left="checklist.title"
   >
       <h5>
-        <i class="fa fa-fw fa-list" aria-hidden="true"></i>
+        <i class="fa fa-fw" :class="checklistIconClass" aria-hidden="true"></i>
         {{checklist.title}}
       </h5>
 
@@ -45,7 +45,15 @@ export default {
   computed: {
     ...mapGetters([
       'selected'
-    ])
+    ]),
+    checklistIconClass: function() {
+    return ! this.checklist.list_type         ? 'fa-list'         :
+             this.checklist.list_type == 'ch' ? 'fa-list'         :
+             this.checklist.list_type == 'ta' ? 'fa-check-square' :
+             this.checklist.list_type == 'bu' ? 'fa-list-ul'      :
+             this.checklist.list_type == 'nu' ? 'fa-list-ol'      :
+                                                'fa-list'         ;
+    },
   },
 }
 </script>

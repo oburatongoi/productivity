@@ -24,17 +24,6 @@
       </div>
     </div>
 
-    <!-- <div class="list-type-option">
-      <input type="radio" id="ta" value="ta" v-model="checklist.list_type" @click="saveChanges">
-      <span>
-        <label for="ta">
-          <i class="fa fa-fw fa-list-alt" aria-hidden="true"></i>
-          Task List
-        </label>
-        <p class="notice">List items are tasks which must be completed</p>
-      </span>
-    </div> -->
-
     <div class="list-type-option">
       <input type="radio" id="bu" value="bu" v-model="checklist.list_type" @click="saveChanges">
       <span>
