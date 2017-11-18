@@ -40,8 +40,8 @@ const actions = {
             if (response.data.tokenMismatch) {
                 Vue.handleTokenMismatch(response.data).then(
                     (response) => {
-                        if (response.data.item) {
-                            commit(DELETE_FOLDER, folder)
+                        if (response.data.folder) {
+                            commit(DELETE_FOLDER, response.data.folder)
                             resolve(response.data.folder)
                         } else if (response.data.error) {
                             reject(response.data.error)
@@ -53,7 +53,7 @@ const actions = {
                     (error) => reject(error)
                 )
             } else if (response.data.folder) {
-                commit(DELETE_FOLDER, folder)
+                commit(DELETE_FOLDER, response.data.folder)
                 resolve(response.data.folder)
             } else if (response.data.error) {
                 reject(response.data.error)
@@ -75,8 +75,8 @@ const actions = {
               if (response.data.tokenMismatch) {
                   Vue.handleTokenMismatch(response.data).then(
                       (response) => {
-                          if (response.data.item) {
-                              commit(UPDATE_FOLDER, folder)
+                          if (response.data.folder) {
+                              commit(UPDATE_FOLDER, response.data.folder)
                               resolve(response.data.folder)
                           } else if (response.data.error) {
                               reject(response.data.error)
@@ -88,7 +88,7 @@ const actions = {
                       (error) => reject(error)
                   )
               } else if (response.data.folder) {
-                  commit(UPDATE_FOLDER, folder)
+                  commit(UPDATE_FOLDER, response.data.folder)
                   resolve(response.data.folder)
               } else if (response.data.error) {
                   reject(response.data.error)
@@ -110,7 +110,7 @@ const actions = {
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(
                         (response) => {
-                            if (response.data.item) {
+                            if (response.data.folder) {
                                 commit(ADD_FOLDER, response.data.folder)
                                 resolve(response.data.folder)
                             } else if (response.data.error) {

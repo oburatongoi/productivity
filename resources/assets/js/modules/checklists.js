@@ -155,7 +155,9 @@ const actions = {
   addChecklistItem({dispatch, commit}, payload) {
       return new Promise((resolve, reject) => {
           axios.post('/lists/' + state.checklist.fake_id + '/add-item', {item:payload.item})
-               .then( response => dispatch('addChecklistItemHandler', response) )
+               .then( response => dispatch('addChecklistItemHandler', response).then(
+                      response => resolve(response)
+               ) )
       })
   },
   addChecklistItemHandler({commit}, response) {
@@ -198,7 +200,9 @@ const actions = {
   deleteChecklist({ dispatch, commit }, checklist) {
     return new Promise((resolve, reject) => {
         axios.delete('/lists/'+ checklist.fake_id)
-          .then( response => dispatch('deleteChecklistHandler', response) )
+          .then( response => dispatch('deleteChecklistHandler', response).then(
+                 response => resolve(response)
+          ) )
       })
   },
   deleteChecklistHandler({ commit }, response) {
@@ -206,8 +210,8 @@ const actions = {
       if (response.data.tokenMismatch) {
           Vue.handleTokenMismatch(response.data).then(
               (response) => {
-                  if (response.data.item) {
-                      commit(DELETE_CHECKLIST, checklist)
+                  if (response.data.checklist) {
+                      commit(DELETE_CHECKLIST, response.data.checklist)
                       resolve(response.data.checklist)
                   } else if (response.data.error) {
                       reject(response.data.error)
@@ -219,7 +223,7 @@ const actions = {
               (error) => reject(error)
           )
       } else if (response.data.checklist) {
-          commit(DELETE_CHECKLIST, checklist)
+          commit(DELETE_CHECKLIST, response.data.checklist)
           resolve(response.data.checklist)
       } else if (response.data.error) {
           reject(response.data.error)
@@ -281,7 +285,9 @@ const actions = {
   saveChecklist({ dispatch, commit }, checklist) {
       return new Promise((resolve, reject) => {
         axios.patch('/lists/'+checklist.fake_id, {checklist:checklist})
-        .then( response => dispatch('saveChecklistHandler', response) )
+             .then( response => dispatch('saveChecklistHandler', response).then(
+                    response => resolve(response)
+                  ) )
       })
   },
   saveChecklistHandler({ commit }, response) {
@@ -289,8 +295,8 @@ const actions = {
       if (response.data.tokenMismatch) {
           Vue.handleTokenMismatch(response.data).then(
               (response) => {
-                  if (response.data.item) {
-                      commit(UPDATE_CHECKLIST, checklist)
+                  if (response.data.checklist) {
+                      commit(UPDATE_CHECKLIST, response.data.checklist)
                       resolve(response.data.checklist)
                   } else if (response.data.error) {
                       reject(response.data.error)
@@ -302,7 +308,7 @@ const actions = {
               (error) => reject(error)
           )
       } else if (response.data.checklist) {
-          commit(UPDATE_CHECKLIST, checklist)
+          commit(UPDATE_CHECKLIST, response.data.checklist)
           resolve(response.data.checklist)
       } else if (response.data.error) {
           reject(response.data.error)
@@ -320,20 +326,15 @@ const actions = {
           commit(ADD_UNFILTERED, item)
           axios.patch('/lists/item/' + item.id + '/update', {item:item})
           .then(function(response) {
-
               if (response.data.tokenMismatch) {
                   Vue.handleTokenMismatch(response.data).then(
-                      (response) => resolve(response)
-                  ).catch(
-                      (error) => reject(error)
-                  )
+                      response => resolve(response)
+                  ).catch( error => reject(error) )
               } else {
                   resolve(response)
               }
           })
-          .catch(function(error) {
-              reject(error)
-          })
+          .catch( error => reject(error) )
       })
   },
   setEditability({commit}, payload) {
@@ -358,7 +359,9 @@ const actions = {
   storeChecklist({dispatch, commit}, checklist) {
     return new Promise((resolve, reject) => {
         axios.post('/lists', {checklist: checklist})
-             .then( response => dispatch('storeChecklistHandler', response) )
+             .then( response => dispatch('storeChecklistHandler', response).then(
+                    response => resolve(response)
+                  ) )
     })
   },
   storeChecklistHandler({commit}, response) {
@@ -366,7 +369,7 @@ const actions = {
       if (response.data.tokenMismatch) {
           Vue.handleTokenMismatch(response.data).then(
               (response) => {
-                  if (response.data.item) {
+                  if (response.data.checklist) {
                       commit(ADD_CHECKLIST, response.data.checklist)
                       resolve(response.data.checklist)
                   } else if (response.data.error) {

@@ -7,18 +7,17 @@
             <span v-if="!isEditable" @click="toggleEditability(true)">
               {{checklist.title}}
             </span>
-            <input
-              type="text"
-              class="edit-checklist-input"
-              ref="titleinput"
-              v-model="checklist.title"
-              v-if="isEditable"
-              @keyup.enter="debounceSaveChanges"
-              @keyup="debounceSaveChanges"
-              @keydown="debounceSaveChanges"
-              @change="debounceSaveChanges"
-              @blur="debounceSaveChanges"
-              v-focus
+            <input type="text"
+                   class="edit-checklist-input"
+                   ref="titleinput"
+                   v-model="checklist.title"
+                   v-if="isEditable"
+                   @keyup.enter="debounceSaveChanges"
+                   @keyup="debounceSaveChanges"
+                   @keydown="debounceSaveChanges"
+                   @change="debounceSaveChanges"
+                   @blur="debounceSaveChanges"
+                   v-focus
             />
             <i class="fa fa-fw edit-checklist-icon"
               :class="inputIcon"
@@ -234,6 +233,11 @@ export default {
           this.isEditable = ! this.isEditable
         }
       },
+    },
+    created: function() {
+      if (!this.checklist.list_type) {
+        return this.toggleEditability(true)
+      }
     }
 }
 </script>
