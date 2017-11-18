@@ -234,22 +234,38 @@ const actions = {
 
         // Note: selected represents data passed down from the server response
 
-        if (state.selected.folders && state.selected.folders.length) {
-          for (var i = 0; i < state.selected.folders.length; i++) {
-            dispatch('delistFolder', state.selected.folders[i], { root: true })
+        var count =  0;
+
+        if (selected.folders && selected.folders.length) {
+          for (var i = 0; i < selected.folders.length; i++) {
+            dispatch('delistFolder', selected.folders[i], { root: true })
+            count ++
           }
         }
 
-        if (state.selected.checklists && state.selected.checklists.length) {
-          for (var i = 0; i < state.selected.checklists.length; i++) {
-            dispatch('delistChecklist', state.selected.checklists[i], { root: true })
+        if (selected.checklists && selected.checklists.length) {
+          for (var i = 0; i < selected.checklists.length; i++) {
+            dispatch('delistChecklist', selected.checklists[i], { root: true })
+            count ++
           }
         }
 
-        if (state.selected.checklistItems && state.selected.checklistItems.length) {
-          for (var i = 0; i < state.selected.checklistItems.length; i++) {
-            dispatch('deleteChecklistItem', state.selected.checklistItems[i], { root: true })
+        if (selected.checklistItems && selected.checklistItems.length) {
+          for (var i = 0; i < selected.checklistItems.length; i++) {
+            dispatch('deleteChecklistItem', selected.checklistItems[i], { root: true })
+            count ++
           }
+        }
+
+        if (count > 0) {
+          var msg = count == 1 ? 'The selected item has been successfuly deleted.' : count + ' items have been successfuly deleted.';
+          var notice = {
+                type: 'success',
+                heading: 'Success!',
+                message: msg,
+                persist: false,
+            }
+          dispatch('addNotice', notice, {root: true})
         }
 
         resolve(selected) // return the items passed down from the server
