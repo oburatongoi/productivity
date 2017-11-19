@@ -71366,7 +71366,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       resource: {
         name: undefined,
         title: undefined,
-        folder_id: Productivity.currentFolder ? Productivity.currentFolder.id : undefined
+        folder_id: Productivity.currentFolder ? Productivity.currentFolder.id : {}
       }
     };
   },

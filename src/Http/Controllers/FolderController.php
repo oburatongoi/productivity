@@ -84,19 +84,25 @@ class FolderController extends Controller
     {
       $parent = $folder = null;
 
+      $exceptions = [];
+
       if ($request->has('folder.folder_id')) {
         $parent = Folder::find($request->input('folder.folder_id'));
       }
 
       try {
 
-        $folder = $request->user()->folders()->create($request->input('folder'), $parent);
+        $folder = $request->user()->folders()->create($request->input('folder'));
+
+        $parent->appendNode($folder);
 
       } catch (AlgoliaException $e) {
 
+        $exceptions[] = [ 'AlgoliaException' => $e->getMessage() ];
+
         $folder = $request->user()->folders()->orderBy('created_at', 'desc')->first();
 
-        if ($folder->name === $request->input('folder.name')) {
+        if ($folder->name == $request->input('folder.name')) {
           Folder::withoutSyncingToSearch(function () use  ($parent, $folder) {
               $parent->appendNode($folder);
 
@@ -107,6 +113,8 @@ class FolderController extends Controller
 
       } catch (Exception $e) {
 
+        $exceptions[] = [ 'Exception' => $e->getMessage() ];
+
         if ($request->expectsJson()) return response()->json([
             'input' => $request->except(['password']),
             'exception' => $e->getMessage()
@@ -115,7 +123,9 @@ class FolderController extends Controller
       }
 
       return response()->json([
-          'folder' => $folder
+          'folder' => $folder,
+          'exceptions' => $exceptions,
+          'parent' => $parent
       ]);
 
     }
