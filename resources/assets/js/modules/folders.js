@@ -1,6 +1,7 @@
 import {
     ADD_FOLDER,
     DELETE_FOLDER,
+    // SORT_FOLDERS,
     UPDATE_FOLDER,
 } from '../mutations'
 
@@ -19,6 +20,9 @@ const mutations = {
         let i = _.findIndex(state.folders, folder);
         state.folders.splice(i,1)
     },
+    // [SORT_FOLDERS] (state, attr) {
+    //     return state.folders = _.orderBy(state.folders, attr)
+    // },
     [UPDATE_FOLDER] (state, payload) {
         let i = _.findIndex(state.folders, payload.folder);
         state.folders.splice(i,1,payload.updatedFolder)
@@ -101,8 +105,13 @@ const actions = {
           })
 
         })
-
     },
+    // sortFolders({ commit }, attr) {
+    //   return new Promise((resolve, reject) => {
+    //     commit(SORT_FOLDERS, attr)
+    //     resolve()
+    //   })
+    // },
     storeFolder({commit}, folder) {
         return new Promise((resolve, reject) => {
             axios.post('/folders', {folder: folder})

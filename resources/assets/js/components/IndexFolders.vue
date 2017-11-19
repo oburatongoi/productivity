@@ -33,6 +33,7 @@ export default {
   methods: {
     ...mapActions([
       'clearSelected',
+      // 'sortFolders',
       'toggleSelection'
     ]),
     goToListing: function(model, id) {
@@ -48,6 +49,9 @@ export default {
       'selected'
     ])
   }
+  // created: function() {
+  //   return this.sortFolders('name')
+  // }
 }
 </script>
 

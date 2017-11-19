@@ -8,6 +8,7 @@ export const REMOVE_FROM_SELECTED = 'home/REMOVE_FROM_SELECTED'
 
 export const ADD_FOLDER = 'folders/ADD_FOLDER'
 export const DELETE_FOLDER = 'folders/DELETE_FOLDER'
+export const SORT_FOLDERS = 'folders/SORT_FOLDERS'
 export const UPDATE_FOLDER = 'folders/UPDATE_FOLDER'
 
 export const ADD_CHECKLIST = 'checklists/ADD_CHECKLIST'

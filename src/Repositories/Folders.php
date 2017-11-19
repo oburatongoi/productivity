@@ -17,14 +17,9 @@ class Folders implements FoldersInterface {
     {
         return $user->folders()
                     ->whereNull('folder_id')
-                    ->orderBy('name', 'desc')
+                    // ->orderBy('name', 'desc') // doestn work since values are encrypted
                     ->get();
 
-        // $unsorted = $user->folders()->whereNull('folder_id')->get();  //dd($unsorted);
-        // $sorted = collect($unsorted)->map(function($id) {
-        //     return Folder::find($id)->attributesToArray();
-        // });   dd($sorted->sortBy('name')->all());
-        // return $sorted->sortByDesc('created_at')->all();
     }
 
     public function rootForFolder(User $user, Folder $folder)

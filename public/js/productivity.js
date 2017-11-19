@@ -7395,6 +7395,7 @@ module.exports = function (it) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return REMOVE_FROM_SELECTED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ADD_FOLDER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return DELETE_FOLDER; });
+/* unused harmony export SORT_FOLDERS */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return UPDATE_FOLDER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ADD_CHECKLIST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ADD_CURRENTLY_EDITABLE; });
@@ -7436,6 +7437,7 @@ var REMOVE_FROM_SELECTED = 'home/REMOVE_FROM_SELECTED';
 
 var ADD_FOLDER = 'folders/ADD_FOLDER';
 var DELETE_FOLDER = 'folders/DELETE_FOLDER';
+var SORT_FOLDERS = 'folders/SORT_FOLDERS';
 var UPDATE_FOLDER = 'folders/UPDATE_FOLDER';
 
 var ADD_CHECKLIST = 'checklists/ADD_CHECKLIST';
@@ -89710,7 +89712,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'index-folders',
-  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['clearSelected', 'toggleSelection']), {
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['clearSelected',
+  // 'sortFolders',
+  'toggleSelection']), {
     goToListing: function goToListing(model, id) {
       return window.location = '/' + model + 's/' + id;
     },
@@ -89719,6 +89723,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     }
   }),
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['folders', 'selected']))
+  // created: function() {
+  //   return this.sortFolders('name')
+  // }
 });
 
 /***/ }),
@@ -95939,6 +95946,13 @@ var actions = {
             });
         });
     },
+
+    // sortFolders({ commit }, attr) {
+    //   return new Promise((resolve, reject) => {
+    //     commit(SORT_FOLDERS, attr)
+    //     resolve()
+    //   })
+    // },
     storeFolder: function storeFolder(_ref4, folder) {
         var commit = _ref4.commit;
 
