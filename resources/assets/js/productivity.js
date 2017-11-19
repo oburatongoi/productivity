@@ -34,15 +34,14 @@ Vue.directive('focus', {
 
 import store from './store.js'
 import VTooltip from 'v-tooltip'
+import Vue2Filters from 'vue2-filters'
 import VueTokenMismatch from './plugins/vue-token-mismatch.js'
 
 Vue.use(VTooltip)
+Vue.use(Vue2Filters)
 Vue.use(VueTokenMismatch)
-
-var bus = new Vue()
 
 const app = new Vue({
     el: '#productivity-app',
-    store,
-    bus
+    store
 });
