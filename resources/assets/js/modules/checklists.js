@@ -21,8 +21,9 @@ import {
 const namespaced = true;
 
 const state = {
-    checklists: Productivity.checklists,
-    checklist: Productivity.checklist,
+    checklists: Productivity.checklists ? Productivity.checklists: [],
+    checklist: Productivity.checklist ? Productivity.checklist: [],
+    checklistItems: Productivity.checklistItems ? Productivity.checklistItems: [],
     unfilteredItems: [],
     currentEditableItem: {},
     currentEditableItemIsExpanded: false,
@@ -34,7 +35,6 @@ const state = {
         comments: null
     },
     delistedItems: [],
-    checklistAlias: Productivity.checklistAlias ? Productivity.checklistAlias: [],
     filters: {
         checked: 'unchecked',
         priority: 'none'
@@ -94,10 +94,10 @@ const mutations = {
     },
     [DELETE_CHECKLIST_ITEM] (state, checklistItem) {
         if (
-          ! _.isEmpty(state.checklistAlias)
+          ! _.isEmpty(state.checklistItems)
         ) {
-          let i = _.findIndex(state.checklistAlias, ['id', checklistItem.id]);
-          state.checklistAlias.splice(i,1)
+          let i = _.findIndex(state.checklistItems, ['id', checklistItem.id]);
+          state.checklistItems.splice(i,1)
         } else if (
           ! _.isEmpty(state.checklist.items)
         ) {
@@ -134,8 +134,8 @@ const mutations = {
         }
     },
     [REPLACE_PENDING_TASK] (state, payload) {
-        let i = _.findIndex(state.checklistAlias, payload.old);
-        state.checklistAlias.splice(i,1,payload.new)
+        let i = _.findIndex(state.checklistItems, payload.old);
+        state.checklistItems.splice(i,1,payload.new)
     },
     [RESET_NEW_CHECKLIST_ITEM] (state) {
         state.newChecklistItem = {
@@ -407,7 +407,7 @@ const getters = {
     filters: state => state.filters,
     newChecklistItem: state => state.newChecklistItem,
     currentEditableItem: state => state.currentEditableItem,
-    checklistAlias: state => state.checklistAlias,
+    checklistItems: state => state.checklistItems,
     currentEditableItemIsExpanded: state => state.currentEditableItemIsExpanded
 }
 

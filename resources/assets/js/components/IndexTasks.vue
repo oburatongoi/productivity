@@ -4,14 +4,14 @@
       <div class="home-body panel-body">
         <ul class="list-unstyled checklist-items">
             <checklist-item
-              v-if="items.length"
-              v-for="item in items"
+              v-if="checklistItems.length"
+              v-for="item in checklistItems"
               :item="item"
               type="ta"
               :key="item.id"
             ></checklist-item>
 
-            <li v-if="!items.length">There are no pending tasks at this time.</li>
+            <li v-if="!checklistItems.length">There are no pending tasks at this time.</li>
         </ul>
       </div>
     </div>
@@ -29,11 +29,11 @@ import ManageChecklistItem from './ManageChecklistItem.vue'
 export default {
     name: 'index-tasks',
     computed: {
-      ...mapGetters({
-        items: 'checklistAlias',
-        currentEditableItem: 'currentEditableItem',
-        currentEditableItemIsExpanded: 'currentEditableItemIsExpanded'
-      }),
+      ...mapGetters([
+        'checklistItems',
+        'currentEditableItem',
+        'currentEditableItemIsExpanded'
+      ]),
       taskClass: function() {
         if (this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
         if (this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'

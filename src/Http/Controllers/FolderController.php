@@ -47,7 +47,7 @@ class FolderController extends Controller
         JavaScript::put([
             'folders' => $this->folders->rootForUser($request->user()),
             'checklists' => $this->checklists->rootForUser($request->user()),
-            'checklistAlias' => $this->items->pendingForUser($request->user()),
+            'checklistItems' => $this->items->pendingForUser($request->user()),
             'currentView' => 'home'
         ]);
 
@@ -66,7 +66,7 @@ class FolderController extends Controller
         JavaScript::put([
             'folders' => $this->folders->rootForUser($request->user()),
             'checklists' => $this->checklists->rootForUser($request->user()),
-            'model' => 'folders',
+            // 'model' => 'folders',
             'currentView' => 'foldersIndex'
         ]);
 
@@ -141,13 +141,12 @@ class FolderController extends Controller
         $this->authorize('view', $folder);
 
         JavaScript::put([
-            'user' => $request->user(),
             'folders' => $this->folders->rootForFolder($request->user(), $folder),
             'currentFolder' => $folder->load('folder', 'subfolders'),
             'checklists' => $this->checklists->forFolder($request->user(), $folder),
             'ancestors' => $folder->getAncestors(),
-            'checklistAlias' => $this->items->pendingForFolder($folder),
-            'model' => 'folder',
+            'checklistItems' => $this->items->pendingForFolder($folder),
+            // 'model' => 'folder',
         ]);
 
         return view('productivity::folders.show')

@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="folder">
-    <ul class="folder-nav">
-      <li :class="{ selected: view=='files' }" @click="setView('files')">Files</li>
-      <li :class="{ selected: view=='tasks' }" @click="setView('tasks')">Tasks</li>
+    <ul class="folder-nav" id="folder-nav">
+      <li :class="{ selected: view=='files' }" @click="setView('files')" id="select-files">Files</li>
+      <li :class="{ selected: view=='tasks' }" @click="setView('tasks')" id="select-tasks">Tasks</li>
     </ul>
 
     <template v-if="view=='files'">

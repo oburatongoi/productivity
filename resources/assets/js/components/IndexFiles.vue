@@ -2,7 +2,7 @@
   <ul class="list-unstyled" @click.self="clearSelected">
       <index-checklists
         v-if="checklists"
-        v-for="checklist in checklists"
+        v-for="checklist in orderBy(checklists, 'title')"
         :checklist="checklist"
         :key="checklist.fake_id"
       ></index-checklists>

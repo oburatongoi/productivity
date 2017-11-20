@@ -7,19 +7,17 @@
           Home
         </a>
       </li>
-      <li v-if="ancestors.length" v-for="ancestor in ancestors" :class="{ 'current-folder': model!=='folder'&&checklist&&checklist.folder_id==ancestor.id }">
+      <li v-if="ancestors.length" v-for="ancestor in ancestors" :class="{ 'current-folder': checklist&&checklist.folder_id==ancestor.id }">
         <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
         <a :href="'/folders/'+ancestor.fake_id">
           <i class="fa fa-fw fa-folder-o" aria-hidden="true"></i>
           {{ancestor.name}}
         </a>
       </li>
-      <li v-if="currentFolder.id" class="current-folder">
-        <template v-if="model=='folder'">
+      <li v-if="!currentFolderIsAncestor" class="current-folder">
           <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
           <i class="fa fa-fw fa-folder-open" aria-hidden="true"></i>
           {{currentFolder.name}}
-        </template>
       </li>
 
       <li v-if="hasCurrentView" class="current-view">
@@ -48,7 +46,6 @@ export default {
       'currentFolder',
       'ancestors',
       'checklist',
-      'model',
       'currentView'
     ]),
     hasCurrentView: function() {
@@ -56,6 +53,9 @@ export default {
         return ! _.isEmpty(this.currentView)
       }
       return false
+    },
+    currentFolderIsAncestor: function() {
+      return this.ancestors && this.currentFolder ? _.findIndex(this.ancestors, this.currentFolder) !== -1 : false;
     }
   }
 }

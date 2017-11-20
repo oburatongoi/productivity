@@ -11,11 +11,9 @@ import {
 const namespaced = true;
 
 const state = {
-    user: Productivity.user,
     creatingNew: undefined,
     showCreatingNewButtons: false,
     ancestors: Productivity.ancestors ? Productivity.ancestors : [],
-    model: Productivity.model ? Productivity.model : {},
     currentView: Productivity.currentView ? Productivity.currentView : undefined,
     selected: {
         folders: [],
@@ -277,9 +275,7 @@ const actions = {
 const getters = {
     creatingNew: state => state.creatingNew,
     showCreatingNewButtons: state => state.showCreatingNewButtons,
-    user: state => state.user,
     ancestors: state => state.ancestors,
-    model: state => state.model,
     currentView: state => state.currentView,
     selected: state => state.selected,
     selectedIsMovable: state => state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length),

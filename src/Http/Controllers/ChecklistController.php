@@ -31,7 +31,7 @@ class ChecklistController extends Controller
     {
         JavaScript::put([
             'checklists' => $this->checklists->forUser($request->user()),
-            'model' => 'checklists',
+            // 'model' => 'checklists',
             'currentView' => 'checklistsIndex'
         ]);
 
@@ -85,7 +85,7 @@ class ChecklistController extends Controller
             'checklist' => $checklist,
             'ancestors' => $checklist->getFolderTree(),
             'currentFolder' => $checklist->folderById(),
-            'model' => 'list',
+            // 'model' => 'list',
         ]);
 
         return view('productivity::checklists.show')
