@@ -16,17 +16,19 @@ const mutations = {
         state.folders.unshift(folder)
     },
     [DELETE_FOLDER] (state, folder) {
-        let i = _.findIndex(state.folders, folder);
+        let i = _.findIndex(state.folders, ['id', folder.id]);
+        console.log('i = ' + i);
         state.folders.splice(i,1)
     },
     [UPDATE_FOLDER] (state, payload) {
-        let i = _.findIndex(state.folders, payload.folder);
+        let i = _.findIndex(state.folders, ['id', payload.folder.id]);
         state.folders.splice(i,1,payload.updatedFolder)
     },
 }
 
 const actions = {
     delistFolder({ commit }, folder) {
+      console.log(folder);
       return new Promise((resolve, reject) => {
           commit(DELETE_FOLDER, folder)
           resolve()

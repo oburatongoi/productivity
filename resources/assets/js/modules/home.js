@@ -237,6 +237,7 @@ const actions = {
         if (selected.folders && selected.folders.length) {
           for (var i = 0; i < selected.folders.length; i++) {
             dispatch('delistFolder', selected.folders[i], { root: true })
+            commit(REMOVE_FROM_SELECTED, {model: 'folder', listing: selected.folders[i]})
             count ++
           }
         }
@@ -244,6 +245,7 @@ const actions = {
         if (selected.checklists && selected.checklists.length) {
           for (var i = 0; i < selected.checklists.length; i++) {
             dispatch('delistChecklist', selected.checklists[i], { root: true })
+            commit(REMOVE_FROM_SELECTED, {model: 'checklist', listing: selected.checklists[i]})
             count ++
           }
         }
@@ -251,6 +253,7 @@ const actions = {
         if (selected.checklistItems && selected.checklistItems.length) {
           for (var i = 0; i < selected.checklistItems.length; i++) {
             dispatch('deleteChecklistItem', selected.checklistItems[i], { root: true })
+            commit(REMOVE_FROM_SELECTED, {model: 'checklist-item', listing: selected.checklistItems[i]})
             count ++
           }
         }
@@ -277,6 +280,7 @@ const getters = {
     showCreatingNewButtons: state => state.showCreatingNewButtons,
     ancestors: state => state.ancestors,
     currentView: state => state.currentView,
+    hasCurrentView: state => ! _.isEmpty(state.currentView),
     selected: state => state.selected,
     selectedIsMovable: state => state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length),
     listingIsActionable: state => !state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length)

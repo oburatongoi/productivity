@@ -88,7 +88,7 @@ const mutations = {
       if (
         ! _.isEmpty(state.checklists)
       ) {
-        let i = _.findIndex(state.checklists, checklist);
+        let i = _.findIndex(state.checklists, ['id', checklist.id]);
         state.checklists.splice(i,1)
       }
     },
@@ -113,7 +113,7 @@ const mutations = {
     },
     [DELETE_UNFILTERED] (state, item = null) {
         if (item) {
-            let i = _.findIndex(state.unfilteredItems, item.id);
+            let i = _.findIndex(state.unfilteredItems, ['id', item.id]);
             ~ i && state.unfilteredItems.splice(i,1)
         }
         state.unfilteredItems = []
@@ -134,7 +134,7 @@ const mutations = {
         }
     },
     [REPLACE_PENDING_TASK] (state, payload) {
-        let i = _.findIndex(state.checklistItems, payload.old);
+        let i = _.findIndex(state.checklistItems, ['id', payload.old.id]);
         state.checklistItems.splice(i,1,payload.new)
     },
     [RESET_NEW_CHECKLIST_ITEM] (state) {

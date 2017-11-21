@@ -14,12 +14,14 @@
           {{ancestor.name}}
         </a>
       </li>
-      <li v-if="!currentFolderIsAncestor" class="current-folder">
+
+      <li v-if="!hasCurrentView&&!currentFolderIsAncestor" class="current-folder">
           <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
           <i class="fa fa-fw fa-folder-open" aria-hidden="true"></i>
           {{currentFolder.name}}
       </li>
 
+      <!-- this section renders the name of the current view of the Home screen -->
       <li v-if="hasCurrentView" class="current-view">
         <template v-if="currentView=='foldersIndex'">
           <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
@@ -46,16 +48,11 @@ export default {
       'currentFolder',
       'ancestors',
       'checklist',
+      'hasCurrentView',
       'currentView'
     ]),
-    hasCurrentView: function() {
-      if (this.currentView) {
-        return ! _.isEmpty(this.currentView)
-      }
-      return false
-    },
     currentFolderIsAncestor: function() {
-      return this.ancestors && this.currentFolder ? _.findIndex(this.ancestors, this.currentFolder) !== -1 : false;
+      return this.ancestors.length && this.currentFolder ? _.findIndex(this.ancestors, ['id', this.currentFolder.id]) !== -1 : false;
     }
   }
 }

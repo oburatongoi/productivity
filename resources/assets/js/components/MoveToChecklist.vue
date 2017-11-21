@@ -209,7 +209,7 @@ export default {
       this.folders.unshift(folder)
     },
     handleSuccessfulMove: function(response) {
-      if (this.replaceAfterMove) { // if replace-after-move prop is set
+      if (this.replaceAfterMove && response.checklist.list_type == 'ta') { // if replace-after-move prop is set and the target checklist is a task list
 
         if (response.selected && response.selected.checklistItems && response.selected.checklistItems.length) {
           for (var i = 0; i < response.selected.checklistItems.length; i++) {
