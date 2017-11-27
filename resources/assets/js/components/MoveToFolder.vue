@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="move-to-folder">
+  <div class="move-to-folder" id="move-to-folder">
     <div class="move-to-folder-heading">
       <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="selectFolder(currentFolder.folder)" v-if="currentFolder.folder"></i>
       <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFolders()" v-if="currentFolder.id&&!currentFolder.folder"></i>

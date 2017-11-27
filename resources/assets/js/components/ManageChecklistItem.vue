@@ -119,7 +119,7 @@ export default {
       this.saveCurrentEditableItem().then(
         () => this.savingChanges = false
       ).catch(
-        (error) => alert(error)
+        (error) => console.log(error)
       )
     },
     checkItem: function() {

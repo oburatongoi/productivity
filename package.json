@@ -7,19 +7,28 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "test-vue": "mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --require tests/Vue/setup.js tests/**/*.spec.js",
+        "watch-test-vue": "mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --watch --require tests/Vue/setup.js tests/**/*.spec.js"
     },
     "devDependencies": {
         "bootstrap-sass": "^3.3.7",
         "cross-env": "^5.1",
+        "expect": "^21.2.1",
         "jquery": "^3.2",
+        "jsdom": "^11.4.0",
+        "jsdom-global": "^3.0.2",
         "laravel-mix": "^1.2.0",
         "lodash": "^4.17.4",
         "mark.js": "github:julmot/mark.js",
+        "mocha": "^4.0.1",
+        "mocha-webpack": "^1.0.1",
         "node-sass": "^4.6.1",
         "sass-loader": "^6.0.6",
         "sass-resources-loader": "^1.3.1",
         "vue": "^2.4.4",
+        "vue-test-utils": "^1.0.0-beta.5",
+        "webpack": "^3.8.1",
         "webpack-shell-plugin": "^0.5.0"
     },
     "dependencies": {
@@ -30,6 +39,7 @@
         "highlight.js": "^9.10.0",
         "moment": "^2.17.1",
         "quill": "^1.2.3",
+        "sinon": "^4.1.2",
         "v-tooltip": "^1.1.2",
         "vue2-filters": "^0.2.2",
         "vuejs-datepicker": "^0.5.5",
