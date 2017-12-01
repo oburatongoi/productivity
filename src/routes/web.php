@@ -14,8 +14,8 @@ Route::group(['domain' => '{'.(string)(config('productivity.subdomain')).'}.'.(s
         Route::patch('/lists/item/{item}/update', 'ChecklistItemController@update');
         Route::patch('/lists/item/{item}/check', 'ChecklistItemController@check');
 
-        Route::resource('/folders', 'FolderController', ['except' => ['create', 'edit']]);
-        Route::resource('/lists', 'ChecklistController', ['except' => ['create', 'edit']]);
+        Route::resource('/folders', 'FolderController', ['except' => ['create', 'edit', 'destroy']]);
+        Route::resource('/lists', 'ChecklistController', ['except' => ['create', 'edit', 'destroy']]);
 
         Route::post('/fetch-initial-tree', 'SelectionController@fetchInitialTree');
         Route::post('/{folder}/fetch-new-tree', 'SelectionController@fetchNewTree');

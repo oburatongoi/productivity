@@ -112,41 +112,41 @@ class ChecklistController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($account, Request $request, Checklist $checklist)
-    {
-        $this->authorize('modify', $checklist);
-
-        try {
-
-            $checklist->delete();
-
-            return response()->json([
-                'checklist' => $checklist
-            ]);
-
-        } catch (\ModelNotFoundException $e) {
-
-            return $this->handleException($e);
-
-        } catch (\NotFoundHttpException $e) {
-
-            return $this->handleException($e);
-
-        } catch (\AlgoliaException $e) {
-
-            return $this->handleException($e);
-
-        } catch (\Exception $e) {
-
-            return $this->handleException($e);
-
-        }
-
-    }
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function destroy($account, Request $request, Checklist $checklist)
+    // {
+    //     $this->authorize('modify', $checklist);
+    //
+    //     try {
+    //
+    //         $checklist->delete();
+    //
+    //         return response()->json([
+    //             'checklist' => $checklist
+    //         ]);
+    //
+    //     } catch (\ModelNotFoundException $e) {
+    //
+    //         return $this->handleException($e);
+    //
+    //     } catch (\NotFoundHttpException $e) {
+    //
+    //         return $this->handleException($e);
+    //
+    //     } catch (\AlgoliaException $e) {
+    //
+    //         return $this->handleException($e);
+    //
+    //     } catch (\Exception $e) {
+    //
+    //         return $this->handleException($e);
+    //
+    //     }
+    //
+    // }
 }

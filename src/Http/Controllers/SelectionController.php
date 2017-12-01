@@ -258,6 +258,10 @@ class SelectionController extends Controller
           } catch (Exception $e) {
             Bugsnag::notifyException($e);
             $this->handleException($e);
+          } catch (\ModelNotFoundException $e) {
+            $this->handleException($e);
+          } catch (\NotFoundHttpException $e) {
+            $this->handleException($e);
           }
 
           $selected['folders'][] = $child;
@@ -278,6 +282,10 @@ class SelectionController extends Controller
           } catch (Exception $e) {
             Bugsnag::notifyException($e);
             $this->handleException($e);
+          } catch (\ModelNotFoundException $e) {
+            $this->handleException($e);
+          } catch (\NotFoundHttpException $e) {
+            $this->handleException($e);
           }
 
           $selected['checklists'][] = $child;
@@ -297,6 +305,10 @@ class SelectionController extends Controller
             $success = true;
           } catch (Exception $e) {
             Bugsnag::notifyException($e);
+            $this->handleException($e);
+          } catch (\ModelNotFoundException $e) {
+            $this->handleException($e);
+          } catch (\NotFoundHttpException $e) {
             $this->handleException($e);
           }
 

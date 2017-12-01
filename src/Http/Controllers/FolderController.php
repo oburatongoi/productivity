@@ -83,50 +83,39 @@ class FolderController extends Controller
     public function store($account, Request $request)
     {
       $parent = $folder = null;
+      $response = [];
 
-      $exceptions = [];
-
-      if ($request->has('folder.folder_id')) {
-        $parent = Folder::find($request->input('folder.folder_id'));
-      }
+      if ($request->has('folder.folder_id')) $parent = Folder::find($request->input('folder.folder_id'));
 
       try {
 
         $folder = $request->user()->folders()->create($request->input('folder'));
-
-        $parent->appendNode($folder);
+        if($parent) $parent->appendNode($folder);
 
       } catch (AlgoliaException $e) {
+        // $folder = $request->user()->folders()->orderBy('created_at', 'desc')->first();
+        $folder = $request->user()->folders()->latest()->first();
 
-        $exceptions[] = [ 'AlgoliaException' => $e->getMessage() ];
-
-        $folder = $request->user()->folders()->orderBy('created_at', 'desc')->first();
-
-        if ($folder->name == $request->input('folder.name')) {
+        if ($folder->name == $request->input('folder.name')) { // Due to encryption, $folder must be retrieved first
           Folder::withoutSyncingToSearch(function () use  ($parent, $folder) {
-              $parent->appendNode($folder);
-
+              if($parent) $parent->appendNode($folder);
               // To Do: Add to queue so that the change gets indexed
           });
-
         }
+
+        $response['exceptions'][] = $e->getMessage();
+        $response['originalInput'][] = $request->except(['password', 'password_confirmation']);
 
       } catch (Exception $e) {
 
-        $exceptions[] = [ 'Exception' => $e->getMessage() ];
-
-        if ($request->expectsJson()) return response()->json([
-            'input' => $request->except(['password']),
-            'exception' => $e->getMessage()
-        ]);
+        $response['exceptions'][] = $e->getMessage();
+        $response['originalInput'][] = $request->except(['password', 'password_confirmation']);
 
       }
 
-      return response()->json([
-          'folder' => $folder,
-          'exceptions' => $exceptions,
-          'parent' => $parent
-      ]);
+      $response['parent'] = $parent;
+      $response['folder'] = $folder;
+      return response()->json($response);
 
     }
 
@@ -163,56 +152,19 @@ class FolderController extends Controller
      */
     public function update($account, Request $request, Folder $folder)
     {
+      $this->authorize('modify', $folder);
+      $response = [];
 
-        try {
+      try {
+        $folder->update($request->input('folder'));
+      } catch (AlgoliaException $e) {
+        $response['exceptions'][] = $e->getMessage();
+      } catch (Exception $e) {
+        $response['exceptions'][] = $e->getMessage();
+      }
 
-          $this->authorize('modify', $folder);
-
-          $folder->update($request->input('folder'));
-
-          return response()->json([
-              'folder' => $folder
-          ]);
-
-        } catch (Exception $e) {
-
-          $this->handleException($e);
-
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($account, Request $request, Folder $folder)
-    {
-
-        try {
-
-          $this->authorize('modify', $folder);
-
-          $folder->delete();
-
-
-        } catch (AlgoliaException $e) {
-
-          // $folder = $request->user()->folders()->orderBy('deleted_at', 'desc')->first();
-
-          // To Do: Add to queue so that the change gets indexed
-
-        } catch (Exception $e) {
-
-          $this->handleException($e);
-
-        }
-
-        return response()->json([
-            'folder' => $folder
-        ]);
-
+      $response['folder'] = $folder;
+      return response()->json($response);
     }
 
 }
