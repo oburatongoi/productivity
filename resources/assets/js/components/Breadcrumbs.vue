@@ -15,7 +15,7 @@
         </a>
       </li>
 
-      <li v-if="!hasCurrentView&&!currentFolderIsAncestor" class="current-folder">
+      <li v-if="currentFolder&&currentFolder.name&&!hasCurrentView&&!currentFolderIsAncestor" class="current-folder">
           <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
           <i class="fa fa-fw fa-folder-open" aria-hidden="true"></i>
           {{currentFolder.name}}
