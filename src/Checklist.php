@@ -8,6 +8,7 @@ use Oburatongoi\Productivity\Traits\Fakable;
 use Oburatongoi\Productivity\Traits\Enfoldable;
 use Oburatongoi\Productivity\Traits\Encryptable;
 use Laravel\Scout\Searchable;
+use App\Jobs\ReindexParentModels;
 
 class Checklist extends Model
 {
@@ -49,7 +50,11 @@ class Checklist extends Model
     {
         $array = $this->toArray();
 
-        $array = array_only($array, ['id', 'title', 'fake_id', 'folder_id']);
+        $array['items'] = $this->items->map(function ($data) {
+          return array_only($data->toArray(), ['id', 'content', 'comments']);
+        })->toArray();
+
+        $array = array_only($array, ['id', 'title', 'fake_id', 'folder_id', 'items']);
 
         return $array;
     }
@@ -57,6 +62,11 @@ class Checklist extends Model
     public function owner()
     {
      return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+
+    public function folder()
+    {
+     return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id', 'id');
     }
 
     public function items()
@@ -76,6 +86,9 @@ class Checklist extends Model
         });
         static::restoring(function(Checklist $checklist) {
             $checklist->items()->restore();
+        });
+        static::saved(function(Checklist $checklist) {
+          ReindexParentModels::dispatch($checklist);
         });
     }
 

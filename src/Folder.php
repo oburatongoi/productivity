@@ -53,7 +53,15 @@ class Folder extends Model
     {
         $array = $this->toArray();
 
-        $array = array_only($array, ['id', 'name', 'fake_id', 'folder_id']);
+        $array['checklists'] = $this->checklists->map(function ($data) {
+          return array_only($data->toArray(), ['id', 'title']);
+        })->toArray();
+
+        $array['items'] = $this->items->map(function ($data) {
+          return array_only($data->toArray(), ['id', 'content', 'comments']);
+        })->toArray();
+
+        $array = array_only($array, ['id', 'name', 'fake_id', 'folder_id', 'checklists', 'items']);
 
         return $array;
     }

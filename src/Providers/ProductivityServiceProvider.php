@@ -26,6 +26,7 @@ class ProductivityServiceProvider extends ServiceProvider
             __DIR__.'/../config/javascript.php' => config_path('javascript.php'),
             __DIR__.'/../config/scout.php' => config_path('scout.php'),
             __DIR__.'/../database/migrations/' => database_path('migrations'),
+            __DIR__.'/../Jobs' => app_path('Jobs'),
         ], 'productivity');
 
     }
