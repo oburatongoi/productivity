@@ -26,8 +26,6 @@ class ChecklistItemController extends Controller
      */
     public function store($account, Request $request, Checklist $checklist)
     {
-      $reponse = [];
-
       $this->authorize('modify', $checklist);
 
       $this->validate($request, [
@@ -38,22 +36,18 @@ class ChecklistItemController extends Controller
       ]);
 
       try {
-        $item = $checklist->items()->create($request->input('item'));
+        $response['item'] = $checklist->items()->create($request->input('item'));
       } catch (AlgoliaException $e) {
         $response['exceptions'][] = $e->getMessage();
       } catch (Exception $e) {
         $response['exceptions'][] = $e->getMessage();
       }
 
-      $response['item'] = $item;
-
       return response()->json($response);
     }
 
     public function update($account, Request $request, ChecklistItem $item)
     {
-      $reponse = [];
-
       $this->authorize('modify', $item->checklistById());
 
       $this->validate($request, [
@@ -75,7 +69,7 @@ class ChecklistItemController extends Controller
       if ($request->has('item.deadline')) $item->deadline = $request->item['deadline'];
 
       try {
-        $item->save();
+        $response['item'] = $item->save();
       } catch (AlgoliaException $e) {
         $response['exceptions'][] = $e->getMessage();
       } catch (Exception $e) {

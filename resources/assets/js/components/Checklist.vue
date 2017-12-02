@@ -212,7 +212,7 @@ export default {
         .catch(
           () => {
             this.inputIcon = 'fa-times'
-            alert('Error saving List')
+            console.log('Error saving List');
           }
         )
       },

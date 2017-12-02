@@ -30,9 +30,7 @@ class ChecklistController extends Controller
     public function index($account, Request $request)
     {
         JavaScript::put([
-            'checklists' => $this->checklists->forUser($request->user()),
-            // 'model' => 'checklists',
-            'currentView' => 'checklistsIndex'
+            'checklists' => $this->checklists->forUser($request->user())
         ]);
 
         return view('productivity::checklists.index')
@@ -49,17 +47,11 @@ class ChecklistController extends Controller
     {
 
         try {
-
-            $checklist = $request->user()->checklists()->create($request->input('checklist'));
-
-            if ($checklist) return response()->json([
-                'checklist' => $checklist
-            ]);
+          if ($response['checklist'] = $request->user()->checklists()->create($request->input('checklist')))
+          return response()->json($response);
 
         } catch (\Exception $e) {
-
-            return $this->handleException($e);
-
+          return $this->handleException($e);
         }
 
 
@@ -82,15 +74,14 @@ class ChecklistController extends Controller
         }]);
 
         JavaScript::put([
-            'checklist' => $checklist,
-            'ancestors' => $checklist->getFolderTree(),
-            'currentFolder' => $checklist->folderById(),
-            // 'model' => 'list',
+          'checklist' => $checklist,
+          'ancestors' => $checklist->getFolderTree(),
+          'currentFolder' => $checklist->folderById()
         ]);
 
         return view('productivity::checklists.show')
-                ->withChecklist($checklist)
-                ->withTitle($checklist->title . ' - Productivity - ' . config('app.name'));
+            ->withChecklist($checklist)
+            ->withTitle($checklist->title . ' - Productivity - ' . config('app.name'));
     }
 
     /**
@@ -112,41 +103,4 @@ class ChecklistController extends Controller
         ]);
     }
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($account, Request $request, Checklist $checklist)
-    // {
-    //     $this->authorize('modify', $checklist);
-    //
-    //     try {
-    //
-    //         $checklist->delete();
-    //
-    //         return response()->json([
-    //             'checklist' => $checklist
-    //         ]);
-    //
-    //     } catch (\ModelNotFoundException $e) {
-    //
-    //         return $this->handleException($e);
-    //
-    //     } catch (\NotFoundHttpException $e) {
-    //
-    //         return $this->handleException($e);
-    //
-    //     } catch (\AlgoliaException $e) {
-    //
-    //         return $this->handleException($e);
-    //
-    //     } catch (\Exception $e) {
-    //
-    //         return $this->handleException($e);
-    //
-    //     }
-    //
-    // }
 }

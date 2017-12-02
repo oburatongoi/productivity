@@ -1,7 +1,7 @@
 @extends('productivity::layouts.main')
 
 @section('top-nav')
-    <top-nav></top-nav>
+    <top-nav current-view="foldersIndex"></top-nav>
 @endsection
 
 @section('main-menu')

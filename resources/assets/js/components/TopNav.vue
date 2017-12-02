@@ -10,7 +10,7 @@
 
     <create-new v-if="showCreatingNewButtons||creatingNew"></create-new>
 
-    <breadcrumbs v-if="!showCreatingNewButtons"></breadcrumbs>
+    <breadcrumbs v-if="!showCreatingNewButtons" :current-view="currentView"></breadcrumbs>
 
     <action-nav v-if="listingIsActionable"></action-nav>
 
@@ -26,6 +26,7 @@ import ActionNav from './ActionNav.vue'
 
 export default {
   name: 'top-nav',
+  props: ['currentView'],
   computed: {
     ...mapGetters([
       'showCreatingNewButtons',

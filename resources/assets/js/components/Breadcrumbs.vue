@@ -43,16 +43,18 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'breadcrumbs',
+  props: ['currentView'],
   computed: {
     ...mapGetters([
       'currentFolder',
       'ancestors',
-      'checklist',
-      'hasCurrentView',
-      'currentView'
+      'checklist'
     ]),
     currentFolderIsAncestor: function() {
       return this.ancestors.length && this.currentFolder ? _.findIndex(this.ancestors, ['id', this.currentFolder.id]) !== -1 : false;
+    },
+    hasCurrentView: function() {
+      return ! _.isEmpty(this.currentView)
     }
   }
 }

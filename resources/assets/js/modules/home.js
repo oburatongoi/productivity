@@ -14,7 +14,6 @@ const state = {
     creatingNew: undefined,
     showCreatingNewButtons: false,
     ancestors: Productivity.ancestors ? Productivity.ancestors : [],
-    currentView: Productivity.currentView ? Productivity.currentView : undefined,
     selected: {
         folders: [],
         checklists: [],
@@ -279,8 +278,6 @@ const getters = {
     creatingNew: state => state.creatingNew,
     showCreatingNewButtons: state => state.showCreatingNewButtons,
     ancestors: state => state.ancestors,
-    currentView: state => state.currentView,
-    hasCurrentView: state => ! _.isEmpty(state.currentView),
     selected: state => state.selected,
     selectedIsMovable: state => state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length),
     listingIsActionable: state => !state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length)

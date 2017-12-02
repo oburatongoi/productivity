@@ -47,8 +47,7 @@ class FolderController extends Controller
         JavaScript::put([
             'folders' => $this->folders->rootForUser($request->user()),
             'checklists' => $this->checklists->rootForUser($request->user()),
-            'checklistItems' => $this->items->pendingForUser($request->user()),
-            'currentView' => 'home'
+            'checklistItems' => $this->items->pendingForUser($request->user())
         ]);
 
         // return view('productivity::home.index')
@@ -64,10 +63,8 @@ class FolderController extends Controller
     public function index($account, Request $request)
     {
         JavaScript::put([
-            'folders' => $this->folders->rootForUser($request->user()),
-            'checklists' => $this->checklists->rootForUser($request->user()),
-            // 'model' => 'folders',
-            'currentView' => 'foldersIndex'
+          'folders' => $this->folders->rootForUser($request->user()),
+          // 'checklists' => $this->checklists->rootForUser($request->user())
         ]);
 
         return view('productivity::folders.index')
@@ -92,19 +89,19 @@ class FolderController extends Controller
         $folder = $request->user()->folders()->create($request->input('folder'));
         if($parent) $parent->appendNode($folder);
 
-      } catch (AlgoliaException $e) {
-        // $folder = $request->user()->folders()->orderBy('created_at', 'desc')->first();
-        $folder = $request->user()->folders()->latest()->first();
-
-        if ($folder->name == $request->input('folder.name')) { // Due to encryption, $folder must be retrieved first
-          Folder::withoutSyncingToSearch(function () use  ($parent, $folder) {
-              if($parent) $parent->appendNode($folder);
-              // To Do: Add to queue so that the change gets indexed
-          });
-        }
-
-        $response['exceptions'][] = $e->getMessage();
-        $response['originalInput'][] = $request->except(['password', 'password_confirmation']);
+      // } catch (AlgoliaException $e) {
+      //   // $folder = $request->user()->folders()->orderBy('created_at', 'desc')->first();
+      //   $folder = $request->user()->folders()->latest()->first();
+      //
+      //   if ($folder->name == $request->input('folder.name')) { // Due to encryption, $folder must be retrieved first
+      //     Folder::withoutSyncingToSearch(function () use  ($parent, $folder) {
+      //         if($parent) $parent->appendNode($folder);
+      //         // To Do: Add to queue so that the change gets indexed
+      //     });
+      //   }
+      //
+      //   $response['exceptions'][] = $e->getMessage();
+      //   $response['originalInput'][] = $request->except(['password', 'password_confirmation']);
 
       } catch (Exception $e) {
 
@@ -134,8 +131,7 @@ class FolderController extends Controller
             'currentFolder' => $folder->load('folder', 'subfolders'),
             'checklists' => $this->checklists->forFolder($request->user(), $folder),
             'ancestors' => $folder->getAncestors(),
-            'checklistItems' => $this->items->pendingForFolder($folder),
-            // 'model' => 'folder',
+            'checklistItems' => $this->items->pendingForFolder($folder)
         ]);
 
         return view('productivity::folders.show')
