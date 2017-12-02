@@ -156,7 +156,7 @@ class SelectionController extends Controller
         $this->authorize('modify', $child);
 
         try {
-          if($child) $child->moveToChecklist($checklist);
+          if($child) $child->checklist()->associate($checklist)->save();;
           $success = true;
         } catch (AlgoliaException $e) {
           // WIP: Add to some sort of queue to sync to algolia
