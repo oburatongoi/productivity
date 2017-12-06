@@ -162,8 +162,7 @@ const mutations = {
     [UNDO_UPDATE_SORT_ORDER] (state) {
       // Maybe use https://github.com/pinguinjkeke/vue-local-storage or some other way to store/retrieve items
     },
-    [UPDATE_SORT_ORDER] (state, event = null) {
-      if(event) state.checklistItems.splice(event.newIndex, 0, state.checklistItems.splice(event.oldIndex, 1)[0])
+    [UPDATE_SORT_ORDER] (state) {
       for (var i = 0; i < state.checklistItems.length; i++) {
         state.checklistItems[i].sort_order = i
       }
@@ -449,9 +448,9 @@ const actions = {
         resolve()
     })
   },
-  updateSortOrder({ commit, state, dispatch }, event) {
+  updateSortOrder({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {
-      commit(UPDATE_SORT_ORDER, event)
+      commit(UPDATE_SORT_ORDER)
       commit(SORT_CHECKLIST_ITEMS)
       dispatch('saveSortOrder')
         .then( () => resolve() )

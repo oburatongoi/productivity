@@ -1,5 +1,5 @@
 <template>
-  <li v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsSelected}" @click.self="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" draggable>
+  <li v-show="itemIsVisible" class="show-item" :class="{'is-selected':itemIsSelected}" @click.self="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" draggable>
     <span class="checkbox-container">
       <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="type&&type=='ch'||type=='ta'"></i>
       <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'"></i>

@@ -3,6 +3,7 @@
       :class="{'list-unstyled': listType!=='ol'}"
       :element="listType"
       @end="updateSortOrder"
+      :list="checklistItems"
     >
         <checklist-item
           v-if="checklistItems"
