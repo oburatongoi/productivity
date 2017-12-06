@@ -15,15 +15,20 @@ import {
     UPDATE_ITEM_COUNTS,
     REPLACE_PENDING_TASK,
     RESET_NEW_CHECKLIST_ITEM,
-    TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION
+    SORT_CHECKLIST_ITEMS,
+    TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION,
+    UNDO_UPDATE_SORT_ORDER,
+    UPDATE_SORT_ORDER
 } from '../mutations'
+
+import sort from 'fast-sort';
 
 const namespaced = true;
 
 const state = {
     checklists: Productivity.checklists ? Productivity.checklists: [],
     checklist: Productivity.checklist ? Productivity.checklist: [],
-    checklistItems: Productivity.checklistItems ? Productivity.checklistItems: [],
+    checklistItems: Productivity.checklistItems ? Productivity.checklistItems : Productivity.checklist && Productivity.checklist.items ? Productivity.checklist.items : [],
     unfilteredItems: [],
     currentEditableItem: {},
     currentEditableItemIsExpanded: false,
@@ -32,7 +37,8 @@ const state = {
         is_urgent: false,
         is_important: false,
         deadline: null,
-        comments: null
+        comments: null,
+        sort_order: Productivity.checklistItems ? Productivity.checklistItems.length : Productivity.checklist && Productivity.checklist.items ? Productivity.checklist.items.length : 0,
     },
     delistedItems: [],
     filters: {
@@ -143,11 +149,24 @@ const mutations = {
             is_urgent: undefined,
             is_important: undefined,
             deadline: undefined,
-            comments: undefined
+            comments: undefined,
+            sort_order: Productivity.checklistItems ? Productivity.checklistItems.length : Productivity.checklist && Productivity.checklist.items ? Productivity.checklist.items.length : 0,
         }
     },
     [TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION] (state) {
         state.currentEditableItemIsExpanded = ! state.currentEditableItemIsExpanded
+    },
+    [SORT_CHECKLIST_ITEMS] (state) {
+      state.checklistItems = sort(state.checklistItems).asc(i => i.sort_order)
+    },
+    [UNDO_UPDATE_SORT_ORDER] (state) {
+      // Maybe use https://github.com/pinguinjkeke/vue-local-storage or some other way to store/retrieve items
+    },
+    [UPDATE_SORT_ORDER] (state, event = null) {
+      if(event) state.checklistItems.splice(event.newIndex, 0, state.checklistItems.splice(event.oldIndex, 1)[0])
+      for (var i = 0; i < state.checklistItems.length; i++) {
+        state.checklistItems[i].sort_order = i
+      }
     },
 }
 
@@ -169,6 +188,7 @@ const actions = {
                       commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
                       commit(ADD_UNFILTERED, response.data.item)
                       commit(RESET_NEW_CHECKLIST_ITEM)
+                      commit(SORT_CHECKLIST_ITEMS)
                       resolve(response.data.item)
                   } else if (response.data.error) {
                       reject(response.data.error)
@@ -183,6 +203,7 @@ const actions = {
           commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
           commit(ADD_UNFILTERED, response.data.item)
           commit(RESET_NEW_CHECKLIST_ITEM)
+          commit(SORT_CHECKLIST_ITEMS)
           resolve(response.data.item)
       } else if (response.data.error) {
           reject(response.data.error)
@@ -240,6 +261,8 @@ const actions = {
             () => {
               commit(DECREMENT_ITEM_COUNT, checklistItem.checklist_id)
               commit(DELETE_CHECKLIST_ITEM, checklistItem)
+              commit(UPDATE_SORT_ORDER)
+              dispatch('saveSortOrder')
               resolve(checklistItem)
             }
           )
@@ -337,6 +360,29 @@ const actions = {
           .catch( error => reject(error) )
       })
   },
+  saveSortOrder({ commit, state, dispatch }) {
+    return new Promise((resolve, reject) => {
+      axios.patch('/lists/' + state.checklist.fake_id + '/save-sort-order', { checklistItems: state.checklistItems })
+           .then( response => resolve( dispatch('saveSortOrderHandler', response) ))
+           .catch( error => console.log(error) )
+    })
+  },
+  saveSortOrderHandler({ dispatch, commit }, response) {
+    return new Promise((resolve, reject) => {
+      if (response.data.exceptions) {
+        dispatch(
+          'addNotice',
+          { type: 'error',
+            heading: 'Error!',
+            message: 'The list could not be re-sorted at this time.',
+            persist: false
+          },
+          {root: true}
+        )
+      }
+     resolve()
+    })
+  },
   setEditability({commit}, payload) {
       return new Promise((resolve, reject) => {
           payload.editable ? commit(ADD_EDITABLE, payload.item) : commit(DELETE_EDITABLE, payload.item)
@@ -353,6 +399,12 @@ const actions = {
     return new Promise((resolve, reject) => {
         commit(UPDATE_FILTERS, payload)
         commit(DELETE_UNFILTERED)
+        resolve()
+    })
+  },
+  sortChecklistItems: function({commit}){
+    return new Promise((resolve, reject) => {
+        commit(SORT_CHECKLIST_ITEMS)
         resolve()
     })
   },
@@ -395,6 +447,20 @@ const actions = {
     return new Promise((resolve, reject) => {
         commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
         resolve()
+    })
+  },
+  updateSortOrder({ commit, state, dispatch }, event) {
+    return new Promise((resolve, reject) => {
+      commit(UPDATE_SORT_ORDER, event)
+      commit(SORT_CHECKLIST_ITEMS)
+      dispatch('saveSortOrder')
+        .then( () => resolve() )
+        .catch( (error) => {
+          console.log(error);
+          commit(UNDO_UPDATE_SORT_ORDER) //WIP : set initial items
+          reject()
+        })
+
     })
   },
 }

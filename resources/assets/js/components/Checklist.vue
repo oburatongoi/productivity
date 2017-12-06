@@ -31,7 +31,7 @@
 
           <div class="checklist-filters">
             <div class="pull-right">
-              <div class="checked-filter">
+              <div class="checked-filter" v-if="checklist.list_type!=='nu'">
                 <span v-if="!selectingCheckedFilter" @click="toggleFilter('checked')">
                   {{checkedFilterText}}
                   <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -135,11 +135,8 @@ export default {
         'filters'
       ]),
       checklistClass: function() {
-        // if (this.currentEditableItem && this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
-        // if (this.currentEditableItem && this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
-        // return null
         return ! this.currentEditableItem || ! this.currentEditableItem.id ? null :
-               this.currentEditableItemIsExpanded ? 'has-expanded-editable-item' : 'has-editable-item'
+                 this.currentEditableItemIsExpanded ? 'has-expanded-editable-item' : 'has-editable-item'
       },
       checklistIconClass: function() {
       return ! this.checklist.list_type         ? 'fa-list'         :

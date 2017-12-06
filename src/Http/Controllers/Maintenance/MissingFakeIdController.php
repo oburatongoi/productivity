@@ -1,32 +1,26 @@
 <?php
 
-namespace Oburatongoi\Productivity\Http\Controllers;
+namespace Oburatongoi\Productivity\Http\Controllers\Maintenance;
 
 use Illuminate\Http\Request;
 use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
-use Oburatongoi\Productivity\Repositories\Checklists;
-use Oburatongoi\Productivity\Repositories\Folders;
+use Oburatongoi\Productivity\Checklist;
+use Oburatongoi\Productivity\Folder;
+
 
 
 class MissingFakeIdController extends Controller
 {
-
-    protected $checklists;
-    protected $folders;
-
-    public function __construct(Checklists $checklists, Folders $folders)
+    public function __construct()
     {
         $this->middleware('web');
         $this->middleware('auth');
-
-        $this->checklists = $checklists;
-        $this->folders = $folders;
     }
 
     public function addMissingFakeIds()
     {
-        $checklists = $this->checklists->missingFakeId();
-        $folders = $this->folders->missingFakeId();
+        $checklists = $this->missingFakeId('checklist');
+        $folders = $this->missingFakeId('folder');
 
         if ( $checklists->count() ) {
             foreach ($checklists as $checklist) {
@@ -48,6 +42,20 @@ class MissingFakeIdController extends Controller
         return response()->json([
             'Message' => 'There were no models missing fake_id'
         ]);
+    }
+
+
+    public function missingFakeId($model)
+    {
+        switch ($model) {
+          case 'folder':
+            return Folder::whereNull('fake_id')->get();
+            break;
+          case 'checklist':
+            return Checklist::whereNull('fake_id')->get();
+            break;
+        }
+
     }
 
 }

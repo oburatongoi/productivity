@@ -4,6 +4,7 @@ namespace Oburatongoi\Productivity\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
+use Oburatongoi\Productivity\Repositories\Checklists;
 use Oburatongoi\Productivity\Checklist;
 use Oburatongoi\Productivity\ChecklistItem;
 use Carbon\Carbon;
@@ -12,11 +13,13 @@ use Bugsnag, Exception;
 
 class ChecklistItemController extends Controller
 {
+  protected $checklists;
 
-    public function __construct()
+    public function __construct(Checklists $checklists)
     {
         $this->middleware('web');
         $this->middleware('auth');
+        $this->checklists = $checklists;
     }
     /**
      * Store a newly created resource in storage.
@@ -33,6 +36,7 @@ class ChecklistItemController extends Controller
           'item.is_urgent' => 'boolean',
           'item.is_important' => 'boolean',
           'item.deadline' => 'nullable|date',
+          'item.sort_order' => 'nullable|integer',
       ]);
 
       try {
@@ -56,6 +60,7 @@ class ChecklistItemController extends Controller
           'item.is_important' => 'boolean',
           'item.deadline' => 'nullable|date',
           'item.checked_at' => 'nullable|date',
+          'item.sort_order' => 'nullable|integer',
       ]);
 
       if ($request->input('item.checked_at')) {
@@ -67,6 +72,7 @@ class ChecklistItemController extends Controller
       if ($request->has('item.is_urgent')) $item->is_urgent = $request->item['is_urgent'];
       if ($request->has('item.is_important')) $item->is_important = $request->item['is_important'];
       if ($request->has('item.deadline')) $item->deadline = $request->item['deadline'];
+      if ($request->has('item.sort_order')) $item->sort_order = $request->item['sort_order'];
 
       try {
         $response['item'] = $item->save();
@@ -79,5 +85,13 @@ class ChecklistItemController extends Controller
       $response['item'] = $item;
 
       return response()->json($response);
+    }
+
+    public function saveSortOrder($account, Request $request, Checklist $checklist)
+    {
+      $this->authorize('modify', $checklist);
+
+      return $this->checklists->setItemSortOrder($request, $checklist);
+      
     }
 }

@@ -18,7 +18,7 @@ class ChecklistItem extends Model
     protected $dates = ['published_at', 'checked_at', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $fillable = [
-        'checklist_id', 'fake_id', 'content', 'comments', 'deadline', 'is_urgent', 'is_important', 'checked_at', 'created_at', 'updated_at', 'deleted_at',
+        'checklist_id', 'fake_id', 'content', 'comments', 'deadline', 'sort_order', 'is_urgent', 'is_important', 'checked_at', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     protected $casts = [

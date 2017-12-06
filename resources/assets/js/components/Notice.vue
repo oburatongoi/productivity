@@ -72,7 +72,7 @@ export default {
     } // &.success
 
     &.error {
-      background: $list-background;
+      background: $brand-warning;
       color: white;
     } // &.error
 

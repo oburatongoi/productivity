@@ -4,6 +4,7 @@ namespace Oburatongoi\Productivity\Repositories\Decorators;
 
 
 use App\User;
+use Illuminate\Http\Request;
 use Oburatongoi\Productivity\Folder;
 use Oburatongoi\Productivity\Checklist;
 use Oburatongoi\Productivity\Repositories\Checklists;
@@ -39,6 +40,11 @@ class CacheableChecklists implements ChecklistsInterface {
         // return Cache::remember('user.'.$user->id.'.folder.'.$folder->id.'.checklists', 60 * 60, function() use ($user, $folder) {
             return $this->checklists->forFolder($user, $folder);
         // });
+    }
+
+    public function setItemSortOrder(Request $request, Checklist $checklist)
+    {
+            return $this->checklists->setItemSortOrder($request, $checklist);
     }
 
 }

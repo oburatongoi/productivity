@@ -1,8 +1,9 @@
 <template>
-  <div v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsSelected}" @click.self="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})">
+  <li v-if="itemIsVisible" class="show-item" :class="{'is-selected':itemIsSelected}" @click.self="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" draggable>
     <span class="checkbox-container">
       <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="type&&type=='ch'||type=='ta'"></i>
-      <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'||type=='nu'"></i>
+      <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'"></i>
+      <span class="ol" aria-hidden="true" v-if="type&&type=='nu'">{{item.sort_order + 1}}.</span>
     </span>
 
     <p class="show-item-content" @click="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" @dblclick="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})">
@@ -40,7 +41,7 @@
         <i class="fa fa-fw fa-list" aria-hidden="true"></i> {{item.checklist.title}}
       </span>
     </div>
-  </div>
+  </li>
 </template>
 
 <script>
@@ -102,7 +103,7 @@ export default {
         return this.delistedItems.indexOf(this.item.id) !== -1
       },
       itemPassesCheckedFilter: function() {
-        if (this.filters.checked == 'all') {
+        if (this.type == 'nu' || this.type == 'bu' || this.filters.checked == 'all') {
           return true
         }
         if (this.filters.checked == 'checked') {
@@ -158,3 +159,139 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+.show-item {
+    @include desktop-overflow-y;
+    border-bottom: 1px solid lighten($base-border-color, 10%);
+    font-family: $paragraph-font-family-sans-serif;
+    &.is-selected,
+    &:hover {
+        background: lighten($body-bg, 1%);
+
+        .fa-angle-down.toggle {
+            color: $brand-primary;
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
+    }
+
+    &.is-selected {
+        border: 1px solid $brand-primary;
+        border-radius: 2px;
+        padding-left: 10px;
+        // color: black;
+        .show-item-content {
+            color: $brand-primary;
+        }
+    }
+
+    p, i {
+        display: inline-block;
+        margin:0;
+        vertical-align: middle;
+    }
+    p {
+        cursor: pointer;
+        @media(min-width:992px){
+            white-space: nowrap;
+            @include desktop-overflow-y;
+            text-overflow: ellipsis;
+        }
+    }
+    i {
+        font-size: 1.8em;
+        line-height: 1em;
+        margin: 0;
+        padding: 0;
+    }
+
+    .show-item-content {
+        width: 60%;
+        @media(min-width:768px){
+            width: 75%;
+            padding: 5px 0;
+            font-size: 1em;
+            line-height: 0.7em;
+        }
+        @media(min-width:992px){
+            width: 75%;
+            padding: 7px 0;
+            white-space: nowrap;
+            @include desktop-overflow-y;
+            text-overflow: ellipsis;
+        }
+        @media(min-width:1200px){
+            width: 80%;
+            padding: 10px 0;
+            font-size: 1.1em;
+            line-height: 1em;
+        }
+    }
+
+    .preview-deadline,
+    .toggle {
+        float: right;
+        margin-top: 5px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    .toggle {
+        font-size: 16px;
+        padding: 7px;
+        &:hover {
+            color: $brand-primary;
+        }
+    }
+    .preview-deadline {
+        font-size: 0.75em;
+        margin-top: 10px;
+        color: darken($base-border-color, 20%);
+        .fa {
+            font-size: 1.2em;
+        }
+        span {
+            margin-right: 5px;
+        }
+    }
+
+}
+
+.checkbox-container {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+
+    .fa {
+        cursor: pointer;
+    }
+
+    .fa-circle-thin {
+        color: $input-border;
+        font-size: 1.5em;
+    }
+
+    .fa-circle-o-notch {
+        color: $input-border;
+        font-size: 1em;
+    }
+
+    .ol,
+    .fa-check {
+        color: $brand-primary;
+        font-size: 1em;
+    }
+
+    .ol {
+        font-weight: bold;
+    }
+
+    .fa-circle {
+        color: $brand-primary;
+        font-size: 0.7em;
+    }
+}
+</style>
