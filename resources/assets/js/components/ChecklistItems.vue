@@ -9,7 +9,7 @@
           v-if="checklistItems"
           v-for="item in checklistItems"
           :item="item"
-          :type="checklist.list_type"
+          :list-type="checklist.list_type"
           :key="item.id"
         ></checklist-item>
     </draggable>

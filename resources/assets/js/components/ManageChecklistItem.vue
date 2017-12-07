@@ -16,9 +16,9 @@
           <div class="edit-content">
             <h4 class="manage-checklist-item-content-textarea">
               <span class="checkbox-container">
-                <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="type&&type=='ch'||type=='ta'"></i>
-                <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'"></i>
-                <span class="ol-number" aria-hidden="true" v-if="type&&type=='nu'">{{currentEditableItem.sort_order + 1}}.</span>
+                <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"></i>
+                <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"></i>
+                <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{currentEditableItem.sort_order + 1}}.</span>
               </span>
 
               <textarea
@@ -94,7 +94,12 @@ import autosize from 'autosize';
 
 export default {
   name: 'manage-checklist-item',
-  props: ['type'],
+  props: {
+    listType: {
+      type: String,
+      default: 'undefined'
+    }
+  },
   data () {
     return {
       savingChanges: false,

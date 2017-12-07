@@ -1,9 +1,9 @@
 <template>
   <li v-show="itemIsVisible" class="show-item" :class="{'is-selected':itemIsSelected}" @click.self="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" draggable>
     <span class="checkbox-container">
-      <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="type&&type=='ch'||type=='ta'"></i>
-      <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'"></i>
-      <span class="ol-number" aria-hidden="true" v-if="type&&type=='nu'">{{item.sort_order + 1}}.</span>
+      <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"></i>
+      <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"></i>
+      <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{item.sort_order + 1}}.</span>
     </span>
 
     <p class="show-item-content" @click="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" @dblclick="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})">
@@ -54,7 +54,7 @@ export default {
       item: {
         type: Object
       },
-      type: {
+      listType: {
         type: String,
         default: 'undefined'
       }
@@ -103,7 +103,7 @@ export default {
         return this.delistedItems.indexOf(this.item.id) !== -1
       },
       itemPassesCheckedFilter: function() {
-        if (this.type == 'nu' || this.type == 'bu' || this.filters.checked == 'all') {
+        if (this.listType == 'nu' || this.listType == 'bu' || this.filters.checked == 'all') {
           return true
         }
         if (this.filters.checked == 'checked') {
