@@ -91,7 +91,7 @@
       </div>
     </div>
 
-    <manage-checklist-item v-if="!selectedIsMovable && currentEditableItem.id"></manage-checklist-item>
+    <manage-checklist-item v-if="!selectedIsMovable && currentEditableItem.id" :type="checklist.list_type"></manage-checklist-item>
 
     <move-to-checklist v-if="selectedIsMovable"></move-to-checklist>
   </div>

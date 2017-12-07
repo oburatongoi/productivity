@@ -16,7 +16,9 @@
           <div class="edit-content">
             <h4 class="manage-checklist-item-content-textarea">
               <span class="checkbox-container">
-                <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem"></i>
+                <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="type&&type=='ch'||type=='ta'"></i>
+                <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'"></i>
+                <span class="ol-number" aria-hidden="true" v-if="type&&type=='nu'">{{currentEditableItem.sort_order + 1}}.</span>
               </span>
 
               <textarea
@@ -92,6 +94,7 @@ import autosize from 'autosize';
 
 export default {
   name: 'manage-checklist-item',
+  props: ['type'],
   data () {
     return {
       savingChanges: false,
@@ -167,5 +170,14 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+.ol-number,
+.fa-check {
+    color: $brand-primary;
+    font-size: 1em;
+}
+
+.ol-number {
+    font-weight: bold;
+}
 </style>

@@ -3,7 +3,7 @@
     <span class="checkbox-container">
       <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="type&&type=='ch'||type=='ta'"></i>
       <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="type&&type=='bu'"></i>
-      <span class="ol" aria-hidden="true" v-if="type&&type=='nu'">{{item.sort_order + 1}}.</span>
+      <span class="ol-number" aria-hidden="true" v-if="type&&type=='nu'">{{item.sort_order + 1}}.</span>
     </span>
 
     <p class="show-item-content" @click="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" @dblclick="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})">
@@ -279,13 +279,13 @@ export default {
         font-size: 1em;
     }
 
-    .ol,
+    .ol-number,
     .fa-check {
         color: $brand-primary;
         font-size: 1em;
     }
 
-    .ol {
+    .ol-number {
         font-weight: bold;
     }
 
