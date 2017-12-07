@@ -209,7 +209,10 @@ export default {
       this.folders.unshift(folder)
     },
     handleSuccessfulMove: function(response) {
-      if (this.replaceAfterMove && response.checklist.list_type == 'ta') { // if replace-after-move prop is set and the target checklist is a task list
+      if (
+        this.replaceAfterMove // if replace-after-move prop is set to true
+        && response.checklist.list_type == 'ta' // and the target checklist is a task list
+      ) {
 
         if (response.selected && response.selected.checklistItems && response.selected.checklistItems.length) {
           for (var i = 0; i < response.selected.checklistItems.length; i++) {
@@ -224,11 +227,11 @@ export default {
 
         if (this.selected.checklistItems && this.selected.checklistItems.length) {
           for (var i = 0; i < this.selected.checklistItems.length; i++) {
-            this.delistChecklistItem(this.selected.checklistItems[i]).then(
-              (checklistItem) => this.deselect( {model: 'checklist-item', listing: checklistItem })
-            ).catch(
-              (response) => {console.log('error delisting item');console.log(response);}
-            )
+            this.delistChecklistItem(this.selected.checklistItems[i])
+                .then(
+                  (checklistItem) => this.deselect( {model: 'checklist-item', listing: checklistItem }) )
+                .catch(
+                  (response) => {console.log('error delisting item');console.log(response);} )
           }
         }
 
