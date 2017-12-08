@@ -92,6 +92,8 @@ import ManageItemFormButtons from './ManageItemFormButtons.vue'
 
 import autosize from 'autosize';
 
+const { observe } = require('dirty-object'); // used to check if object has ben modified before saving
+
 export default {
   name: 'manage-checklist-item',
   props: {
@@ -123,12 +125,17 @@ export default {
       this.saveChanges()
     }, 1000),
     saveChanges: function() {
-      this.savingChanges = true
-      this.saveCurrentEditableItem().then(
-        () => this.savingChanges = false
-      ).catch(
-        (error) => console.log(error)
-      )
+      if(this.currentEditableItem.dirty) {
+        this.savingChanges = true
+        this.saveCurrentEditableItem().then(
+          () => {
+            this.savingChanges = false
+            observe(this.currentEditableItem)
+          }
+        ).catch(
+          (error) => console.log(error)
+        )
+      }
     },
     checkItem: function() {
       this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
@@ -170,6 +177,8 @@ export default {
     this.$nextTick(function() {
       autosize(document.querySelector('.content-textarea'));
       autosize(document.querySelector('.comments-textarea'));
+      observe(this.currentEditableItem);
+      console.log(this.currentEditableItem.dirty);
     })
   },
 }

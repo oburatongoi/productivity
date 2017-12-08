@@ -1,9 +1,9 @@
 <template lang="html">
-  <div class="edit-checklist">
+  <div class="edit-checklist" @change="saveChanges">
     <h4>{{ listTypeTitle }}</h4>
     <div class="list-type-option">
       <div class="list-type-option-inner">
-        <input type="radio" id="ch" value="ch" v-model="checklist.list_type" @click="saveChanges">
+        <input type="radio" id="ch" value="ch" v-model="checklist.list_type">
         <span>
           <label for="ch">
             <i class="fa fa-fw fa-list" aria-hidden="true"></i>
@@ -13,7 +13,7 @@
         </span>
       </div>
       <div class="list-type-option-inner">
-        <input type="radio" id="ta" value="ta" v-model="checklist.list_type" @click="saveChanges">
+        <input type="radio" id="ta" value="ta" v-model="checklist.list_type">
         <span>
           <label for="ta">
             <i class="fa fa-fw fa-check-square" aria-hidden="true"></i>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="list-type-option">
-      <input type="radio" id="bu" value="bu" v-model="checklist.list_type" @click="saveChanges">
+      <input type="radio" id="bu" value="bu" v-model="checklist.list_type">
       <span>
         <label for="bu">
           <i class="fa fa-fw fa-list-ul" aria-hidden="true"></i>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="list-type-option">
-      <input type="radio" id="nu" value="nu" v-model="checklist.list_type" @click="saveChanges">
+      <input type="radio" id="nu" value="nu" v-model="checklist.list_type">
       <span>
         <label for="nu">
           <i class="fa fa-fw fa-list-ol" aria-hidden="true"></i>
@@ -56,20 +56,22 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+
+const { observe } = require('dirty-object'); // used to check if object has ben modified before saving
 
 export default {
   name: 'edit-checklist',
-  data () {
-    return {
-      unsavedChanges: false,
-      isSaving: false
+  props: {
+    checklist: {
+      type: Object,
+      required: true
+    },
+    isSaving: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
-    ...mapGetters([
-      'checklist'
-    ]),
     saveButtonIcon: function() {
       return this.isSaving ? 'fa-spinner fa-spin' : 'fa-floppy-o'
     },
@@ -78,14 +80,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'saveChecklist'
-    ]),
     saveChanges: function() {
-      this.unsavedChanges = this.isSaving = true
-      this.saveChecklist(this.checklist)
-          .then( (response) => this.unsavedChanges = this.isSaving = false )
-          .catch( () => alert('Error saving List') )
+      this.$emit('saveChanges');
     },
     close: function() {
       this.$emit('close');

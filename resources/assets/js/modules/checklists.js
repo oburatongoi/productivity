@@ -136,7 +136,7 @@ const mutations = {
     },
     [UPDATE_CHECKLIST] (state, updatedChecklist) {
         if (updatedChecklist && updatedChecklist.title) {
-            state.checklist.title = updatedChecklist.title
+            state.checklist = updatedChecklist
         }
     },
     [REPLACE_PENDING_TASK] (state, payload) {
