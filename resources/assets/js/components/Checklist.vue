@@ -87,7 +87,13 @@
 
       <div class="checklist-index-panel panel-body">
           <checklist-items v-if="!isEditable"></checklist-items>
-          <edit-checklist v-if="isEditable" @close="saveAndClose"></edit-checklist>
+          <edit-checklist
+            v-if="isEditable"
+            @close="saveAndClose"
+            @saveChanges="saveChanges"
+            :checklist="checklist"
+            :is-saving="isSaving"
+          ></edit-checklist>
       </div>
     </div>
 
@@ -99,6 +105,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+
+const { observe } = require('dirty-object'); // used to check if object has been modified before saving
 
 import ChecklistItems from './ChecklistItems.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
@@ -112,6 +120,7 @@ export default {
     data () {
       return {
         isEditable: false,
+        isSaving: false,
         inputIcon: 'fa-times',
         unsavedChanges: false,
         selectingCheckedFilter: false,
@@ -188,7 +197,7 @@ export default {
         'setFilters'
       ]),
       saveAndClose: function() {
-        if (this.unsavedChanges == true) {
+        if (this.checklist.dirty || this.unsavedChanges == true) {
           this.saveChanges()
         }
         this.toggleEditability(false)
@@ -198,20 +207,24 @@ export default {
         this.saveChanges()
       }, 1000),
       saveChanges: function() {
-        this.inputIcon = 'fa-spin fa-circle-o-notch'
-        this.saveChecklist(this.checklist)
-        .then(
-          (checklist) => {
-            this.inputIcon = 'fa-times'
-            this.unsavedChanges = false
-          }
-        )
-        .catch(
-          () => {
-            this.inputIcon = 'fa-times'
-            console.log('Error saving List');
-          }
-        )
+        if(this.checklist.dirty) {
+          this.inputIcon = 'fa-spin fa-circle-o-notch'
+          this.isSaving = true
+          this.saveChecklist(this.checklist)
+          .then(
+            (checklist) => {
+              this.inputIcon = 'fa-times'
+              this.isSaving = this.unsavedChanges = false
+              observe(this.checklist)
+            }
+          )
+          .catch(
+            () => {
+              this.inputIcon = 'fa-times'
+              console.log('Error saving List');
+            }
+          )
+        }
       },
       setCheckedFilter: function(filter){
         this.setFilters({type: 'checked', value: filter})
@@ -243,10 +256,13 @@ export default {
         }
       },
     },
-    created: function() {
-      if (!this.checklist.list_type) {
-        return this.toggleEditability(true)
-      }
+    mounted: function() {
+      this.$nextTick(function () {
+        observe(this.checklist)
+        if (!this.checklist.list_type) {
+          return this.toggleEditability(true)
+        }
+      })
     }
 }
 </script>
