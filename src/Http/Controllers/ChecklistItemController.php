@@ -64,7 +64,7 @@ class ChecklistItemController extends Controller
       ]);
 
       if ($request->input('item.checked_at')) {
-          $item->checked_at = Carbon::createFromFormat('Y-m-d\TH:i:sP',$request->item['checked_at'])->toDateTimeString();
+          $item->checked_at = Carbon::parse($request->item['checked_at'])->toDateTimeString();
       } else $item->checked_at = null;
 
       if ($request->has('item.content')) $item->content = $request->item['content'];
@@ -92,6 +92,6 @@ class ChecklistItemController extends Controller
       $this->authorize('modify', $checklist);
 
       return $this->checklists->setItemSortOrder($request, $checklist);
-      
+
     }
 }
