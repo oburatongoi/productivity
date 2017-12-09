@@ -10,8 +10,6 @@ import {
     DELETE_CHECKLIST_ITEM,
     DELIST_CHECKLIST_ITEM,
     INCREMENT_ITEM_COUNT,
-    OBSERVE_CHECKLIST,
-    OBSERVE_CURRENT_EDITABLE_ITEM,
     UPDATE_FILTERS,
     UPDATE_CHECKLIST,
     UPDATE_ITEM_COUNTS,
@@ -29,8 +27,6 @@ import {
 } from '../mutations'
 
 import sort from 'fast-sort';
-
-const { observe } = require('dirty-object'); // used to check if object has been modified before saving
 
 const namespaced = true;
 
@@ -122,16 +118,6 @@ const mutations = {
       ) {
         let i = _.findIndex(state.checklists, ['id', checklistID]);
         state.checklists[i].items_count = ++ state.checklists[i].items_count
-      }
-    },
-    [OBSERVE_CHECKLIST] (state) {
-        // observe(state.checklist)
-    },
-    [OBSERVE_CURRENT_EDITABLE_ITEM] (state) {
-      if (state.currentEditableItemID) {
-        let i = _.findIndex(state.checklistItems, ['id', state.currentEditableItemID]);
-        observe(state.checklistItems[i])
-        console.log('simulating editable item observed');
       }
     },
     [UPDATE_FILTERS] (state, payload) {
@@ -320,18 +306,6 @@ const actions = {
         resolve(checklistItem)
     })
   },
-  observeChecklist({ commit }) {
-    return new Promise((resolve, reject) => {
-        commit(OBSERVE_CHECKLIST)
-        resolve()
-    })
-  },
-  observeCurrentEditableItem({ commit }) {
-    return new Promise((resolve, reject) => {
-        commit(OBSERVE_CURRENT_EDITABLE_ITEM)
-        resolve()
-    })
-  },
   removeCurrentlyEditable({commit}) {
       return new Promise((resolve, reject) => {
           if (state.currentEditableItemIsExpanded) {
@@ -406,17 +380,8 @@ const actions = {
         if (response.data.tokenMismatch) {
           Vue.handleTokenMismatch(response.data)
              .catch( error => reject(error) )
-             .then( response => {
-               dispatch('observeCurrentEditableItem')
-                .then( () => resolve() )
-                .catch( () => reject() )
-              resolve()
-             })
-
+             .then( response => resolve() )
         } else if (response.data.item) {
-            dispatch('observeCurrentEditableItem')
-             .then( () => resolve() )
-             .catch( () => reject() )
             resolve()
         } else {
           reject(response)

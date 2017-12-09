@@ -7387,15 +7387,15 @@ module.exports = function (it) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return CLEAR_SELECTED; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return SET_CREATING_NEW; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "B", function() { return TOGGLE_CREATING_NEW_BUTTONS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "G", function() { return TOGGLE_DELETABLE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return TOGGLE_MOVABLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return SET_CREATING_NEW; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return TOGGLE_CREATING_NEW_BUTTONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return TOGGLE_DELETABLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return TOGGLE_MOVABLE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return ADD_TO_SELECTED; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return REMOVE_FROM_SELECTED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return REMOVE_FROM_SELECTED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ADD_FOLDER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return DELETE_FOLDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "M", function() { return UPDATE_FOLDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "K", function() { return UPDATE_FOLDER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ADD_CHECKLIST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ADD_CURRENTLY_EDITABLE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return ADD_ITEM_TO_CHECKLIST; });
@@ -7407,22 +7407,20 @@ module.exports = function (it) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return DELETE_UNFILTERED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return DELIST_CHECKLIST_ITEM; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return INCREMENT_ITEM_COUNT; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return OBSERVE_CHECKLIST; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return OBSERVE_CURRENT_EDITABLE_ITEM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return REPLACE_PENDING_TASK; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return RESET_NEW_CHECKLIST_ITEM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return SET_CURRENT_EDITABLE_ITEM_COMMENTS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return SET_CURRENT_EDITABLE_ITEM_DEADLINE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return SORT_CHECKLIST_ITEMS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return UPDATE_CHECKLIST; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return UPDATE_FILTERS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "O", function() { return UPDATE_ITEM_COUNTS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return UNDO_UPDATE_SORT_ORDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "R", function() { return UPDATE_SORT_ORDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return REPLACE_PENDING_TASK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return RESET_NEW_CHECKLIST_ITEM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return SET_CURRENT_EDITABLE_ITEM_COMMENTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return SET_CURRENT_EDITABLE_ITEM_DEADLINE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return SORT_CHECKLIST_ITEMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "B", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return UPDATE_CHECKLIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return UPDATE_FILTERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "M", function() { return UPDATE_ITEM_COUNTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "G", function() { return UNDO_UPDATE_SORT_ORDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P", function() { return UPDATE_SORT_ORDER; });
 /* unused harmony export ADD_NOTE */
 /* unused harmony export DELETE_NOTE */
 /* unused harmony export UPDATE_NOTE */
@@ -7430,10 +7428,10 @@ module.exports = function (it) {
 /* unused harmony export DELETE_GOAL */
 /* unused harmony export UPDATE_GOAL */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return CLEAR_QUERY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P", function() { return UPDATE_QUERY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Q", function() { return UPDATE_RESULTS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "K", function() { return UPDATE_ERROR_MESSAGE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "N", function() { return UPDATE_IS_SEARCHING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "N", function() { return UPDATE_QUERY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "O", function() { return UPDATE_RESULTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return UPDATE_ERROR_MESSAGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return UPDATE_IS_SEARCHING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return ADD_NOTICE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return DELETE_NOTICE; });
 var CLEAR_SELECTED = 'home/CLEAR_SELECTED';
@@ -7459,8 +7457,6 @@ var DELETE_CHECKLIST_ITEM = 'checklists/DELETE_CHECKLIST_ITEM';
 var DELETE_UNFILTERED = 'checklists/DELETE_UNFILTERED';
 var DELIST_CHECKLIST_ITEM = 'checklists/DELIST_CHECKLIST_ITEM';
 var INCREMENT_ITEM_COUNT = 'checklists/INCREMENT_ITEM_COUNT';
-var OBSERVE_CHECKLIST = 'checklists/OBSERVE_CHECKLIST';
-var OBSERVE_CURRENT_EDITABLE_ITEM = 'checklists/OBSERVE_CURRENT_EDITABLE_ITEM';
 var REPLACE_PENDING_TASK = 'checklists/REPLACE_PENDING_TASK';
 var RESET_NEW_CHECKLIST_ITEM = 'checklists/RESET_NEW_CHECKLIST_ITEM';
 var SET_CURRENT_EDITABLE_ITEM_COMMENTS = 'checklists/SET_CURRENT_EDITABLE_ITEM_COMMENTS';
@@ -32778,121 +32774,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 266 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _require = __webpack_require__(609),
-    isValid = _require.isValid,
-    isObject = _require.isObject,
-    isCallable = _require.isCallable,
-    smartString = _require.smartString;
-
-var defaultConfig = {
-  date: false,
-  name: 'dirty',
-  setLogging: false,
-  getLogging: false
-};
-
-/// configuration
-var config = Object.assign({}, defaultConfig);
-
-var configure = exports.configure = function configure() {
-  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultConfig;
-
-  config = Object.assign({}, config, defaultConfig, options);
-};
-
-/// library
-var __generate__ = function __generate__(clz, key, val) {
-  var _f = val;
-  return {
-    __proto__: null,
-    enumerable: true,
-    configurable: true,
-    get: function get() {
-      if (config.getLogging) {
-        console.log('getting prop ' + key);
-      }
-      return _f;
-    },
-    set: function set(v) {
-      clz[config.name] = true;
-
-      if (config.date) {
-        clz.last_modified = Date.now();
-      }
-
-      if (config.setLogging) {
-        console.log('setting prop ' + key + ' with ' + smartString(v));
-      }
-      _f = v;
-    }
-  };
-};
-
-var observe_child = function observe_child() {
-  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var root = arguments[1];
-
-  if (!root) root = obj;
-  var keys = Object.keys(obj);
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var key = _step.value;
-
-      if ('' + key === config.name) continue;
-
-      // copy current value
-      var seed = obj[key];
-
-      // ignore functions
-      if (isCallable(seed)) {
-        continue;
-      }
-
-      // delete existing value
-      delete obj[key];
-
-      Object.defineProperty(obj, key, __generate__(root, key, seed));
-      if (isValid(seed) && isObject(seed)) {
-        observe_child(seed, root);
-      }
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
-  }
-};
-
-var observe = exports.observe = function observe(root) {
-  root[config.name] = false;
-  observe_child(root);
-  return root;
-};
-
-/***/ }),
+/* 266 */,
 /* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -74354,7 +74236,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     };
   },
 
-  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['clearSelected', 'observeCurrentEditableItem', 'toggleCurrentEditableItemCheckMark', 'toggleCurrentEditableItemExpansion', 'saveCurrentEditableItem', 'removeCurrentlyEditable', 'toggleMovable']), {
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['clearSelected', 'toggleCurrentEditableItemCheckMark', 'toggleCurrentEditableItemExpansion', 'saveCurrentEditableItem', 'removeCurrentlyEditable', 'toggleMovable']), {
     saveAndClose: function saveAndClose() {
       this.saveChanges();
       this.removeCurrentlyEditable();
@@ -74366,14 +74248,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     saveChanges: function saveChanges() {
       var _this = this;
 
-      if (this.currentEditableItem.dirty) {
-        this.savingChanges = true;
-        this.saveCurrentEditableItem().then(function () {
-          return _this.savingChanges = false;
-        }).catch(function (error) {
-          return console.log(error);
-        });
-      }
+      this.savingChanges = true;
+      this.saveCurrentEditableItem().then(function () {
+        return _this.savingChanges = false;
+      }).catch(function (error) {
+        return console.log(error);
+      });
     },
     checkItem: function checkItem() {
       var _this2 = this;
@@ -74406,12 +74286,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     this.$nextTick(function () {
       __WEBPACK_IMPORTED_MODULE_4_autosize___default()(document.querySelector('.content-textarea'));
       __WEBPACK_IMPORTED_MODULE_4_autosize___default()(document.querySelector('.comments-textarea'));
-      this.observeCurrentEditableItem();
     });
+  },
+  updated: function updated() {
+    console.log('data has been updated');
   }
-  // updated: function() {
-  //   this.observeCurrentEditableItem()
-  // },
 });
 
 /***/ }),
@@ -92394,9 +92273,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       return text;
     }
   }),
-  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['observeChecklist', 'saveChecklist', 'setFilters']), {
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['saveChecklist', 'setFilters']), {
     saveAndClose: function saveAndClose() {
-      if (this.checklist.dirty || this.unsavedChanges == true) {
+      if (this.unsavedChanges == true) {
         this.saveChanges();
       }
       this.toggleEditability(false);
@@ -92408,18 +92287,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     saveChanges: function saveChanges() {
       var _this = this;
 
-      if (this.checklist.dirty) {
-        this.inputIcon = 'fa-spin fa-circle-o-notch';
-        this.isSaving = true;
-        this.saveChecklist(this.checklist).then(function (checklist) {
-          _this.inputIcon = 'fa-times';
-          _this.isSaving = _this.unsavedChanges = false;
-          _this.observeChecklist();
-        }).catch(function () {
-          _this.inputIcon = 'fa-times';
-          console.log('Error saving List');
-        });
-      }
+      this.inputIcon = 'fa-spin fa-circle-o-notch';
+      this.isSaving = true;
+      this.saveChecklist(this.checklist).then(function (checklist) {
+        _this.inputIcon = 'fa-times';
+        _this.isSaving = _this.unsavedChanges = false;
+      }).catch(function () {
+        _this.inputIcon = 'fa-times';
+        console.log('Error saving List');
+      });
     },
     setCheckedFilter: function setCheckedFilter(filter) {
       this.setFilters({ type: 'checked', value: filter });
@@ -92458,7 +92334,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
   }),
   mounted: function mounted() {
     this.$nextTick(function () {
-      this.observeChecklist();
       if (!this.checklist.list_type) {
         return this.toggleEditability(true);
       }
@@ -95571,9 +95446,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-var _require = __webpack_require__(266),
-    observe = _require.observe; // used to check if object has ben modified before saving
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'edit-checklist',
   props: {
@@ -95605,38 +95477,7 @@ var _require = __webpack_require__(266),
 });
 
 /***/ }),
-/* 609 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var isValid = exports.isValid = function isValid(v) {
-  return v !== null && v !== undefined;
-};
-
-var isObject = exports.isObject = function isObject(v) {
-  return (typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object';
-};
-
-var isCallable = exports.isCallable = function isCallable(v) {
-  return typeof v === 'function';
-};
-
-var smartString = exports.smartString = function smartString(v) {
-  if (isValid(v)) {
-    return '' + (v.constructor.name === 'Object' ? JSON.stringify(v) : v);
-  }
-  return '' + v;
-};
-
-/***/ }),
+/* 609 */,
 /* 610 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -97796,13 +97637,13 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     movable: false,
     deletable: false
   };
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SET_CREATING_NEW */], function (state, model) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* SET_CREATING_NEW */], function (state, model) {
   state.creatingNew = model;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* TOGGLE_CREATING_NEW_BUTTONS */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* TOGGLE_CREATING_NEW_BUTTONS */], function (state) {
   state.showCreatingNewButtons = !state.showCreatingNewButtons;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* TOGGLE_MOVABLE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_MOVABLE */], function (state) {
   state.selected.movable = !state.selected.movable;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* TOGGLE_DELETABLE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_DELETABLE */], function (state) {
   state.selected.deletable = !state.selected.deletable;
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], function (state, payload) {
   switch (payload.model) {
@@ -97819,7 +97660,7 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
       return;
 
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REMOVE_FROM_SELECTED */], function (state, payload) {
 
   if (payload && payload.model) {
     switch (payload.model) {
@@ -97846,22 +97687,22 @@ var actions = {
   createNew: function createNew(_ref, model) {
     var commit = _ref.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SET_CREATING_NEW */], model);
+    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* SET_CREATING_NEW */], model);
   },
   toggleCreatingNewButtons: function toggleCreatingNewButtons(_ref2) {
     var commit = _ref2.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* TOGGLE_CREATING_NEW_BUTTONS */]);
+    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* TOGGLE_CREATING_NEW_BUTTONS */]);
   },
   toggleMovable: function toggleMovable(_ref3) {
     var commit = _ref3.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* TOGGLE_MOVABLE */]);
+    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_MOVABLE */]);
   },
   toggleDeletable: function toggleDeletable(_ref4) {
     var commit = _ref4.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* TOGGLE_DELETABLE */]);
+    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_DELETABLE */]);
   },
   toggleSelection: function toggleSelection(_ref5, payload) {
     var dispatch = _ref5.dispatch,
@@ -97872,7 +97713,7 @@ var actions = {
       case 'folder':
         if (_.findIndex(state.selected.folders, payload.selection.listing) !== -1) {
           if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], payload.selection);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REMOVE_FROM_SELECTED */], payload.selection);
           } else {
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
@@ -97889,7 +97730,7 @@ var actions = {
       case 'checklist':
         if (_.findIndex(state.selected.checklists, payload.selection.listing) !== -1) {
           if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], payload.selection);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REMOVE_FROM_SELECTED */], payload.selection);
           } else {
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
@@ -97909,7 +97750,7 @@ var actions = {
 
             if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey || state.selected.checklistItems.length === 1) {
               // if either a modifier key was used or there is only one selected item
-              commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], payload.selection);
+              commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REMOVE_FROM_SELECTED */], payload.selection);
             } else {
               // if there are mulitple items and a modifier key was not used
               commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
@@ -97992,7 +97833,7 @@ var actions = {
     var commit = _ref8.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REMOVE_FROM_SELECTED */], payload);
       resolve(payload);
     });
   },
@@ -98021,7 +97862,7 @@ var actions = {
       if (selected.folders && selected.folders.length) {
         for (var i = 0; i < selected.folders.length; i++) {
           dispatch('delistFolder', selected.folders[i], { root: true });
-          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], { model: 'folder', listing: selected.folders[i] });
+          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REMOVE_FROM_SELECTED */], { model: 'folder', listing: selected.folders[i] });
           count++;
         }
       }
@@ -98029,7 +97870,7 @@ var actions = {
       if (selected.checklists && selected.checklists.length) {
         for (var i = 0; i < selected.checklists.length; i++) {
           dispatch('delistChecklist', selected.checklists[i], { root: true });
-          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], { model: 'checklist', listing: selected.checklists[i] });
+          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REMOVE_FROM_SELECTED */], { model: 'checklist', listing: selected.checklists[i] });
           count++;
         }
       }
@@ -98037,7 +97878,7 @@ var actions = {
       if (selected.checklistItems && selected.checklistItems.length) {
         for (var i = 0; i < selected.checklistItems.length; i++) {
           dispatch('deleteChecklistItem', selected.checklistItems[i], { root: true });
-          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], { model: 'checklist-item', listing: selected.checklistItems[i] });
+          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REMOVE_FROM_SELECTED */], { model: 'checklist-item', listing: selected.checklistItems[i] });
           count++;
         }
       }
@@ -98111,7 +97952,7 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     var i = _.findIndex(state.folders, ['id', folder.id]);
     console.log('i = ' + i);
     state.folders.splice(i, 1);
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UPDATE_FOLDER */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* UPDATE_FOLDER */], function (state, payload) {
     var i = _.findIndex(state.folders, ['id', payload.folder.id]);
     state.folders.splice(i, 1, payload.updatedFolder);
 }), _mutations);
@@ -98167,7 +98008,7 @@ var actions = {
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(function (response) {
                         if (response.data.folder) {
-                            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UPDATE_FOLDER */], response.data.folder);
+                            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* UPDATE_FOLDER */], response.data.folder);
                             resolve(response.data.folder);
                         } else if (response.data.error) {
                             reject(response.data.error);
@@ -98178,7 +98019,7 @@ var actions = {
                         return reject(error);
                     });
                 } else if (response.data.folder) {
-                    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UPDATE_FOLDER */], response.data.folder);
+                    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* UPDATE_FOLDER */], response.data.folder);
                     resolve(response.data.folder);
                 } else if (response.data.error) {
                     reject(response.data.error);
@@ -98255,9 +98096,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var _require = __webpack_require__(266),
-    observe = _require.observe; // used to check if object has been modified before saving
-
 var namespaced = true;
 
 var state = {
@@ -98330,15 +98168,7 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
         var i = _.findIndex(state.checklists, ['id', checklistID]);
         state.checklists[i].items_count = ++state.checklists[i].items_count;
     }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* OBSERVE_CHECKLIST */], function (state) {
-    // observe(state.checklist)
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["t" /* OBSERVE_CURRENT_EDITABLE_ITEM */], function (state) {
-    if (state.currentEditableItemID) {
-        var i = _.findIndex(state.checklistItems, ['id', state.currentEditableItemID]);
-        observe(state.checklistItems[i]);
-        console.log('simulating editable item observed');
-    }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UPDATE_FILTERS */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* UPDATE_FILTERS */], function (state, payload) {
     switch (payload.type) {
         case 'checked':
             state.filters.checked = payload.value;
@@ -98347,11 +98177,11 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
             state.filters.priority = payload.value;
             break;
     }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* UPDATE_CHECKLIST */], function (state, updatedChecklist) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* UPDATE_CHECKLIST */], function (state, updatedChecklist) {
     if (updatedChecklist && updatedChecklist.title) {
         state.checklist = updatedChecklist;
     }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_ITEM_COUNTS */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UPDATE_ITEM_COUNTS */], function (state, payload) {
     if (!_.isEmpty(state.checklists) && !_.isEmpty(payload.old.checklist_id) && !_.isEmpty(payload.new.checklist_id)) {
         var o = _.findIndex(state.checklists, ['id', payload.old.checklist_id]);
         state.checklists[o].items_count = --state.checklists[o].items_count;
@@ -98359,10 +98189,10 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
         var n = _.findIndex(state.checklists, ['id', payload.new.checklist_id]);
         state.checklists[n].items_count = ++state.checklists[n].items_count;
     }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* REPLACE_PENDING_TASK */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["t" /* REPLACE_PENDING_TASK */], function (state, payload) {
     var i = _.findIndex(state.checklistItems, ['id', payload.old.id]);
     state.checklistItems.splice(i, 1, payload.new);
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* RESET_NEW_CHECKLIST_ITEM */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* RESET_NEW_CHECKLIST_ITEM */], function (state) {
     state.newChecklistItem = {
         content: undefined,
         is_urgent: undefined,
@@ -98371,29 +98201,29 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
         comments: undefined,
         sort_order: Productivity.checklistItems ? Productivity.checklistItems.length : Productivity.checklist && Productivity.checklist.items ? Productivity.checklist.items.length : 0
     };
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SET_CURRENT_EDITABLE_ITEM_COMMENTS */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* SET_CURRENT_EDITABLE_ITEM_COMMENTS */], function (state) {
     var html = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
     state.checklistItems[state.currentEditableItemIndex].comments = html;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SET_CURRENT_EDITABLE_ITEM_DEADLINE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SET_CURRENT_EDITABLE_ITEM_DEADLINE */], function (state) {
     var date = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
     state.checklistItems[state.currentEditableItemIndex].deadline = date ? moment(date).format('YYYY-MM-DD') : null;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK */], function (state) {
     state.checklistItems[state.currentEditableItemIndex].checked_at = state.checklistItems[state.currentEditableItemIndex].checked_at ? null : moment().format();
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], function (state) {
     state.currentEditableItemIsExpanded = !state.currentEditableItemIsExpanded;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE */], function (state) {
     state.checklistItems[state.currentEditableItemIndex].is_important = !state.checklistItems[state.currentEditableItemIndex].is_important;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY */], function (state) {
     state.checklistItems[state.currentEditableItemIndex].is_urgent = !state.checklistItems[state.currentEditableItemIndex].is_urgent;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SORT_CHECKLIST_ITEMS */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_CHECKLIST_ITEMS */], function (state) {
     state.checklistItems = __WEBPACK_IMPORTED_MODULE_1_fast_sort___default()(state.checklistItems).asc(function (i) {
         return i.sort_order;
     });
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* UNDO_UPDATE_SORT_ORDER */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* UNDO_UPDATE_SORT_ORDER */], function (state) {
     // Maybe use https://github.com/pinguinjkeke/vue-local-storage or some other way to store/retrieve items
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_SORT_ORDER */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_SORT_ORDER */], function (state) {
     for (var i = 0; i < state.checklistItems.length; i++) {
         state.checklistItems[i].sort_order = i;
     }
@@ -98421,8 +98251,8 @@ var actions = {
                     if (response.data.item) {
                         commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["d" /* ADD_ITEM_TO_CHECKLIST */], response.data.item);
                         commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], response.data.item);
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* RESET_NEW_CHECKLIST_ITEM */]);
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SORT_CHECKLIST_ITEMS */]);
+                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* RESET_NEW_CHECKLIST_ITEM */]);
+                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_CHECKLIST_ITEMS */]);
                         resolve(response.data.item);
                     } else if (response.data.error) {
                         reject(response.data.error);
@@ -98435,8 +98265,8 @@ var actions = {
             } else if (response.data.item) {
                 commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["d" /* ADD_ITEM_TO_CHECKLIST */], response.data.item);
                 commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], response.data.item);
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* RESET_NEW_CHECKLIST_ITEM */]);
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SORT_CHECKLIST_ITEMS */]);
+                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* RESET_NEW_CHECKLIST_ITEM */]);
+                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_CHECKLIST_ITEMS */]);
                 resolve(response.data.item);
             } else if (response.data.error) {
                 reject(response.data.error);
@@ -98502,7 +98332,7 @@ var actions = {
                     return dispatch('removeCurrentlyEditable').then(function () {
                         commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* DECREMENT_ITEM_COUNT */], checklistItem.checklist_id);
                         commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["l" /* DELETE_CHECKLIST_ITEM */], checklistItem);
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_SORT_ORDER */]);
+                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_SORT_ORDER */]);
                         dispatch('saveSortOrder');
                         resolve(checklistItem);
                     });
@@ -98526,53 +98356,37 @@ var actions = {
             resolve(checklistItem);
         });
     },
-    observeChecklist: function observeChecklist(_ref9) {
+    removeCurrentlyEditable: function removeCurrentlyEditable(_ref9) {
         var commit = _ref9.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* OBSERVE_CHECKLIST */]);
-            resolve();
-        });
-    },
-    observeCurrentEditableItem: function observeCurrentEditableItem(_ref10) {
-        var commit = _ref10.commit;
-
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["t" /* OBSERVE_CURRENT_EDITABLE_ITEM */]);
-            resolve();
-        });
-    },
-    removeCurrentlyEditable: function removeCurrentlyEditable(_ref11) {
-        var commit = _ref11.commit;
-
-        return new Promise(function (resolve, reject) {
             if (state.currentEditableItemIsExpanded) {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */]);
+                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */]);
             }
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["m" /* DELETE_CURRENTLY_EDITABLE */]);
             resolve();
         });
     },
-    replacePendingTask: function replacePendingTask(_ref12, payload) {
-        var commit = _ref12.commit;
+    replacePendingTask: function replacePendingTask(_ref10, payload) {
+        var commit = _ref10.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* REPLACE_PENDING_TASK */], payload);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_ITEM_COUNTS */], payload);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["t" /* REPLACE_PENDING_TASK */], payload);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UPDATE_ITEM_COUNTS */], payload);
             resolve(payload);
         });
     },
-    resetNewChecklistItem: function resetNewChecklistItem(_ref13) {
-        var commit = _ref13.commit;
+    resetNewChecklistItem: function resetNewChecklistItem(_ref11) {
+        var commit = _ref11.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* RESET_NEW_CHECKLIST_ITEM */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* RESET_NEW_CHECKLIST_ITEM */]);
             resolve();
         });
     },
-    saveChecklist: function saveChecklist(_ref14, checklist) {
-        var dispatch = _ref14.dispatch,
-            commit = _ref14.commit;
+    saveChecklist: function saveChecklist(_ref12, checklist) {
+        var dispatch = _ref12.dispatch,
+            commit = _ref12.commit;
 
         return new Promise(function (resolve, reject) {
             axios.patch('/lists/' + checklist.fake_id, { checklist: checklist }).then(function (response) {
@@ -98582,14 +98396,14 @@ var actions = {
             });
         });
     },
-    saveChecklistHandler: function saveChecklistHandler(_ref15, response) {
-        var commit = _ref15.commit;
+    saveChecklistHandler: function saveChecklistHandler(_ref13, response) {
+        var commit = _ref13.commit;
 
         return new Promise(function (resolve, reject) {
             if (response.data.tokenMismatch) {
                 Vue.handleTokenMismatch(response.data).then(function (response) {
                     if (response.data.checklist) {
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* UPDATE_CHECKLIST */], response.data.checklist);
+                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* UPDATE_CHECKLIST */], response.data.checklist);
                         resolve(response.data.checklist);
                     } else if (response.data.error) {
                         reject(response.data.error);
@@ -98600,7 +98414,7 @@ var actions = {
                     return reject(error);
                 });
             } else if (response.data.checklist) {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* UPDATE_CHECKLIST */], response.data.checklist);
+                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* UPDATE_CHECKLIST */], response.data.checklist);
                 resolve(response.data.checklist);
             } else if (response.data.error) {
                 reject(response.data.error);
@@ -98609,9 +98423,9 @@ var actions = {
             }
         });
     },
-    saveCurrentEditableItem: function saveCurrentEditableItem(_ref16) {
-        var dispatch = _ref16.dispatch,
-            commit = _ref16.commit;
+    saveCurrentEditableItem: function saveCurrentEditableItem(_ref14) {
+        var dispatch = _ref14.dispatch,
+            commit = _ref14.commit;
         var item = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
         return new Promise(function (resolve, reject) {
@@ -98626,38 +98440,28 @@ var actions = {
             });
         });
     },
-    saveCurrentEditableItemHandler: function saveCurrentEditableItemHandler(_ref17, response) {
-        var dispatch = _ref17.dispatch,
-            commit = _ref17.commit;
+    saveCurrentEditableItemHandler: function saveCurrentEditableItemHandler(_ref15, response) {
+        var dispatch = _ref15.dispatch,
+            commit = _ref15.commit;
 
         return new Promise(function (resolve, reject) {
             if (response.data.tokenMismatch) {
                 Vue.handleTokenMismatch(response.data).catch(function (error) {
                     return reject(error);
                 }).then(function (response) {
-                    dispatch('observeCurrentEditableItem').then(function () {
-                        return resolve();
-                    }).catch(function () {
-                        return reject();
-                    });
-                    resolve();
+                    return resolve();
                 });
             } else if (response.data.item) {
-                dispatch('observeCurrentEditableItem').then(function () {
-                    return resolve();
-                }).catch(function () {
-                    return reject();
-                });
                 resolve();
             } else {
                 reject(response);
             }
         });
     },
-    saveSortOrder: function saveSortOrder(_ref18) {
-        var commit = _ref18.commit,
-            state = _ref18.state,
-            dispatch = _ref18.dispatch;
+    saveSortOrder: function saveSortOrder(_ref16) {
+        var commit = _ref16.commit,
+            state = _ref16.state,
+            dispatch = _ref16.dispatch;
 
         return new Promise(function (resolve, reject) {
             axios.patch('/lists/' + state.checklist.fake_id + '/save-sort-order', { checklistItems: state.checklistItems }).then(function (response) {
@@ -98667,9 +98471,9 @@ var actions = {
             });
         });
     },
-    saveSortOrderHandler: function saveSortOrderHandler(_ref19, response) {
-        var dispatch = _ref19.dispatch,
-            commit = _ref19.commit;
+    saveSortOrderHandler: function saveSortOrderHandler(_ref17, response) {
+        var dispatch = _ref17.dispatch,
+            commit = _ref17.commit;
 
         return new Promise(function (resolve, reject) {
             if (response.data.exceptions) {
@@ -98682,13 +98486,13 @@ var actions = {
             resolve();
         });
     },
-    setCurentEditableItemDeadline: function setCurentEditableItemDeadline(_ref20) {
-        var dispatch = _ref20.dispatch,
-            commit = _ref20.commit;
+    setCurentEditableItemDeadline: function setCurentEditableItemDeadline(_ref18) {
+        var dispatch = _ref18.dispatch,
+            commit = _ref18.commit;
         var date = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SET_CURRENT_EDITABLE_ITEM_DEADLINE */], date);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SET_CURRENT_EDITABLE_ITEM_DEADLINE */], date);
             dispatch('saveCurrentEditableItem').then(function (success) {
                 return resolve(success);
             }).catch(function (error) {
@@ -98696,26 +98500,26 @@ var actions = {
             });
         });
     },
-    setCurentEditableItemComments: function setCurentEditableItemComments(_ref21) {
-        var dispatch = _ref21.dispatch,
-            commit = _ref21.commit;
+    setCurentEditableItemComments: function setCurentEditableItemComments(_ref19) {
+        var dispatch = _ref19.dispatch,
+            commit = _ref19.commit;
         var html = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SET_CURRENT_EDITABLE_ITEM_COMMENTS */], html);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* SET_CURRENT_EDITABLE_ITEM_COMMENTS */], html);
             resolve();
         });
     },
-    setEditability: function setEditability(_ref22, payload) {
-        var commit = _ref22.commit;
+    setEditability: function setEditability(_ref20, payload) {
+        var commit = _ref20.commit;
 
         return new Promise(function (resolve, reject) {
             payload.editable ? commit(ADD_EDITABLE, payload.item) : commit(DELETE_EDITABLE, payload.item);
             resolve();
         });
     },
-    setFilterability: function setFilterability(_ref23, payload) {
-        var commit = _ref23.commit;
+    setFilterability: function setFilterability(_ref21, payload) {
+        var commit = _ref21.commit;
 
         return new Promise(function (resolve, reject) {
             payload.filterable ? commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], payload.item) : commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELETE_UNFILTERED */], payload.item);
@@ -98723,26 +98527,26 @@ var actions = {
         });
     },
 
-    setFilters: function setFilters(_ref24, payload) {
-        var commit = _ref24.commit;
+    setFilters: function setFilters(_ref22, payload) {
+        var commit = _ref22.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UPDATE_FILTERS */], payload);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* UPDATE_FILTERS */], payload);
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELETE_UNFILTERED */]);
             resolve();
         });
     },
-    sortChecklistItems: function sortChecklistItems(_ref25) {
-        var commit = _ref25.commit;
+    sortChecklistItems: function sortChecklistItems(_ref23) {
+        var commit = _ref23.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SORT_CHECKLIST_ITEMS */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_CHECKLIST_ITEMS */]);
             resolve();
         });
     },
-    storeChecklist: function storeChecklist(_ref26, checklist) {
-        var dispatch = _ref26.dispatch,
-            commit = _ref26.commit;
+    storeChecklist: function storeChecklist(_ref24, checklist) {
+        var dispatch = _ref24.dispatch,
+            commit = _ref24.commit;
 
         return new Promise(function (resolve, reject) {
             axios.post('/lists', { checklist: checklist }).then(function (response) {
@@ -98752,8 +98556,8 @@ var actions = {
             });
         });
     },
-    storeChecklistHandler: function storeChecklistHandler(_ref27, response) {
-        var commit = _ref27.commit;
+    storeChecklistHandler: function storeChecklistHandler(_ref25, response) {
+        var commit = _ref25.commit;
 
         return new Promise(function (resolve, reject) {
             if (response.data.tokenMismatch) {
@@ -98779,12 +98583,33 @@ var actions = {
             }
         });
     },
-    toggleCurrentEditableItemCheckMark: function toggleCurrentEditableItemCheckMark(_ref28) {
+    toggleCurrentEditableItemCheckMark: function toggleCurrentEditableItemCheckMark(_ref26) {
+        var dispatch = _ref26.dispatch,
+            commit = _ref26.commit;
+
+        return new Promise(function (resolve, reject) {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK */]);
+            dispatch('saveCurrentEditableItem').then(function () {
+                return resolve();
+            }).catch(function (error) {
+                return reject(error);
+            });
+        });
+    },
+    toggleCurrentEditableItemExpansion: function toggleCurrentEditableItemExpansion(_ref27) {
+        var commit = _ref27.commit;
+
+        return new Promise(function (resolve, reject) {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */]);
+            resolve();
+        });
+    },
+    toggleCurentEditableItemImportance: function toggleCurentEditableItemImportance(_ref28) {
         var dispatch = _ref28.dispatch,
             commit = _ref28.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE */]);
             dispatch('saveCurrentEditableItem').then(function () {
                 return resolve();
             }).catch(function (error) {
@@ -98792,20 +98617,12 @@ var actions = {
             });
         });
     },
-    toggleCurrentEditableItemExpansion: function toggleCurrentEditableItemExpansion(_ref29) {
-        var commit = _ref29.commit;
+    toggleCurentEditableItemUrgency: function toggleCurentEditableItemUrgency(_ref29) {
+        var dispatch = _ref29.dispatch,
+            commit = _ref29.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */]);
-            resolve();
-        });
-    },
-    toggleCurentEditableItemImportance: function toggleCurentEditableItemImportance(_ref30) {
-        var dispatch = _ref30.dispatch,
-            commit = _ref30.commit;
-
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY */]);
             dispatch('saveCurrentEditableItem').then(function () {
                 return resolve();
             }).catch(function (error) {
@@ -98813,32 +98630,19 @@ var actions = {
             });
         });
     },
-    toggleCurentEditableItemUrgency: function toggleCurentEditableItemUrgency(_ref31) {
-        var dispatch = _ref31.dispatch,
-            commit = _ref31.commit;
+    updateSortOrder: function updateSortOrder(_ref30) {
+        var commit = _ref30.commit,
+            state = _ref30.state,
+            dispatch = _ref30.dispatch;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY */]);
-            dispatch('saveCurrentEditableItem').then(function () {
-                return resolve();
-            }).catch(function (error) {
-                return reject(error);
-            });
-        });
-    },
-    updateSortOrder: function updateSortOrder(_ref32) {
-        var commit = _ref32.commit,
-            state = _ref32.state,
-            dispatch = _ref32.dispatch;
-
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_SORT_ORDER */]);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SORT_CHECKLIST_ITEMS */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_SORT_ORDER */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_CHECKLIST_ITEMS */]);
             dispatch('saveSortOrder').then(function () {
                 return resolve();
             }).catch(function (error) {
                 console.log(error);
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* UNDO_UPDATE_SORT_ORDER */]); //WIP : set initial items
+                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* UNDO_UPDATE_SORT_ORDER */]); //WIP : set initial items
                 reject();
             });
         });
@@ -98965,13 +98769,13 @@ var state = {
 
 var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["h" /* CLEAR_QUERY */], function (state) {
     state.search.query = undefined;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_QUERY */], function (state, query) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_QUERY */], function (state, query) {
     state.search.query = query;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_RESULTS */], function (state, results) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_RESULTS */], function (state, results) {
     state.search.results = results;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* UPDATE_ERROR_MESSAGE */], function (state, errorMessage) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* UPDATE_ERROR_MESSAGE */], function (state, errorMessage) {
     state.search.errorMessage = errorMessage;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_IS_SEARCHING */], function (state, isSearching) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UPDATE_IS_SEARCHING */], function (state, isSearching) {
     state.search.isSearching = isSearching;
 }), _mutations);
 
@@ -98984,7 +98788,7 @@ var actions = {
                 folders: {},
                 checklists: {}
             };
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_RESULTS */], results);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_RESULTS */], results);
             resolve();
         });
     },
@@ -98992,7 +98796,7 @@ var actions = {
         var commit = _ref2.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_RESULTS */], results);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_RESULTS */], results);
             resolve();
         });
     },
@@ -99001,7 +98805,7 @@ var actions = {
         var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* UPDATE_ERROR_MESSAGE */], value);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* UPDATE_ERROR_MESSAGE */], value);
             resolve();
         });
     },
@@ -99011,7 +98815,7 @@ var actions = {
 
         return new Promise(function (resolve, reject) {
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["h" /* CLEAR_QUERY */]);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_QUERY */], value);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_QUERY */], value);
             resolve();
         });
     },
@@ -99019,7 +98823,7 @@ var actions = {
         var commit = _ref5.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_IS_SEARCHING */], value);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UPDATE_IS_SEARCHING */], value);
             resolve();
         });
     }

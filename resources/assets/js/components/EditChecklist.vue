@@ -57,8 +57,6 @@
 
 <script>
 
-const { observe } = require('dirty-object'); // used to check if object has ben modified before saving
-
 export default {
   name: 'edit-checklist',
   props: {

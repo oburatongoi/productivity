@@ -35,7 +35,6 @@
         "autosize": "^3.0.20",
         "axios": "^0.17",
         "babel-polyfill": "^6.23.0",
-        "dirty-object": "^1.0.6",
         "es6-promise": "^4.1.0",
         "fast-sort": "^1.2.5",
         "highlight.js": "^9.10.0",

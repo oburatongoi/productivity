@@ -197,12 +197,11 @@ export default {
     },
     methods: {
       ...mapActions([
-        'observeChecklist',
         'saveChecklist',
         'setFilters'
       ]),
       saveAndClose: function() {
-        if (this.checklist.dirty || this.unsavedChanges == true) {
+        if (this.unsavedChanges == true) {
           this.saveChanges()
         }
         this.toggleEditability(false)
@@ -212,7 +211,6 @@ export default {
         this.saveChanges()
       }, 1000),
       saveChanges: function() {
-        if(this.checklist.dirty) {
           this.inputIcon = 'fa-spin fa-circle-o-notch'
           this.isSaving = true
           this.saveChecklist(this.checklist)
@@ -220,14 +218,12 @@ export default {
                 (checklist) => {
                   this.inputIcon = 'fa-times'
                   this.isSaving = this.unsavedChanges = false
-                  this.observeChecklist()
                 })
               .catch(
                 () => {
                   this.inputIcon = 'fa-times'
                   console.log('Error saving List');
                 })
-        }
       },
       setCheckedFilter: function(filter){
         this.setFilters({type: 'checked', value: filter})
@@ -261,7 +257,6 @@ export default {
     },
     mounted: function() {
       this.$nextTick(function () {
-        this.observeChecklist()
         if (!this.checklist.list_type) {
           return this.toggleEditability(true)
         }

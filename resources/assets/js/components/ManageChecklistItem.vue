@@ -114,7 +114,6 @@ export default {
   methods: {
     ...mapActions([
       'clearSelected',
-      'observeCurrentEditableItem',
       'toggleCurrentEditableItemCheckMark',
       'toggleCurrentEditableItemExpansion',
       'saveCurrentEditableItem',
@@ -130,12 +129,10 @@ export default {
       this.saveChanges()
     }, 1000),
     saveChanges: function() {
-      if(this.currentEditableItem.dirty) {
-        this.savingChanges = true
-        this.saveCurrentEditableItem()
-        .then( () => this.savingChanges = false )
-        .catch( (error) => console.log(error) )
-      }
+      this.savingChanges = true
+      this.saveCurrentEditableItem()
+      .then( () => this.savingChanges = false )
+      .catch( (error) => console.log(error) )
     },
     checkItem: function() {
       this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
@@ -167,12 +164,11 @@ export default {
     this.$nextTick(function() {
       autosize(document.querySelector('.content-textarea'));
       autosize(document.querySelector('.comments-textarea'));
-      this.observeCurrentEditableItem()
     })
   },
-  // updated: function() {
-  //   this.observeCurrentEditableItem()
-  // },
+  updated: function() {
+    console.log('data has been updated');
+  },
 }
 </script>
 
