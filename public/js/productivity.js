@@ -73663,6 +73663,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -73674,7 +73677,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     IndexTasks: __WEBPACK_IMPORTED_MODULE_1__IndexTasks_vue___default.a,
     ManageChecklistItem: __WEBPACK_IMPORTED_MODULE_2__ManageChecklistItem_vue___default.a
   }
-}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['currentEditableItem'])));
+}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['checklistItems', 'currentEditableItemID', 'currentEditableItemIndex'])));
 
 /***/ }),
 /* 522 */
@@ -73711,6 +73714,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -73719,10 +73725,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'index-tasks',
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['checklistItems', 'currentEditableItem', 'currentEditableItemIsExpanded']), {
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['checklistItems', 'currentEditableItemID', 'currentEditableItemIndex', 'currentEditableItemIsExpanded']), {
     taskClass: function taskClass() {
-      if (this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item';
-      if (this.currentEditableItem.id && !this.currentEditableItemIsExpanded) return 'has-editable-item';
+      if (this.currentEditableItemID && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item';
+      if (this.currentEditableItemID && !this.currentEditableItemIsExpanded) return 'has-editable-item';
       return null;
     }
   }),
@@ -74412,6 +74418,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -74433,7 +74440,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     };
   },
 
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['deadlinePlaceholder'])),
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['deadlinePlaceholder']), {
+    highlightedDate: function highlightedDate() {
+      return {
+        dates: [new Date(this.currentEditableItem.deadline)]
+      };
+    }
+  }),
   methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['setCurentEditableItemDeadline', 'toggleCurentEditableItemImportance', 'toggleCurentEditableItemUrgency']), {
     dateFormatter: function dateFormatter(date) {
       return moment(date).format('YYYY-MM-DD');
@@ -74595,7 +74608,11 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("datepicker", {
-                attrs: { inline: true, format: _vm.dateFormatter },
+                attrs: {
+                  inline: true,
+                  format: _vm.dateFormatter,
+                  highlighted: _vm.highlightedDate
+                },
                 on: { selected: _vm.setDate },
                 model: {
                   value: _vm.currentEditableItem.deadline,
@@ -74752,7 +74769,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
           html = _ref.html,
           text = _ref.text;
 
-      // this.currentEditableItem.comments = html
       this.setCurentEditableItemComments(html);
       this.debounceSaveChanges();
     }
@@ -88468,14 +88484,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     };
   },
 
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['currentEditableItem']), {
+  computed: {
     deletabilityIcon: function deletabilityIcon() {
       return this.isDeletable ? 'fa-times' : 'fa-trash-o';
     },
     saveButtonIcon: function saveButtonIcon() {
       return this.isSaving ? 'fa-spinner fa-spin' : 'fa-floppy-o';
     }
-  }),
+  },
   methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['deleteSelection', 'removeCurrentlyEditable']), {
     submit: function submit() {
       this.$emit('saveChanges');
@@ -89134,7 +89150,14 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.currentEditableItem.id ? _c("manage-checklist-item") : _vm._e()
+      _vm.currentEditableItemID
+        ? _c("manage-checklist-item", {
+            attrs: {
+              "current-editable-item":
+                _vm.checklistItems[_vm.currentEditableItemIndex]
+            }
+          })
+        : _vm._e()
     ],
     1
   )
@@ -89163,8 +89186,13 @@ var render = function() {
     [
       _c("index-tasks"),
       _vm._v(" "),
-      _vm.currentEditableItem && _vm.currentEditableItem.id
-        ? _c("manage-checklist-item")
+      _vm.currentEditableItemID && _vm.currentEditableItemIndex
+        ? _c("manage-checklist-item", {
+            attrs: {
+              "current-editable-item":
+                _vm.checklistItems[_vm.currentEditableItemIndex]
+            }
+          })
         : _vm._e()
     ],
     1
@@ -92230,7 +92258,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
   },
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['checklist', 'checklistItems', 'currentEditableItemIndex', 'currentEditableItemIndexIsSet', 'currentEditableItemIsExpanded', 'selectedIsMovable', 'filters']), {
     checklistClass: function checklistClass() {
-      return !this.currentEditableItemIndex ? null : this.currentEditableItemIsExpanded ? 'has-expanded-editable-item' : 'has-editable-item';
+      return !this.currentEditableItemIndexIsSet ? null : this.currentEditableItemIsExpanded ? 'has-expanded-editable-item' : 'has-editable-item';
     },
     checklistIconClass: function checklistIconClass() {
       return !this.checklist.list_type ? 'fa-list' : this.checklist.list_type == 'ch' ? 'fa-list' : this.checklist.list_type == 'ta' ? 'fa-check-square' : this.checklist.list_type == 'bu' ? 'fa-list-ul' : this.checklist.list_type == 'nu' ? 'fa-list-ol' : 'fa-list';

@@ -52,6 +52,7 @@
             @selected="setDate"
             :inline="true"
             :format="dateFormatter"
+            :highlighted="highlightedDate"
           ></datepicker>
         </div>
     </span>
@@ -81,7 +82,14 @@ export default {
   computed: {
     ...mapGetters([
       'deadlinePlaceholder'
-    ])
+    ]),
+    highlightedDate () {
+      return {
+        dates: [
+          new Date(this.currentEditableItem.deadline)
+        ]
+      }
+    }
   },
   methods: {
     ...mapActions([

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'manage-item-form-buttons',
@@ -44,9 +44,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'currentEditableItem'
-    ]),
     deletabilityIcon: function() {
       return this.isDeletable ? 'fa-times' : 'fa-trash-o'
     },

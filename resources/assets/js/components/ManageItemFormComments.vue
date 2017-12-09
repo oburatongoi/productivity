@@ -57,7 +57,6 @@ export default {
       this.$emit('saveChanges')
     },
     onEditorChange({ editor, html, text }) {
-      // this.currentEditableItem.comments = html
       this.setCurentEditableItemComments(html)
       this.debounceSaveChanges()
     }

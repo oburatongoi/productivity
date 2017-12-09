@@ -148,7 +148,7 @@ export default {
         'filters'
       ]),
       checklistClass: function() {
-        return ! this.currentEditableItemIndex ? null :
+        return ! this.currentEditableItemIndexIsSet ? null :
                  this.currentEditableItemIsExpanded ? 'has-expanded-editable-item' : 'has-editable-item'
       },
       checklistIconClass: function() {
