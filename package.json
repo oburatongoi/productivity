@@ -35,7 +35,6 @@
         "autosize": "^3.0.20",
         "axios": "^0.17",
         "babel-polyfill": "^6.23.0",
-        "dirty-object": "^1.0.6",
         "es6-promise": "^4.1.0",
         "fast-sort": "^1.2.5",
         "highlight.js": "^9.10.0",
@@ -45,7 +44,7 @@
         "v-tooltip": "^1.1.2",
         "vue2-filters": "^0.2.2",
         "vuedraggable": "^2.15.0",
-        "vuejs-datepicker": "^0.5.5",
+        "vuejs-datepicker": "^0.9.21",
         "vuex": "^2.2.1"
     }
 }

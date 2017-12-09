@@ -31,7 +31,7 @@
 
         <div class="datepicker-container" v-if="chooseDate">
           <div class="delete-deadline">
-            <button v-if="currentEditableItem.deadline" type="button" class="btn btn-xs btn-default" @click="removeDeadline">
+            <button v-if="currentEditableItem.deadline" type="button" class="btn btn-xs btn-default" @click="setDate(null)">
               <i class="fa fa-fw fa-calendar-times-o" aria-hidden="true"></i>
                  Remove Due Date
             </button>
@@ -41,10 +41,17 @@
             </button>
           </div>
 
-          <datepicker
-            value="item.deadline"
+          <!-- <datepicker
+            :value="currentEditableItem.deadline"
             @selected="setDate"
             :inline="true"
+            :format="dateFormatter"
+          ></datepicker> -->
+          <datepicker
+            v-model="currentEditableItem.deadline"
+            @selected="setDate"
+            :inline="true"
+            :format="dateFormatter"
           ></datepicker>
         </div>
     </span>
@@ -57,6 +64,12 @@ import Datepicker from 'vuejs-datepicker';
 
 export default {
   name: 'manage-item-form-meta',
+  props: {
+    currentEditableItem: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       urgencyIsLoading: false,
@@ -67,51 +80,44 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'currentEditableItem'
-    ]),
-    deadlinePlaceholder: function () {
-      return this.currentEditableItem.deadline ? 'Due: '+moment(this.currentEditableItem.deadline).format('MMM D, YYYY') : 'No Due Date'
-    },
+      'deadlinePlaceholder'
+    ])
   },
   methods: {
     ...mapActions([
-      'saveCurrentEditableItem'
+      'setCurentEditableItemDeadline',
+      'toggleCurentEditableItemImportance',
+      'toggleCurentEditableItemUrgency'
     ]),
+    dateFormatter(date) {
+      return moment(date).format('YYYY-MM-DD');
+    },
     showDatePicker: function() {
       return this.chooseDate = true
     },
     hideDatePicker: function() {
       return this.chooseDate = false
     },
-    setDate: function(date) {
+    setDate: function(date = null) {
       this.deadlineIsLoading = true
-      date ? this.currentEditableItem.deadline = moment(date).format('YYYY-MM-DD') : this.currentEditableItem.deadline = undefined
-      this.hideDatePicker()
-      this.saveCurrentEditableItem().then(
-        () => this.deadlineIsLoading = false
-      )
-    },
-    removeDeadline: function() {
-      this.currentEditableItem.deadline = null
-      this.deadlineIsLoading = true
-      this.hideDatePicker()
-      this.saveCurrentEditableItem().then(
-        () => this.deadlineIsLoading = false
-      )
+      this.setCurentEditableItemDeadline(date)
+          .then( (success) => {
+            this.hideDatePicker()
+            this.deadlineIsLoading = false
+          })
+          .catch( (error) => console.log(error) )
     },
     toggleImportance: function() {
       this.importanceIsLoading = true
-      this.currentEditableItem.is_important = ! this.currentEditableItem.is_important
-      this.saveCurrentEditableItem().then(
-        (response) => this.importanceIsLoading = false
-      )
+      this.toggleCurentEditableItemImportance()
+          .then( () => this.importanceIsLoading = false )
+          .catch( (error) => console.log(error) )
     },
     toggleUrgency: function() {
       this.urgencyIsLoading = true
-      this.currentEditableItem.is_urgent = ! this.currentEditableItem.is_urgent
-      this.saveCurrentEditableItem().then(
-        (response) => this.urgencyIsLoading = false
-      )
+      this.toggleCurentEditableItemUrgency()
+          .then( () => this.urgencyIsLoading = false )
+          .catch( (error) => console.log(error) )
     }
   },
   components: {

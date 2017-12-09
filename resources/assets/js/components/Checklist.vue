@@ -97,7 +97,11 @@
       </div>
     </div>
 
-    <manage-checklist-item v-if="!selectedIsMovable && currentEditableItem.id" :list-type="checklist.list_type"></manage-checklist-item>
+    <manage-checklist-item
+      v-if="!selectedIsMovable&&currentEditableItemIndexIsSet"
+      :list-type="checklist.list_type"
+      :current-editable-item="checklistItems[currentEditableItemIndex]"
+    ></manage-checklist-item>
 
     <move-to-checklist v-if="selectedIsMovable"></move-to-checklist>
   </div>
@@ -105,8 +109,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-
-const { observe } = require('dirty-object'); // used to check if object has been modified before saving
 
 import ChecklistItems from './ChecklistItems.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
@@ -138,13 +140,15 @@ export default {
     computed: {
       ...mapGetters([
         'checklist',
-        'currentEditableItem',
+        'checklistItems',
+        'currentEditableItemIndex',
+        'currentEditableItemIndexIsSet',
         'currentEditableItemIsExpanded',
         'selectedIsMovable',
         'filters'
       ]),
       checklistClass: function() {
-        return ! this.currentEditableItem || ! this.currentEditableItem.id ? null :
+        return ! this.currentEditableItemIndex ? null :
                  this.currentEditableItemIsExpanded ? 'has-expanded-editable-item' : 'has-editable-item'
       },
       checklistIconClass: function() {
@@ -197,7 +201,7 @@ export default {
         'setFilters'
       ]),
       saveAndClose: function() {
-        if (this.checklist.dirty || this.unsavedChanges == true) {
+        if (this.unsavedChanges == true) {
           this.saveChanges()
         }
         this.toggleEditability(false)
@@ -207,24 +211,19 @@ export default {
         this.saveChanges()
       }, 1000),
       saveChanges: function() {
-        if(this.checklist.dirty) {
           this.inputIcon = 'fa-spin fa-circle-o-notch'
           this.isSaving = true
           this.saveChecklist(this.checklist)
-          .then(
-            (checklist) => {
-              this.inputIcon = 'fa-times'
-              this.isSaving = this.unsavedChanges = false
-              observe(this.checklist)
-            }
-          )
-          .catch(
-            () => {
-              this.inputIcon = 'fa-times'
-              console.log('Error saving List');
-            }
-          )
-        }
+              .then(
+                (checklist) => {
+                  this.inputIcon = 'fa-times'
+                  this.isSaving = this.unsavedChanges = false
+                })
+              .catch(
+                () => {
+                  this.inputIcon = 'fa-times'
+                  console.log('Error saving List');
+                })
       },
       setCheckedFilter: function(filter){
         this.setFilters({type: 'checked', value: filter})
@@ -258,7 +257,6 @@ export default {
     },
     mounted: function() {
       this.$nextTick(function () {
-        observe(this.checklist)
         if (!this.checklist.list_type) {
           return this.toggleEditability(true)
         }
