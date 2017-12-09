@@ -7,6 +7,8 @@
     v-on:keyup="debounceSearch"
     v-on:keydown="debounceSearch"
     v-on:change="debounceSearch"
+    v-on:keydown.enter.prevent="debounceSearch"
+    v-on:keyup.enter.prevent="debounceSearch"
     v-on:keyup.delete="clearSearchResults"
   >
 </template>
