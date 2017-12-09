@@ -89,7 +89,8 @@ export default {
       ...mapGetters([
         'selected',
         'unfilteredItems',
-        'currentEditableItem',
+        'currentEditableItemID',
+        'currentEditableItemIndex',
         'delistedItems',
         'filters'
       ]),
@@ -148,7 +149,7 @@ export default {
         return this.itemBypassesFilters || !this.itemIsDelisted && !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
       },
       itemIsCurrentlyEditable: function() {
-        return this.currentEditableItem && this.currentEditableItem.id && this.item.id == this.currentEditableItem.id
+        return this.currentEditableItemID && this.item.id == this.currentEditableItemID
       },
       itemIsSelected: function() {
         return this.selected.checklistItems.indexOf(this.item) !== -1

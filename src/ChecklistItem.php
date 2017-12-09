@@ -26,7 +26,7 @@ class ChecklistItem extends Model
         'checklist_id' => 'integer',
         'content' => 'string',
         'description' => 'string',
-        'deadline' => 'date',
+        // 'deadline' => 'date',
     ];
 
     public function checklist()

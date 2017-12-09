@@ -71,7 +71,7 @@ class ChecklistItemController extends Controller
       if ($request->has('item.comments')) $item->comments = $request->item['comments'];
       if ($request->has('item.is_urgent')) $item->is_urgent = $request->item['is_urgent'];
       if ($request->has('item.is_important')) $item->is_important = $request->item['is_important'];
-      if ($request->has('item.deadline')) $item->deadline = $request->item['deadline'];
+      if ($request->has('item.deadline')) { $item->deadline = $request->item['deadline']; } else { $item->deadline = null; };
       if ($request->has('item.sort_order')) $item->sort_order = $request->item['sort_order'];
 
       try {

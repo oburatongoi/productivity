@@ -33,7 +33,7 @@
             </h4>
           </div>
 
-          <manage-item-form-meta></manage-item-form-meta>
+          <manage-item-form-meta :current-editable-item="currentEditableItem"></manage-item-form-meta>
 
           <div class="comments-label">
             <i class="fa fa-note" aria-hidden="true"></i>
@@ -67,6 +67,7 @@
         <div class="panel-body">
           <manage-item-form-comments
             @saveChanges="saveChanges"
+            :current-editable-item="currentEditableItem"
           ></manage-item-form-comments>
         </div>
 
@@ -92,11 +93,13 @@ import ManageItemFormButtons from './ManageItemFormButtons.vue'
 
 import autosize from 'autosize';
 
-const { observe } = require('dirty-object'); // used to check if object has ben modified before saving
-
 export default {
   name: 'manage-checklist-item',
   props: {
+    currentEditableItem: {
+      type: Object,
+      required: true
+    },
     listType: {
       type: String,
       default: 'undefined'
@@ -111,6 +114,8 @@ export default {
   methods: {
     ...mapActions([
       'clearSelected',
+      'observeCurrentEditableItem',
+      'toggleCurrentEditableItemCheckMark',
       'toggleCurrentEditableItemExpansion',
       'saveCurrentEditableItem',
       'removeCurrentlyEditable',
@@ -127,35 +132,20 @@ export default {
     saveChanges: function() {
       if(this.currentEditableItem.dirty) {
         this.savingChanges = true
-        this.saveCurrentEditableItem().then(
-          () => {
-            this.savingChanges = false
-            observe(this.currentEditableItem)
-          }
-        ).catch(
-          (error) => console.log(error)
-        )
+        this.saveCurrentEditableItem()
+        .then( () => this.savingChanges = false )
+        .catch( (error) => console.log(error) )
       }
     },
     checkItem: function() {
       this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
-      if (this.currentEditableItem.checked_at) {
-        this.currentEditableItem.checked_at = null
-      } else {
-        this.currentEditableItem.checked_at = moment().format()
-      }
-      this.saveCurrentEditableItem(this.currentEditableItem)
-          .then(
-            () => {this.checkboxClassOverride = null}
-          )
-          .catch(
-            () => {this.checkboxClassOverride = null}
-          )
+      this.toggleCurrentEditableItemCheckMark()
+          .then( () => this.checkboxClassOverride = null )
+          .catch( (error) => console.log(error))
     }
   },
   computed: {
     ...mapGetters([
-      'currentEditableItem',
       'currentEditableItemIsExpanded'
     ]),
     checkboxClass: function() {
@@ -173,14 +163,16 @@ export default {
       ManageItemFormComments,
       ManageItemFormButtons
   },
-  created: function() {
+  mounted: function() {
     this.$nextTick(function() {
       autosize(document.querySelector('.content-textarea'));
       autosize(document.querySelector('.comments-textarea'));
-      observe(this.currentEditableItem);
-      console.log(this.currentEditableItem.dirty);
+      this.observeCurrentEditableItem()
     })
   },
+  // updated: function() {
+  //   this.observeCurrentEditableItem()
+  // },
 }
 </script>
 

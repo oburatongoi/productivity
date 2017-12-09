@@ -21,12 +21,17 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
+import { mapActions } from 'vuex'
 import QuillEditor from './QuillEditor.vue'
 
 export default {
   name: 'manage-item-form-comments',
+  props: {
+    currentEditableItem: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       quillOptions: {
@@ -41,12 +46,10 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters([
-      'currentEditableItem'
-    ])
-  },
   methods: {
+    ...mapActions([
+      'setCurentEditableItemComments'
+    ]),
     debounceSaveChanges: _.debounce(function() {
       this.saveChanges()
     }, 1000),
@@ -54,7 +57,8 @@ export default {
       this.$emit('saveChanges')
     },
     onEditorChange({ editor, html, text }) {
-      this.currentEditableItem.comments = html
+      // this.currentEditableItem.comments = html
+      this.setCurentEditableItemComments(html)
       this.debounceSaveChanges()
     }
   },
