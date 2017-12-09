@@ -102,7 +102,7 @@ export default {
     },
     listType: {
       type: String,
-      default: 'undefined'
+      default: 'ch'
     }
   },
   data () {
