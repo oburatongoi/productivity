@@ -95,7 +95,7 @@ export default {
     },
     setSortOrder: function() {
       switch (this.parentModel) {
-        case 'checklistItem':
+        case 'checklist-item':
           this.newItem.sort_order = this.parent.child_list_items ? this.parent.child_list_items.length : 0
           break;
         default: this.newItem.sort_order = Productivity.checklistItems ? Productivity.checklistItems.length : 0
@@ -112,7 +112,7 @@ export default {
       if (!this.hasContent) { return }
       this.isSaving = true
       switch (this.parentModel) {
-        case 'checklistItem':
+        case 'checklist-item':
           return this.addSubChecklistItem( {item: this.newItem, parent: this.parent} )
                      .then( () => this.resetNewItem() )
                      .catch( () => console.log('Error has occured') )

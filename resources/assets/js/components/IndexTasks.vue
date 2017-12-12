@@ -19,8 +19,8 @@
     </div>
 
     <manage-checklist-item
-      v-if="currentEditableItem.id"
-      :currently-editable-item="checklistItems[currentEditableItem.index]"
+      v-if="editableChecklistItem.id"
+      :item="editableChecklistItem"
     ></manage-checklist-item>
   </div>
 </template>
@@ -41,11 +41,12 @@ export default {
     computed: {
       ...mapGetters([
         'checklistItems',
-        'currentEditableItem'
+        'editableChecklistItem',
+        'currentEditableItemIsExpanded'
       ]),
       taskClass: function() {
-        if (this.currentEditableItem.id && this.currentEditableItem.isExpanded) return 'has-expanded-editable-item'
-        if (this.currentEditableItem.id && ! this.currentEditableItem.isExpanded) return 'has-editable-item'
+        if (this.editableChecklistItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
+        if (this.editableChecklistItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
         return null
       }
     },

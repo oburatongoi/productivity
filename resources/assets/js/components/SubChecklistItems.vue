@@ -1,35 +1,51 @@
 <template lang="html">
   <div class="sub-checklist-items">
     <add-item
-      :parent="currentEditableItem"
-      parent-model="checklistItem"
+      :parent="parent"
+      :parent-model="parentModel"
     ></add-item>
 
     <checklist-items
-      :list-type="currentEditableItem.sub_list_type"
-      :items="currentEditableItem.child_list_items"
-      parent-model="checklist-item"
-      :parent="currentEditableItem"
+      :list-type="listType"
+      :items="items"
+      :parent-model="parentModel"
+      :parent="parent"
       @onChecklistItemClick="toggleSelection"
     ></checklist-items>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import AddItem from './AddItem.vue'
 import ChecklistItems from './ChecklistItems.vue'
 export default {
   name: 'sub-checklist-items',
   props: {
-    currentEditableItem: {
-      type: Object,
-      required: true
+    parent: {
+      type: Object
+    },
+    items: {
+      type: Array
+    },
+    listType: {
+      type: String,
+      default: 'ch'
+    },
+    parentModel: {
+      type: String,
+      default: 'checklist-item'
     }
   },
   methods: {
     toggleSelection: function(payload) {
       console.log(payload);
     }
+  },
+  computed: {
+    ...mapGetters([
+      'editableChecklistItem'
+    ])
   },
   components: {
     AddItem,

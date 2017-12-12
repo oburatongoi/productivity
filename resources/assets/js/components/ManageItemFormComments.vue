@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="edit-comments" id="quill-boundary">
 
-    <quill-editor :content="currentEditableItem.comments"
+    <quill-editor :content="item.comments"
                   :options="quillOptions"
                   @change="onEditorChange($event)">
     </quill-editor>
@@ -13,7 +13,7 @@
       @keydown="debounceSaveChanges"
       @delete="debounceSaveChanges"
       class="comments-textarea"
-      v-model="currentEditableItem.comments"
+      v-model="item.comments"
       placeholder="Add a comment..."
       maxlength="25000"></textarea> -->
 
@@ -27,7 +27,7 @@ import QuillEditor from './QuillEditor.vue'
 export default {
   name: 'manage-item-form-comments',
   props: {
-    currentEditableItem: {
+    item: {
       type: Object,
       required: true
     }

@@ -151,7 +151,7 @@ class ChecklistItemController extends Controller
         return $this->checklists->setItemSortOrder($request, $checklist);
       }
 
-      if ($request->parentModel == 'checklistItem') {
+      if ($request->parentModel == 'checklist-item') {
         $item = ChecklistItem::where('id', $request->parent['id'])->firstOrFail();
 
         $this->authorize('modify', $item);

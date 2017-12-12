@@ -18,11 +18,11 @@
               <span class="checkbox-container">
                 <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"></i>
                 <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"></i>
-                <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{currentlyEditableItem.sort_order + 1}}.</span>
+                <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{item.sort_order + 1}}.</span>
               </span>
 
               <textarea
-                v-model="currentlyEditableItem.content"
+                v-model="item.content"
                 class="content-textarea"
                 @keyup="debounceSaveChanges"
                 @keydown="debounceSaveChanges"
@@ -33,7 +33,7 @@
             </h4>
           </div>
 
-          <manage-item-form-meta :current-editable-item="currentlyEditableItem"></manage-item-form-meta>
+          <manage-item-form-meta :item="item"></manage-item-form-meta>
 
           <ul class="manage-item-menu">
             <li @click="switchView('notes')" :class="{ selected: view=='notes' }">
@@ -77,7 +77,7 @@
           <div class="panel-body notes">
             <manage-item-form-comments
               @saveChanges="saveChanges"
-              :current-editable-item="currentlyEditableItem"
+              :item="item"
             ></manage-item-form-comments>
           </div>
 
@@ -93,8 +93,10 @@
         <template v-if="view=='sub-items'">
           <div class="panel-body sub-items">
             <sub-checklist-items
-              :current-editable-item="currentlyEditableItem"
-              :items="currentlyEditableItem.child_list_items"
+              :items="item.child_list_items"
+              :parent="item"
+              :parent-model="'checklist-item'"
+              :list-type="item.sub_list_type"
             ></sub-checklist-items>
           </div>
         </template>
@@ -118,7 +120,7 @@ import autosize from 'autosize';
 export default {
   name: 'manage-checklist-item',
   props: {
-    currentlyEditableItem: {
+    item: {
       type: Object,
       required: true
     },
@@ -169,16 +171,16 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'currentEditableItem'
+      'currentEditableItemIsExpanded',
     ]),
     checkboxClass: function() {
-      return this.checkboxClassOverride ? this.checkboxClassOverride : this.currentlyEditableItem.checked_at ? 'fa-check' : 'fa-circle-thin'
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-circle-thin'
     },
     toggleExpansionClass: function() {
-      return this.currentEditableItem.isExpanded ? 'fa-compress' : 'fa-expand'
+      return this.currentEditableItemIsExpanded ? 'fa-compress' : 'fa-expand'
     },
     toggleExpansionTitle: function() {
-      return this.currentEditableItem.isExpanded ? 'Compress' : 'Expand'
+      return this.currentEditableItemIsExpanded ? 'Compress' : 'Expand'
     }
   },
   components: {
