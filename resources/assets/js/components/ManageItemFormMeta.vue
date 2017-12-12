@@ -41,12 +41,6 @@
             </button>
           </div>
 
-          <!-- <datepicker
-            :value="currentEditableItem.deadline"
-            @selected="setDate"
-            :inline="true"
-            :format="dateFormatter"
-          ></datepicker> -->
           <datepicker
             v-model="currentEditableItem.deadline"
             @selected="setDate"

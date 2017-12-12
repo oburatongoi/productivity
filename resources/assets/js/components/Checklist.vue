@@ -108,7 +108,7 @@
     <manage-checklist-item
       v-if="!selectedIsMovable&&currentEditableItemIndexIsSet"
       :list-type="checklist.list_type"
-      :current-editable-item="checklistItems[currentEditableItem.index]"
+      :currently-editable-item="checklistItems[currentEditableItem.index]"
     ></manage-checklist-item>
 
     <move-to-checklist v-if="selectedIsMovable"></move-to-checklist>

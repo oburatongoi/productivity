@@ -158,7 +158,7 @@ const mutations = {
       state.checklistItems[state.currentEditableItem.index].checked_at = state.checklistItems[state.currentEditableItem.index].checked_at ? null : moment().format()
     },
     [TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION] (state) {
-        state.currentEditableItemIsExpanded = ! state.currentEditableItemIsExpanded
+        state.currentEditableItem.isExpanded = ! state.currentEditableItem.isExpanded
     },
     [TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE] (state) {
         state.checklistItems[state.currentEditableItem.index].is_important = ! state.checklistItems[state.currentEditableItem.index].is_important
@@ -335,7 +335,7 @@ const actions = {
   },
   removeCurrentlyEditable({commit}) {
       return new Promise((resolve, reject) => {
-          if (state.currentEditableItemIsExpanded) {
+          if (state.currentEditableItem.isExpanded) {
               commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
           }
           commit(DELETE_CURRENTLY_EDITABLE)
@@ -593,7 +593,6 @@ const getters = {
     currentEditableItem: state => state.currentEditableItem,
     checklistItems: state => state.checklistItems,
     currentEditableItemIndexIsSet: state => state.currentEditableItem.index === null ? false : true,
-    currentEditableItemIsExpanded: state => state.currentEditableItemIsExpanded,
     deadlinePlaceholder: state => state.checklistItems[state.currentEditableItem.index]&&state.checklistItems[state.currentEditableItem.index].deadline ? 'Due: ' + moment(state.checklistItems[state.currentEditableItem.index].deadline).format('MMM D, YYYY') : 'No Due Date'
 }
 
