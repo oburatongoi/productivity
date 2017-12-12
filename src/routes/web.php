@@ -11,9 +11,10 @@ Route::group(['domain' => '{'.(string)(config('productivity.subdomain')).'}.'.(s
         Route::post('/search', 'SearchController@search');
 
         Route::post('/lists/{list}/add-item', 'ChecklistItemController@store');
-        Route::patch('/lists/{list}/save-sort-order', 'ChecklistItemController@saveSortOrder');
+        Route::patch('/lists/save-sort-order', 'ChecklistItemController@saveSortOrder');
         Route::patch('/lists/item/{item}/update', 'ChecklistItemController@update');
         Route::patch('/lists/item/{item}/check', 'ChecklistItemController@check');
+        Route::post('/lists/item/{item}/add-sub-item', 'ChecklistItemController@storeSubItem');
 
         Route::resource('/folders', 'FolderController', ['except' => ['create', 'edit', 'destroy']]);
         Route::resource('/lists', 'ChecklistController', ['except' => ['create', 'edit', 'destroy']]);
@@ -28,7 +29,7 @@ Route::group(['domain' => '{'.(string)(config('productivity.subdomain')).'}.'.(s
         Route::post('/selection', 'SelectionController@delete');
 
         Route::get('/maintenance/add-missing-fake-ids', 'Maintenance\MissingFakeIdController@addMissingFakeIds');
-        Route::get('/maintenance/set-item-sort-order', 'Maintenance\ItemSortOrderController@setItemSortOrder');
+        Route::get('/maintenance/set-item-sort-order', 'Maintenance\ItemSortOrderController@setSortOrder');
     });
 
 });

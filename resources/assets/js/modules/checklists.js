@@ -3,6 +3,7 @@ import {
     ADD_CURRENTLY_EDITABLE,
     ADD_UNFILTERED,
     ADD_ITEM_TO_CHECKLIST,
+    ADD_SUB_ITEM_TO_CHECKLIST_ITEM,
     DECREMENT_ITEM_COUNT,
     DELETE_CHECKLIST,
     DELETE_CURRENTLY_EDITABLE,
@@ -14,16 +15,17 @@ import {
     UPDATE_CHECKLIST,
     UPDATE_ITEM_COUNTS,
     REPLACE_PENDING_TASK,
-    RESET_NEW_CHECKLIST_ITEM,
     SET_CURRENT_EDITABLE_ITEM_COMMENTS,
     SET_CURRENT_EDITABLE_ITEM_DEADLINE,
     SORT_CHECKLIST_ITEMS,
+    SORT_SUB_CHECKLIST_ITEMS,
     TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK,
     TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION,
     TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE,
     TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY,
     UNDO_UPDATE_SORT_ORDER,
-    UPDATE_SORT_ORDER
+    UPDATE_SORT_ORDER,
+    UPDATE_SUB_ITEM_SORT_ORDER
 } from '../mutations'
 
 import sort from 'fast-sort';
@@ -38,14 +40,6 @@ const state = {
     currentEditableItemID: null,
     currentEditableItemIndex: null,
     currentEditableItemIsExpanded: false,
-    newChecklistItem: {
-        content: null,
-        is_urgent: false,
-        is_important: false,
-        deadline: null,
-        comments: null,
-        sort_order: Productivity.checklistItems ? Productivity.checklistItems.length : Productivity.checklist && Productivity.checklist.items ? Productivity.checklist.items.length : 0,
-    },
     delistedItems: [],
     filters: {
         checked: 'unchecked',
@@ -68,7 +62,11 @@ const mutations = {
       }
     },
     [ADD_ITEM_TO_CHECKLIST] (state, item) {
-      state.checklist.items.unshift(item)
+      state.checklist.items.push(item)
+    },
+    [ADD_SUB_ITEM_TO_CHECKLIST_ITEM] (state, payload) {
+      let i = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
+      state.checklistItems[i].child_list_items.push(payload.child)
     },
     [DECREMENT_ITEM_COUNT] (state, checklistID) {
       if (
@@ -152,16 +150,6 @@ const mutations = {
         let i = _.findIndex(state.checklistItems, ['id', payload.old.id]);
         state.checklistItems.splice(i,1,payload.new)
     },
-    [RESET_NEW_CHECKLIST_ITEM] (state) {
-        state.newChecklistItem = {
-            content: undefined,
-            is_urgent: undefined,
-            is_important: undefined,
-            deadline: undefined,
-            comments: undefined,
-            sort_order: Productivity.checklistItems ? Productivity.checklistItems.length : Productivity.checklist && Productivity.checklist.items ? Productivity.checklist.items.length : 0,
-        }
-    },
     [SET_CURRENT_EDITABLE_ITEM_COMMENTS] (state, html = null) {
       state.checklistItems[state.currentEditableItemIndex].comments = html
     },
@@ -183,6 +171,10 @@ const mutations = {
     [SORT_CHECKLIST_ITEMS] (state) {
       state.checklistItems = sort(state.checklistItems).asc(i => i.sort_order)
     },
+    [SORT_SUB_CHECKLIST_ITEMS] (state, payload) {
+      let i = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
+      state.checklistItems[i].child_list_items = sort(state.checklistItems[i].child_list_items).asc(item => item.sort_order)
+    },
     [UNDO_UPDATE_SORT_ORDER] (state) {
       // Maybe use https://github.com/pinguinjkeke/vue-local-storage or some other way to store/retrieve items
     },
@@ -191,45 +183,82 @@ const mutations = {
         state.checklistItems[i].sort_order = i
       }
     },
+    [UPDATE_SUB_ITEM_SORT_ORDER] (state, payload) {
+      let c = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
+
+      for (var i = 0; i < state.checklistItems[c].child_list_items.length; i++) {
+      state.checklistItems[c].child_list_items[i].sort_order = i
+      }
+    },
 }
 
 const actions = {
   addChecklistItem({dispatch, commit}, payload) {
       return new Promise((resolve, reject) => {
-          axios.post('/lists/' + state.checklist.fake_id + '/add-item', {item:payload.item})
-               .then( response => dispatch('addChecklistItemHandler', response).then(
-                      response => resolve(response)
-               ) )
+          axios.post('/lists/' + payload.parent.fake_id + '/add-item', {item:payload.item})
+               .then( response => dispatch('addChecklistItemHandler', response)
+                                    .then( response => resolve(response) ) )
       })
   },
   addChecklistItemHandler({commit}, response) {
     return new Promise((resolve, reject) => {
       if (response.data.tokenMismatch) {
-          Vue.handleTokenMismatch(response.data).then(
-              (response) => {
+          Vue.handleTokenMismatch(response.data)
+          .then( (response) => {
                   if (response.data.item) {
                       commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
-                      commit(ADD_UNFILTERED, response.data.item)
-                      commit(RESET_NEW_CHECKLIST_ITEM)
                       commit(SORT_CHECKLIST_ITEMS)
+                      commit(ADD_UNFILTERED, response.data.item)
                       resolve(response.data.item)
                   } else if (response.data.error) {
                       reject(response.data.error)
                   } else {
                       reject()
                   }
-              }
-          ).catch(
-              (error) => reject(error)
-          )
+              } )
+          .catch( error => reject(error) )
       } else if (response.data.item) {
           commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
-          commit(ADD_UNFILTERED, response.data.item)
-          commit(RESET_NEW_CHECKLIST_ITEM)
           commit(SORT_CHECKLIST_ITEMS)
+          commit(ADD_UNFILTERED, response.data.item)
           resolve(response.data.item)
       } else if (response.data.error) {
           reject(response.data.error)
+      } else {
+          reject()
+      }
+    })
+  },
+  addSubChecklistItem({dispatch, commit}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post('/lists/item/' + payload.parent.id + '/add-sub-item', {item:payload.item})
+               .then( response => dispatch('addSubChecklistItemHandler', {parent:payload.parent, response:response})
+                                    .then( response => resolve(response) ) )
+      })
+  },
+  addSubChecklistItemHandler({commit}, payload) {
+    return new Promise((resolve, reject) => {
+      let parent = payload.parent;
+      if (payload.response.data.tokenMismatch) {
+          Vue.handleTokenMismatch(payload.response.data)
+          .then( (response) => {
+                  if (response.data.item) {
+                      commit(ADD_SUB_ITEM_TO_CHECKLIST_ITEM, {parent, child: response.data.item})
+                      commit(SORT_SUB_CHECKLIST_ITEMS, {parent})
+                      resolve(response.data.item)
+                  } else if (response.data.error) {
+                      reject(response.data.error)
+                  } else {
+                      reject()
+                  }
+              } )
+          .catch( error => reject(error) )
+      } else if (payload.response.data.item) {
+          commit(ADD_SUB_ITEM_TO_CHECKLIST_ITEM, {parent, child: payload.response.data.item})
+          commit(SORT_SUB_CHECKLIST_ITEMS, {parent})
+          resolve(payload.response.data.item)
+      } else if (payload.response.data.error) {
+          reject(payload.response.data.error)
       } else {
           reject()
       }
@@ -285,7 +314,7 @@ const actions = {
               commit(DECREMENT_ITEM_COUNT, checklistItem.checklist_id)
               commit(DELETE_CHECKLIST_ITEM, checklistItem)
               commit(UPDATE_SORT_ORDER)
-              dispatch('saveSortOrder')
+              dispatch('saveSortOrder', {checklistItems: state.checklistItems, parent: state.checklist, parentModel: 'checklist'})
               resolve(checklistItem)
             }
           )
@@ -322,12 +351,12 @@ const actions = {
         resolve(payload)
     })
   },
-  resetNewChecklistItem({commit}) {
-      return new Promise((resolve, reject) => {
-          commit(RESET_NEW_CHECKLIST_ITEM)
-          resolve()
-      })
-  },
+  // resetNewChecklistItem({commit}) {
+  //     return new Promise((resolve, reject) => {
+  //         commit(RESET_NEW_CHECKLIST_ITEM)
+  //         resolve()
+  //     })
+  // },
   saveChecklist({ dispatch, commit }, checklist) {
       return new Promise((resolve, reject) => {
         axios.patch('/lists/'+checklist.fake_id, {checklist:checklist})
@@ -375,6 +404,15 @@ const actions = {
              .catch( error => reject(error) )
       })
   },
+  checkChecklistItem({dispatch, commit}, item) {
+      return new Promise((resolve, reject) => {
+        item.checked_at = item.checked_at ? null : moment().format();
+        commit(ADD_UNFILTERED, item)
+        axios.patch('/lists/item/' + item.id + '/check', {item:item})
+             .then( response => resolve(dispatch('saveCurrentEditableItemHandler', response)) )
+             .catch( error => reject(error) )
+      })
+  },
   saveCurrentEditableItemHandler({dispatch, commit}, response) {
       return new Promise((resolve, reject) => {
         if (response.data.tokenMismatch) {
@@ -388,9 +426,9 @@ const actions = {
         }
       })
   },
-  saveSortOrder({ commit, state, dispatch }) {
+  saveSortOrder({ commit, state, dispatch }, payload) {
     return new Promise((resolve, reject) => {
-      axios.patch('/lists/' + state.checklist.fake_id + '/save-sort-order', { checklistItems: state.checklistItems })
+      axios.patch('/lists/save-sort-order', payload)
            .then( response => resolve( dispatch('saveSortOrderHandler', response) ))
            .catch( error => console.log(error) )
     })
@@ -517,14 +555,19 @@ const actions = {
         .catch( (error) => reject(error) )
     })
   },
-  updateSortOrder({ commit, state, dispatch }) {
+  updateSortOrder({ commit, state, dispatch }, payload) {
     return new Promise((resolve, reject) => {
-      commit(UPDATE_SORT_ORDER)
-      commit(SORT_CHECKLIST_ITEMS)
-      dispatch('saveSortOrder')
+      if (payload.parentModel == 'checklist') {
+        commit(UPDATE_SORT_ORDER)
+        commit(SORT_CHECKLIST_ITEMS)
+      } else if (payload.parentModel == 'checklistItem') {
+        commit(UPDATE_SUB_ITEM_SORT_ORDER, payload)
+        commit(SORT_SUB_CHECKLIST_ITEMS, payload)
+      }
+
+      dispatch('saveSortOrder', payload)
         .then( () => resolve() )
         .catch( (error) => {
-          console.log(error);
           commit(UNDO_UPDATE_SORT_ORDER) //WIP : set initial items
           reject()
         })
@@ -539,7 +582,6 @@ const getters = {
     unfilteredItems: state => state.unfilteredItems,
     delistedItems: state => state.delistedItems,
     filters: state => state.filters,
-    newChecklistItem: state => state.newChecklistItem,
     currentEditableItemID: state => state.currentEditableItemID,
     currentEditableItemIndex: state => state.currentEditableItemIndex,
     checklistItems: state => state.checklistItems,

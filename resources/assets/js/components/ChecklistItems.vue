@@ -1,34 +1,50 @@
 <template>
     <draggable class="checklist-items"
       :class="{'list-unstyled': listType!=='ol'}"
-      :element="listType"
-      @end="updateSortOrder"
-      :list="checklistItems"
+      :element="draggableListType"
+      @end="beforeUpdateSortOrder"
+      :list="items"
     >
         <checklist-item
-          v-if="checklistItems"
-          v-for="item in checklistItems"
+          v-if="items"
+          v-for="item in items"
           :item="item"
-          :list-type="checklist.list_type"
+          :list-type="listType"
           :key="item.id"
+          :parent-model="parentModel"
+          @onEmitClick="emitChecklistItemClick"
         ></checklist-item>
     </draggable>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 
 import ChecklistItem from './ChecklistItem.vue'
 import Draggable from 'vuedraggable'
 
 export default {
     name: 'checklist-items',
+    props: {
+      items: {
+        type: Array,
+        default: () => []
+      },
+      listType: {
+        type: String,
+        default: 'ch'
+      },
+      parent: {
+        type: Object,
+        required: true
+      },
+      parentModel: {
+        type: String,
+        required: true
+      }
+    },
     computed: {
-      ...mapGetters([
-        'checklist',
-        'checklistItems'
-      ]),
-      listType: function() {
+      draggableListType: function() {
         return this.checklist&&this.checklist.list_type&&this.checklist.list_type == 'nu' ? 'ol' : 'ul';
       }
     },
@@ -36,7 +52,13 @@ export default {
       ...mapActions([
         'sortChecklistItems',
         'updateSortOrder'
-      ])
+      ]),
+      beforeUpdateSortOrder: function() {
+        return this.updateSortOrder({checklistItems: this.items, parent: this.parent, parentModel: this.parentModel})
+      },
+      emitChecklistItemClick: function(payload) {
+        return this.$emit('onChecklistItemClick', payload)
+      }
     },
     components: {
         ChecklistItem,

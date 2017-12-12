@@ -5,6 +5,7 @@ namespace Oburatongoi\Productivity\Http\Controllers;
 use Illuminate\Http\Request;
 use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
 use Oburatongoi\Productivity\Repositories\Checklists;
+use Oburatongoi\Productivity\Repositories\ChecklistItems;
 use Oburatongoi\Productivity\Checklist;
 use Oburatongoi\Productivity\ChecklistItem;
 use Carbon\Carbon;
@@ -50,9 +51,38 @@ class ChecklistItemController extends Controller
       return response()->json($response);
     }
 
+    /**
+     * Store a newly created sub item in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeSubItem($account, Request $request, ChecklistItem $item)
+    {
+      $this->authorize('modify', $item);
+
+      $this->validate($request, [
+          'item.content' => 'required|max:255',
+          'item.is_urgent' => 'boolean',
+          'item.is_important' => 'boolean',
+          'item.deadline' => 'nullable|date',
+          'item.sort_order' => 'nullable|integer',
+      ]);
+
+      try {
+        $response['item'] = $item->child_list_items()->create($request->input('item'));
+      } catch (AlgoliaException $e) {
+        $response['exceptions'][] = $e->getMessage();
+      } catch (Exception $e) {
+        $response['exceptions'][] = $e->getMessage();
+      }
+
+      return response()->json($response);
+    }
+
     public function update($account, Request $request, ChecklistItem $item)
     {
-      $this->authorize('modify', $item->checklistById());
+      $this->authorize('modify', $item->checklist()->first());
 
       $this->validate($request, [
           'item.content' => 'required|max:255',
@@ -87,11 +117,47 @@ class ChecklistItemController extends Controller
       return response()->json($response);
     }
 
-    public function saveSortOrder($account, Request $request, Checklist $checklist)
+    public function check($account, Request $request, ChecklistItem $item)
     {
-      $this->authorize('modify', $checklist);
+      $this->authorize('modify', $item->checklist()->first());
 
-      return $this->checklists->setItemSortOrder($request, $checklist);
+      $this->validate($request, [
+          'item.checked_at' => 'nullable|date',
+      ]);
+
+      $item->checked_at = $request->input('item.checked_at') ? Carbon::parse($request->item['checked_at'])->toDateTimeString() : null;
+
+      try {
+        $response['item'] = $item->save();
+      } catch (AlgoliaException $e) {
+        $response['exceptions'][] = $e->getMessage();
+      } catch (Exception $e) {
+        $response['exceptions'][] = $e->getMessage();
+      }
+
+      $response['item'] = $item;
+
+      return response()->json($response);
+    }
+
+    public function saveSortOrder($account, Request $request)
+    {
+      if ($request->parentModel == 'checklist') {
+        $checklist = Checklist::where('fake_id', $request->parent['fake_id'])->firstOrFail();
+
+        $this->authorize('modify', $checklist);
+
+        return $this->checklists->setItemSortOrder($request, $checklist);
+      }
+
+      if ($request->parentModel == 'checklistItem') {
+        $item = ChecklistItem::where('id', $request->parent['id'])->firstOrFail();
+
+        $this->authorize('modify', $item);
+
+        return ChecklistItems::setItemSortOrder($request, $item);
+      }
+
 
     }
 }

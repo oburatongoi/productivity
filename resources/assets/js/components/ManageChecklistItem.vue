@@ -35,49 +35,70 @@
 
           <manage-item-form-meta :current-editable-item="currentEditableItem"></manage-item-form-meta>
 
-          <div class="comments-label">
-            <i class="fa fa-note" aria-hidden="true"></i>
-            Notes
+          <ul class="manage-item-menu">
+            <li @click="switchView('notes')" :class="{ selected: view=='notes' }">
+              <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+              Notes
+            </li>
+
+            <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }">
+              <i class="fa fa-check-square" aria-hidden="true"></i>
+              Tasks
+            </li>
+          </ul>
+
+          <template v-if="view=='notes'">
+            <div id="quill-toolbar">
+              <span class="ql-formats">
+                <button class="ql-bold" type="button"></button>
+                <button class="ql-italic" type="button"></button>
+                <button class="ql-underline" type="button"></button>
+                <button class="ql-strike" type="button"></button>
+              </span>
+
+              <span class="ql-formats">
+                <button class="ql-list" value="ordered" type="button"></button>
+                <button class="ql-list" value="bullet" type="button"></button>
+                <button class="ql-indent" value="-1" type="button"></button>
+                <button class="ql-indent" value="+1" type="button"></button>
+              </span>
+
+              <span class="ql-formats">
+                <button class="ql-link" type="button"></button>
+                <button class="ql-script" value="sub" type="button"></button>
+                <button class="ql-script" value="super" type="button"></button>
+                <button class="ql-code-block" type="button"></button>
+              </span>
+            </div>
+          </template>
+        </div>
+
+        <template v-if="view=='notes'">
+          <div class="panel-body notes">
+            <manage-item-form-comments
+              @saveChanges="saveChanges"
+              :current-editable-item="currentEditableItem"
+            ></manage-item-form-comments>
           </div>
 
-          <div id="quill-toolbar">
-            <span class="ql-formats">
-              <button class="ql-bold" type="button"></button>
-              <button class="ql-italic" type="button"></button>
-              <button class="ql-underline" type="button"></button>
-              <button class="ql-strike" type="button"></button>
-            </span>
-
-            <span class="ql-formats">
-              <button class="ql-list" value="ordered" type="button"></button>
-              <button class="ql-list" value="bullet" type="button"></button>
-              <button class="ql-indent" value="-1" type="button"></button>
-              <button class="ql-indent" value="+1" type="button"></button>
-            </span>
-
-            <span class="ql-formats">
-              <button class="ql-link" type="button"></button>
-              <button class="ql-script" value="sub" type="button"></button>
-              <button class="ql-script" value="super" type="button"></button>
-              <button class="ql-code-block" type="button"></button>
-            </span>
+          <div class="panel-footer">
+            <manage-item-form-buttons
+              :isSaving="savingChanges"
+              @resetForm="saveAndClose"
+              @saveChanges="saveChanges"
+            ></manage-item-form-buttons>
           </div>
-        </div>
+        </template>
 
-        <div class="panel-body">
-          <manage-item-form-comments
-            @saveChanges="saveChanges"
-            :current-editable-item="currentEditableItem"
-          ></manage-item-form-comments>
-        </div>
+        <template v-if="view=='sub-items'">
+          <div class="panel-body sub-items">
+            <sub-checklist-items
+              :current-editable-item="currentEditableItem"
+              :items="currentEditableItem.child_list_items"
+            ></sub-checklist-items>
+          </div>
+        </template>
 
-        <div class="panel-footer">
-          <manage-item-form-buttons
-            :isSaving="savingChanges"
-            @resetForm="saveAndClose"
-            @saveChanges="saveChanges"
-          ></manage-item-form-buttons>
-        </div>
       </template>
 
     </div>
@@ -90,6 +111,7 @@ import { mapActions, mapGetters } from 'vuex'
 import ManageItemFormMeta from './ManageItemFormMeta.vue'
 import ManageItemFormComments from './ManageItemFormComments.vue'
 import ManageItemFormButtons from './ManageItemFormButtons.vue'
+import SubChecklistItems from './SubChecklistItems.vue'
 
 import autosize from 'autosize';
 
@@ -108,7 +130,8 @@ export default {
   data () {
     return {
       savingChanges: false,
-      checkboxClassOverride: null
+      checkboxClassOverride: null,
+      view: 'notes'
     }
   },
   methods: {
@@ -139,6 +162,9 @@ export default {
       this.toggleCurrentEditableItemCheckMark()
           .then( () => this.checkboxClassOverride = null )
           .catch( (error) => console.log(error))
+    },
+    switchView: function(view) {
+      this.view = view
     }
   },
   computed: {
@@ -158,17 +184,15 @@ export default {
   components: {
       ManageItemFormMeta,
       ManageItemFormComments,
-      ManageItemFormButtons
+      ManageItemFormButtons,
+      SubChecklistItems
   },
   mounted: function() {
     this.$nextTick(function() {
       autosize(document.querySelector('.content-textarea'));
       autosize(document.querySelector('.comments-textarea'));
     })
-  },
-  updated: function() {
-    console.log('data has been updated');
-  },
+  }
 }
 </script>
 
@@ -182,4 +206,216 @@ export default {
 .ol-number {
     font-weight: bold;
 }
+.manage-checklist-item {
+    @media(min-width:769px){
+        border: 1px solid $brand-primary;
+    }
+
+    & > .position-relative {
+        height: inherit;
+        background: none;
+    }
+
+
+    .sizing-buttons {
+        padding: 10px;
+        padding-bottom: 0;
+        height: 25px;
+        overflow: visible;
+        @include clearfix;
+        text-align: center;
+
+        .fa {
+            cursor: pointer;
+            color: $base-border-color;
+            &:hover {
+                color: $brand-primary;
+            }
+        }
+
+
+
+        .fa-stack {
+            margin-top: -5px;
+            font-size: 0.75em;
+            .fa-flopy-o {
+                color: darken($base-border-color, 10%);
+            }
+            .fa-circle-o-notch {
+                color: $brand-primary;
+                opacity: 0.6;
+            }
+        }
+    }
+
+    .panel-heading {
+        // padding-bottom: 10px;
+        padding-bottom: 0;
+        padding-top: 10px;
+    }
+
+    .panel-body {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        @include desktop-overflow-y-scroll;
+
+        &.sub-items {
+            height: 70%;
+        }
+        &.notes {
+            height: 75%;
+        }
+    }
+
+
+
+    .panel-footer {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        border: 0;
+        @include transparent-linear-gradient;
+    }
+
+    .item-form-buttons {
+        background: transparent;
+        @include clearfix;
+        & > button {
+            float: left;
+        }
+
+        .delete-item-btn-container {
+            @include clearfix;
+            @include desktop-overflow-y;
+            float: right;
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+
+            & > i.toggle-delete-item-btn,
+            & > i.delete-item-btn {
+                cursor: pointer;
+                display: inline;
+                float: right;
+                vertical-align: middle;
+                line-height: 1.4;
+                font-size: 16px;
+            }
+
+            & > i.delete-item-btn {
+                color: $brand-danger;
+                background: white;
+                margin-right: 10px;
+            }
+
+        }
+    }
+
+    .manage-checklist-item-content-textarea {
+        margin: 0;
+        padding: 0 0 3px 0;
+
+        .checkbox-container {
+            vertical-align: text-top;
+        }
+    }
+
+    .edit-content {
+        textarea {
+            display: inline-block;
+            vertical-align: top;
+            border-radius: 2px;
+            height: auto;
+            margin: 0;
+            resize: none;
+            width: 85%;
+            border: 1px solid white;
+            outline: none;
+            padding: 4px 4px 6px;
+            font-size: 0.9em;
+            // font-weight: $font-weight-light;
+            font-weight: $font-weight-bold;
+            &:focus {
+                border: 1px dotted $brand-primary;
+                color: black;
+            }
+            @media(max-width:768px){
+                width: 83%;
+            }
+            @media(min-width:1000px){
+                width: 81%;
+            }
+            @media(min-width:1200px){
+                width: 85%;
+            }
+            @media(min-width:1433px){
+                width: 90%;
+            }
+        }
+    }
+
+
+    .manage-item-menu {
+        display: block;
+        margin: 0;
+        padding: 0;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        color: darken($base-border-color, 20%);
+        font-size: 0.8em;
+        font-family: $font-family-sans-serif;
+        font-weight: 600;
+
+        li {
+          cursor: pointer;
+          display: inline-block;
+          padding-left: 3px;
+          padding-right: 3px;
+          &:not(:last-child) {
+            margin-right: 5px;
+          }
+          &.selected {
+            border-bottom: 2px solid $brand-primary;
+          }
+          &:hover {
+            border-bottom: 2px solid;
+          }
+        }
+    }
+
+    .manage-item-form-meta {
+        background: lighten($body-bg, 1%);
+        // background: transparent;
+        padding: 3px;
+        border: 1px solid $base-border-color;
+        border-radius: 2px;
+        text-align: center;
+
+        .is-important,
+        .is-urgent,
+        .deadline {
+            display: inline-block;
+            margin: 0;
+            width: 32.5%;
+            color: darken($base-border-color, 20%);
+
+            label {
+                display: block;
+                margin: 0;
+                font-size: 0.8em;
+            }
+
+            .fa {
+                font-size: 1.1em;
+                cursor: pointer;
+            }
+            &:nth-child(2) {
+                border-left: 1px solid $base-border-color;
+                border-right: 1px solid $base-border-color;
+            }
+        }
+    }
+}
+
 </style>

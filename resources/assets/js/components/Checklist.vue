@@ -82,11 +82,19 @@
               </div>
             </div>
           </div>
-          <add-item v-if="!isEditable"></add-item>
+          <add-item v-if="!isEditable" :parent="checklist" parent-model="checklist"></add-item>
       </div>
 
       <div class="checklist-index-panel panel-body">
-          <checklist-items v-if="!isEditable"></checklist-items>
+          <checklist-items
+            v-if="!isEditable"
+            :list-type="checklist.list_type"
+            :items="checklistItems"
+            parent-model="checklist"
+            :parent="checklist"
+            @onChecklistItemClick="toggleSelection"
+          ></checklist-items>
+
           <edit-checklist
             v-if="isEditable"
             @close="saveAndClose"
@@ -198,6 +206,7 @@ export default {
     methods: {
       ...mapActions([
         'saveChecklist',
+        'toggleSelection',
         'setFilters'
       ]),
       saveAndClose: function() {

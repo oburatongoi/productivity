@@ -22,7 +22,7 @@
       </div>
       <textarea @change.keyup.blur.delete="saveChanges"
                 class="form-control"
-                v-model="newChecklistItem.comments"
+                v-model="item.comments"
                 placeholder="Add a comment..."
                 maxlength="25000">
       </textarea>
@@ -31,21 +31,22 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'item-form-comments',
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       showComments: false
     }
   },
   computed: {
-    ...mapGetters([
-      'newChecklistItem'
-    ]),
     hasComments: function() {
-      return this.newChecklistItem.comments ? true : false
+      return this.item.comments ? true : false
     },
   },
   methods: {

@@ -1,18 +1,18 @@
 <template>
-  <li v-show="itemIsVisible" class="show-item" :class="{'is-selected':itemIsSelected}" @click.self="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" draggable>
+  <li v-show="itemIsVisible" class="show-item" :class="{'is-selected':itemIsSelected}" @click.self="emitClick({selection: {model, listing: item, parentModel}, event: $event})" draggable>
     <span class="checkbox-container">
       <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"></i>
       <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"></i>
       <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{item.sort_order + 1}}.</span>
     </span>
 
-    <p class="show-item-content" @click="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" @dblclick="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})">
+    <p class="show-item-content" @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})" @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})">
       {{ item.content }}
     </p>
 
-    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" @dblclick="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})"></i>
+    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})" @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})"></i>
 
-    <p class="preview-deadline" @click="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})" @dblclick="toggleSelection({selection: {model: 'checklist-item', listing: item}, event: $event})">
+    <p class="preview-deadline" @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})" @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})">
       <span v-if="item.is_important">
         <i class="fa fa-fw fa-star" aria-hidden="true"></i>
       </span>
@@ -57,32 +57,30 @@ export default {
       listType: {
         type: String,
         default: 'ch'
+      },
+      parentModel: {
+        type: String,
+        default: 'checklist'
       }
     },
     data () {
       return {
-          checkboxClassOverride: null
+        checkboxClassOverride: null,
+        model: 'checklist-item'
       }
     },
     methods: {
       ...mapActions([
-        'saveCurrentEditableItem',
-        'toggleSelection'
+        'checkChecklistItem',
       ]),
       checkItem: function() {
         this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
-        if (this.item.checked_at) {
-          this.item.checked_at = null
-        } else {
-          this.item.checked_at = moment().format()
-        }
-        this.saveCurrentEditableItem(this.item)
-            .then(
-              () => {this.checkboxClassOverride = null}
-            )
-            .catch(
-              () => {this.checkboxClassOverride = null}
-            )
+        this.checkChecklistItem(this.item)
+            .then( () => this.checkboxClassOverride = null )
+            .catch( () => this.checkboxClassOverride = null )
+      },
+      emitClick: function(payload) {
+        this.$emit('onEmitClick', payload)
       }
     },
     computed: {
@@ -104,9 +102,10 @@ export default {
         return this.delistedItems.indexOf(this.item.id) !== -1
       },
       itemPassesCheckedFilter: function() {
-        if (this.listType == 'nu' || this.listType == 'bu' || this.filters.checked == 'all') {
-          return true
-        }
+        if (this.parentModel == 'checklist-item') return true
+
+        if (this.listType == 'nu' || this.listType == 'bu' || this.filters.checked == 'all') return true
+
         if (this.filters.checked == 'checked') {
           if (this.item.checked_at && this.item.checked_at !== null) {
             return true
@@ -122,9 +121,8 @@ export default {
         return true
       },
       itemPassesPriorityFilter: function() {
-        if (this.filters.priority == 'none') {
-          return true
-        }
+        if (this.filters.priority == 'none') return true
+        
         if (this.filters.priority == 'both') {
           if (this.item.is_important && this.item.is_urgent) {
             return true
