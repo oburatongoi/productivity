@@ -87,7 +87,7 @@ export default {
       ...mapGetters([
         'selected',
         'unfilteredItems',
-        'currentEditableItem',
+        'editableChecklistItem',
         'delistedItems',
         'filters'
       ]),
@@ -146,7 +146,7 @@ export default {
         return this.itemBypassesFilters || !this.itemIsDelisted && !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
       },
       itemIsCurrentlyEditable: function() {
-        return this.currentEditableItem.id && this.item.id == this.currentEditableItem.id
+        return this.editableChecklistItem.id && this.item.id == this.editableChecklistItem.id
       },
       itemIsSelected: function() {
         return this.selected.checklistItems.indexOf(this.item) !== -1
