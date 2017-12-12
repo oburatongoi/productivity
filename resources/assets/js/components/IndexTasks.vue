@@ -9,6 +9,8 @@
               :item="item"
               type="ta"
               :key="item.id"
+              :parent-model="'checklist'"
+              @onEmitClick="toggleSelection"
             ></checklist-item>
 
             <li v-if="!checklistItems.length">There are no pending tasks at this time.</li>
@@ -17,32 +19,36 @@
     </div>
 
     <manage-checklist-item
-      v-if="currentEditableItemID"
-      :current-editable-item="checklistItems[currentEditableItemIndex]"
+      v-if="currentEditableItem.id"
+      :current-editable-item="checklistItems[currentEditableItem.index]"
     ></manage-checklist-item>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 import ChecklistItem from './ChecklistItem.vue'
 import ManageChecklistItem from './ManageChecklistItem.vue'
 
 export default {
     name: 'index-tasks',
+    methods: {
+      ...mapActions([
+        'toggleSelection'
+      ])
+    },
     computed: {
       ...mapGetters([
         'checklistItems',
-        'currentEditableItemID',
-        'currentEditableItemIndex',
+        'currentEditableItem',
         'currentEditableItemIsExpanded'
       ]),
       taskClass: function() {
-        if (this.currentEditableItemID && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
-        if (this.currentEditableItemID && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
+        if (this.currentEditableItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item'
+        if (this.currentEditableItem.id && ! this.currentEditableItemIsExpanded) return 'has-editable-item'
         return null
-      },
+      }
     },
     components: {
         ChecklistItem,

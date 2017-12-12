@@ -108,7 +108,7 @@
     <manage-checklist-item
       v-if="!selectedIsMovable&&currentEditableItemIndexIsSet"
       :list-type="checklist.list_type"
-      :current-editable-item="checklistItems[currentEditableItemIndex]"
+      :current-editable-item="checklistItems[currentEditableItem.index]"
     ></manage-checklist-item>
 
     <move-to-checklist v-if="selectedIsMovable"></move-to-checklist>
@@ -149,15 +149,14 @@ export default {
       ...mapGetters([
         'checklist',
         'checklistItems',
-        'currentEditableItemIndex',
+        'currentEditableItem',
         'currentEditableItemIndexIsSet',
-        'currentEditableItemIsExpanded',
         'selectedIsMovable',
         'filters'
       ]),
       checklistClass: function() {
         return ! this.currentEditableItemIndexIsSet ? null :
-                 this.currentEditableItemIsExpanded ? 'has-expanded-editable-item' : 'has-editable-item'
+                 this.currentEditableItem.isExpanded ? 'has-expanded-editable-item' : 'has-editable-item'
       },
       checklistIconClass: function() {
       return ! this.checklist.list_type         ? 'fa-list'         :

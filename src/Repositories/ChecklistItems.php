@@ -50,7 +50,7 @@ class ChecklistItems implements ChecklistItemsInterface {
 
     public function forChecklist(Checklist $checklist)
     {
-        return $checklist->items()->get();
+        return $checklist->items()->orderBy('sort_order', 'asc')->get();
     }
 
     public static function setItemSortOrder(Request $request, ChecklistItem $parentItem)

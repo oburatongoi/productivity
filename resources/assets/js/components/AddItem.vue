@@ -96,9 +96,9 @@ export default {
     setSortOrder: function() {
       switch (this.parentModel) {
         case 'checklistItem':
-          this.newItem.sort_order = this.parent.child_list_items.length
+          this.newItem.sort_order = this.parent.child_list_items ? this.parent.child_list_items.length : 0
           break;
-        default: this.newItem.sort_order = Productivity.checklistItems ? Productivity.checklistItems.length : Productivity.checklist && Productivity.checklist.items ? Productivity.checklist.items.length : 0
+        default: this.newItem.sort_order = Productivity.checklistItems ? Productivity.checklistItems.length : 0
       }
     },
     showDatePicker: function() {

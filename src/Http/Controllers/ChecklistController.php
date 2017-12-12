@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Oburatongoi\Productivity\Http\Controllers\ProductivityBaseController as Controller;
 
 use Oburatongoi\Productivity\Repositories\Checklists;
+use Oburatongoi\Productivity\Repositories\ChecklistItems;
 use Oburatongoi\Productivity\Checklist;
 use JavaScript;
 
@@ -13,13 +14,15 @@ class ChecklistController extends Controller
 {
 
     protected $checklists;
+    protected $items;
 
-    public function __construct(Checklists $checklists)
+    public function __construct(Checklists $checklists, ChecklistItems $items)
     {
         $this->middleware('web');
         $this->middleware('auth');
 
         $this->checklists = $checklists;
+        $this->items = $items;
     }
 
     /**
@@ -67,15 +70,11 @@ class ChecklistController extends Controller
     {
         $this->authorize('view', $checklist);
 
-        $checklist->load(['items' => function($query) {
-            $query->orderBy('sort_order', 'asc');
-            $query->orderBy(\DB::raw('-`deadline`'), 'desc');
-            $query->orderBy('created_at', 'desc');
-            $query->latest();
-        }]);
+        $checklistItems = $this->items->forChecklist($checklist);
 
         JavaScript::put([
           'checklist' => $checklist,
+          'checklistItems' => $checklistItems,
           'ancestors' => $checklist->getFolderTree(),
           'currentFolder' => $checklist->folderById()
         ]);

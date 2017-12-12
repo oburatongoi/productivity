@@ -35,11 +35,13 @@ const namespaced = true;
 const state = {
     checklists: Productivity.checklists ? Productivity.checklists: [],
     checklist: Productivity.checklist ? Productivity.checklist: [],
-    checklistItems: Productivity.checklistItems ? Productivity.checklistItems : Productivity.checklist && Productivity.checklist.items ? Productivity.checklist.items : [],
+    checklistItems: Productivity.checklistItems ? Productivity.checklistItems : [],
     unfilteredItems: [],
-    currentEditableItemID: null,
-    currentEditableItemIndex: null,
-    currentEditableItemIsExpanded: false,
+    currentEditableItem: {
+      id: null,
+      index: null,
+      isExpanded: false,
+    },
     delistedItems: [],
     filters: {
         checked: 'unchecked',
@@ -53,8 +55,8 @@ const mutations = {
     },
     [ADD_CURRENTLY_EDITABLE] (state, item) {
         let i = _.findIndex(state.checklistItems, ['id', item.id]);
-        state.currentEditableItemIndex = i
-        state.currentEditableItemID = item.id
+        state.currentEditableItem.index = i
+        state.currentEditableItem.id = item.id
     },
     [ADD_UNFILTERED] (state, item) {
       if( ! state.unfilteredItems.includes(item.id) ) {
@@ -62,10 +64,11 @@ const mutations = {
       }
     },
     [ADD_ITEM_TO_CHECKLIST] (state, item) {
-      state.checklist.items.push(item)
+      state.checklistItems.push(item)
     },
     [ADD_SUB_ITEM_TO_CHECKLIST_ITEM] (state, payload) {
       let i = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
+      if( i == -1 ) return false;
       state.checklistItems[i].child_list_items.push(payload.child)
     },
     [DECREMENT_ITEM_COUNT] (state, checklistID) {
@@ -90,18 +93,13 @@ const mutations = {
         ) {
           let i = _.findIndex(state.checklistItems, ['id', checklistItem.id]);
           state.checklistItems.splice(i,1)
-        } else if (
-          ! _.isEmpty(state.checklist.items)
-        ) {
-          let i = _.findIndex(state.checklist.items, ['id', checklistItem.id]);
-          state.checklist.items.splice(i,1)
         }
     },
     [DELIST_CHECKLIST_ITEM] (state, checklistItem) {
         state.delistedItems.unshift(checklistItem.id)
     },
     [DELETE_CURRENTLY_EDITABLE] (state) {
-        state.currentEditableItemID = state.currentEditableItemIndex = null
+        state.currentEditableItem.id = state.currentEditableItem.index = null
     },
     [DELETE_UNFILTERED] (state, item = null) {
         if (item) {
@@ -151,22 +149,22 @@ const mutations = {
         state.checklistItems.splice(i,1,payload.new)
     },
     [SET_CURRENT_EDITABLE_ITEM_COMMENTS] (state, html = null) {
-      state.checklistItems[state.currentEditableItemIndex].comments = html
+      state.checklistItems[state.currentEditableItem.index].comments = html
     },
     [SET_CURRENT_EDITABLE_ITEM_DEADLINE] (state, date = null) {
-      state.checklistItems[state.currentEditableItemIndex].deadline = date ? moment(date).format('YYYY-MM-DD') : null
+      state.checklistItems[state.currentEditableItem.index].deadline = date ? moment(date).format('YYYY-MM-DD') : null
     },
     [TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK] (state) {
-      state.checklistItems[state.currentEditableItemIndex].checked_at = state.checklistItems[state.currentEditableItemIndex].checked_at ? null : moment().format()
+      state.checklistItems[state.currentEditableItem.index].checked_at = state.checklistItems[state.currentEditableItem.index].checked_at ? null : moment().format()
     },
     [TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION] (state) {
         state.currentEditableItemIsExpanded = ! state.currentEditableItemIsExpanded
     },
     [TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE] (state) {
-        state.checklistItems[state.currentEditableItemIndex].is_important = ! state.checklistItems[state.currentEditableItemIndex].is_important
+        state.checklistItems[state.currentEditableItem.index].is_important = ! state.checklistItems[state.currentEditableItem.index].is_important
     },
     [TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY] (state) {
-        state.checklistItems[state.currentEditableItemIndex].is_urgent = ! state.checklistItems[state.currentEditableItemIndex].is_urgent
+        state.checklistItems[state.currentEditableItem.index].is_urgent = ! state.checklistItems[state.currentEditableItem.index].is_urgent
     },
     [SORT_CHECKLIST_ITEMS] (state) {
       state.checklistItems = sort(state.checklistItems).asc(i => i.sort_order)
@@ -396,7 +394,7 @@ const actions = {
   saveCurrentEditableItem({dispatch, commit}, item = null) {
       return new Promise((resolve, reject) => {
         if (item == null) {
-            item = state.checklistItems[state.currentEditableItemIndex] ? state.checklistItems[state.currentEditableItemIndex] : reject('There is no item or currently editable item')
+            item = state.checklistItems[state.currentEditableItem.index] ? state.checklistItems[state.currentEditableItem.index] : reject('There is no item or currently editable item')
         }
         commit(ADD_UNFILTERED, item)
         axios.patch('/lists/item/' + item.id + '/update', {item:item})
@@ -482,9 +480,19 @@ const actions = {
         resolve()
     })
   },
-  sortChecklistItems: function({commit}){
+  sortChecklistItems: function({commit}, payload = { parentModel: 'checklist' }){
     return new Promise((resolve, reject) => {
-        commit(SORT_CHECKLIST_ITEMS)
+      switch (payload.parentModel) {
+        case 'checklist-item':
+          if(payload.parent) {
+            commit(SORT_SUB_CHECKLIST_ITEMS, {parent: payload.parent})
+          } else {
+            console.log('Error: no parent included in the payload');
+          }
+          break;
+        default: commit(SORT_CHECKLIST_ITEMS)
+
+      }
         resolve()
     })
   },
@@ -582,12 +590,11 @@ const getters = {
     unfilteredItems: state => state.unfilteredItems,
     delistedItems: state => state.delistedItems,
     filters: state => state.filters,
-    currentEditableItemID: state => state.currentEditableItemID,
-    currentEditableItemIndex: state => state.currentEditableItemIndex,
+    currentEditableItem: state => state.currentEditableItem,
     checklistItems: state => state.checklistItems,
-    currentEditableItemIndexIsSet: state => state.currentEditableItemIndex === null ? false : true,
+    currentEditableItemIndexIsSet: state => state.currentEditableItem.index === null ? false : true,
     currentEditableItemIsExpanded: state => state.currentEditableItemIsExpanded,
-    deadlinePlaceholder: state => state.checklistItems[state.currentEditableItemIndex]&&state.checklistItems[state.currentEditableItemIndex].deadline ? 'Due: ' + moment(state.checklistItems[state.currentEditableItemIndex].deadline).format('MMM D, YYYY') : 'No Due Date'
+    deadlinePlaceholder: state => state.checklistItems[state.currentEditableItem.index]&&state.checklistItems[state.currentEditableItem.index].deadline ? 'Due: ' + moment(state.checklistItems[state.currentEditableItem.index].deadline).format('MMM D, YYYY') : 'No Due Date'
 }
 
 export default {

@@ -42,6 +42,7 @@ class ChecklistItemController extends Controller
 
       try {
         $response['item'] = $checklist->items()->create($request->input('item'));
+        if(empty($response['item']['child_list_items'])) $response['item']['child_list_items'] = []; // fixes bug in Vue code
       } catch (AlgoliaException $e) {
         $response['exceptions'][] = $e->getMessage();
       } catch (Exception $e) {
