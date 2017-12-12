@@ -28,7 +28,8 @@ export default {
     props: {
       items: {
         type: Array,
-        default: () => []
+        // default: () => []
+        required: true
       },
       listType: {
         type: String,
@@ -65,7 +66,7 @@ export default {
         Draggable
     },
     created: function() {
-      return this.sortChecklistItems()
+      return this.sortChecklistItems({parentModel: this.parentModel, parent: this.parent})
     }
 }
 </script>

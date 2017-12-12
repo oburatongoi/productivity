@@ -87,8 +87,7 @@ export default {
       ...mapGetters([
         'selected',
         'unfilteredItems',
-        'currentEditableItemID',
-        'currentEditableItemIndex',
+        'currentEditableItem',
         'delistedItems',
         'filters'
       ]),
@@ -122,7 +121,7 @@ export default {
       },
       itemPassesPriorityFilter: function() {
         if (this.filters.priority == 'none') return true
-        
+
         if (this.filters.priority == 'both') {
           if (this.item.is_important && this.item.is_urgent) {
             return true
@@ -147,7 +146,7 @@ export default {
         return this.itemBypassesFilters || !this.itemIsDelisted && !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
       },
       itemIsCurrentlyEditable: function() {
-        return this.currentEditableItemID && this.item.id == this.currentEditableItemID
+        return this.currentEditableItem.id && this.item.id == this.currentEditableItem.id
       },
       itemIsSelected: function() {
         return this.selected.checklistItems.indexOf(this.item) !== -1

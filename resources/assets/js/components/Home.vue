@@ -3,8 +3,8 @@
     <index-tasks></index-tasks>
 
     <manage-checklist-item
-      v-if="currentEditableItemID&&currentEditableItemIndex"
-      :current-editable-item="checklistItems[currentEditableItemIndex]"
+      v-if="currentEditableItem.id&&currentEditableItem.index"
+      :current-editable-item="checklistItems[currentEditableItem.index]"
     ></manage-checklist-item>
   </div>
 </template>
@@ -22,8 +22,7 @@ export default {
   },
   ...mapGetters([
     'checklistItems',
-    'currentEditableItemID',
-    'currentEditableItemIndex'
+    'currentEditableItem',
   ]),
 }
 </script>
