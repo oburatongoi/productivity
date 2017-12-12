@@ -587,7 +587,7 @@ const getters = {
     delistedItems: state => state.delistedItems,
     filters: state => state.filters,
     editableChecklistItem: state => state.editableChecklistItem,
-    currentEditableItemIsExpanded: state => state.editableChecklistItem,
+    currentEditableItemIsExpanded: state => state.currentEditableItemIsExpanded,
     checklistItems: state => state.checklistItems,
     deadlinePlaceholder: state => state.editableChecklistItem&&state.editableChecklistItem.deadline ? 'Due: ' + moment(state.editableChecklistItem.deadline).format('MMM D, YYYY') : 'No Due Date'
 }
