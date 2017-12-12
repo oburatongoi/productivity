@@ -18,7 +18,7 @@ class ChecklistItem extends Model
     protected $dates = ['published_at', 'checked_at', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $fillable = [
-        'checklist_id', 'fake_id', 'content', 'comments', 'deadline', 'sort_order', 'is_urgent', 'is_important', 'checked_at', 'created_at', 'updated_at', 'deleted_at',
+        'checklist_id', 'parent_checklist_item_id', 'child_list_item_type', 'fake_id', 'content', 'comments', 'deadline', 'sort_order', 'is_urgent', 'is_important', 'checked_at', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     protected $casts = [
@@ -29,15 +29,30 @@ class ChecklistItem extends Model
         // 'deadline' => 'date',
     ];
 
+    protected $with = ['child_list_items'];
+
     public function checklist()
     {
-        return $this->belongsTo('Oburatongoi\Productivity\Checklist', 'checklist_id');
+      if ($this->parent_checklist_item_id) {
+        return $this->parent_list_item->checklist();
+      }
+      return $this->belongsTo('Oburatongoi\Productivity\Checklist', 'checklist_id');
     }
 
-    public function checklistById()
+    public function child_list_items()
     {
-        return $this->checklist()->where('id', $this->checklist_id)->first();
+        return $this->hasMany('Oburatongoi\Productivity\ChecklistItem', 'parent_checklist_item_id');
     }
+
+    public function parent_list_item()
+    {
+        return $this->belongsTo('Oburatongoi\Productivity\ChecklistItem', 'parent_checklist_item_id');
+    }
+
+    // public function checklistById()
+    // {
+    //     return $this->checklist()->where('id', $this->checklist_id)->first();
+    // }
 
     protected $touches = ['checklist'];
     protected static function boot() {

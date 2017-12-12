@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'add-item-form-buttons',
@@ -29,9 +29,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'newChecklistItem'
-    ]),
     saveButtonIcon: function() {
       return this.isSaving ? 'fa-spinner fa-spin' : 'fa-floppy-o'
     }

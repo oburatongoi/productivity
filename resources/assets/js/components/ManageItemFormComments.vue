@@ -67,6 +67,42 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+.manage-checklist-item {
+  .edit-comments {
+      // min-height: 100%;
+      height: 100%;
+      padding: 0;
+      padding-bottom: 50px !important;
+      #comments-textarea.ql-container.ql-snow {
+          font-family: $paragraph-font-family-sans-serif !important;
+          display: inline-block;
+          vertical-align: top;
+          border-top-right-radius: 0;
+          border-top-left-radius: 0;
+          border-bottom-right-radius: 2px;
+          border-bottom-left-radius: 2px;
+          border: 0;
+          outline: none;
+          margin: 0;
+          padding-top: 10px !important;
+          padding-bottom: 50px !important;
+          overflow-y: visible;
+          font-size: 1.1em;
+          width: 100%;
+          height: 100%;
+          color: black;
+          border: 1px solid $base-border-color;
+          border-top: 0;
+          padding: 10px;
+          .ql-editor {
+              padding: 0;
 
+              a {
+                  color: $brand-primary !important;
+              }
+          }
+      }
+  }
+}
 </style>

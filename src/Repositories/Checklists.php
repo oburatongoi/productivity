@@ -53,7 +53,7 @@ class Checklists implements ChecklistsInterface {
             $response['exceptions'][] = $e->getMessage();
           }
 
-          if($updated) $response['items'][] = $item;
+          if(isset($updated)) $response['items'][] = $item;
 
         }
 
@@ -78,7 +78,7 @@ class Checklists implements ChecklistsInterface {
                               ['checklist_id', $checklist->id]
                             ])
                             ->update([ 'sort_order' => $key ]);
-               if($updated) $response['items'][] = $item->id;
+               if(isset($updated)) $response['items'][] = $item->id;
             } catch (AlgoliaException $e) {
               $response['exceptions'][] = $e;
             } catch (Exception $e) {
