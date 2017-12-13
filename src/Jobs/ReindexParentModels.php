@@ -44,7 +44,7 @@ class ReindexParentModels implements ShouldQueue
               if ($this->model->folder_id) return $this->model->folder->searchable();
               break;
             case 'Oburatongoi\Productivity\ChecklistItem':
-              if ($this->model->parent_checklist_item_id) return $this->model->parent_list_item->searchable();
+              // if ($this->model->parent_checklist_item_id) return $this->model->parent_list_item->searchable();
               if ($this->model->checklist_id) return $this->model->checklist->searchable();
               break;
           }
