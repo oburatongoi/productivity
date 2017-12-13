@@ -40,9 +40,21 @@ class ChecklistItemController extends Controller
           'item.sort_order' => 'nullable|integer',
       ]);
 
+      $newItem['deadline'] = $request->has('item.deadline') ? Carbon::parse($request->item['deadline'])->toDateTimeString() : null;
+
+      if ($request->has('item.content')) $newItem['content'] = $request->item['content'];
+      if ($request->has('item.comments')) $newItem['comments'] = $request->item['comments'];
+      if ($request->has('item.is_urgent')) $newItem['is_urgent'] = $request->item['is_urgent'];
+      if ($request->has('item.is_important')) $newItem['is_important'] = $request->item['is_important'];
+      if ($request->has('item.sort_order')) $newItem['sort_order'] = $request->item['sort_order'];
+
       try {
-        $response['item'] = $checklist->items()->create($request->input('item'));
-        if(empty($response['item']['child_list_items'])) $response['item']['child_list_items'] = []; // fixes bug in Vue code
+        if(isset($newItem) && ! empty($newItem)) {
+          $response['item'] = $checklist->items()->create($newItem);
+          if(empty($response['item']['child_list_items'])) $response['item']['child_list_items'] = []; // fixes bug in Vue code
+        } else {
+          $response['exceptions'][] = 'The new item had no defined properties.';
+        }
       } catch (AlgoliaException $e) {
         $response['exceptions'][] = $e->getMessage();
       } catch (Exception $e) {
@@ -70,8 +82,21 @@ class ChecklistItemController extends Controller
           'item.sort_order' => 'nullable|integer',
       ]);
 
+      $newItem['deadline'] = $request->has('item.deadline') ? Carbon::parse($request->item['deadline'])->toDateTimeString() : null;
+
+      if ($request->has('item.content')) $newItem['content'] = $request->item['content'];
+      if ($request->has('item.comments')) $newItem['comments'] = $request->item['comments'];
+      if ($request->has('item.is_urgent')) $newItem['is_urgent'] = $request->item['is_urgent'];
+      if ($request->has('item.is_important')) $newItem['is_important'] = $request->item['is_important'];
+      if ($request->has('item.sort_order')) $newItem['sort_order'] = $request->item['sort_order'];
+
       try {
-        $response['item'] = $item->child_list_items()->create($request->input('item'));
+        if(isset($newItem) && ! empty($newItem)) {
+          $response['item'] = $item->child_list_items()->create($newItem);
+          if(empty($response['item']['child_list_items'])) $response['item']['child_list_items'] = []; // fixes bug in Vue code
+        } else {
+          $response['exceptions'][] = 'The new item had no defined properties.';
+        }
       } catch (AlgoliaException $e) {
         $response['exceptions'][] = $e->getMessage();
       } catch (Exception $e) {
@@ -94,15 +119,14 @@ class ChecklistItemController extends Controller
           'item.sort_order' => 'nullable|integer',
       ]);
 
-      if ($request->input('item.checked_at')) {
-          $item->checked_at = Carbon::parse($request->item['checked_at'])->toDateTimeString();
-      } else $item->checked_at = null;
+      $item->checked_at = $request->input('item.checked_at') ? Carbon::parse($request->item['checked_at'])->toDateTimeString() : null;
+
+      $item->deadline = $request->has('item.deadline') ? Carbon::parse($request->item['deadline'])->toDateTimeString() : null;
 
       if ($request->has('item.content')) $item->content = $request->item['content'];
       if ($request->has('item.comments')) $item->comments = $request->item['comments'];
       if ($request->has('item.is_urgent')) $item->is_urgent = $request->item['is_urgent'];
       if ($request->has('item.is_important')) $item->is_important = $request->item['is_important'];
-      if ($request->has('item.deadline')) { $item->deadline = $request->item['deadline']; } else { $item->deadline = null; };
       if ($request->has('item.sort_order')) $item->sort_order = $request->item['sort_order'];
 
       try {
