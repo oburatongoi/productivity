@@ -43,7 +43,7 @@
 
             <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }">
               <i class="fa fa-check-square" aria-hidden="true"></i>
-              Tasks
+              Sub-Lists
             </li>
           </ul>
 
