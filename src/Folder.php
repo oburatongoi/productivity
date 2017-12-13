@@ -62,7 +62,7 @@ class Folder extends Model
           return array_only($data->toArray(), ['id', 'content', 'comments']);
         })->toArray();
 
-        $array = array_only($array, ['id', 'name', 'fake_id', 'folder_id', 'checklists', 'items']);
+        $array = array_only($array, ['id', 'name', 'fake_id', 'folder_id', 'checklists', 'items', 'child_list_items']);
 
         return $array;
     }

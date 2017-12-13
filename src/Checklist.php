@@ -54,7 +54,7 @@ class Checklist extends Model
           return array_only($data->toArray(), ['id', 'content', 'comments']);
         })->toArray();
 
-        $array = array_only($array, ['id', 'title', 'fake_id', 'folder_id', 'items']);
+        $array = array_only($array, ['id', 'title', 'fake_id', 'folder_id', 'items', 'child_list_items']);
 
         return $array;
     }
