@@ -49,12 +49,7 @@ class ChecklistItem extends Model
         return $this->belongsTo('Oburatongoi\Productivity\ChecklistItem', 'parent_checklist_item_id');
     }
 
-    // public function checklistById()
-    // {
-    //     return $this->checklist()->where('id', $this->checklist_id)->first();
-    // }
-
-    protected $touches = ['checklist'];
+    protected $touches = ['checklist', 'parent_list_item'];
     protected static function boot() {
         parent::boot();
         static::saved(function(ChecklistItem $item) {
