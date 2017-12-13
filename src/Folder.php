@@ -89,6 +89,9 @@ class Folder extends Model
     protected $touches = ['folder'];
     protected static function boot() {
     parent::boot();
+    static::saved(function(Folder $folder) {
+      ReindexParentModels::dispatch($folder);
+    });
     static::deleting(function(Folder $folder) {
         if ($folder->isForceDeleting()) {
             $folder->subfolders()->forceDelete();
