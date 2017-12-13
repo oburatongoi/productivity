@@ -107,7 +107,10 @@ export default {
             this.hideDatePicker()
             this.deadlineIsLoading = false
           })
-          .catch( (error) => console.log(error) )
+          .catch( (error) => {
+            this.hideDatePicker()
+            console.log(error)
+          })
     },
     toggleImportance: function() {
       this.importanceIsLoading = true

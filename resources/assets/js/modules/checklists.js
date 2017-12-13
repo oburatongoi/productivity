@@ -448,7 +448,18 @@ const actions = {
         commit(SET_EDITABLE_CHECKLIST_ITEM_DEADLINE, date)
         dispatch('saveCurrentEditableItem')
         .then( (success) => resolve(success) )
-        .catch( (error) => reject(error) )
+        .catch( (error) => {
+          dispatch(
+            'addNotice',
+            { type: 'error',
+              heading: 'Error!',
+              message: 'There was a problem setting the deadline.',
+              persist: false
+            },
+            {root: true}
+          )
+          reject(error)
+        })
       })
   },
   setCurentEditableItemComments({dispatch, commit}, html = null) {
