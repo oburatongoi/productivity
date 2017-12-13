@@ -8,6 +8,7 @@ use Oburatongoi\Productivity\Traits\Fakable;
 use Oburatongoi\Productivity\Traits\Nestable;
 use Oburatongoi\Productivity\Traits\Encryptable;
 use Oburatongoi\Productivity\Traits\Enfoldable;
+use App\Jobs\ReindexParentModels;
 use Laravel\Scout\Searchable;
 
 class Folder extends Model
