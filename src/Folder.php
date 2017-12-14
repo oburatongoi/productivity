@@ -59,10 +59,10 @@ class Folder extends Model
         })->toArray();
 
         $array['items'] = $this->items->map(function ($data) {
-          return array_only($data->toArray(), ['id', 'content', 'comments']);
+          return array_only($data->toArray(), ['id', 'content', 'comments', 'child_list_items']);
         })->toArray();
 
-        $array = array_only($array, ['id', 'name', 'fake_id', 'folder_id', 'checklists', 'items', 'child_list_items']);
+        $array = array_only($array, ['id', 'name', 'fake_id', 'folder_id', 'checklists', 'items']);
 
         return $array;
     }
