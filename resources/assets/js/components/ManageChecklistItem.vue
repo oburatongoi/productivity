@@ -43,7 +43,7 @@
 
             <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }">
               <i class="fa fa-check-square" aria-hidden="true"></i>
-              Sub-Lists
+              Lists <span class="list-items-count" v-if="item.child_list_items.length">({{item.child_list_items.length}})</span>
             </li>
           </ul>
 
@@ -383,6 +383,11 @@ export default {
           &:hover {
             border-bottom: 2px solid;
           }
+        }
+
+        .list-items-count {
+          font-size: 1em;
+
         }
     }
 

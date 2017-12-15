@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 import AddItemFormButtons from './AddItemFormButtons.vue'
 import AddItemFormComments from './AddItemFormComments.vue'
@@ -62,6 +62,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'checklistItems'
+    ]),
     hasContent: function() {
       return this.newItem.content ? true : false
     },
@@ -77,7 +80,7 @@ export default {
       'addChecklistItem',
       'addSubChecklistItem',
     ]),
-    resetNewItem: function(date) {
+    resetNewItem: function() {
       this.newItem = {
           content: undefined,
           is_urgent: undefined,
@@ -98,7 +101,7 @@ export default {
         case 'checklist-item':
           this.newItem.sort_order = this.parent.child_list_items ? this.parent.child_list_items.length : 0
           break;
-        default: this.newItem.sort_order = Productivity.checklistItems ? Productivity.checklistItems.length : 0
+        default: this.newItem.sort_order = this.checklistItems ? this.checklistItems.length : 0
       }
     },
     showDatePicker: function() {

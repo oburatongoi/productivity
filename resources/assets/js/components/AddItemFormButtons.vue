@@ -1,12 +1,12 @@
 <template lang="html">
   <div class="item-form-buttons">
     <div class="form-group" v-if="hasUserInput">
-      <button type="button" class="btn btn-xs btn-list" @click.prevent="submit">
+      <button type="button" class="btn btn-xs btn-list save-button" @click.prevent="submit">
         <i class="fa" :class="saveButtonIcon" aria-hidden="true"></i>
         Save
       </button>
 
-      <button type="button" class="btn btn-xs btn-default" @click="cancel">
+      <button type="button" class="btn btn-xs btn-default cancel-button" @click="cancel">
         Cancel
       </button>
     </div>

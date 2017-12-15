@@ -1,16 +1,11 @@
 import Vuex from 'vuex'
-
+import Folder from '../../resources/assets/js/components/Folder.vue'
 import { createLocalVue, shallow } from 'vue-test-utils';
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-import Folder from '../../resources/assets/js/components/Folder.vue'
-
-
-
 describe('Folder', () => {
   let wrapper
-  let state
   let actions
   let getters
   let store
@@ -20,10 +15,6 @@ describe('Folder', () => {
   let selectTasks
 
   beforeEach(() => {
-    state = {
-
-    }
-
     actions = {
       clearSelected: sinon.spy()
     }
@@ -33,7 +24,6 @@ describe('Folder', () => {
     }
 
     store = new Vuex.Store({
-      state,
       actions,
       getters
     })
@@ -54,7 +44,7 @@ describe('Folder', () => {
   });
 
   it ('changes view when folder nav option is clicked', () => {
-    expect(wrapper.vm.view).toBe('files')
+    expect(wrapper.vm.view).toBe('files');
     expect(selectFiles.html()).toContain('selected');
     expect(selectTasks.html()).not.toContain('selected');
 
