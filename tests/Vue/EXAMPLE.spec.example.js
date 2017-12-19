@@ -1,10 +1,10 @@
 import Vuex from 'vuex'
-import Folder from '../../resources/assets/js/components/Folder.vue'
+import Example from '../../resources/assets/js/components/Example.vue'
 import { createLocalVue, shallow } from 'vue-test-utils';
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-describe('Folder', () => {
+describe('Example', () => {
   let wrapper
   let state
   let actions
@@ -34,7 +34,7 @@ describe('Folder', () => {
       getters
     })
 
-    wrapper = shallow(Folder, {
+    wrapper = shallow(Example, {
       localVue,
       store
     })
