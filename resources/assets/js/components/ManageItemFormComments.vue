@@ -68,12 +68,13 @@ export default {
 </script>
 
 <style lang="scss">
-.manage-checklist-item {
+.edit-checklist-item {
   .edit-comments {
       // min-height: 100%;
       height: 100%;
       padding: 0;
-      padding-bottom: 50px !important;
+      // padding-bottom: 50px !important;
+      padding-bottom: 10px !important; // changed because height is now dynamically calculated
       #comments-textarea.ql-container.ql-snow {
           font-family: $paragraph-font-family-sans-serif !important;
           display: inline-block;
@@ -86,7 +87,10 @@ export default {
           outline: none;
           margin: 0;
           padding-top: 10px !important;
-          padding-bottom: 50px !important;
+          // padding-bottom: 50px !important;
+          padding-bottom: 10px !important; // changed because height is now dynamically calculated
+          padding-left: 10px;
+          padding-right: 10px;
           overflow-y: visible;
           font-size: 1.1em;
           width: 100%;
@@ -94,7 +98,6 @@ export default {
           color: black;
           border: 1px solid $base-border-color;
           border-top: 0;
-          padding: 10px;
           .ql-editor {
               padding: 0;
 

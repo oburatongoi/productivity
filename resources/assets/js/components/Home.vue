@@ -2,23 +2,23 @@
   <div class="home">
     <index-tasks></index-tasks>
 
-    <manage-checklist-item
+    <edit-checklist-item
       v-if="currentEditableItem.id&&currentEditableItem.index"
       :current-editable-item="checklistItems[currentEditableItem.index]"
-    ></manage-checklist-item>
+    ></edit-checklist-item>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import IndexTasks from './IndexTasks.vue'
-import ManageChecklistItem from './ManageChecklistItem.vue'
+import EditChecklistItem from './EditChecklistItem.vue'
 
 export default {
   name: 'home',
   components: {
       IndexTasks,
-      ManageChecklistItem
+      EditChecklistItem
   },
   ...mapGetters([
     'checklistItems',

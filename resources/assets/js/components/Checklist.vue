@@ -105,11 +105,11 @@
       </div>
     </div>
 
-    <manage-checklist-item
+    <edit-checklist-item
       v-if="!selectedIsMovable&&editableChecklistItem.id"
       :list-type="checklist.list_type"
       :item="editableChecklistItem"
-    ></manage-checklist-item>
+    ></edit-checklist-item>
 
     <move-to-checklist v-if="selectedIsMovable"></move-to-checklist>
   </div>
@@ -122,7 +122,7 @@ import ChecklistItems from './ChecklistItems.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import AddItem from './AddItem.vue'
 import EditChecklist from './EditChecklist.vue'
-import ManageChecklistItem from './ManageChecklistItem.vue'
+import EditChecklistItem from './EditChecklistItem.vue'
 import MoveToChecklist from './MoveToChecklist.vue'
 
 export default {
@@ -142,7 +142,7 @@ export default {
         Breadcrumbs,
         AddItem,
         EditChecklist,
-        ManageChecklistItem,
+        EditChecklistItem,
         MoveToChecklist
     },
     computed: {

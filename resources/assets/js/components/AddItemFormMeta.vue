@@ -31,11 +31,6 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      showComments: false
-    }
-  },
   computed: {
     deadlinePlaceholder: function () {
       return this.item.deadline ? moment(this.item.deadline).format('MMM D') : '--'

@@ -18,10 +18,10 @@
       </div>
     </div>
 
-    <manage-checklist-item
+    <edit-checklist-item
       v-if="editableChecklistItem.id"
       :item="editableChecklistItem"
-    ></manage-checklist-item>
+    ></edit-checklist-item>
   </div>
 </template>
 
@@ -29,7 +29,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 import ChecklistItem from './ChecklistItem.vue'
-import ManageChecklistItem from './ManageChecklistItem.vue'
+import EditChecklistItem from './EditChecklistItem.vue'
 
 export default {
     name: 'index-tasks',
@@ -52,7 +52,7 @@ export default {
     },
     components: {
         ChecklistItem,
-        ManageChecklistItem
+        EditChecklistItem
     },
 }
 </script>

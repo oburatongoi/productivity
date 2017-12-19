@@ -12,25 +12,26 @@
       ></add-item-form-meta>
     </div>
 
-    <div class="datepicker-container" v-if="chooseDate">
-      <datepicker
-        value="newItem.deadline"
-        @selected="setDate"
-        :inline="true"
-      ></datepicker>
-    </div>
+    <template v-if="hasUserInput">
+      <div class="datepicker-container" v-if="chooseDate">
+        <datepicker
+          value="newItem.deadline"
+          @selected="setDate"
+          :inline="true"
+        ></datepicker>
+      </div>
 
-    <add-item-form-comments
-      v-if="hasUserInput"
-      :item="newItem"
-    ></add-item-form-comments>
+      <add-item-form-comments
+        :item="newItem"
+      ></add-item-form-comments>
 
-    <add-item-form-buttons
-      :hasUserInput=hasUserInput
-      :isSaving=isSaving
-      @resetForm="resetNewItem"
-      @submitForm="submitForm"
-    ></add-item-form-buttons>
+      <add-item-form-buttons
+        :hasUserInput=hasUserInput
+        :isSaving=isSaving
+        @resetForm="resetNewItem"
+        @submitForm="submitForm"
+      ></add-item-form-buttons>
+    </template>
   </form>
 </template>
 

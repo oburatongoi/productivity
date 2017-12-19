@@ -1,10 +1,5 @@
 <template lang="html">
   <div class="sub-checklist-items">
-    <add-item
-      :parent="parent"
-      :parent-model="parentModel"
-    ></add-item>
-
     <checklist-items
       :list-type="listType"
       :items="items"
@@ -17,7 +12,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import AddItem from './AddItem.vue'
 import ChecklistItems from './ChecklistItems.vue'
 export default {
   name: 'sub-checklist-items',
@@ -48,7 +42,6 @@ export default {
     ])
   },
   components: {
-    AddItem,
     ChecklistItems
   },
 }

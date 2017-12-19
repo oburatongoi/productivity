@@ -1,7 +1,7 @@
 <template lang="html">
-  <div class="manage-checklist-item panel side-panel">
+  <div class="edit-checklist-item panel side-panel" :id="'edit-checklist-item-'+item.id">
     <div class="position-relative">
-      <div class="sizing-buttons">
+      <div class="sizing-buttons" :id="'sizing-buttons-'+item.id">
         <i class="fa fa-fw fa-times pull-right" v-if="!savingChanges" aria-hidden="true" title="Save and Close" @click="saveAndClose"></i>
         <span class="fa-stack pull-right" v-if="savingChanges">
           <i class="fa fa-circle-o-notch fa-spin fa-stack-2x"></i>
@@ -11,97 +11,95 @@
         <i class="fa fa-fw pull-left" :class="toggleExpansionClass" aria-hidden="true" :title="toggleExpansionTitle" @click="toggleCurrentEditableItemExpansion"></i>
       </div>
 
-      <template>
-        <div class="panel-heading">
-          <div class="edit-content">
-            <h4 class="manage-checklist-item-content-textarea">
-              <span class="checkbox-container">
-                <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"></i>
-                <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"></i>
-                <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{item.sort_order + 1}}.</span>
-              </span>
+      <div class="panel-heading" :id="'panel-heading-'+item.id">
+        <div class="edit-content">
+          <h4 class="edit-checklist-item-content-textarea">
+            <span class="checkbox-container">
+              <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"></i>
+              <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"></i>
+              <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{item.sort_order + 1}}.</span>
+            </span>
 
-              <textarea
-                v-model="item.content"
-                class="content-textarea"
-                @keyup="debounceSaveChanges"
-                @keydown="debounceSaveChanges"
-                @delete="debounceSaveChanges"
-                @change="debounceSaveChanges"
-                maxlength="255"
-              ></textarea>
-            </h4>
-          </div>
-
-          <manage-item-form-meta :item="item"></manage-item-form-meta>
-
-          <ul class="manage-item-menu">
-            <li @click="switchView('notes')" :class="{ selected: view=='notes' }">
-              <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-              Notes
-            </li>
-
-            <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }">
-              <i class="fa fa-check-square" aria-hidden="true"></i>
-              Lists <span class="list-items-count" v-if="item.child_list_items.length">({{item.child_list_items.length}})</span>
-            </li>
-          </ul>
-
-          <template v-if="view=='notes'">
-            <div id="quill-toolbar">
-              <span class="ql-formats">
-                <button class="ql-bold" type="button"></button>
-                <button class="ql-italic" type="button"></button>
-                <button class="ql-underline" type="button"></button>
-                <button class="ql-strike" type="button"></button>
-              </span>
-
-              <span class="ql-formats">
-                <button class="ql-list" value="ordered" type="button"></button>
-                <button class="ql-list" value="bullet" type="button"></button>
-                <button class="ql-indent" value="-1" type="button"></button>
-                <button class="ql-indent" value="+1" type="button"></button>
-              </span>
-
-              <span class="ql-formats">
-                <button class="ql-link" type="button"></button>
-                <button class="ql-script" value="sub" type="button"></button>
-                <button class="ql-script" value="super" type="button"></button>
-                <button class="ql-code-block" type="button"></button>
-              </span>
-            </div>
-          </template>
+            <textarea
+              v-model="item.content"
+              class="content-textarea"
+              :id="'content-textarea-'+item.id"
+              @keyup="debounceSaveChanges"
+              @keydown="debounceSaveChanges"
+              @delete="debounceSaveChanges"
+              @change="debounceSaveChanges"
+              maxlength="255"
+            ></textarea>
+          </h4>
         </div>
 
-        <template v-if="view=='notes'">
-          <div class="panel-body notes">
-            <manage-item-form-comments
-              @saveChanges="saveChanges"
-              :item="item"
-            ></manage-item-form-comments>
-          </div>
+        <manage-item-form-meta :item="item"></manage-item-form-meta>
 
-          <div class="panel-footer">
-            <manage-item-form-buttons
-              :isSaving="savingChanges"
-              @resetForm="saveAndClose"
-              @saveChanges="saveChanges"
-            ></manage-item-form-buttons>
-          </div>
-        </template>
+        <ul class="manage-item-menu">
+          <li @click="switchView('notes')" :class="{ selected: view=='notes' }">
+            <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+            Notes
+          </li>
 
-        <template v-if="view=='sub-items'">
-          <div class="panel-body sub-items">
-            <sub-checklist-items
-              :items="item.child_list_items"
-              :parent="item"
-              :parent-model="'checklist-item'"
-              :list-type="item.sub_list_type"
-            ></sub-checklist-items>
-          </div>
-        </template>
+          <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }">
+            <i class="fa fa-check-square" aria-hidden="true"></i>
+            Lists <span class="list-items-count" v-if="uncheckedSubItemsCount">({{uncheckedSubItemsCount}})</span>
+          </li>
+        </ul>
 
-      </template>
+        <div id="quill-toolbar" v-if="view=='notes'">
+          <span class="ql-formats">
+            <button class="ql-bold" type="button"></button>
+            <button class="ql-italic" type="button"></button>
+            <button class="ql-underline" type="button"></button>
+            <button class="ql-strike" type="button"></button>
+          </span>
+
+          <span class="ql-formats">
+            <button class="ql-list" value="ordered" type="button"></button>
+            <button class="ql-list" value="bullet" type="button"></button>
+            <button class="ql-indent" value="-1" type="button"></button>
+            <button class="ql-indent" value="+1" type="button"></button>
+          </span>
+
+          <span class="ql-formats">
+            <button class="ql-link" type="button"></button>
+            <button class="ql-script" value="sub" type="button"></button>
+            <button class="ql-script" value="super" type="button"></button>
+            <button class="ql-code-block" type="button"></button>
+          </span>
+        </div>
+
+        <add-item
+          v-if="view=='sub-items'"
+          :parent="item"
+          :parent-model="'checklist-item'"
+        ></add-item>
+      </div>
+
+      <div class="panel-body notes" :id="'notes-panel-'+item.id" v-if="view=='notes'">
+        <manage-item-form-comments
+          @saveChanges="saveChanges"
+          :item="item"
+        ></manage-item-form-comments>
+      </div>
+
+      <div class="panel-footer" :id="'notes-buttons-'+item.id" v-if="view=='notes'">
+        <manage-item-form-buttons
+          :isSaving="savingChanges"
+          @resetForm="saveAndClose"
+          @saveChanges="saveChanges"
+        ></manage-item-form-buttons>
+      </div>
+
+      <div class="panel-body sub-items" :id="'sub-items-panel-'+item.id" v-if="view=='sub-items'">
+        <sub-checklist-items
+          :items="item.child_list_items"
+          :parent="item"
+          :parent-model="'checklist-item'"
+          :list-type="item.sub_list_type"
+        ></sub-checklist-items>
+      </div>
 
     </div>
   </div>
@@ -110,6 +108,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
+import AddItem from './AddItem.vue'
 import ManageItemFormMeta from './ManageItemFormMeta.vue'
 import ManageItemFormComments from './ManageItemFormComments.vue'
 import ManageItemFormButtons from './ManageItemFormButtons.vue'
@@ -118,7 +117,7 @@ import SubChecklistItems from './SubChecklistItems.vue'
 import autosize from 'autosize';
 
 export default {
-  name: 'manage-checklist-item',
+  name: 'edit-checklist-item',
   props: {
     item: {
       type: Object,
@@ -133,7 +132,8 @@ export default {
     return {
       savingChanges: false,
       checkboxClassOverride: null,
-      view: 'notes'
+      view: 'notes',
+      notesHeight: '70%'
     }
   },
   methods: {
@@ -155,6 +155,7 @@ export default {
     }, 1000),
     saveChanges: function() {
       this.savingChanges = true
+      this.adjustNotesHeight()
       this.saveCurrentEditableItem()
       .then( () => this.savingChanges = false )
       .catch( (error) => console.log(error) )
@@ -167,6 +168,29 @@ export default {
     },
     switchView: function(view) {
       this.view = view
+      this.$nextTick(function() {
+        this.adjustNotesHeight()
+      })
+    },
+    adjustNotesHeight: function() {
+      var panel = document.getElementById('edit-checklist-item-'+this.item.id);
+      var header = document.getElementById('panel-heading-'+this.item.id);
+      var topButtons = document.getElementById('sizing-buttons-'+this.item.id);
+
+      var panelHeight = panel.innerHeight || panel.clientHeight;
+      var headerHeight = header.outerHeight || header.clientHeight;
+      var topButtonsHeight = topButtons.outerHeight || topButtons.clientHeight;
+
+      switch (this.view) {
+        case 'sub-items':
+          var bottomButtonsHeight = 10;
+          break;
+        default: var bottomButtonsHeight = 50;
+
+      }
+      var target = document.getElementById(this.view+'-panel-'+this.item.id);
+      var notesHeight = panelHeight - (headerHeight+bottomButtonsHeight+topButtonsHeight)
+      target.style.height = notesHeight+'px'
     }
   },
   computed: {
@@ -181,9 +205,13 @@ export default {
     },
     toggleExpansionTitle: function() {
       return this.currentEditableItemIsExpanded ? 'Compress' : 'Expand'
+    },
+    uncheckedSubItemsCount: function() {
+      return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
     }
   },
   components: {
+    AddItem,
       ManageItemFormMeta,
       ManageItemFormComments,
       ManageItemFormButtons,
@@ -191,8 +219,10 @@ export default {
   },
   mounted: function() {
     this.$nextTick(function() {
-      autosize(document.querySelector('.content-textarea'));
+      // autosize(document.querySelector('.content-textarea'));
       autosize(document.querySelector('.comments-textarea'));
+      this.adjustNotesHeight()
+      window.addEventListener("resize", this.adjustNotesHeight, false);
     })
   }
 }
@@ -208,7 +238,7 @@ export default {
 .ol-number {
     font-weight: bold;
 }
-.manage-checklist-item {
+.edit-checklist-item {
     @media(min-width:769px){
         border: 1px solid $brand-primary;
     }
@@ -261,12 +291,12 @@ export default {
         padding-bottom: 0 !important;
         @include desktop-overflow-y-scroll;
 
-        &.sub-items {
-            height: 70%;
-        }
-        &.notes {
-            height: 75%;
-        }
+        // &.sub-items {
+        //     height: 70%;
+        // }
+        // &.notes {
+        //     height: 75%;
+        // }
     }
 
 
@@ -278,6 +308,7 @@ export default {
         left: 0;
         border: 0;
         @include transparent-linear-gradient;
+        max-height: 50px !important;
     }
 
     .item-form-buttons {
@@ -314,7 +345,7 @@ export default {
         }
     }
 
-    .manage-checklist-item-content-textarea {
+    .edit-checklist-item-content-textarea {
         margin: 0;
         padding: 0 0 3px 0;
 
@@ -336,7 +367,6 @@ export default {
             outline: none;
             padding: 4px 4px 6px;
             font-size: 0.9em;
-            // font-weight: $font-weight-light;
             font-weight: $font-weight-bold;
             &:focus {
                 border: 1px dotted $brand-primary;
