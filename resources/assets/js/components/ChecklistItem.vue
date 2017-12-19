@@ -10,8 +10,6 @@
       {{ item.content }}
     </p>
 
-    <i class="fa fa-fw fa-angle-down toggle" aria-hidden="true" @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})" @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})"></i>
-
     <p class="preview-deadline" @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})" @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})">
       <span v-if="item.is_important">
         <i class="fa fa-fw fa-star" aria-hidden="true"></i>
@@ -23,6 +21,10 @@
 
       <span v-if="item.comments">
         <i class="fa fa-fw fa-comment-o" aria-hidden="true"></i>
+      </span>
+
+      <span v-if="item.child_list_items">
+        <i class="fa fa-fw fa-check-square" aria-hidden="true"></i>
       </span>
 
       <span v-if="deadlinePlaceholder">
