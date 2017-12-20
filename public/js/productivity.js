@@ -71859,6 +71859,7 @@ var render = function() {
             ? _c(
                 "li",
                 {
+                  key: ancestor.id,
                   class: {
                     "current-folder":
                       _vm.checklist && _vm.checklist.folder_id == ancestor.id
@@ -73651,7 +73652,7 @@ var render = function() {
               _vm._l(_vm.orderBy(_vm.search.results.folders, "name"), function(
                 folder
               ) {
-                return _c("li", [
+                return _c("li", { key: folder.id }, [
                   _c("a", { attrs: { href: "/folders/" + folder.fake_id } }, [
                     _c("i", {
                       staticClass: "fa fa-fw fa-folder",
@@ -73671,7 +73672,7 @@ var render = function() {
               _vm._l(
                 _vm.orderBy(_vm.search.results.checklists, "title"),
                 function(checklist) {
-                  return _c("li", [
+                  return _c("li", { key: checklist.id }, [
                     _c(
                       "a",
                       { attrs: { href: "/lists/" + checklist.fake_id } },
@@ -75112,38 +75113,41 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _c("textarea", {
-              directives: [
+            _c(
+              "textarea",
+              _vm._g(
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.item.comments,
-                  expression: "item.comments"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { placeholder: "Add a comment...", maxlength: "25000" },
-              domProps: { value: _vm.item.comments },
-              on: {
-                change: function($event) {
-                  if (
-                    !("button" in $event) &&
-                    _vm._k($event.keyCode, "keyup", undefined, $event.key) &&
-                    _vm._k($event.keyCode, "blur", undefined, $event.key) &&
-                    _vm._k($event.keyCode, "delete", [8, 46], $event.key)
-                  ) {
-                    return null
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.item.comments,
+                      expression: "item.comments"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    placeholder: "Add a comment...",
+                    maxlength: "25000"
+                  },
+                  domProps: { value: _vm.item.comments },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.item, "comments", $event.target.value)
+                    }
                   }
-                  _vm.saveChanges($event)
                 },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.item, "comments", $event.target.value)
+                {
+                  change: _vm.saveChanges,
+                  keyup: _vm.saveChanges,
+                  blur: _vm.saveChanges,
+                  delete: _vm.saveChanges
                 }
-              }
-            })
+              )
+            )
           ]
         : _vm._e()
     ],
@@ -92680,7 +92684,7 @@ var render = function() {
                         _vm._l(_vm.editableItem.child_list_items, function(
                           item
                         ) {
-                          return _c("li", [
+                          return _c("li", { key: item.id }, [
                             item.checked_at
                               ? _c("i", {
                                   staticClass: "fa fa-fw fa-check",
@@ -94003,6 +94007,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -94377,6 +94382,7 @@ var render = function() {
                     return _c(
                       "li",
                       {
+                        key: folder.id,
                         staticClass: "nested-folder",
                         class: { active: folder.id == _vm.selectedFolder.id },
                         on: {
@@ -96818,7 +96824,7 @@ var render = function() {
                         _vm._l(_vm.editableItem.child_list_items, function(
                           item
                         ) {
-                          return _c("li", [
+                          return _c("li", { key: item.id }, [
                             item.checked_at
                               ? _c("i", {
                                   staticClass: "fa fa-fw fa-check",
@@ -96967,11 +96973,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'notices',
-  methods: {
-    getKey: function getKey() {
-      return _.uniqueId();
-    }
-  },
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['notices'])),
   components: {
     Notice: __WEBPACK_IMPORTED_MODULE_1__Notice_vue___default.a
@@ -97085,9 +97086,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       var arg = notice && (typeof notice === 'undefined' ? 'undefined' : _typeof(notice)) == 'object' ? JSON.stringify(notice) : notice;
       var fn = arg ? fnx.toString() + '(' + arg + ')' : fnx.toString();
       return eval(fn);
-    },
-    getKey: function getKey() {
-      return _.uniqueId();
     }
   }),
   computed: {
@@ -97148,7 +97146,7 @@ var render = function() {
                 return _c(
                   "button",
                   {
-                    key: _vm.getKey(),
+                    key: button.key,
                     staticClass: "btn",
                     class: button.class,
                     on: {
@@ -97189,7 +97187,7 @@ var render = function() {
         "ul",
         { staticClass: "productivity-notices" },
         _vm._l(_vm.notices, function(notice) {
-          return _c("notice", { key: _vm.getKey(), attrs: { notice: notice } })
+          return _c("notice", { key: notice.id, attrs: { notice: notice } })
         })
       )
     : _vm._e()
@@ -99783,11 +99781,13 @@ var state = {
         //   persist: true,
         //   buttons: [
         //     {
+        //       id: _.uniqueId()
         //       text: 'close',
         //       class: 'btn-xs btn-default',
         //       action: 'this.deleteNotice'
         //     },
         //     {
+        //       id: _.uniqueId()
         //       text: 'cancel',
         //       class: 'btn-xs btn-primary',
         //       action: 'this.deleteNotice'
@@ -99810,6 +99810,7 @@ var actions = {
         var commit = _ref.commit;
 
         return new Promise(function (resolve, reject) {
+            if (!payload.id) payload.id = _.uniqueId();
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["d" /* ADD_NOTICE */], payload);
 
             if (!payload.persist) setTimeout(function () {

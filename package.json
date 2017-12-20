@@ -14,6 +14,9 @@
     "devDependencies": {
         "bootstrap-sass": "^3.3.7",
         "cross-env": "^5.1",
+        "eslint": "^4.13.1",
+        "eslint-loader": "^1.9.0",
+        "eslint-plugin-vue": "^4.0.0-beta.3",
         "expect": "^21.2.1",
         "jquery": "^3.2",
         "jsdom": "^11.4.0",

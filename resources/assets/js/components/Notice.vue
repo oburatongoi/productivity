@@ -12,7 +12,7 @@
                 class="btn"
                 :class="button.class"
                 @click="callAction(button.action, notice)"
-                :key="getKey()">
+                :key="button.key">
           {{button.text}}
         </button>
       </div>
@@ -37,9 +37,6 @@ export default {
       var arg = notice && typeof notice == 'object' ? JSON.stringify(notice) : notice;
       var fn = arg ? fnx.toString() + '('+arg+')' : fnx.toString();
       return eval(fn);
-    },
-    getKey: function() {
-      return _.uniqueId()
     }
   },
   computed: {
