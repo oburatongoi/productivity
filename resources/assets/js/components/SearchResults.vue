@@ -10,7 +10,7 @@
     <i class="fa fa-spinner fa-spin" aria-hidden="true" v-if="search.isSearching"></i>
 
     <ul class="list-unstyled folder-color-scheme" v-if="search.results.folders">
-      <li v-for="folder in orderBy(search.results.folders, 'name')">
+      <li v-for="folder in orderBy(search.results.folders, 'name')" :key="folder.id">
         <a :href="'/folders/'+folder.fake_id">
           <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
           {{folder.name}}
@@ -19,7 +19,7 @@
     </ul>
 
     <ul class="list-unstyled list-color-scheme" v-if="search.results.checklists">
-      <li v-for="checklist in orderBy(search.results.checklists, 'title')">
+      <li v-for="checklist in orderBy(search.results.checklists, 'title')" :key="checklist.id">
         <a :href="'/lists/'+checklist.fake_id">
           <i class="fa fa-fw fa-list" aria-hidden="true"></i>
           {{checklist.title}}

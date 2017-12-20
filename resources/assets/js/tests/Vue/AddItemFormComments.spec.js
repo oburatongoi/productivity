@@ -53,10 +53,24 @@ describe('AddItemFormComments', () => {
     expect(label.html()).toContain('Cancel')
   });
 
-  it ('calls saveChanges when textarea change.keyup.blur.delete event is fired', () => {
+  it ('calls saveChanges when textarea blur event is fired', () => {
     wrapper.setData({ showComments: true })
     textarea = wrapper.find('textarea')
-    textarea.trigger('change.keyup.blur.delete')
+    textarea.trigger('blur')
+    expect(wrapper.emitted().saveChanges).toBeTruthy();
+  });
+
+  it ('calls saveChanges when textarea delete event is fired', () => {
+    wrapper.setData({ showComments: true })
+    textarea = wrapper.find('textarea')
+    textarea.trigger('delete')
+    expect(wrapper.emitted().saveChanges).toBeTruthy();
+  });
+
+  it ('calls saveChanges when textarea keyup event is fired', () => {
+    wrapper.setData({ showComments: true })
+    textarea = wrapper.find('textarea')
+    textarea.trigger('keyup')
     expect(wrapper.emitted().saveChanges).toBeTruthy();
   });
 

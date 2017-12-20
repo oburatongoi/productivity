@@ -11,6 +11,17 @@ plugins.push(new WebpackShellPlugin({
   onBuildExit:['echo vendor-pub && echo "Vendor files have been published"']
 }));
 
+// This is for ESLint functionality
+let rules = [
+      // only lint local *.vue files
+      {
+        enforce: 'pre',
+        test: /\.vue$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/
+      }
+    ]
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -26,7 +37,10 @@ mix.js('resources/assets/js/productivity.js', 'public/js')
    .sass('resources/assets/sass/productivity.scss', 'public/css')
    .webpackConfig({
      resolve: {
-       plugins: plugins
+       plugins: plugins,
+     },
+     module: {  // This is for ESLint functionality
+       rules: rules,
      }
    })
    .options({

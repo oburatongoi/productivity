@@ -20,7 +20,7 @@
         <i class="fa fa-times" aria-hidden="true"></i>
         <p>Cancel</p>
       </div>
-      <textarea @change.keyup.blur.delete="saveChanges"
+      <textarea v-on="{ change:saveChanges, keyup:saveChanges, blur:saveChanges, delete:saveChanges }"
                 class="form-control"
                 v-model="item.comments"
                 placeholder="Add a comment..."
