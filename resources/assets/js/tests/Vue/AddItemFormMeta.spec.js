@@ -1,5 +1,5 @@
 import { createLocalVue, shallow } from 'vue-test-utils'
-import AddItemFormMeta from '../../resources/assets/js/components/AddItemFormMeta.vue'
+import AddItemFormMeta from '../../components/AddItemFormMeta.vue'
 
 const localVue = createLocalVue()
 

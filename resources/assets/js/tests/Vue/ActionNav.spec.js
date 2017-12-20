@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-import ActionNav from '../../resources/assets/js/components/ActionNav.vue'
+import ActionNav from '../../components/ActionNav.vue'
 import { createLocalVue, shallow } from 'vue-test-utils';
 const localVue = createLocalVue()
 localVue.use(Vuex)

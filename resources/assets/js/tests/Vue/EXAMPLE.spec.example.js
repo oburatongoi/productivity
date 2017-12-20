@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-import Example from '../../resources/assets/js/components/Example.vue'
+import Example from '../../components/Example.vue'
 import { createLocalVue, shallow } from 'vue-test-utils';
 const localVue = createLocalVue()
 localVue.use(Vuex)

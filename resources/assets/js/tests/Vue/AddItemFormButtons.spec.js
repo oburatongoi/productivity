@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import { createLocalVue, shallow } from 'vue-test-utils'
-import AddItemFormButtons from '../../resources/assets/js/components/AddItemFormButtons.vue'
+import AddItemFormButtons from '../../components/AddItemFormButtons.vue'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)

@@ -1,5 +1,5 @@
 import { createLocalVue, shallow } from 'vue-test-utils'
-import AddItemFormComments from '../../resources/assets/js/components/AddItemFormComments.vue'
+import AddItemFormComments from '../../components/AddItemFormComments.vue'
 
 const localVue = createLocalVue()
 
