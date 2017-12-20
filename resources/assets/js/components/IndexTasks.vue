@@ -18,34 +18,10 @@
       </div>
     </div>
 
-    <div class="panel side-panel checklist-item-tree" v-if="editableSubItem.id">
-      <div class="panel-body">
-        <ul>
-          <li>
-            <i class="fa fa-fw fa-home" aria-hidden="true"></i>
-            Home
-          </li>
-          <li>
-            <ul class="left-border">
-              <li>
-                <i class="fa fa-fw fa-check" aria-hidden="true" v-if="editableItem.checked_at"></i>
-                <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-if="!editableItem.checked_at"></i>
-                {{editableItem.content}}
-              </li>
-              <li>
-                <ul class="left-border">
-                  <li v-for="item in editableItem.child_list_items">
-                    <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"></i>
-                    <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="!item.checked_at"></i>
-                    {{item.content}}
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <checklist-item-tree
+      v-if="editableSubItem.id"
+      :item="editableItem"
+    ></checklist-item-tree>
 
     <edit-checklist-item
       v-if="editableItem.id"
@@ -67,6 +43,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 import ChecklistItem from './ChecklistItem.vue'
+import ChecklistItemTree from './ChecklistItemTree.vue'
 import EditChecklistItem from './EditChecklistItem.vue'
 
 export default {
@@ -97,29 +74,11 @@ export default {
     },
     components: {
         ChecklistItem,
+        ChecklistItemTree,
         EditChecklistItem
     },
 }
 </script>
 
 <style lang="scss">
-.checklist-item-tree {
-  font-size: 1.1em;
-  ul {
-    list-style: none;
-    padding-left: 20px;
-    margin-top: 0;
-  }
-  .left-border {
-    border-left: 1px dashed $base-border-color;
-    margin-left: 10px;
-  }
-  .fa-circle-thin,
-  .fa-square-o {
-      color: $input-border;
-  }
-  .fa-list-ul {
-    color: $list-primary;
-  }
-}
 </style>

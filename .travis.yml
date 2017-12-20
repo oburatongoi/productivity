@@ -1,1 +1,12 @@
 language: php
+php:
+  - '7.1'
+before_script:
+  - cp .env.travis .env
+  - composer self-update
+  - composer install --no-interaction
+
+before_install:
+  - mysql -e 'create database productivity;'
+services:
+  - mysql

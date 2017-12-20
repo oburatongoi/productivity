@@ -98,11 +98,12 @@ const actions = {
     toggleDeletable({ commit }) {
         commit(TOGGLE_DELETABLE)
     },
-    toggleSelection({ dispatch, commit, state }, payload) {
+    toggleSelection({ dispatch, commit, state, rootState }, payload) {
       let isInSelectedArray
       let isSubItem
       let isChecklistItem = false
       let modifierKeyPressed = payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey ? true : false
+
       switch (payload.selection.model) {
         case 'folder':
           isInSelectedArray = _.findIndex(state.selected.folders, ['id', payload.selection.listing.id]) !== -1
@@ -117,10 +118,11 @@ const actions = {
           break;
       }
 
+      if (isChecklistItem) {
+        dispatch('removeCurrentlyEditable', {isSubItem}, {root: true})
+      }
+
       if (isInSelectedArray) {
-          if (isChecklistItem) {
-            dispatch('removeCurrentlyEditable', {isSubItem: isSubItem}, {root: true})
-          }
           // Remove if modifier key was pressed
           if (modifierKeyPressed || isChecklistItem && state.selected.checklistItems.length === 1) {
             commit(REMOVE_FROM_SELECTED, payload.selection)
@@ -129,10 +131,6 @@ const actions = {
             commit(ADD_TO_SELECTED, payload.selection)
           }
 
-          // If only one checklist item is left, make it editable
-          if (isChecklistItem && state.selected.checklistItems.length === 1) {
-            dispatch('addCurrentlyEditable', { isSubItem: isSubItem, item: state.selected.checklistItems[0] }, {root: true})
-          }
       } else { // If it is not in the selected array
           // Add if modifier key was pressed
           if (modifierKeyPressed) {
@@ -141,13 +139,16 @@ const actions = {
             commit(CLEAR_SELECTED)
             commit(ADD_TO_SELECTED, payload.selection)
           }
+      }
 
-          // If only one checklist item is left, make it editable
-          if (isChecklistItem && state.selected.checklistItems.length === 1) {
-            dispatch('addCurrentlyEditable', { isSubItem: isSubItem, item: payload.selection.listing }, {root: true})
-          } else {
-            dispatch('removeCurrentlyEditable', {isSubItem: isSubItem}, {root: true})
-          }
+      // If only one checklist item is left, make it editable
+      if (isChecklistItem && state.selected.checklistItems.length === 1) {
+        dispatch('addCurrentlyEditable', { isSubItem, item: state.selected.checklistItems[0] }, {root: true})
+      }
+
+      // Select the editable item
+      if (isSubItem && (! rootState.checklists.editableSubItem || ! rootState.checklists.editableSubItem.id) && rootState.checklists.editableItem && rootState.checklists.editableItem.id) {
+        commit(ADD_TO_SELECTED, {model: 'checklist-item', listing: rootState.checklists.editableItem})
       }
     },
     deleteSelection({ dispatch, commit, state }) {

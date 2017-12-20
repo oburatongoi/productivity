@@ -166,7 +166,7 @@ const mutations = {
         if (payload.isSubItem) {
           state.editableSubItem = {}
         } else {
-          state.editableItem = {}
+          state.editableItem = state.editableSubItem = {}
         }
     },
     [TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK] (state, payload = {isSubItem: false}) {
@@ -180,6 +180,7 @@ const mutations = {
         if (payload.isSubItem) {
           state.editableSubItemIsExpanded = ! state.editableSubItemIsExpanded
         } else {
+          state.editableSubItemIsExpanded = false
           state.editableItemIsExpanded = ! state.editableItemIsExpanded
         }
     },
@@ -384,7 +385,7 @@ const actions = {
   },
   removeCurrentlyEditable({commit, state}, payload = {isSubItem: false}) {
       return new Promise((resolve, reject) => {
-        if (payload.isSubItem && state.editableSubItemIsExpanded || ! payload.isSubItem && state.editableItemIsExpanded) {
+        if (payload.isSubItem && state.editableSubItemIsExpanded || ! payload.isSubItem && state.editableItemIsExpanded || ! payload.isSubItem && state.editableSubItemIsExpanded) {
           commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION, payload)
         }
         commit(UNSET_EDITABLE_CHECKLIST_ITEM, payload)

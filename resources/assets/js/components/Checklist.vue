@@ -105,34 +105,12 @@
       </div>
     </div>
 
-    <div class="panel side-panel checklist-item-tree" v-if="!selectedIsMovable&&editableSubItem.id">
-      <div class="panel-body">
-        <ul>
-          <li>
-            <i class="fa fa-fw fa-list-ul" aria-hidden="true"></i>
-            {{checklist.title}}
-          </li>
-          <li>
-            <ul class="left-border">
-              <li>
-                <i class="fa fa-fw fa-check" aria-hidden="true" v-if="editableItem.checked_at"></i>
-                <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-if="!editableItem.checked_at"></i>
-                {{editableItem.content}}
-              </li>
-              <li>
-                <ul class="left-border">
-                  <li v-for="item in editableItem.child_list_items">
-                    <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"></i>
-                    <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="!item.checked_at"></i>
-                    {{item.content}}
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <checklist-item-tree
+      v-if="!selectedIsMovable&&editableSubItem.id"
+      :item="editableItem"
+      :checklist="checklist"
+      @onSelection="toggleSelection"
+    ></checklist-item-tree>
 
     <edit-checklist-item
       v-if="!selectedIsMovable&&editableItem.id"
@@ -156,6 +134,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 import ChecklistItems from './ChecklistItems.vue'
+import ChecklistItemTree from './ChecklistItemTree.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import AddItem from './AddItem.vue'
 import EditChecklist from './EditChecklist.vue'
@@ -176,6 +155,7 @@ export default {
     },
     components: {
         ChecklistItems,
+        ChecklistItemTree,
         Breadcrumbs,
         AddItem,
         EditChecklist,
@@ -316,23 +296,5 @@ export default {
 </script>
 
 <style lang="scss">
-  .checklist-item-tree {
-    font-size: 1.1em;
-    ul {
-      list-style: none;
-      padding-left: 20px;
-      margin-top: 0;
-    }
-    .left-border {
-      border-left: 1px dashed $base-border-color;
-      margin-left: 10px;
-    }
-    .fa-circle-thin,
-    .fa-square-o {
-        color: $input-border;
-    }
-    .fa-list-ul {
-      color: $list-primary;
-    }
-  }
+
 </style>
