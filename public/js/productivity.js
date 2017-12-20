@@ -7388,14 +7388,14 @@ module.exports = function (it) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return CLEAR_SELECTED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return SET_CREATING_NEW; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return TOGGLE_CREATING_NEW_BUTTONS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return TOGGLE_DELETABLE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return TOGGLE_MOVABLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return TOGGLE_CREATING_NEW_BUTTONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return TOGGLE_DELETABLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "G", function() { return TOGGLE_MOVABLE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return ADD_TO_SELECTED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return REMOVE_FROM_SELECTED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ADD_FOLDER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return DELETE_FOLDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return UPDATE_FOLDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "M", function() { return UPDATE_FOLDER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ADD_CHECKLIST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ADD_ITEM_TO_CHECKLIST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return ADD_SUB_ITEM_TO_CHECKLIST_ITEM; });
@@ -7410,19 +7410,20 @@ module.exports = function (it) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return SET_EDITABLE_CHECKLIST_ITEM; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return SET_EDITABLE_CHECKLIST_ITEM_COMMENTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return SET_EDITABLE_CHECKLIST_ITEM_DEADLINE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return SORT_CHECKLIST_ITEMS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return SORT_SUB_CHECKLIST_ITEMS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "B", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return UNSET_EDITABLE_CHECKLIST_ITEM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return UPDATE_CHECKLIST; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "K", function() { return UPDATE_FILTERS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "N", function() { return UPDATE_ITEM_COUNTS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "G", function() { return UNDO_UPDATE_SORT_ORDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Q", function() { return UPDATE_SORT_ORDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "R", function() { return UPDATE_SUB_ITEM_SORT_ORDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return SET_EDITABLE_SUB_CHECKLIST_ITEM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return SORT_CHECKLIST_ITEMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return SORT_SUB_CHECKLIST_ITEMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "B", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return UNSET_EDITABLE_CHECKLIST_ITEM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return UPDATE_CHECKLIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return UPDATE_FILTERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "O", function() { return UPDATE_ITEM_COUNTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return UNDO_UPDATE_SORT_ORDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "R", function() { return UPDATE_SORT_ORDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "S", function() { return UPDATE_SUB_ITEM_SORT_ORDER; });
 /* unused harmony export ADD_NOTE */
 /* unused harmony export DELETE_NOTE */
 /* unused harmony export UPDATE_NOTE */
@@ -7430,10 +7431,10 @@ module.exports = function (it) {
 /* unused harmony export DELETE_GOAL */
 /* unused harmony export UPDATE_GOAL */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return CLEAR_QUERY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "O", function() { return UPDATE_QUERY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P", function() { return UPDATE_RESULTS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return UPDATE_ERROR_MESSAGE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "M", function() { return UPDATE_IS_SEARCHING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P", function() { return UPDATE_QUERY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Q", function() { return UPDATE_RESULTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "K", function() { return UPDATE_ERROR_MESSAGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "N", function() { return UPDATE_IS_SEARCHING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return ADD_NOTICE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return DELETE_NOTICE; });
 var CLEAR_SELECTED = 'home/CLEAR_SELECTED';
@@ -7462,6 +7463,7 @@ var REPLACE_PENDING_TASK = 'checklists/REPLACE_PENDING_TASK';
 var SET_EDITABLE_CHECKLIST_ITEM = 'checklists/SET_EDITABLE_CHECKLIST_ITEM';
 var SET_EDITABLE_CHECKLIST_ITEM_COMMENTS = 'checklists/SET_EDITABLE_CHECKLIST_ITEM_COMMENTS';
 var SET_EDITABLE_CHECKLIST_ITEM_DEADLINE = 'checklists/SET_EDITABLE_CHECKLIST_ITEM_DEADLINE';
+var SET_EDITABLE_SUB_CHECKLIST_ITEM = 'checklists/SET_EDITABLE_SUB_CHECKLIST_ITEM';
 var SORT_CHECKLIST_ITEMS = 'checklists/SORT_CHECKLIST_ITEMS';
 var SORT_SUB_CHECKLIST_ITEMS = 'checklists/SORT_SUB_CHECKLIST_ITEMS';
 var TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK = 'checklists/TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK';
@@ -32523,6 +32525,10 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(670)
+}
 var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(523)
@@ -32531,7 +32537,7 @@ var __vue_template__ = __webpack_require__(570)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -34705,7 +34711,7 @@ return Tether;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(270);
-module.exports = __webpack_require__(636);
+module.exports = __webpack_require__(637);
 
 
 /***/ }),
@@ -34714,12 +34720,12 @@ module.exports = __webpack_require__(636);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(622);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_tooltip__ = __webpack_require__(631);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(623);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_tooltip__ = __webpack_require__(632);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_tooltip___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_v_tooltip__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue2_filters__ = __webpack_require__(634);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue2_filters__ = __webpack_require__(635);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue2_filters___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue2_filters__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__plugins_vue_token_mismatch_js__ = __webpack_require__(635);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__plugins_vue_token_mismatch_js__ = __webpack_require__(636);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -34743,7 +34749,7 @@ Vue.component('Folders', __webpack_require__(579));
 Vue.component('Folder', __webpack_require__(598));
 Vue.component('Checklists', __webpack_require__(604));
 Vue.component('Checklist', __webpack_require__(607));
-Vue.component('Notices', __webpack_require__(614));
+Vue.component('Notices', __webpack_require__(615));
 
 // v-focus global directive
 Vue.directive('focus', {
@@ -73855,6 +73861,44 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -73864,11 +73908,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'index-tasks',
   methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['toggleSelection'])),
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['checklistItems', 'editableChecklistItem', 'currentEditableItemIsExpanded']), {
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['checklistItems', 'editableItem', 'editableSubItem', 'editableItemIsExpanded', 'editableSubItemIsExpanded']), {
     taskClass: function taskClass() {
-      if (this.editableChecklistItem.id && this.currentEditableItemIsExpanded) return 'has-expanded-editable-item';
-      if (this.editableChecklistItem.id && !this.currentEditableItemIsExpanded) return 'has-editable-item';
-      return null;
+      // if (this.editableItem.id && this.editableItemIsExpanded) return 'has-expanded-editable-item'
+      // if (this.editableItem.id && ! this.editableItemIsExpanded) return 'has-editable-item'
+      // return null
+      return this.editableSubItemIsExpanded ? 'has-expanded-editable-sub-item' : this.editableSubItem.id ? 'has-editable-sub-item' : this.editableItemIsExpanded ? 'has-expanded-editable-item' : this.editableItem.id ? 'has-editable-item' : null;
     }
   }),
   components: {
@@ -73981,9 +74026,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       this.$emit('onEmitClick', payload);
     }
   }),
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['selected', 'unfilteredItems', 'editableChecklistItem', 'delistedItems', 'filters']), {
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['selected', 'unfilteredItems', 'editableItem', 'delistedItems', 'filters']), {
     checkboxClass: function checkboxClass() {
-      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-circle-thin';
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin';
     },
     itemBypassesFilters: function itemBypassesFilters() {
       return this.unfilteredItems.indexOf(this.item.id) !== -1;
@@ -74037,13 +74082,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       return this.itemBypassesFilters || !this.itemIsDelisted && !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter;
     },
     itemIsCurrentlyEditable: function itemIsCurrentlyEditable() {
-      return this.editableChecklistItem.id && this.item.id == this.editableChecklistItem.id;
+      return this.editableItem.id && this.item.id == this.editableItem.id;
     },
     itemIsSelected: function itemIsSelected() {
       return this.selected.checklistItems.indexOf(this.item) !== -1;
     },
     deadlinePlaceholder: function deadlinePlaceholder() {
       return this.item.deadline ? moment(this.item.deadline).format('MMM DD') : undefined;
+    },
+    isSubItem: function isSubItem() {
+      return this.parentModel == 'checklist-item' ? true : false;
     }
   })
 });
@@ -74198,7 +74246,7 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm.item.child_list_items
+          _vm.item.child_list_items && _vm.item.child_list_items.length
             ? _c("span", [
                 _c("i", {
                   staticClass: "fa fa-fw fa-check-square",
@@ -74393,6 +74441,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -74414,6 +74463,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     listType: {
       type: String,
       default: 'ch'
+    },
+    parentModel: {
+      type: String,
+      default: 'checklist'
     }
   },
   data: function data() {
@@ -74428,7 +74481,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
   methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['clearSelected', 'toggleCurrentEditableItemCheckMark', 'toggleCurrentEditableItemExpansion', 'saveCurrentEditableItem', 'removeCurrentlyEditable', 'toggleMovable']), {
     saveAndClose: function saveAndClose() {
       this.saveChanges();
-      this.removeCurrentlyEditable();
+      this.removeCurrentlyEditable({ isSubItem: this.isSubItem });
       this.clearSelected();
     },
     debounceSaveChanges: _.debounce(function () {
@@ -74439,7 +74492,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
       this.savingChanges = true;
       this.adjustNotesHeight();
-      this.saveCurrentEditableItem().then(function () {
+
+      this.saveCurrentEditableItem({ isSubItem: this.isSubItem }).then(function () {
         return _this.savingChanges = false;
       }).catch(function (error) {
         return console.log(error);
@@ -74449,11 +74503,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       var _this2 = this;
 
       this.checkboxClassOverride = 'fa-circle-o-notch fa-spin';
-      this.toggleCurrentEditableItemCheckMark().then(function () {
+      this.toggleCurrentEditableItemCheckMark({ isSubItem: this.isSubItem }).then(function () {
         return _this2.checkboxClassOverride = null;
       }).catch(function (error) {
         return console.log(error);
       });
+    },
+    toggleExpansion: function toggleExpansion() {
+      this.toggleCurrentEditableItemExpansion({ isSubItem: this.isSubItem });
     },
     switchView: function switchView(view) {
       this.view = view;
@@ -74483,20 +74540,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       target.style.height = notesHeight + 'px';
     }
   }),
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['currentEditableItemIsExpanded']), {
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['editableItemIsExpanded']), {
     checkboxClass: function checkboxClass() {
-      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-circle-thin';
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin';
+    },
+    editChecklistItemClass: function editChecklistItemClass() {
+      return this.item.checklist_id ? 'checklist-item' : 'sub-checklist-item';
     },
     toggleExpansionClass: function toggleExpansionClass() {
-      return this.currentEditableItemIsExpanded ? 'fa-compress' : 'fa-expand';
+      return this.editableItemIsExpanded ? 'fa-compress' : 'fa-expand';
     },
     toggleExpansionTitle: function toggleExpansionTitle() {
-      return this.currentEditableItemIsExpanded ? 'Compress' : 'Expand';
+      return this.editableItemIsExpanded ? 'Compress' : 'Expand';
     },
     uncheckedSubItemsCount: function uncheckedSubItemsCount() {
       return this.item.child_list_items ? _.countBy(this.item.child_list_items, function (i) {
         return i.checked_at == null;
       }).true : 0;
+    },
+    isSubItem: function isSubItem() {
+      return this.parentModel == 'checklist-item' ? true : false;
     }
   }),
   components: {
@@ -74570,6 +74633,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -74599,6 +74663,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
   },
 
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['checklistItems']), {
+    highlightedDate: function highlightedDate() {
+      return {
+        dates: [this.newItem.deadline ? new Date(this.newItem.deadline) : new Date()]
+      };
+    },
+
     hasContent: function hasContent() {
       return this.newItem.content ? true : false;
     },
@@ -75379,7 +75449,11 @@ var render = function() {
                   { staticClass: "datepicker-container" },
                   [
                     _c("datepicker", {
-                      attrs: { value: "newItem.deadline", inline: true },
+                      attrs: {
+                        value: "newItem.deadline",
+                        inline: true,
+                        highlighted: _vm.highlightedDate
+                      },
                       on: { selected: _vm.setDate }
                     })
                   ],
@@ -75533,6 +75607,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     item: {
       type: Object,
       required: true
+    },
+    isSubItem: {
+      type: Boolean,
+      default: false
     }
   },
   data: function data() {
@@ -75544,14 +75622,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     };
   },
 
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['deadlinePlaceholder']), {
+  computed: {
     highlightedDate: function highlightedDate() {
       return {
-        dates: [new Date(this.item.deadline)]
+        dates: [this.item.deadline ? new Date(this.item.deadline) : new Date()]
       };
+    },
+
+    deadlinePlaceholder: function deadlinePlaceholder() {
+      return this.item.deadline ? 'Due: ' + moment(this.item.deadline).format('MMM D, YYYY') : 'No Due Date';
     }
-  }),
-  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['setCurentEditableItemDeadline', 'toggleCurentEditableItemImportance', 'toggleCurentEditableItemUrgency']), {
+  },
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['setCurrentEditableItemDeadline', 'toggleCurentEditableItemImportance', 'toggleCurentEditableItemUrgency']), {
     dateFormatter: function dateFormatter(date) {
       return moment(date).format('YYYY-MM-DD');
     },
@@ -75568,7 +75650,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       var date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
       this.deadlineIsLoading = true;
-      this.setCurentEditableItemDeadline(date).then(function (success) {
+      this.setCurrentEditableItemDeadline({ date: date, isSubItem: this.isSubItem }).then(function (success) {
         _this.hideDatePicker();
         _this.deadlineIsLoading = false;
       }).catch(function (error) {
@@ -75580,7 +75662,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       var _this2 = this;
 
       this.importanceIsLoading = true;
-      this.toggleCurentEditableItemImportance().then(function () {
+      this.toggleCurentEditableItemImportance({ isSubItem: this.isSubItem }).then(function () {
         return _this2.importanceIsLoading = false;
       }).catch(function (error) {
         return console.log(error);
@@ -75590,7 +75672,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       var _this3 = this;
 
       this.urgencyIsLoading = true;
-      this.toggleCurentEditableItemUrgency().then(function () {
+      this.toggleCurentEditableItemUrgency({ isSubItem: this.isSubItem }).then(function () {
         return _this3.urgencyIsLoading = false;
       }).catch(function (error) {
         return console.log(error);
@@ -75843,6 +75925,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     item: {
       type: Object,
       required: true
+    },
+    isSubItem: {
+      type: Boolean,
+      default: false
     }
   },
   data: function data() {
@@ -75860,7 +75946,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     };
   },
 
-  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['setCurentEditableItemComments']), {
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['setCurrentEditableItemComments']), {
     debounceSaveChanges: _.debounce(function () {
       this.saveChanges();
     }, 1000),
@@ -75872,7 +75958,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
           html = _ref.html,
           text = _ref.text;
 
-      this.setCurentEditableItemComments(html);
+      this.setCurrentEditableItemComments({ html: html, isSubItem: this.isSubItem });
       this.debounceSaveChanges();
     }
   }),
@@ -89592,7 +89678,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       return this.isSaving ? 'fa-spinner fa-spin' : 'fa-floppy-o';
     }
   },
-  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['deleteSelection', 'removeCurrentlyEditable']), {
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['deleteSelection']), {
     submit: function submit() {
       this.$emit('saveChanges');
     },
@@ -89769,12 +89855,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       default: 'checklist-item'
     }
   },
-  methods: {
-    toggleSelection: function toggleSelection(payload) {
-      console.log(payload);
-    }
-  },
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['editableChecklistItem'])),
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['toggleSelection'])),
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['editableItem'])),
   components: {
     ChecklistItems: __WEBPACK_IMPORTED_MODULE_1__ChecklistItems_vue___default.a
   }
@@ -92192,6 +92274,7 @@ var render = function() {
     "div",
     {
       staticClass: "edit-checklist-item panel side-panel",
+      class: _vm.editChecklistItemClass,
       attrs: { id: "edit-checklist-item-" + _vm.item.id }
     },
     [
@@ -92231,7 +92314,7 @@ var render = function() {
               staticClass: "fa fa-fw pull-left",
               class: _vm.toggleExpansionClass,
               attrs: { "aria-hidden": "true", title: _vm.toggleExpansionTitle },
-              on: { click: _vm.toggleCurrentEditableItemExpansion }
+              on: { click: _vm.toggleExpansion }
             })
           ]
         ),
@@ -92310,7 +92393,9 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("manage-item-form-meta", { attrs: { item: _vm.item } }),
+            _c("manage-item-form-meta", {
+              attrs: { item: _vm.item, "is-sub-item": _vm.isSubItem }
+            }),
             _vm._v(" "),
             _c("ul", { staticClass: "manage-item-menu" }, [
               _c(
@@ -92332,29 +92417,33 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c(
-                "li",
-                {
-                  class: { selected: _vm.view == "sub-items" },
-                  on: {
-                    click: function($event) {
-                      _vm.switchView("sub-items")
-                    }
-                  }
-                },
-                [
-                  _c("i", {
-                    staticClass: "fa fa-check-square",
-                    attrs: { "aria-hidden": "true" }
-                  }),
-                  _vm._v("\n          Lists "),
-                  _vm.uncheckedSubItemsCount
-                    ? _c("span", { staticClass: "list-items-count" }, [
-                        _vm._v("(" + _vm._s(_vm.uncheckedSubItemsCount) + ")")
-                      ])
-                    : _vm._e()
-                ]
-              )
+              _vm.parentModel == "checklist"
+                ? _c(
+                    "li",
+                    {
+                      class: { selected: _vm.view == "sub-items" },
+                      on: {
+                        click: function($event) {
+                          _vm.switchView("sub-items")
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-check-square",
+                        attrs: { "aria-hidden": "true" }
+                      }),
+                      _vm._v("\n          Items "),
+                      _vm.uncheckedSubItemsCount
+                        ? _c("span", { staticClass: "list-items-count" }, [
+                            _vm._v(
+                              "(" + _vm._s(_vm.uncheckedSubItemsCount) + ")"
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                : _vm._e()
             ]),
             _vm._v(" "),
             _vm.view == "notes"
@@ -92367,7 +92456,7 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _vm.view == "sub-items"
+            _vm.parentModel == "checklist" && _vm.view == "sub-items"
               ? _c("add-item", {
                   attrs: { parent: _vm.item, "parent-model": "checklist-item" }
                 })
@@ -92385,7 +92474,7 @@ var render = function() {
               },
               [
                 _c("manage-item-form-comments", {
-                  attrs: { item: _vm.item },
+                  attrs: { item: _vm.item, "is-sub-item": _vm.isSubItem },
                   on: { saveChanges: _vm.saveChanges }
                 })
               ],
@@ -92549,16 +92638,109 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm.editableChecklistItem.id
+      _vm.editableSubItem.id
+        ? _c("div", { staticClass: "panel side-panel checklist-item-tree" }, [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("ul", [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("li", [
+                  _c("ul", { staticClass: "left-border" }, [
+                    _c("li", [
+                      _vm.editableItem.checked_at
+                        ? _c("i", {
+                            staticClass: "fa fa-fw fa-check",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.editableItem.checked_at
+                        ? _c("i", {
+                            staticClass: "fa fa-fw fa-circle-thin",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        : _vm._e(),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.editableItem.content) +
+                          "\n            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c(
+                        "ul",
+                        { staticClass: "left-border" },
+                        _vm._l(_vm.editableItem.child_list_items, function(
+                          item
+                        ) {
+                          return _c("li", [
+                            item.checked_at
+                              ? _c("i", {
+                                  staticClass: "fa fa-fw fa-check",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            !item.checked_at
+                              ? _c("i", {
+                                  staticClass: "fa fa-fw fa-square-o",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              : _vm._e(),
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(item.content) +
+                                "\n                "
+                            )
+                          ])
+                        })
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.editableItem.id
         ? _c("edit-checklist-item", {
-            attrs: { item: _vm.editableChecklistItem }
+            attrs: {
+              "list-type": "ta",
+              item: _vm.editableItem,
+              "parent-model": "checklist"
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.editableSubItem.id
+        ? _c("edit-checklist-item", {
+            attrs: {
+              "list-type": "ta",
+              item: _vm.editableSubItem,
+              "parent-model": "checklist-item"
+            }
           })
         : _vm._e()
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("i", {
+        staticClass: "fa fa-fw fa-home",
+        attrs: { "aria-hidden": "true" }
+      }),
+      _vm._v("\n          Home\n        ")
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -94652,6 +94834,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     replaceAfterMove: {
       type: Boolean,
       default: false
+    },
+    parentModel: {
+      type: String,
+      default: 'checklist'
     }
   },
   data: function data() {
@@ -94764,7 +94950,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
       }
 
-      this.removeCurrentlyEditable();
+      this.removeCurrentlyEditable({ parentModel: this.parentModel });
     },
     highlightChecklist: function highlightChecklist(checklist) {
       this.toggleAddingFolder('false');
@@ -95448,15 +95634,19 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(608)
+}
 var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(608)
+var __vue_script__ = __webpack_require__(609)
 /* template */
-var __vue_template__ = __webpack_require__(613)
+var __vue_template__ = __webpack_require__(614)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -95493,6 +95683,12 @@ module.exports = Component.exports
 
 /***/ }),
 /* 608 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 609 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -95504,7 +95700,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Breadcrumbs_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Breadcrumbs_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AddItem_vue__ = __webpack_require__(262);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AddItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__AddItem_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__EditChecklist_vue__ = __webpack_require__(609);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__EditChecklist_vue__ = __webpack_require__(610);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__EditChecklist_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__EditChecklist_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__EditChecklistItem_vue__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__EditChecklistItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__EditChecklistItem_vue__);
@@ -95512,6 +95708,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MoveToChecklist_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__MoveToChecklist_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -95660,9 +95893,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     EditChecklistItem: __WEBPACK_IMPORTED_MODULE_5__EditChecklistItem_vue___default.a,
     MoveToChecklist: __WEBPACK_IMPORTED_MODULE_6__MoveToChecklist_vue___default.a
   },
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['checklist', 'checklistItems', 'editableChecklistItem', 'currentEditableItemIsExpanded', 'selectedIsMovable', 'filters']), {
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['checklist', 'checklistItems', 'editableItem', 'editableSubItem', 'editableItemIsExpanded', 'editableSubItemIsExpanded', 'selectedIsMovable', 'filters']), {
     checklistClass: function checklistClass() {
-      return !this.editableChecklistItem.id ? null : this.currentEditableItemIsExpanded ? 'has-expanded-editable-item' : 'has-editable-item';
+      return this.editableSubItemIsExpanded ? 'has-expanded-editable-sub-item' : this.editableSubItem.id ? 'has-editable-sub-item' : this.editableItemIsExpanded ? 'has-expanded-editable-item' : this.editableItem.id ? 'has-editable-item' : null;
     },
     checklistIconClass: function checklistIconClass() {
       return !this.checklist.list_type ? 'fa-list' : this.checklist.list_type == 'ch' ? 'fa-list' : this.checklist.list_type == 'ta' ? 'fa-check-square' : this.checklist.list_type == 'bu' ? 'fa-list-ul' : this.checklist.list_type == 'nu' ? 'fa-list-ol' : 'fa-list';
@@ -95774,19 +96007,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 609 */
+/* 610 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(610)
+  __webpack_require__(611)
 }
 var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(611)
+var __vue_script__ = __webpack_require__(612)
 /* template */
-var __vue_template__ = __webpack_require__(612)
+var __vue_template__ = __webpack_require__(613)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -95826,13 +96059,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 610 */
+/* 611 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 611 */
+/* 612 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -95927,7 +96160,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 612 */
+/* 613 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -96142,7 +96375,7 @@ if (false) {
 }
 
 /***/ }),
-/* 613 */
+/* 614 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -96153,372 +96386,478 @@ var render = function() {
     "div",
     { staticClass: "checklist position-relative", class: _vm.checklistClass },
     [
-      _c("div", { staticClass: "panel main-panel" }, [
-        _c(
-          "div",
-          { staticClass: "panel-heading" },
-          [
-            _c("h4", { staticClass: "checklist-title" }, [
-              _c("i", {
-                staticClass: "fa fa-fw fa-list",
-                class: [
-                  { "grey-color-scheme": _vm.isEditable },
-                  _vm.checklistIconClass
-                ],
-                attrs: { "aria-hidden": "true" }
-              }),
-              _vm._v(" "),
-              !_vm.isEditable
-                ? _c(
-                    "span",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.toggleEditability(true)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(_vm.checklist.title) +
-                          "\n          "
-                      )
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.isEditable
-                ? _c("input", {
-                    directives: [
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.editableSubItem.id,
+              expression: "!editableSubItem.id"
+            }
+          ],
+          staticClass: "panel main-panel"
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "panel-heading" },
+            [
+              _c("h4", { staticClass: "checklist-title" }, [
+                _c("i", {
+                  staticClass: "fa fa-fw fa-list",
+                  class: [
+                    { "grey-color-scheme": _vm.isEditable },
+                    _vm.checklistIconClass
+                  ],
+                  attrs: { "aria-hidden": "true" }
+                }),
+                _vm._v(" "),
+                !_vm.isEditable
+                  ? _c(
+                      "span",
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.checklist.title,
-                        expression: "checklist.title"
-                      },
-                      { name: "focus", rawName: "v-focus" }
-                    ],
-                    ref: "titleinput",
-                    staticClass: "edit-checklist-input",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.checklist.title },
-                    on: {
-                      keyup: [
-                        function($event) {
-                          if (
-                            !("button" in $event) &&
-                            _vm._k($event.keyCode, "enter", 13, $event.key)
-                          ) {
-                            return null
+                        on: {
+                          click: function($event) {
+                            _vm.toggleEditability(true)
                           }
-                          _vm.debounceSaveChanges($event)
-                        },
-                        _vm.debounceSaveChanges
-                      ],
-                      keydown: _vm.debounceSaveChanges,
-                      change: _vm.debounceSaveChanges,
-                      blur: _vm.debounceSaveChanges,
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
                         }
-                        _vm.$set(_vm.checklist, "title", $event.target.value)
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.isEditable
-                ? _c("i", {
-                    staticClass: "fa fa-fw edit-checklist-icon",
-                    class: _vm.inputIcon,
-                    attrs: { "aria-hidden": "true" },
-                    on: { click: _vm.saveAndClose }
-                  })
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "checklist-filters" }, [
-              _c("div", { staticClass: "pull-right" }, [
-                _vm.checklist.list_type !== "nu"
-                  ? _c("div", { staticClass: "checked-filter" }, [
-                      !_vm.selectingCheckedFilter
-                        ? _c(
-                            "span",
-                            {
-                              on: {
-                                click: function($event) {
-                                  _vm.toggleFilter("checked")
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(_vm.checkedFilterText) +
-                                  "\n                "
-                              ),
-                              _c("i", {
-                                staticClass: "fa fa-angle-down",
-                                attrs: { "aria-hidden": "true" }
-                              })
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v("\n               \n\n              "),
-                      _vm.selectingCheckedFilter
-                        ? _c(
-                            "ul",
-                            { class: { open: _vm.selectingCheckedFilter } },
-                            [
-                              _vm.selectingCheckedFilter ||
-                              _vm.filters.checked == "all"
-                                ? _c(
-                                    "li",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          _vm.setCheckedFilter("all")
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fa fa-fw fa-globe",
-                                        attrs: { "aria-hidden": "true" }
-                                      }),
-                                      _vm._v(
-                                        "\n                  All\n                "
-                                      )
-                                    ]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.selectingCheckedFilter ||
-                              _vm.filters.checked == "unchecked"
-                                ? _c(
-                                    "li",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          _vm.setCheckedFilter("unchecked")
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fa fa-fw fa-square-o",
-                                        attrs: { "aria-hidden": "true" }
-                                      }),
-                                      _vm._v(
-                                        "\n                  Incomplete\n                "
-                                      )
-                                    ]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.selectingCheckedFilter ||
-                              _vm.filters.checked == "checked"
-                                ? _c(
-                                    "li",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          _vm.setCheckedFilter("checked")
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fa fa-fw fa-check-square",
-                                        attrs: { "aria-hidden": "true" }
-                                      }),
-                                      _vm._v(
-                                        "\n                  Completed\n                "
-                                      )
-                                    ]
-                                  )
-                                : _vm._e()
-                            ]
-                          )
-                        : _vm._e()
-                    ])
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.checklist.title) +
+                            "\n          "
+                        )
+                      ]
+                    )
                   : _vm._e(),
                 _vm._v(" "),
-                _c("div", { staticClass: "priority-filter" }, [
-                  !_vm.selectingPriorityFilter
-                    ? _c(
-                        "span",
+                _vm.isEditable
+                  ? _c("input", {
+                      directives: [
                         {
-                          on: {
-                            click: function($event) {
-                              _vm.toggleFilter("priority")
-                            }
-                          }
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.checklist.title,
+                          expression: "checklist.title"
                         },
-                        [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(_vm.priorityFilterText) +
-                              "\n                "
-                          ),
-                          _c("i", {
-                            staticClass: "fa fa-angle-down",
+                        { name: "focus", rawName: "v-focus" }
+                      ],
+                      ref: "titleinput",
+                      staticClass: "edit-checklist-input",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.checklist.title },
+                      on: {
+                        keyup: [
+                          function($event) {
+                            if (
+                              !("button" in $event) &&
+                              _vm._k($event.keyCode, "enter", 13, $event.key)
+                            ) {
+                              return null
+                            }
+                            _vm.debounceSaveChanges($event)
+                          },
+                          _vm.debounceSaveChanges
+                        ],
+                        keydown: _vm.debounceSaveChanges,
+                        change: _vm.debounceSaveChanges,
+                        blur: _vm.debounceSaveChanges,
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.checklist, "title", $event.target.value)
+                        }
+                      }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.isEditable
+                  ? _c("i", {
+                      staticClass: "fa fa-fw edit-checklist-icon",
+                      class: _vm.inputIcon,
+                      attrs: { "aria-hidden": "true" },
+                      on: { click: _vm.saveAndClose }
+                    })
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checklist-filters" }, [
+                _c("div", { staticClass: "pull-right" }, [
+                  _vm.checklist.list_type !== "nu"
+                    ? _c("div", { staticClass: "checked-filter" }, [
+                        !_vm.selectingCheckedFilter
+                          ? _c(
+                              "span",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    _vm.toggleFilter("checked")
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(_vm.checkedFilterText) +
+                                    "\n                "
+                                ),
+                                _c("i", {
+                                  staticClass: "fa fa-angle-down",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v("\n               \n\n              "),
+                        _vm.selectingCheckedFilter
+                          ? _c(
+                              "ul",
+                              { class: { open: _vm.selectingCheckedFilter } },
+                              [
+                                _vm.selectingCheckedFilter ||
+                                _vm.filters.checked == "all"
+                                  ? _c(
+                                      "li",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            _vm.setCheckedFilter("all")
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fa fa-fw fa-globe",
+                                          attrs: { "aria-hidden": "true" }
+                                        }),
+                                        _vm._v(
+                                          "\n                  All\n                "
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.selectingCheckedFilter ||
+                                _vm.filters.checked == "unchecked"
+                                  ? _c(
+                                      "li",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            _vm.setCheckedFilter("unchecked")
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fa fa-fw fa-square-o",
+                                          attrs: { "aria-hidden": "true" }
+                                        }),
+                                        _vm._v(
+                                          "\n                  Incomplete\n                "
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.selectingCheckedFilter ||
+                                _vm.filters.checked == "checked"
+                                  ? _c(
+                                      "li",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            _vm.setCheckedFilter("checked")
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "fa fa-fw fa-check-square",
+                                          attrs: { "aria-hidden": "true" }
+                                        }),
+                                        _vm._v(
+                                          "\n                  Completed\n                "
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ]
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "priority-filter" }, [
+                    !_vm.selectingPriorityFilter
+                      ? _c(
+                          "span",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.toggleFilter("priority")
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.priorityFilterText) +
+                                "\n                "
+                            ),
+                            _c("i", {
+                              staticClass: "fa fa-angle-down",
+                              attrs: { "aria-hidden": "true" }
+                            })
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v("\n               \n\n              "),
+                    _vm.selectingPriorityFilter
+                      ? _c(
+                          "ul",
+                          { class: { open: _vm.selectingPriorityFilter } },
+                          [
+                            _vm.selectingPriorityFilter ||
+                            _vm.filters.priority == "none"
+                              ? _c(
+                                  "li",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        _vm.setPriorityFilter("none")
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fa fa-fw fa-globe",
+                                      attrs: { "aria-hidden": "true" }
+                                    }),
+                                    _vm._v(
+                                      "\n                  All (No Priority)\n                "
+                                    )
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.selectingPriorityFilter ||
+                            _vm.filters.priority == "both"
+                              ? _c(
+                                  "li",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        _vm.setPriorityFilter("both")
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "fa fa-fw fa-exclamation-triangle",
+                                      attrs: { "aria-hidden": "true" }
+                                    }),
+                                    _vm._v(
+                                      "\n                  Important & Urgent\n                "
+                                    )
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.selectingPriorityFilter ||
+                            _vm.filters.priority == "important"
+                              ? _c(
+                                  "li",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        _vm.setPriorityFilter("important")
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fa fa-fw fa-star",
+                                      attrs: { "aria-hidden": "true" }
+                                    }),
+                                    _vm._v(
+                                      "\n                  Important\n                "
+                                    )
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.selectingPriorityFilter ||
+                            _vm.filters.priority == "urgent"
+                              ? _c(
+                                  "li",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        _vm.setPriorityFilter("urgent")
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fa fa-fw fa-clock-o",
+                                      attrs: { "aria-hidden": "true" }
+                                    }),
+                                    _vm._v(
+                                      "\n                  Urgent\n                "
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ]
+                        )
+                      : _vm._e()
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              !_vm.isEditable
+                ? _c("add-item", {
+                    attrs: {
+                      parent: _vm.checklist,
+                      "parent-model": "checklist"
+                    }
+                  })
+                : _vm._e()
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "checklist-index-panel panel-body" },
+            [
+              !_vm.isEditable
+                ? _c("checklist-items", {
+                    attrs: {
+                      "list-type": _vm.checklist.list_type,
+                      items: _vm.checklistItems,
+                      "parent-model": "checklist",
+                      parent: _vm.checklist
+                    },
+                    on: { onChecklistItemClick: _vm.toggleSelection }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.isEditable
+                ? _c("edit-checklist", {
+                    attrs: {
+                      checklist: _vm.checklist,
+                      "is-saving": _vm.isSaving
+                    },
+                    on: {
+                      close: _vm.saveAndClose,
+                      saveChanges: _vm.saveChanges
+                    }
+                  })
+                : _vm._e()
+            ],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      !_vm.selectedIsMovable && _vm.editableSubItem.id
+        ? _c("div", { staticClass: "panel side-panel checklist-item-tree" }, [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("ul", [
+                _c("li", [
+                  _c("i", {
+                    staticClass: "fa fa-fw fa-list-ul",
+                    attrs: { "aria-hidden": "true" }
+                  }),
+                  _vm._v(
+                    "\n          " + _vm._s(_vm.checklist.title) + "\n        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("ul", { staticClass: "left-border" }, [
+                    _c("li", [
+                      _vm.editableItem.checked_at
+                        ? _c("i", {
+                            staticClass: "fa fa-fw fa-check",
                             attrs: { "aria-hidden": "true" }
                           })
-                        ]
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.editableItem.checked_at
+                        ? _c("i", {
+                            staticClass: "fa fa-fw fa-circle-thin",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        : _vm._e(),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.editableItem.content) +
+                          "\n            "
                       )
-                    : _vm._e(),
-                  _vm._v("\n               \n\n              "),
-                  _vm.selectingPriorityFilter
-                    ? _c(
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c(
                         "ul",
-                        { class: { open: _vm.selectingPriorityFilter } },
-                        [
-                          _vm.selectingPriorityFilter ||
-                          _vm.filters.priority == "none"
-                            ? _c(
-                                "li",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      _vm.setPriorityFilter("none")
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fa fa-fw fa-globe",
-                                    attrs: { "aria-hidden": "true" }
-                                  }),
-                                  _vm._v(
-                                    "\n                  All (No Priority)\n                "
-                                  )
-                                ]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.selectingPriorityFilter ||
-                          _vm.filters.priority == "both"
-                            ? _c(
-                                "li",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      _vm.setPriorityFilter("both")
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass:
-                                      "fa fa-fw fa-exclamation-triangle",
-                                    attrs: { "aria-hidden": "true" }
-                                  }),
-                                  _vm._v(
-                                    "\n                  Important & Urgent\n                "
-                                  )
-                                ]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.selectingPriorityFilter ||
-                          _vm.filters.priority == "important"
-                            ? _c(
-                                "li",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      _vm.setPriorityFilter("important")
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fa fa-fw fa-star",
-                                    attrs: { "aria-hidden": "true" }
-                                  }),
-                                  _vm._v(
-                                    "\n                  Important\n                "
-                                  )
-                                ]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.selectingPriorityFilter ||
-                          _vm.filters.priority == "urgent"
-                            ? _c(
-                                "li",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      _vm.setPriorityFilter("urgent")
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fa fa-fw fa-clock-o",
-                                    attrs: { "aria-hidden": "true" }
-                                  }),
-                                  _vm._v(
-                                    "\n                  Urgent\n                "
-                                  )
-                                ]
-                              )
-                            : _vm._e()
-                        ]
+                        { staticClass: "left-border" },
+                        _vm._l(_vm.editableItem.child_list_items, function(
+                          item
+                        ) {
+                          return _c("li", [
+                            item.checked_at
+                              ? _c("i", {
+                                  staticClass: "fa fa-fw fa-check",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            !item.checked_at
+                              ? _c("i", {
+                                  staticClass: "fa fa-fw fa-square-o",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              : _vm._e(),
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(item.content) +
+                                "\n                "
+                            )
+                          ])
+                        })
                       )
-                    : _vm._e()
+                    ])
+                  ])
                 ])
               ])
-            ]),
-            _vm._v(" "),
-            !_vm.isEditable
-              ? _c("add-item", {
-                  attrs: { parent: _vm.checklist, "parent-model": "checklist" }
-                })
-              : _vm._e()
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "checklist-index-panel panel-body" },
-          [
-            !_vm.isEditable
-              ? _c("checklist-items", {
-                  attrs: {
-                    "list-type": _vm.checklist.list_type,
-                    items: _vm.checklistItems,
-                    "parent-model": "checklist",
-                    parent: _vm.checklist
-                  },
-                  on: { onChecklistItemClick: _vm.toggleSelection }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.isEditable
-              ? _c("edit-checklist", {
-                  attrs: {
-                    checklist: _vm.checklist,
-                    "is-saving": _vm.isSaving
-                  },
-                  on: { close: _vm.saveAndClose, saveChanges: _vm.saveChanges }
-                })
-              : _vm._e()
-          ],
-          1
-        )
-      ]),
+            ])
+          ])
+        : _vm._e(),
       _vm._v(" "),
-      !_vm.selectedIsMovable && _vm.editableChecklistItem.id
+      !_vm.selectedIsMovable && _vm.editableItem.id
         ? _c("edit-checklist-item", {
             attrs: {
               "list-type": _vm.checklist.list_type,
-              item: _vm.editableChecklistItem
+              item: _vm.editableItem,
+              "parent-model": "checklist"
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.selectedIsMovable && _vm.editableSubItem.id
+        ? _c("edit-checklist-item", {
+            attrs: {
+              "list-type": _vm.checklist.list_type,
+              item: _vm.editableSubItem,
+              "parent-model": "checklist-item"
             }
           })
         : _vm._e(),
@@ -96539,19 +96878,19 @@ if (false) {
 }
 
 /***/ }),
-/* 614 */
+/* 615 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(615)
+  __webpack_require__(616)
 }
 var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(616)
+var __vue_script__ = __webpack_require__(617)
 /* template */
-var __vue_template__ = __webpack_require__(621)
+var __vue_template__ = __webpack_require__(622)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -96591,19 +96930,19 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 615 */
+/* 616 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 616 */
+/* 617 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notice_vue__ = __webpack_require__(617);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notice_vue__ = __webpack_require__(618);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notice_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Notice_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -96634,19 +96973,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 617 */
+/* 618 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(618)
+  __webpack_require__(619)
 }
 var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(619)
+var __vue_script__ = __webpack_require__(620)
 /* template */
-var __vue_template__ = __webpack_require__(620)
+var __vue_template__ = __webpack_require__(621)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -96686,13 +97025,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 618 */
+/* 619 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 619 */
+/* 620 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -96753,7 +97092,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 620 */
+/* 621 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -96832,7 +97171,7 @@ if (false) {
 }
 
 /***/ }),
-/* 621 */
+/* 622 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -96860,19 +97199,19 @@ if (false) {
 }
 
 /***/ }),
-/* 622 */
+/* 623 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(252);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_home__ = __webpack_require__(625);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_folders__ = __webpack_require__(626);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_checklists__ = __webpack_require__(627);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_search__ = __webpack_require__(629);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_notices__ = __webpack_require__(630);
-__webpack_require__(623).polyfill();
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_home__ = __webpack_require__(626);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_folders__ = __webpack_require__(627);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_checklists__ = __webpack_require__(628);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_search__ = __webpack_require__(630);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_notices__ = __webpack_require__(631);
+__webpack_require__(624).polyfill();
 
 
 
@@ -96895,7 +97234,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 }));
 
 /***/ }),
-/* 623 */
+/* 624 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {var require;/*!
@@ -97035,7 +97374,7 @@ function flush() {
 function attemptVertx() {
   try {
     var r = require;
-    var vertx = __webpack_require__(624);
+    var vertx = __webpack_require__(625);
     vertxNext = vertx.runOnLoop || vertx.runOnContext;
     return useVertxTimer();
   } catch (e) {
@@ -98059,13 +98398,13 @@ return Promise$2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(95), __webpack_require__(33)))
 
 /***/ }),
-/* 624 */
+/* 625 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 625 */
+/* 626 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98101,11 +98440,11 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
   };
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["t" /* SET_CREATING_NEW */], function (state, model) {
   state.creatingNew = model;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* TOGGLE_CREATING_NEW_BUTTONS */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* TOGGLE_CREATING_NEW_BUTTONS */], function (state) {
   state.showCreatingNewButtons = !state.showCreatingNewButtons;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_MOVABLE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* TOGGLE_MOVABLE */], function (state) {
   state.selected.movable = !state.selected.movable;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_DELETABLE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_DELETABLE */], function (state) {
   state.selected.deletable = !state.selected.deletable;
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], function (state, payload) {
   switch (payload.model) {
@@ -98127,15 +98466,15 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
   if (payload && payload.model) {
     switch (payload.model) {
       case 'folder':
-        var i = _.findIndex(state.selected.folders, payload.listing);
+        var i = _.findIndex(state.selected.folders, ['id', payload.listing.id]);
         state.selected.folders.splice(i, 1);
         break;
       case 'checklist':
-        var i = _.findIndex(state.selected.checklists, payload.listing);
+        var i = _.findIndex(state.selected.checklists, ['id', payload.listing.id]);
         state.selected.checklists.splice(i, 1);
         break;
       case 'checklist-item':
-        var i = _.findIndex(state.selected.checklists, payload.listing);
+        var i = _.findIndex(state.selected.checklistItems, ['id', payload.listing.id]);
         state.selected.checklistItems.splice(i, 1);
         break;
       default:
@@ -98154,94 +98493,75 @@ var actions = {
   toggleCreatingNewButtons: function toggleCreatingNewButtons(_ref2) {
     var commit = _ref2.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* TOGGLE_CREATING_NEW_BUTTONS */]);
+    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* TOGGLE_CREATING_NEW_BUTTONS */]);
   },
   toggleMovable: function toggleMovable(_ref3) {
     var commit = _ref3.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_MOVABLE */]);
+    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* TOGGLE_MOVABLE */]);
   },
   toggleDeletable: function toggleDeletable(_ref4) {
     var commit = _ref4.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_DELETABLE */]);
+    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_DELETABLE */]);
   },
   toggleSelection: function toggleSelection(_ref5, payload) {
     var dispatch = _ref5.dispatch,
         commit = _ref5.commit,
         state = _ref5.state;
 
+    var isInSelectedArray = void 0;
+    var isSubItem = void 0;
+    var isChecklistItem = false;
+    var modifierKeyPressed = payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey ? true : false;
     switch (payload.selection.model) {
       case 'folder':
-        if (_.findIndex(state.selected.folders, payload.selection.listing) !== -1) {
-          if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["r" /* REMOVE_FROM_SELECTED */], payload.selection);
-          } else {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
-          }
-        } else {
-          if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
-          } else {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
-          }
-        }
+        isInSelectedArray = _.findIndex(state.selected.folders, ['id', payload.selection.listing.id]) !== -1;
         break;
       case 'checklist':
-        if (_.findIndex(state.selected.checklists, payload.selection.listing) !== -1) {
-          if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["r" /* REMOVE_FROM_SELECTED */], payload.selection);
-          } else {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
-          }
-        } else {
-          if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
-          } else {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
-          }
-        }
+        isInSelectedArray = _.findIndex(state.selected.checklists, ['id', payload.selection.listing.id]) !== -1;
         break;
       case 'checklist-item':
-        if (_.findIndex(state.selected.checklistItems, payload.selection.listing) !== -1) {
-          dispatch('removeCurrentlyEditable', null, { root: true }).then(function () {
-
-            if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey || state.selected.checklistItems.length === 1) {
-              // if either a modifier key was used or there is only one selected item
-              commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["r" /* REMOVE_FROM_SELECTED */], payload.selection);
-            } else {
-              // if there are mulitple items and a modifier key was not used
-              commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
-              commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
-            }
-
-            if (state.selected.checklistItems.length === 1) {
-              //If only one is left, make it editable
-              dispatch('addCurrentlyEditable', state.selected.checklistItems[0], { root: true });
-            }
-          }).catch(function () {
-            console.log('error dispatching. home.js toggleSelection()');
-          });
-        } else {
-
-          if (payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
-          } else {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
-          }
-
-          if (state.selected.checklistItems.length == 1) {
-            dispatch('addCurrentlyEditable', payload.selection.listing, { root: true });
-          } else {
-            dispatch('removeCurrentlyEditable', null, { root: true });
-          }
-        }
+        isInSelectedArray = _.findIndex(state.selected.checklistItems, ['id', payload.selection.listing.id]) !== -1;
+        isChecklistItem = true;
+        isSubItem = payload.selection.parentModel === 'checklist-item';
         break;
+    }
+
+    if (isInSelectedArray) {
+      if (isChecklistItem) {
+        dispatch('removeCurrentlyEditable', { isSubItem: isSubItem }, { root: true });
+      }
+      // Remove if modifier key was pressed
+      if (modifierKeyPressed || isChecklistItem && state.selected.checklistItems.length === 1) {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["r" /* REMOVE_FROM_SELECTED */], payload.selection);
+      } else {
+        // If a modifier key was not pressed
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
+      }
+
+      // If only one checklist item is left, make it editable
+      if (isChecklistItem && state.selected.checklistItems.length === 1) {
+        dispatch('addCurrentlyEditable', { isSubItem: isSubItem, item: state.selected.checklistItems[0] }, { root: true });
+      }
+    } else {
+      // If it is not in the selected array
+      // Add if modifier key was pressed
+      if (modifierKeyPressed) {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
+      } else {
+        // If a modifier key was not pressed
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* CLEAR_SELECTED */]);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_SELECTED */], payload.selection);
+      }
+
+      // If only one checklist item is left, make it editable
+      if (isChecklistItem && state.selected.checklistItems.length === 1) {
+        dispatch('addCurrentlyEditable', { isSubItem: isSubItem, item: payload.selection.listing }, { root: true });
+      } else {
+        dispatch('removeCurrentlyEditable', { isSubItem: isSubItem }, { root: true });
+      }
     }
   },
   deleteSelection: function deleteSelection(_ref6) {
@@ -98390,7 +98710,7 @@ var getters = {
 });
 
 /***/ }),
-/* 626 */
+/* 627 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98414,7 +98734,7 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     var i = _.findIndex(state.folders, ['id', folder.id]);
     console.log('i = ' + i);
     state.folders.splice(i, 1);
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UPDATE_FOLDER */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UPDATE_FOLDER */], function (state, payload) {
     var i = _.findIndex(state.folders, ['id', payload.folder.id]);
     state.folders.splice(i, 1, payload.updatedFolder);
 }), _mutations);
@@ -98470,7 +98790,7 @@ var actions = {
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(function (response) {
                         if (response.data.folder) {
-                            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UPDATE_FOLDER */], response.data.folder);
+                            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UPDATE_FOLDER */], response.data.folder);
                             resolve(response.data.folder);
                         } else if (response.data.error) {
                             reject(response.data.error);
@@ -98481,7 +98801,7 @@ var actions = {
                         return reject(error);
                     });
                 } else if (response.data.folder) {
-                    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UPDATE_FOLDER */], response.data.folder);
+                    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UPDATE_FOLDER */], response.data.folder);
                     resolve(response.data.folder);
                 } else if (response.data.error) {
                     reject(response.data.error);
@@ -98543,12 +98863,12 @@ var getters = {
 });
 
 /***/ }),
-/* 627 */
+/* 628 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fast_sort__ = __webpack_require__(628);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fast_sort__ = __webpack_require__(629);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fast_sort___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fast_sort__);
 var _mutations;
 
@@ -98561,663 +98881,729 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var namespaced = true;
 
 var state = {
-    checklists: Productivity.checklists ? Productivity.checklists : [],
-    checklist: Productivity.checklist ? Productivity.checklist : [],
-    checklistItems: Productivity.checklistItems ? Productivity.checklistItems : [],
-    unfilteredItems: [],
-    editableChecklistItem: {},
-    currentEditableItemIsExpanded: false,
-    delistedItems: [],
-    filters: {
-        checked: 'unchecked',
-        priority: 'none'
-    }
+  checklists: Productivity.checklists ? Productivity.checklists : [],
+  checklist: Productivity.checklist ? Productivity.checklist : [],
+  checklistItems: Productivity.checklistItems ? Productivity.checklistItems : [],
+  unfilteredItems: [],
+  editableItem: {},
+  editableSubItem: {},
+  editableItemIsExpanded: false,
+  editableSubItemIsExpanded: false,
+  delistedItems: [],
+  filters: {
+    checked: 'unchecked',
+    priority: 'none'
+  }
 };
 
 var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["a" /* ADD_CHECKLIST */], function (state, checklist) {
-    state.checklists.unshift(checklist);
+  state.checklists.unshift(checklist);
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], function (state, item) {
-    if (!state.unfilteredItems.includes(item.id)) {
-        state.unfilteredItems.unshift(item.id);
-    }
+  if (!state.unfilteredItems.includes(item.id)) {
+    state.unfilteredItems.unshift(item.id);
+  }
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["c" /* ADD_ITEM_TO_CHECKLIST */], function (state, item) {
-    state.checklistItems.push(item);
+  state.checklistItems.push(item);
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["e" /* ADD_SUB_ITEM_TO_CHECKLIST_ITEM */], function (state, payload) {
-    var i = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
-    if (i == -1) return false;
-    state.checklistItems[i].child_list_items.push(payload.child);
+  var i = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
+  if (i == -1) return false;
+  state.checklistItems[i].child_list_items.push(payload.child);
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* DECREMENT_ITEM_COUNT */], function (state, checklistID) {
-    if (!_.isEmpty(state.checklists)) {
-        var i = _.findIndex(state.checklists, ['id', checklistID]);
-        state.checklists[i].items_count = --state.checklists[i].items_count;
-    }
+  if (!_.isEmpty(state.checklists)) {
+    var i = _.findIndex(state.checklists, ['id', checklistID]);
+    state.checklists[i].items_count = --state.checklists[i].items_count;
+  }
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* DELETE_CHECKLIST */], function (state, checklist) {
-    if (!_.isEmpty(state.checklists)) {
-        var i = _.findIndex(state.checklists, ['id', checklist.id]);
-        state.checklists.splice(i, 1);
-    }
+  if (!_.isEmpty(state.checklists)) {
+    var i = _.findIndex(state.checklists, ['id', checklist.id]);
+    state.checklists.splice(i, 1);
+  }
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["l" /* DELETE_CHECKLIST_ITEM */], function (state, checklistItem) {
-    if (!_.isEmpty(state.checklistItems)) {
-        var i = _.findIndex(state.checklistItems, ['id', checklistItem.id]);
-        state.checklistItems.splice(i, 1);
-    }
+  if (!_.isEmpty(state.checklistItems)) {
+    var i = _.findIndex(state.checklistItems, ['id', checklistItem.id]);
+    state.checklistItems.splice(i, 1);
+  }
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELIST_CHECKLIST_ITEM */], function (state, checklistItem) {
-    state.delistedItems.unshift(checklistItem.id);
+  state.delistedItems.unshift(checklistItem.id);
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_UNFILTERED */], function (state) {
-    var item = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var item = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-    if (item) {
-        var i = _.findIndex(state.unfilteredItems, ['id', item.id]);
-        ~i && state.unfilteredItems.splice(i, 1);
-    }
-    state.unfilteredItems = [];
+  if (item) {
+    var i = _.findIndex(state.unfilteredItems, ['id', item.id]);
+    ~i && state.unfilteredItems.splice(i, 1);
+  }
+  state.unfilteredItems = [];
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["q" /* INCREMENT_ITEM_COUNT */], function (state, checklistID) {
-    if (!_.isEmpty(state.checklists)) {
-        var i = _.findIndex(state.checklists, ['id', checklistID]);
-        state.checklists[i].items_count = ++state.checklists[i].items_count;
-    }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* UPDATE_FILTERS */], function (state, payload) {
-    switch (payload.type) {
-        case 'checked':
-            state.filters.checked = payload.value;
-            break;
-        case 'priority':
-            state.filters.priority = payload.value;
-            break;
-    }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* UPDATE_CHECKLIST */], function (state, updatedChecklist) {
-    if (updatedChecklist && updatedChecklist.title) {
-        state.checklist = updatedChecklist;
-    }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_ITEM_COUNTS */], function (state, payload) {
-    if (!_.isEmpty(state.checklists) && !_.isEmpty(payload.old.checklist_id) && !_.isEmpty(payload.new.checklist_id)) {
-        var o = _.findIndex(state.checklists, ['id', payload.old.checklist_id]);
-        state.checklists[o].items_count = --state.checklists[o].items_count;
+  if (!_.isEmpty(state.checklists)) {
+    var i = _.findIndex(state.checklists, ['id', checklistID]);
+    state.checklists[i].items_count = ++state.checklists[i].items_count;
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UPDATE_FILTERS */], function (state, payload) {
+  switch (payload.type) {
+    case 'checked':
+      state.filters.checked = payload.value;
+      break;
+    case 'priority':
+      state.filters.priority = payload.value;
+      break;
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* UPDATE_CHECKLIST */], function (state, updatedChecklist) {
+  if (updatedChecklist && updatedChecklist.title) {
+    state.checklist = updatedChecklist;
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_ITEM_COUNTS */], function (state, payload) {
+  if (!_.isEmpty(state.checklists) && !_.isEmpty(payload.old.checklist_id) && !_.isEmpty(payload.new.checklist_id)) {
+    var o = _.findIndex(state.checklists, ['id', payload.old.checklist_id]);
+    state.checklists[o].items_count = --state.checklists[o].items_count;
 
-        var n = _.findIndex(state.checklists, ['id', payload.new.checklist_id]);
-        state.checklists[n].items_count = ++state.checklists[n].items_count;
-    }
+    var n = _.findIndex(state.checklists, ['id', payload.new.checklist_id]);
+    state.checklists[n].items_count = ++state.checklists[n].items_count;
+  }
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REPLACE_PENDING_TASK */], function (state, payload) {
-    var i = _.findIndex(state.checklistItems, ['id', payload.old.id]);
-    state.checklistItems.splice(i, 1, payload.new);
+  var i = _.findIndex(state.checklistItems, ['id', payload.old.id]);
+  state.checklistItems.splice(i, 1, payload.new);
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* SET_EDITABLE_CHECKLIST_ITEM */], function (state, item) {
-    var i = _.findIndex(state.checklistItems, ['id', item.id]);
-    if (i !== -1) state.editableChecklistItem = state.checklistItems[i];
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* SET_EDITABLE_CHECKLIST_ITEM_COMMENTS */], function (state) {
-    var html = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var i = _.findIndex(state.checklistItems, ['id', item.id]);
+  if (i !== -1) state.editableItem = state.checklistItems[i];
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SET_EDITABLE_SUB_CHECKLIST_ITEM */], function (state, item) {
+  var i = _.findIndex(state.editableItem.child_list_items, ['id', item.id]);
+  if (i !== -1) state.editableSubItem = state.editableItem.child_list_items[i];
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* SET_EDITABLE_CHECKLIST_ITEM_COMMENTS */], function (state, payload) {
+  if (payload.isSubItem) {
+    state.editableSubItem.comments = payload.html;
+  } else {
+    state.editableItem.comments = payload.html;
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* SET_EDITABLE_CHECKLIST_ITEM_DEADLINE */], function (state, payload) {
+  if (payload.isSubItem) {
+    state.editableSubItem.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null;
+  } else {
+    state.editableItem.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null;
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* UNSET_EDITABLE_CHECKLIST_ITEM */], function (state) {
+  var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
 
-    state.editableChecklistItem.comments = html;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* SET_EDITABLE_CHECKLIST_ITEM_DEADLINE */], function (state) {
-    var date = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  if (payload.isSubItem) {
+    state.editableSubItem = {};
+  } else {
+    state.editableItem = {};
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK */], function (state) {
+  var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
 
-    state.editableChecklistItem.deadline = date ? moment(date).format('YYYY-MM-DD') : null;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* UNSET_EDITABLE_CHECKLIST_ITEM */], function (state) {
-    state.editableChecklistItem = {};
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK */], function (state) {
-    state.editableChecklistItem.checked_at = state.editableChecklistItem.checked_at ? null : moment().format();
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], function (state) {
-    state.currentEditableItemIsExpanded = !state.currentEditableItemIsExpanded;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE */], function (state) {
-    state.editableChecklistItem.is_important = !state.editableChecklistItem.is_important;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY */], function (state) {
-    state.editableChecklistItem.is_urgent = !state.editableChecklistItem.is_urgent;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SORT_CHECKLIST_ITEMS */], function (state) {
-    state.checklistItems = __WEBPACK_IMPORTED_MODULE_1_fast_sort___default()(state.checklistItems).asc(function (i) {
-        return i.sort_order;
-    });
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_SUB_CHECKLIST_ITEMS */], function (state, payload) {
-    var i = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
-    state.checklistItems[i].child_list_items = __WEBPACK_IMPORTED_MODULE_1_fast_sort___default()(state.checklistItems[i].child_list_items).asc(function (item) {
-        return item.sort_order;
-    });
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* UNDO_UPDATE_SORT_ORDER */], function (state) {
-    // Maybe use https://github.com/pinguinjkeke/vue-local-storage or some other way to store/retrieve items
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_SORT_ORDER */], function (state) {
-    for (var i = 0; i < state.checklistItems.length; i++) {
-        state.checklistItems[i].sort_order = i;
-    }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_SUB_ITEM_SORT_ORDER */], function (state, payload) {
-    var p = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
+  if (payload.isSubItem) {
+    state.editableSubItem.checked_at = state.editableSubItem.checked_at ? null : moment().format();
+  } else {
+    state.editableItem.checked_at = state.editableItem.checked_at ? null : moment().format();
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], function (state) {
+  var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
 
-    for (var i = 0; i < state.checklistItems[p].child_list_items.length; i++) {
-        state.checklistItems[p].child_list_items[i].sort_order = i;
-    }
+  if (payload.isSubItem) {
+    state.editableSubItemIsExpanded = !state.editableSubItemIsExpanded;
+  } else {
+    state.editableItemIsExpanded = !state.editableItemIsExpanded;
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE */], function (state) {
+  var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
+
+  if (payload.isSubItem) {
+    state.editableSubItem.is_important = !state.editableSubItem.is_important;
+  } else {
+    state.editableItem.is_important = !state.editableItem.is_important;
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY */], function (state) {
+  var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
+
+  if (payload.isSubItem) {
+    state.editableSubItem.is_urgent = !state.editableSubItem.is_urgent;
+  } else {
+    state.editableItem.is_urgent = !state.editableItem.is_urgent;
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_CHECKLIST_ITEMS */], function (state) {
+  state.checklistItems = __WEBPACK_IMPORTED_MODULE_1_fast_sort___default()(state.checklistItems).asc(function (i) {
+    return i.sort_order;
+  });
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SORT_SUB_CHECKLIST_ITEMS */], function (state, payload) {
+  var i = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
+  state.checklistItems[i].child_list_items = __WEBPACK_IMPORTED_MODULE_1_fast_sort___default()(state.checklistItems[i].child_list_items).asc(function (item) {
+    return item.sort_order;
+  });
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* UNDO_UPDATE_SORT_ORDER */], function (state) {
+  // Maybe use https://github.com/pinguinjkeke/vue-local-storage or some other way to store/retrieve items
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_SORT_ORDER */], function (state) {
+  for (var i = 0; i < state.checklistItems.length; i++) {
+    state.checklistItems[i].sort_order = i;
+  }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["S" /* UPDATE_SUB_ITEM_SORT_ORDER */], function (state, payload) {
+  var p = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
+
+  for (var i = 0; i < state.checklistItems[p].child_list_items.length; i++) {
+    state.checklistItems[p].child_list_items[i].sort_order = i;
+  }
 }), _mutations);
 
 var actions = {
-    addChecklistItem: function addChecklistItem(_ref, payload) {
-        var dispatch = _ref.dispatch,
-            commit = _ref.commit;
+  addChecklistItem: function addChecklistItem(_ref, payload) {
+    var dispatch = _ref.dispatch,
+        commit = _ref.commit;
 
-        return new Promise(function (resolve, reject) {
-            axios.post('/lists/' + payload.parent.fake_id + '/add-item', { item: payload.item }).then(function (response) {
-                return dispatch('addChecklistItemHandler', response).then(function (response) {
-                    return resolve(response);
-                });
-            });
+    return new Promise(function (resolve, reject) {
+      axios.post('/lists/' + payload.parent.fake_id + '/add-item', { item: payload.item }).then(function (response) {
+        return dispatch('addChecklistItemHandler', response).then(function (response) {
+          return resolve(response);
         });
-    },
-    addChecklistItemHandler: function addChecklistItemHandler(_ref2, response) {
-        var commit = _ref2.commit;
+      });
+    });
+  },
+  addChecklistItemHandler: function addChecklistItemHandler(_ref2, response) {
+    var commit = _ref2.commit;
 
-        return new Promise(function (resolve, reject) {
-            if (response.data.tokenMismatch) {
-                Vue.handleTokenMismatch(response.data).then(function (response) {
-                    if (response.data.item) {
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["c" /* ADD_ITEM_TO_CHECKLIST */], response.data.item);
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SORT_CHECKLIST_ITEMS */]);
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], response.data.item);
-                        resolve(response.data.item);
-                    } else if (response.data.error) {
-                        reject(response.data.error);
-                    } else {
-                        reject();
-                    }
-                }).catch(function (error) {
-                    return reject(error);
-                });
-            } else if (response.data.item) {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["c" /* ADD_ITEM_TO_CHECKLIST */], response.data.item);
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SORT_CHECKLIST_ITEMS */]);
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], response.data.item);
-                resolve(response.data.item);
-            } else if (response.data.error) {
-                reject(response.data.error);
-            } else {
-                reject();
-            }
+    return new Promise(function (resolve, reject) {
+      if (response.data.tokenMismatch) {
+        Vue.handleTokenMismatch(response.data).then(function (response) {
+          if (response.data.item) {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["c" /* ADD_ITEM_TO_CHECKLIST */], response.data.item);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_CHECKLIST_ITEMS */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], response.data.item);
+            resolve(response.data.item);
+          } else if (response.data.error) {
+            reject(response.data.error);
+          } else {
+            reject();
+          }
+        }).catch(function (error) {
+          return reject(error);
         });
-    },
-    addSubChecklistItem: function addSubChecklistItem(_ref3, payload) {
-        var dispatch = _ref3.dispatch,
-            commit = _ref3.commit;
+      } else if (response.data.item) {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["c" /* ADD_ITEM_TO_CHECKLIST */], response.data.item);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_CHECKLIST_ITEMS */]);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], response.data.item);
+        resolve(response.data.item);
+      } else if (response.data.error) {
+        reject(response.data.error);
+      } else {
+        reject();
+      }
+    });
+  },
+  addSubChecklistItem: function addSubChecklistItem(_ref3, payload) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit;
 
-        return new Promise(function (resolve, reject) {
-            axios.post('/lists/item/' + payload.parent.id + '/add-sub-item', { item: payload.item }).then(function (response) {
-                return dispatch('addSubChecklistItemHandler', { parent: payload.parent, response: response }).then(function (response) {
-                    return resolve(response);
-                });
-            });
+    return new Promise(function (resolve, reject) {
+      axios.post('/lists/item/' + payload.parent.id + '/add-sub-item', { item: payload.item }).then(function (response) {
+        return dispatch('addSubChecklistItemHandler', { parent: payload.parent, response: response }).then(function (response) {
+          return resolve(response);
         });
-    },
-    addSubChecklistItemHandler: function addSubChecklistItemHandler(_ref4, payload) {
-        var commit = _ref4.commit;
+      });
+    });
+  },
+  addSubChecklistItemHandler: function addSubChecklistItemHandler(_ref4, payload) {
+    var commit = _ref4.commit;
 
-        return new Promise(function (resolve, reject) {
-            var parent = payload.parent;
-            if (payload.response.data.tokenMismatch) {
-                Vue.handleTokenMismatch(payload.response.data).then(function (response) {
-                    if (response.data.item) {
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["e" /* ADD_SUB_ITEM_TO_CHECKLIST_ITEM */], { parent: parent, child: response.data.item });
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: parent });
-                        resolve(response.data.item);
-                    } else if (response.data.error) {
-                        reject(response.data.error);
-                    } else {
-                        reject();
-                    }
-                }).catch(function (error) {
-                    return reject(error);
-                });
-            } else if (payload.response.data.item) {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["e" /* ADD_SUB_ITEM_TO_CHECKLIST_ITEM */], { parent: parent, child: payload.response.data.item });
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: parent });
-                resolve(payload.response.data.item);
-            } else if (payload.response.data.error) {
-                reject(payload.response.data.error);
-            } else {
-                reject();
-            }
+    return new Promise(function (resolve, reject) {
+      var parent = payload.parent;
+      if (payload.response.data.tokenMismatch) {
+        Vue.handleTokenMismatch(payload.response.data).then(function (response) {
+          if (response.data.item) {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["e" /* ADD_SUB_ITEM_TO_CHECKLIST_ITEM */], { parent: parent, child: response.data.item });
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: parent });
+            resolve(response.data.item);
+          } else if (response.data.error) {
+            reject(response.data.error);
+          } else {
+            reject();
+          }
+        }).catch(function (error) {
+          return reject(error);
         });
-    },
-    addCurrentlyEditable: function addCurrentlyEditable(_ref5, item) {
-        var commit = _ref5.commit;
+      } else if (payload.response.data.item) {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["e" /* ADD_SUB_ITEM_TO_CHECKLIST_ITEM */], { parent: parent, child: payload.response.data.item });
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: parent });
+        resolve(payload.response.data.item);
+      } else if (payload.response.data.error) {
+        reject(payload.response.data.error);
+      } else {
+        reject();
+      }
+    });
+  },
 
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* SET_EDITABLE_CHECKLIST_ITEM */], item);
-            resolve();
+  // addCurrentlyEditable({commit}, payload) {
+  //     return new Promise((resolve, reject) => {
+  //       switch (payload.parentModel) {
+  //         case 'checklist-item':
+  //           commit(SET_EDITABLE_SUB_CHECKLIST_ITEM, payload.item)
+  //           break;
+  //         default: commit(SET_EDITABLE_CHECKLIST_ITEM, payload.item)
+  //
+  //       }
+  //       resolve()
+  //     })
+  // },
+  addCurrentlyEditable: function addCurrentlyEditable(_ref5) {
+    var commit = _ref5.commit;
+    var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
+
+    return new Promise(function (resolve, reject) {
+      if (payload.isSubItem) {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SET_EDITABLE_SUB_CHECKLIST_ITEM */], payload.item);
+      } else {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* SET_EDITABLE_CHECKLIST_ITEM */], payload.item);
+      }
+      resolve();
+    });
+  },
+  deleteChecklist: function deleteChecklist(_ref6, checklist) {
+    var dispatch = _ref6.dispatch,
+        commit = _ref6.commit;
+
+    return new Promise(function (resolve, reject) {
+      axios.delete('/lists/' + checklist.fake_id).then(function (response) {
+        return dispatch('deleteChecklistHandler', response).then(function (response) {
+          return resolve(response);
         });
-    },
-    deleteChecklist: function deleteChecklist(_ref6, checklist) {
-        var dispatch = _ref6.dispatch,
-            commit = _ref6.commit;
+      });
+    });
+  },
+  deleteChecklistHandler: function deleteChecklistHandler(_ref7, response) {
+    var commit = _ref7.commit;
 
-        return new Promise(function (resolve, reject) {
-            axios.delete('/lists/' + checklist.fake_id).then(function (response) {
-                return dispatch('deleteChecklistHandler', response).then(function (response) {
-                    return resolve(response);
-                });
-            });
+    return new Promise(function (resolve, reject) {
+      if (response.data.tokenMismatch) {
+        Vue.handleTokenMismatch(response.data).then(function (response) {
+          if (response.data.checklist) {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* DELETE_CHECKLIST */], response.data.checklist);
+            resolve(response.data.checklist);
+          } else if (response.data.error) {
+            reject(response.data.error);
+          } else {
+            reject();
+          }
+        }).catch(function (error) {
+          return reject(error);
         });
-    },
-    deleteChecklistHandler: function deleteChecklistHandler(_ref7, response) {
-        var commit = _ref7.commit;
+      } else if (response.data.checklist) {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* DELETE_CHECKLIST */], response.data.checklist);
+        resolve(response.data.checklist);
+      } else if (response.data.error) {
+        reject(response.data.error);
+      } else {
+        reject();
+      }
+    });
+  },
+  deleteChecklistItem: function deleteChecklistItem(_ref8, checklistItem) {
+    var dispatch = _ref8.dispatch,
+        commit = _ref8.commit;
 
-        return new Promise(function (resolve, reject) {
-            if (response.data.tokenMismatch) {
-                Vue.handleTokenMismatch(response.data).then(function (response) {
-                    if (response.data.checklist) {
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* DELETE_CHECKLIST */], response.data.checklist);
-                        resolve(response.data.checklist);
-                    } else if (response.data.error) {
-                        reject(response.data.error);
-                    } else {
-                        reject();
-                    }
-                }).catch(function (error) {
-                    return reject(error);
-                });
-            } else if (response.data.checklist) {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* DELETE_CHECKLIST */], response.data.checklist);
-                resolve(response.data.checklist);
-            } else if (response.data.error) {
-                reject(response.data.error);
-            } else {
-                reject();
-            }
-        });
-    },
-    deleteChecklistItem: function deleteChecklistItem(_ref8, checklistItem) {
-        var dispatch = _ref8.dispatch,
-            commit = _ref8.commit;
-
-        return new Promise(function (resolve, reject) {
-            dispatch('delistChecklistItem', checklistItem).then(function () {
-                return dispatch('deselect', { model: 'checklist-item', listing: checklistItem }, { root: true }).then(function () {
-                    return dispatch('removeCurrentlyEditable').then(function () {
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* DECREMENT_ITEM_COUNT */], checklistItem.checklist_id);
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["l" /* DELETE_CHECKLIST_ITEM */], checklistItem);
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_SORT_ORDER */]);
-                        dispatch('saveSortOrder', { checklistItems: state.checklistItems, parent: state.checklist, parentModel: 'checklist' });
-                        resolve(checklistItem);
-                    });
-                });
-            });
-        });
-    },
-    delistChecklist: function delistChecklist(_ref9, checklist) {
-        var commit = _ref9.commit;
-
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* DELETE_CHECKLIST */], checklist);
-            resolve();
-        });
-    },
-    delistChecklistItem: function delistChecklistItem(_ref10, checklistItem) {
-        var commit = _ref10.commit;
-
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELIST_CHECKLIST_ITEM */], checklistItem);
+    return new Promise(function (resolve, reject) {
+      var parentModel = checklistItem.parent_checklist_item_id ? 'checklist-item' : 'checklist',
+          isSubItem = checklistItem.parent_checklist_item_id ? true : false;
+      dispatch('delistChecklistItem', checklistItem).then(function () {
+        return dispatch('deselect', { model: 'checklist-item', listing: checklistItem }, { root: true }).then(function () {
+          return dispatch('removeCurrentlyEditable', { isSubItem: isSubItem }).then(function () {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* DECREMENT_ITEM_COUNT */], checklistItem.checklist_id);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["l" /* DELETE_CHECKLIST_ITEM */], checklistItem);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_SORT_ORDER */]);
+            dispatch('saveSortOrder', { checklistItems: state.checklistItems, parent: state.checklist, parentModel: parentModel });
             resolve(checklistItem);
+          });
         });
-    },
-    removeCurrentlyEditable: function removeCurrentlyEditable(_ref11) {
-        var commit = _ref11.commit;
+      });
+    });
+  },
+  delistChecklist: function delistChecklist(_ref9, checklist) {
+    var commit = _ref9.commit;
 
-        return new Promise(function (resolve, reject) {
-            if (state.currentEditableItemIsExpanded) {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */]);
-            }
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* UNSET_EDITABLE_CHECKLIST_ITEM */]);
-            resolve();
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* DELETE_CHECKLIST */], checklist);
+      resolve();
+    });
+  },
+  delistChecklistItem: function delistChecklistItem(_ref10, checklistItem) {
+    var commit = _ref10.commit;
+
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELIST_CHECKLIST_ITEM */], checklistItem);
+      resolve(checklistItem);
+    });
+  },
+  removeCurrentlyEditable: function removeCurrentlyEditable(_ref11) {
+    var commit = _ref11.commit,
+        state = _ref11.state;
+    var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
+
+    return new Promise(function (resolve, reject) {
+      if (payload.isSubItem && state.editableSubItemIsExpanded || !payload.isSubItem && state.editableItemIsExpanded) {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], payload);
+      }
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* UNSET_EDITABLE_CHECKLIST_ITEM */], payload);
+      resolve();
+    });
+  },
+  replacePendingTask: function replacePendingTask(_ref12, payload) {
+    var commit = _ref12.commit;
+
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REPLACE_PENDING_TASK */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_ITEM_COUNTS */], payload);
+      resolve(payload);
+    });
+  },
+
+  // resetNewChecklistItem({commit}) {
+  //     return new Promise((resolve, reject) => {
+  //         commit(RESET_NEW_CHECKLIST_ITEM)
+  //         resolve()
+  //     })
+  // },
+  saveChecklist: function saveChecklist(_ref13, checklist) {
+    var dispatch = _ref13.dispatch,
+        commit = _ref13.commit;
+
+    return new Promise(function (resolve, reject) {
+      axios.patch('/lists/' + checklist.fake_id, { checklist: checklist }).then(function (response) {
+        return dispatch('saveChecklistHandler', response).then(function (response) {
+          return resolve(response);
         });
-    },
-    replacePendingTask: function replacePendingTask(_ref12, payload) {
-        var commit = _ref12.commit;
+      });
+    });
+  },
+  saveChecklistHandler: function saveChecklistHandler(_ref14, response) {
+    var commit = _ref14.commit;
 
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REPLACE_PENDING_TASK */], payload);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_ITEM_COUNTS */], payload);
-            resolve(payload);
+    return new Promise(function (resolve, reject) {
+      if (response.data.tokenMismatch) {
+        Vue.handleTokenMismatch(response.data).then(function (response) {
+          if (response.data.checklist) {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* UPDATE_CHECKLIST */], response.data.checklist);
+            resolve(response.data.checklist);
+          } else if (response.data.error) {
+            reject(response.data.error);
+          } else {
+            reject();
+          }
+        }).catch(function (error) {
+          return reject(error);
         });
-    },
+      } else if (response.data.checklist) {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* UPDATE_CHECKLIST */], response.data.checklist);
+        resolve(response.data.checklist);
+      } else if (response.data.error) {
+        reject(response.data.error);
+      } else {
+        reject();
+      }
+    });
+  },
+  saveCurrentEditableItem: function saveCurrentEditableItem(_ref15) {
+    var dispatch = _ref15.dispatch,
+        commit = _ref15.commit;
+    var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
 
-    // resetNewChecklistItem({commit}) {
-    //     return new Promise((resolve, reject) => {
-    //         commit(RESET_NEW_CHECKLIST_ITEM)
-    //         resolve()
-    //     })
-    // },
-    saveChecklist: function saveChecklist(_ref13, checklist) {
-        var dispatch = _ref13.dispatch,
-            commit = _ref13.commit;
+    return new Promise(function (resolve, reject) {
+      if (payload.isSubItem) {
+        var item = state.editableSubItem.id !== undefined ? state.editableSubItem : reject('There is no item or currently editable sub item');
+      } else {
+        var item = state.editableItem.id !== undefined ? state.editableItem : reject('There is no item or currently editable item');
+      }
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], item);
+      axios.patch('/lists/item/' + item.id + '/update', { item: item }).then(function (response) {
+        return resolve(dispatch('saveCurrentItemHandler', response));
+      }).catch(function (error) {
+        return reject(error);
+      });
+    });
+  },
+  checkChecklistItem: function checkChecklistItem(_ref16, item) {
+    var dispatch = _ref16.dispatch,
+        commit = _ref16.commit;
 
-        return new Promise(function (resolve, reject) {
-            axios.patch('/lists/' + checklist.fake_id, { checklist: checklist }).then(function (response) {
-                return dispatch('saveChecklistHandler', response).then(function (response) {
-                    return resolve(response);
-                });
-            });
+    return new Promise(function (resolve, reject) {
+      item.checked_at = item.checked_at ? null : moment().format();
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], item);
+      axios.patch('/lists/item/' + item.id + '/check', { item: item }).then(function (response) {
+        return resolve(dispatch('saveCurrentItemHandler', response));
+      }).catch(function (error) {
+        return reject(error);
+      });
+    });
+  },
+  saveCurrentItemHandler: function saveCurrentItemHandler(_ref17, response) {
+    var dispatch = _ref17.dispatch,
+        commit = _ref17.commit;
+
+    return new Promise(function (resolve, reject) {
+      if (response.data.tokenMismatch) {
+        Vue.handleTokenMismatch(response.data).catch(function (error) {
+          return reject(error);
+        }).then(function (response) {
+          return resolve();
         });
-    },
-    saveChecklistHandler: function saveChecklistHandler(_ref14, response) {
-        var commit = _ref14.commit;
+      } else if (response.data.item) {
+        resolve();
+      } else {
+        reject(response);
+      }
+    });
+  },
+  saveSortOrder: function saveSortOrder(_ref18, payload) {
+    var commit = _ref18.commit,
+        state = _ref18.state,
+        dispatch = _ref18.dispatch;
 
-        return new Promise(function (resolve, reject) {
-            if (response.data.tokenMismatch) {
-                Vue.handleTokenMismatch(response.data).then(function (response) {
-                    if (response.data.checklist) {
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* UPDATE_CHECKLIST */], response.data.checklist);
-                        resolve(response.data.checklist);
-                    } else if (response.data.error) {
-                        reject(response.data.error);
-                    } else {
-                        reject();
-                    }
-                }).catch(function (error) {
-                    return reject(error);
-                });
-            } else if (response.data.checklist) {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* UPDATE_CHECKLIST */], response.data.checklist);
-                resolve(response.data.checklist);
-            } else if (response.data.error) {
-                reject(response.data.error);
-            } else {
-                reject();
-            }
+    return new Promise(function (resolve, reject) {
+      axios.patch('/lists/save-sort-order', payload).then(function (response) {
+        return resolve(dispatch('saveSortOrderHandler', response));
+      }).catch(function (error) {
+        return console.log(error);
+      });
+    });
+  },
+  saveSortOrderHandler: function saveSortOrderHandler(_ref19, response) {
+    var dispatch = _ref19.dispatch,
+        commit = _ref19.commit;
+
+    return new Promise(function (resolve, reject) {
+      if (response.data.exceptions) {
+        dispatch('addNotice', { type: 'error',
+          heading: 'Error!',
+          message: 'The list could not be re-sorted at this time.',
+          persist: false
+        }, { root: true });
+      }
+      resolve();
+    });
+  },
+  setCurrentEditableItemDeadline: function setCurrentEditableItemDeadline(_ref20) {
+    var dispatch = _ref20.dispatch,
+        commit = _ref20.commit;
+    var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { date: null, isSubItem: false };
+
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* SET_EDITABLE_CHECKLIST_ITEM_DEADLINE */], payload);
+      dispatch('saveCurrentEditableItem', { isSubItem: payload.isSubItem }).then(function (success) {
+        return resolve(success);
+      }).catch(function (error) {
+        dispatch('addNotice', { type: 'error',
+          heading: 'Error!',
+          message: 'There was a problem setting the deadline.',
+          persist: false
+        }, { root: true });
+        reject(error);
+      });
+    });
+  },
+  setCurrentEditableItemComments: function setCurrentEditableItemComments(_ref21) {
+    var dispatch = _ref21.dispatch,
+        commit = _ref21.commit;
+    var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { html: null, isSubItem: false };
+
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* SET_EDITABLE_CHECKLIST_ITEM_COMMENTS */], payload);
+      resolve();
+    });
+  },
+  setEditability: function setEditability(_ref22, payload) {
+    var commit = _ref22.commit;
+
+    return new Promise(function (resolve, reject) {
+      payload.editable ? commit(ADD_EDITABLE, payload.item) : commit(DELETE_EDITABLE, payload.item);
+      resolve();
+    });
+  },
+  setFilterability: function setFilterability(_ref23, payload) {
+    var commit = _ref23.commit;
+
+    return new Promise(function (resolve, reject) {
+      payload.filterable ? commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], payload.item) : commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_UNFILTERED */], payload.item);
+      resolve();
+    });
+  },
+
+  setFilters: function setFilters(_ref24, payload) {
+    var commit = _ref24.commit;
+
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UPDATE_FILTERS */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_UNFILTERED */]);
+      resolve();
+    });
+  },
+  sortChecklistItems: function sortChecklistItems(_ref25) {
+    var commit = _ref25.commit;
+    var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { parentModel: 'checklist' };
+
+    return new Promise(function (resolve, reject) {
+      switch (payload.parentModel) {
+        case 'checklist-item':
+          if (payload.parent) {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: payload.parent });
+          } else {
+            console.log('Error: no parent included in the payload');
+          }
+          break;
+        default:
+          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_CHECKLIST_ITEMS */]);
+
+      }
+      resolve();
+    });
+  },
+  storeChecklist: function storeChecklist(_ref26, checklist) {
+    var dispatch = _ref26.dispatch,
+        commit = _ref26.commit;
+
+    return new Promise(function (resolve, reject) {
+      axios.post('/lists', { checklist: checklist }).then(function (response) {
+        return dispatch('storeChecklistHandler', response).then(function (response) {
+          return resolve(response);
         });
-    },
-    saveCurrentEditableItem: function saveCurrentEditableItem(_ref15) {
-        var dispatch = _ref15.dispatch,
-            commit = _ref15.commit;
-        var item = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      });
+    });
+  },
+  storeChecklistHandler: function storeChecklistHandler(_ref27, response) {
+    var commit = _ref27.commit;
 
-        return new Promise(function (resolve, reject) {
-            if (item == null) {
-                item = state.editableChecklistItem.id !== undefined ? state.editableChecklistItem : reject('There is no item or currently editable item');
-            }
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], item);
-            axios.patch('/lists/item/' + item.id + '/update', { item: item }).then(function (response) {
-                return resolve(dispatch('saveCurrentEditableItemHandler', response));
-            }).catch(function (error) {
-                return reject(error);
-            });
+    return new Promise(function (resolve, reject) {
+      if (response.data.tokenMismatch) {
+        Vue.handleTokenMismatch(response.data).then(function (response) {
+          if (response.data.checklist) {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["a" /* ADD_CHECKLIST */], response.data.checklist);
+            resolve(response.data.checklist);
+          } else if (response.data.error) {
+            reject(response.data.error);
+          } else {
+            reject();
+          }
+        }).catch(function (error) {
+          return reject(error);
         });
-    },
-    checkChecklistItem: function checkChecklistItem(_ref16, item) {
-        var dispatch = _ref16.dispatch,
-            commit = _ref16.commit;
+      } else if (response.data.checklist) {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["a" /* ADD_CHECKLIST */], response.data.checklist);
+        resolve(response.data.checklist);
+      } else if (response.data.error) {
+        reject(response.data.error);
+      } else {
+        reject();
+      }
+    });
+  },
+  toggleCurrentEditableItemCheckMark: function toggleCurrentEditableItemCheckMark(_ref28, payload) {
+    var dispatch = _ref28.dispatch,
+        commit = _ref28.commit;
 
-        return new Promise(function (resolve, reject) {
-            item.checked_at = item.checked_at ? null : moment().format();
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], item);
-            axios.patch('/lists/item/' + item.id + '/check', { item: item }).then(function (response) {
-                return resolve(dispatch('saveCurrentEditableItemHandler', response));
-            }).catch(function (error) {
-                return reject(error);
-            });
-        });
-    },
-    saveCurrentEditableItemHandler: function saveCurrentEditableItemHandler(_ref17, response) {
-        var dispatch = _ref17.dispatch,
-            commit = _ref17.commit;
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK */], payload);
+      dispatch('saveCurrentEditableItem', payload).then(function () {
+        return resolve();
+      }).catch(function (error) {
+        return reject(error);
+      });
+    });
+  },
+  toggleCurrentEditableItemExpansion: function toggleCurrentEditableItemExpansion(_ref29, payload) {
+    var commit = _ref29.commit;
 
-        return new Promise(function (resolve, reject) {
-            if (response.data.tokenMismatch) {
-                Vue.handleTokenMismatch(response.data).catch(function (error) {
-                    return reject(error);
-                }).then(function (response) {
-                    return resolve();
-                });
-            } else if (response.data.item) {
-                resolve();
-            } else {
-                reject(response);
-            }
-        });
-    },
-    saveSortOrder: function saveSortOrder(_ref18, payload) {
-        var commit = _ref18.commit,
-            state = _ref18.state,
-            dispatch = _ref18.dispatch;
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], payload);
+      resolve();
+    });
+  },
+  toggleCurentEditableItemImportance: function toggleCurentEditableItemImportance(_ref30, payload) {
+    var dispatch = _ref30.dispatch,
+        commit = _ref30.commit;
 
-        return new Promise(function (resolve, reject) {
-            axios.patch('/lists/save-sort-order', payload).then(function (response) {
-                return resolve(dispatch('saveSortOrderHandler', response));
-            }).catch(function (error) {
-                return console.log(error);
-            });
-        });
-    },
-    saveSortOrderHandler: function saveSortOrderHandler(_ref19, response) {
-        var dispatch = _ref19.dispatch,
-            commit = _ref19.commit;
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE */], payload);
+      dispatch('saveCurrentEditableItem', payload).then(function () {
+        return resolve();
+      }).catch(function (error) {
+        return reject(error);
+      });
+    });
+  },
+  toggleCurentEditableItemUrgency: function toggleCurentEditableItemUrgency(_ref31, payload) {
+    var dispatch = _ref31.dispatch,
+        commit = _ref31.commit;
 
-        return new Promise(function (resolve, reject) {
-            if (response.data.exceptions) {
-                dispatch('addNotice', { type: 'error',
-                    heading: 'Error!',
-                    message: 'The list could not be re-sorted at this time.',
-                    persist: false
-                }, { root: true });
-            }
-            resolve();
-        });
-    },
-    setCurentEditableItemDeadline: function setCurentEditableItemDeadline(_ref20) {
-        var dispatch = _ref20.dispatch,
-            commit = _ref20.commit;
-        var date = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY */], payload);
+      dispatch('saveCurrentEditableItem', payload).then(function () {
+        return resolve();
+      }).catch(function (error) {
+        return reject(error);
+      });
+    });
+  },
+  updateSortOrder: function updateSortOrder(_ref32, payload) {
+    var commit = _ref32.commit,
+        state = _ref32.state,
+        dispatch = _ref32.dispatch;
 
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* SET_EDITABLE_CHECKLIST_ITEM_DEADLINE */], date);
-            dispatch('saveCurrentEditableItem').then(function (success) {
-                return resolve(success);
-            }).catch(function (error) {
-                dispatch('addNotice', { type: 'error',
-                    heading: 'Error!',
-                    message: 'There was a problem setting the deadline.',
-                    persist: false
-                }, { root: true });
-                reject(error);
-            });
-        });
-    },
-    setCurentEditableItemComments: function setCurentEditableItemComments(_ref21) {
-        var dispatch = _ref21.dispatch,
-            commit = _ref21.commit;
-        var html = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    return new Promise(function (resolve, reject) {
+      if (payload.parentModel == 'checklist') {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_SORT_ORDER */]);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_CHECKLIST_ITEMS */]);
+      } else if (payload.parentModel == 'checklistItem') {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["S" /* UPDATE_SUB_ITEM_SORT_ORDER */], payload);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SORT_SUB_CHECKLIST_ITEMS */], payload);
+      }
 
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* SET_EDITABLE_CHECKLIST_ITEM_COMMENTS */], html);
-            resolve();
-        });
-    },
-    setEditability: function setEditability(_ref22, payload) {
-        var commit = _ref22.commit;
-
-        return new Promise(function (resolve, reject) {
-            payload.editable ? commit(ADD_EDITABLE, payload.item) : commit(DELETE_EDITABLE, payload.item);
-            resolve();
-        });
-    },
-    setFilterability: function setFilterability(_ref23, payload) {
-        var commit = _ref23.commit;
-
-        return new Promise(function (resolve, reject) {
-            payload.filterable ? commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_UNFILTERED */], payload.item) : commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_UNFILTERED */], payload.item);
-            resolve();
-        });
-    },
-
-    setFilters: function setFilters(_ref24, payload) {
-        var commit = _ref24.commit;
-
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* UPDATE_FILTERS */], payload);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_UNFILTERED */]);
-            resolve();
-        });
-    },
-    sortChecklistItems: function sortChecklistItems(_ref25) {
-        var commit = _ref25.commit;
-        var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { parentModel: 'checklist' };
-
-        return new Promise(function (resolve, reject) {
-            switch (payload.parentModel) {
-                case 'checklist-item':
-                    if (payload.parent) {
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: payload.parent });
-                    } else {
-                        console.log('Error: no parent included in the payload');
-                    }
-                    break;
-                default:
-                    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SORT_CHECKLIST_ITEMS */]);
-
-            }
-            resolve();
-        });
-    },
-    storeChecklist: function storeChecklist(_ref26, checklist) {
-        var dispatch = _ref26.dispatch,
-            commit = _ref26.commit;
-
-        return new Promise(function (resolve, reject) {
-            axios.post('/lists', { checklist: checklist }).then(function (response) {
-                return dispatch('storeChecklistHandler', response).then(function (response) {
-                    return resolve(response);
-                });
-            });
-        });
-    },
-    storeChecklistHandler: function storeChecklistHandler(_ref27, response) {
-        var commit = _ref27.commit;
-
-        return new Promise(function (resolve, reject) {
-            if (response.data.tokenMismatch) {
-                Vue.handleTokenMismatch(response.data).then(function (response) {
-                    if (response.data.checklist) {
-                        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["a" /* ADD_CHECKLIST */], response.data.checklist);
-                        resolve(response.data.checklist);
-                    } else if (response.data.error) {
-                        reject(response.data.error);
-                    } else {
-                        reject();
-                    }
-                }).catch(function (error) {
-                    return reject(error);
-                });
-            } else if (response.data.checklist) {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["a" /* ADD_CHECKLIST */], response.data.checklist);
-                resolve(response.data.checklist);
-            } else if (response.data.error) {
-                reject(response.data.error);
-            } else {
-                reject();
-            }
-        });
-    },
-    toggleCurrentEditableItemCheckMark: function toggleCurrentEditableItemCheckMark(_ref28) {
-        var dispatch = _ref28.dispatch,
-            commit = _ref28.commit;
-
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK */]);
-            dispatch('saveCurrentEditableItem').then(function () {
-                return resolve();
-            }).catch(function (error) {
-                return reject(error);
-            });
-        });
-    },
-    toggleCurrentEditableItemExpansion: function toggleCurrentEditableItemExpansion(_ref29) {
-        var commit = _ref29.commit;
-
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */]);
-            resolve();
-        });
-    },
-    toggleCurentEditableItemImportance: function toggleCurentEditableItemImportance(_ref30) {
-        var dispatch = _ref30.dispatch,
-            commit = _ref30.commit;
-
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE */]);
-            dispatch('saveCurrentEditableItem').then(function () {
-                return resolve();
-            }).catch(function (error) {
-                return reject(error);
-            });
-        });
-    },
-    toggleCurentEditableItemUrgency: function toggleCurentEditableItemUrgency(_ref31) {
-        var dispatch = _ref31.dispatch,
-            commit = _ref31.commit;
-
-        return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY */]);
-            dispatch('saveCurrentEditableItem').then(function () {
-                return resolve();
-            }).catch(function (error) {
-                return reject(error);
-            });
-        });
-    },
-    updateSortOrder: function updateSortOrder(_ref32, payload) {
-        var commit = _ref32.commit,
-            state = _ref32.state,
-            dispatch = _ref32.dispatch;
-
-        return new Promise(function (resolve, reject) {
-            if (payload.parentModel == 'checklist') {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_SORT_ORDER */]);
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SORT_CHECKLIST_ITEMS */]);
-            } else if (payload.parentModel == 'checklistItem') {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_SUB_ITEM_SORT_ORDER */], payload);
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SORT_SUB_CHECKLIST_ITEMS */], payload);
-            }
-
-            dispatch('saveSortOrder', payload).then(function () {
-                return resolve();
-            }).catch(function (error) {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* UNDO_UPDATE_SORT_ORDER */]); //WIP : set initial items
-                reject();
-            });
-        });
-    }
+      dispatch('saveSortOrder', payload).then(function () {
+        return resolve();
+      }).catch(function (error) {
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* UNDO_UPDATE_SORT_ORDER */]); //WIP : set initial items
+        reject();
+      });
+    });
+  }
 };
 
 var getters = {
-    checklists: function checklists(state) {
-        return state.checklists;
-    },
-    checklist: function checklist(state) {
-        return state.checklist;
-    },
-    unfilteredItems: function unfilteredItems(state) {
-        return state.unfilteredItems;
-    },
-    delistedItems: function delistedItems(state) {
-        return state.delistedItems;
-    },
-    filters: function filters(state) {
-        return state.filters;
-    },
-    editableChecklistItem: function editableChecklistItem(state) {
-        return state.editableChecklistItem;
-    },
-    currentEditableItemIsExpanded: function currentEditableItemIsExpanded(state) {
-        return state.currentEditableItemIsExpanded;
-    },
-    checklistItems: function checklistItems(state) {
-        return state.checklistItems;
-    },
-    deadlinePlaceholder: function deadlinePlaceholder(state) {
-        return state.editableChecklistItem && state.editableChecklistItem.deadline ? 'Due: ' + moment(state.editableChecklistItem.deadline).format('MMM D, YYYY') : 'No Due Date';
-    }
+  checklists: function checklists(state) {
+    return state.checklists;
+  },
+  checklist: function checklist(state) {
+    return state.checklist;
+  },
+  unfilteredItems: function unfilteredItems(state) {
+    return state.unfilteredItems;
+  },
+  delistedItems: function delistedItems(state) {
+    return state.delistedItems;
+  },
+  filters: function filters(state) {
+    return state.filters;
+  },
+  editableItem: function editableItem(state) {
+    return state.editableItem;
+  },
+  editableSubItem: function editableSubItem(state) {
+    return state.editableSubItem;
+  },
+  editableItemIsExpanded: function editableItemIsExpanded(state) {
+    return state.editableItemIsExpanded;
+  },
+  editableSubItemIsExpanded: function editableSubItemIsExpanded(state) {
+    return state.editableSubItemIsExpanded;
+  },
+  checklistItems: function checklistItems(state) {
+    return state.checklistItems;
+  }
 };
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    state: state,
-    mutations: mutations,
-    actions: actions,
-    getters: getters
+  state: state,
+  mutations: mutations,
+  actions: actions,
+  getters: getters
 });
 
 /***/ }),
-/* 628 */
+/* 629 */
 /***/ (function(module, exports) {
 
 // Internals
@@ -99263,7 +99649,7 @@ module.exports = function(ctx) {
 
 
 /***/ }),
-/* 629 */
+/* 630 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99290,13 +99676,13 @@ var state = {
 
 var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["h" /* CLEAR_QUERY */], function (state) {
     state.search.query = undefined;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_QUERY */], function (state, query) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_QUERY */], function (state, query) {
     state.search.query = query;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_RESULTS */], function (state, results) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_RESULTS */], function (state, results) {
     state.search.results = results;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* UPDATE_ERROR_MESSAGE */], function (state, errorMessage) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* UPDATE_ERROR_MESSAGE */], function (state, errorMessage) {
     state.search.errorMessage = errorMessage;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UPDATE_IS_SEARCHING */], function (state, isSearching) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_IS_SEARCHING */], function (state, isSearching) {
     state.search.isSearching = isSearching;
 }), _mutations);
 
@@ -99309,7 +99695,7 @@ var actions = {
                 folders: {},
                 checklists: {}
             };
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_RESULTS */], results);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_RESULTS */], results);
             resolve();
         });
     },
@@ -99317,7 +99703,7 @@ var actions = {
         var commit = _ref2.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_RESULTS */], results);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_RESULTS */], results);
             resolve();
         });
     },
@@ -99326,7 +99712,7 @@ var actions = {
         var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* UPDATE_ERROR_MESSAGE */], value);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* UPDATE_ERROR_MESSAGE */], value);
             resolve();
         });
     },
@@ -99336,7 +99722,7 @@ var actions = {
 
         return new Promise(function (resolve, reject) {
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["h" /* CLEAR_QUERY */]);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_QUERY */], value);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_QUERY */], value);
             resolve();
         });
     },
@@ -99344,7 +99730,7 @@ var actions = {
         var commit = _ref5.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UPDATE_IS_SEARCHING */], value);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_IS_SEARCHING */], value);
             resolve();
         });
     }
@@ -99368,7 +99754,7 @@ var getters = {
 });
 
 /***/ }),
-/* 630 */
+/* 631 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99451,7 +99837,7 @@ var getters = {
 });
 
 /***/ }),
-/* 631 */
+/* 632 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {module.exports =
@@ -99734,7 +100120,7 @@ function getTetherAttachments(position) {
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(632);
+module.exports = __webpack_require__(633);
 
 /***/ }),
 /* 3 */
@@ -99781,14 +100167,14 @@ if (GlobalVue) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
-/* 632 */
+/* 633 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether-tooltip 1.1.0 */
 
 (function(root, factory) {
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(633),__webpack_require__(268)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(634),__webpack_require__(268)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -99928,7 +100314,7 @@ return Tooltip;
 
 
 /***/ }),
-/* 633 */
+/* 634 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether-drop 1.4.1 */
@@ -100497,7 +100883,7 @@ return Drop;
 
 
 /***/ }),
-/* 634 */
+/* 635 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -101171,7 +101557,7 @@ function pluralize (value) {
 });
 
 /***/ }),
-/* 635 */
+/* 636 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -101227,7 +101613,45 @@ var VueTokenMismatch = {
 /* harmony default export */ __webpack_exports__["a"] = (VueTokenMismatch);
 
 /***/ }),
-/* 636 */
+/* 637 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 638 */,
+/* 639 */,
+/* 640 */,
+/* 641 */,
+/* 642 */,
+/* 643 */,
+/* 644 */,
+/* 645 */,
+/* 646 */,
+/* 647 */,
+/* 648 */,
+/* 649 */,
+/* 650 */,
+/* 651 */,
+/* 652 */,
+/* 653 */,
+/* 654 */,
+/* 655 */,
+/* 656 */,
+/* 657 */,
+/* 658 */,
+/* 659 */,
+/* 660 */,
+/* 661 */,
+/* 662 */,
+/* 663 */,
+/* 664 */,
+/* 665 */,
+/* 666 */,
+/* 667 */,
+/* 668 */,
+/* 669 */,
+/* 670 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

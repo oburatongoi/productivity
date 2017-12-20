@@ -53,8 +53,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'deleteSelection',
-      'removeCurrentlyEditable'
+      'deleteSelection'
     ]),
     submit: function() {
       this.$emit('saveChanges')

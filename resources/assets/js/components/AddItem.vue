@@ -18,6 +18,7 @@
           value="newItem.deadline"
           @selected="setDate"
           :inline="true"
+          :highlighted="highlightedDate"
         ></datepicker>
       </div>
 
@@ -66,6 +67,13 @@ export default {
     ...mapGetters([
       'checklistItems'
     ]),
+    highlightedDate () {
+      return {
+        dates: [
+          this.newItem.deadline ? new Date(this.newItem.deadline) : new Date()
+        ]
+      }
+    },
     hasContent: function() {
       return this.newItem.content ? true : false
     },

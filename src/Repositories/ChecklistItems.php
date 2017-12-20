@@ -28,7 +28,7 @@ class ChecklistItems implements ChecklistItemsInterface {
 
         return $user->items()
             ->whereNull('checked_at')
-            ->with('checklist.folder')
+            ->with('checklist.folder', 'child_list_items')
             ->whereHas('checklist', function($query) {
                 $query->where('list_type', 'ta');
             })

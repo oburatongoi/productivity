@@ -116,6 +116,10 @@ export default {
     replaceAfterMove: {
       type: Boolean,
       default: false
+    },
+    parentModel: {
+      type: String,
+      default: 'checklist'
     }
   },
   data () {
@@ -237,7 +241,7 @@ export default {
 
       }
 
-      this.removeCurrentlyEditable()
+      this.removeCurrentlyEditable({ parentModel: this.parentModel })
     },
     highlightChecklist: function(checklist) {
       this.toggleAddingFolder('false')

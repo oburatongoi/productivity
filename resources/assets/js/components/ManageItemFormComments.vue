@@ -30,6 +30,10 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    isSubItem: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -48,7 +52,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setCurentEditableItemComments'
+      'setCurrentEditableItemComments'
     ]),
     debounceSaveChanges: _.debounce(function() {
       this.saveChanges()
@@ -57,7 +61,7 @@ export default {
       this.$emit('saveChanges')
     },
     onEditorChange({ editor, html, text }) {
-      this.setCurentEditableItemComments(html)
+      this.setCurrentEditableItemComments({html:html, isSubItem: this.isSubItem})
       this.debounceSaveChanges()
     }
   },
