@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="edit-checklist-item panel side-panel" :id="'edit-checklist-item-'+item.id">
+  <div class="edit-checklist-item panel side-panel" :class="editChecklistItemClass" :id="'edit-checklist-item-'+item.id">
     <div class="position-relative">
       <div class="sizing-buttons" :id="'sizing-buttons-'+item.id">
         <i class="fa fa-fw fa-times pull-right" v-if="!savingChanges" aria-hidden="true" title="Save and Close" @click="saveAndClose"></i>
@@ -8,7 +8,7 @@
           <i class="fa fa-floppy-o fa-stack-1x"></i>
         </span>
         <i class="fa fa-fw fa-exchange pull-right" aria-hidden="true" title="Move"  @click="toggleMovable"></i>
-        <i class="fa fa-fw pull-left" :class="toggleExpansionClass" aria-hidden="true" :title="toggleExpansionTitle" @click="toggleCurrentEditableItemExpansion"></i>
+        <i class="fa fa-fw pull-left" :class="toggleExpansionClass" aria-hidden="true" :title="toggleExpansionTitle" @click="toggleExpansion"></i>
       </div>
 
       <div class="panel-heading" :id="'panel-heading-'+item.id">
@@ -33,7 +33,7 @@
           </h4>
         </div>
 
-        <manage-item-form-meta :item="item"></manage-item-form-meta>
+        <manage-item-form-meta :item="item" :is-sub-item="isSubItem"></manage-item-form-meta>
 
         <ul class="manage-item-menu">
           <li @click="switchView('notes')" :class="{ selected: view=='notes' }">
@@ -41,9 +41,9 @@
             Notes
           </li>
 
-          <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }">
+          <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }" v-if="parentModel=='checklist'">
             <i class="fa fa-check-square" aria-hidden="true"></i>
-            Lists <span class="list-items-count" v-if="uncheckedSubItemsCount">({{uncheckedSubItemsCount}})</span>
+            Items <span class="list-items-count" v-if="uncheckedSubItemsCount">({{uncheckedSubItemsCount}})</span>
           </li>
         </ul>
 
@@ -71,9 +71,9 @@
         </div>
 
         <add-item
-          v-if="view=='sub-items'"
+          v-if="parentModel=='checklist'&&view=='sub-items'"
           :parent="item"
-          :parent-model="'checklist-item'"
+          parent-model="checklist-item"
         ></add-item>
       </div>
 
@@ -81,6 +81,7 @@
         <manage-item-form-comments
           @saveChanges="saveChanges"
           :item="item"
+          :is-sub-item="isSubItem"
         ></manage-item-form-comments>
       </div>
 
@@ -96,7 +97,7 @@
         <sub-checklist-items
           :items="item.child_list_items"
           :parent="item"
-          :parent-model="'checklist-item'"
+          parent-model="checklist-item"
           :list-type="item.sub_list_type"
         ></sub-checklist-items>
       </div>
@@ -126,6 +127,10 @@ export default {
     listType: {
       type: String,
       default: 'ch'
+    },
+    parentModel: {
+      type: String,
+      default: 'checklist'
     }
   },
   data () {
@@ -147,7 +152,7 @@ export default {
     ]),
     saveAndClose: function() {
       this.saveChanges()
-      this.removeCurrentlyEditable()
+      this.removeCurrentlyEditable({isSubItem: this.isSubItem})
       this.clearSelected()
     },
     debounceSaveChanges: _.debounce(function() {
@@ -156,15 +161,20 @@ export default {
     saveChanges: function() {
       this.savingChanges = true
       this.adjustNotesHeight()
-      this.saveCurrentEditableItem()
+
+      this.saveCurrentEditableItem({isSubItem: this.isSubItem})
       .then( () => this.savingChanges = false )
       .catch( (error) => console.log(error) )
+
     },
     checkItem: function() {
       this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
-      this.toggleCurrentEditableItemCheckMark()
+      this.toggleCurrentEditableItemCheckMark({isSubItem: this.isSubItem})
           .then( () => this.checkboxClassOverride = null )
           .catch( (error) => console.log(error))
+    },
+    toggleExpansion: function() {
+      this.toggleCurrentEditableItemExpansion({isSubItem: this.isSubItem})
     },
     switchView: function(view) {
       this.view = view
@@ -195,19 +205,25 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'currentEditableItemIsExpanded',
+      'editableItemIsExpanded',
     ]),
     checkboxClass: function() {
-      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-circle-thin'
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
+    },
+    editChecklistItemClass: function() {
+      return this.item.checklist_id ? 'checklist-item' : 'sub-checklist-item'
     },
     toggleExpansionClass: function() {
-      return this.currentEditableItemIsExpanded ? 'fa-compress' : 'fa-expand'
+      return this.editableItemIsExpanded ? 'fa-compress' : 'fa-expand'
     },
     toggleExpansionTitle: function() {
-      return this.currentEditableItemIsExpanded ? 'Compress' : 'Expand'
+      return this.editableItemIsExpanded ? 'Compress' : 'Expand'
     },
     uncheckedSubItemsCount: function() {
       return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
+    },
+    isSubItem: function() {
+      return this.parentModel == 'checklist-item' ? true : false;
     }
   },
   components: {

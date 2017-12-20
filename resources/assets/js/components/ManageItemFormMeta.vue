@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import Datepicker from 'vuejs-datepicker';
 
 export default {
@@ -63,6 +63,10 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    isSubItem: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -74,20 +78,20 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'deadlinePlaceholder'
-    ]),
     highlightedDate () {
       return {
         dates: [
-          new Date(this.item.deadline)
+          this.item.deadline ? new Date(this.item.deadline) : new Date()
         ]
       }
+    },
+    deadlinePlaceholder: function() {
+      return this.item.deadline ? 'Due: ' + moment(this.item.deadline).format('MMM D, YYYY') : 'No Due Date'
     }
   },
   methods: {
     ...mapActions([
-      'setCurentEditableItemDeadline',
+      'setCurrentEditableItemDeadline',
       'toggleCurentEditableItemImportance',
       'toggleCurentEditableItemUrgency'
     ]),
@@ -102,7 +106,7 @@ export default {
     },
     setDate: function(date = null) {
       this.deadlineIsLoading = true
-      this.setCurentEditableItemDeadline(date)
+      this.setCurrentEditableItemDeadline({date, isSubItem: this.isSubItem})
           .then( (success) => {
             this.hideDatePicker()
             this.deadlineIsLoading = false
@@ -114,13 +118,13 @@ export default {
     },
     toggleImportance: function() {
       this.importanceIsLoading = true
-      this.toggleCurentEditableItemImportance()
+      this.toggleCurentEditableItemImportance({isSubItem: this.isSubItem})
           .then( () => this.importanceIsLoading = false )
           .catch( (error) => console.log(error) )
     },
     toggleUrgency: function() {
       this.urgencyIsLoading = true
-      this.toggleCurentEditableItemUrgency()
+      this.toggleCurentEditableItemUrgency({isSubItem: this.isSubItem})
           .then( () => this.urgencyIsLoading = false )
           .catch( (error) => console.log(error) )
     }

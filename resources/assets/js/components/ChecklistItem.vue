@@ -23,7 +23,7 @@
         <i class="fa fa-fw fa-comment-o" aria-hidden="true"></i>
       </span>
 
-      <span v-if="item.child_list_items">
+      <span v-if="item.child_list_items&&item.child_list_items.length">
         <i class="fa fa-fw fa-check-square" aria-hidden="true"></i>
       </span>
 
@@ -89,12 +89,12 @@ export default {
       ...mapGetters([
         'selected',
         'unfilteredItems',
-        'editableChecklistItem',
+        'editableItem',
         'delistedItems',
         'filters'
       ]),
       checkboxClass: function() {
-        return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-circle-thin'
+        return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
       },
       itemBypassesFilters: function() {
         return this.unfilteredItems.indexOf(this.item.id) !== -1
@@ -148,13 +148,16 @@ export default {
         return this.itemBypassesFilters || !this.itemIsDelisted && !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
       },
       itemIsCurrentlyEditable: function() {
-        return this.editableChecklistItem.id && this.item.id == this.editableChecklistItem.id
+        return this.editableItem.id && this.item.id == this.editableItem.id
       },
       itemIsSelected: function() {
         return this.selected.checklistItems.indexOf(this.item) !== -1
       },
       deadlinePlaceholder: function () {
         return this.item.deadline ? moment(this.item.deadline).format('MMM DD') : undefined
+      },
+      isSubItem: function() {
+        return this.parentModel == 'checklist-item' ? true : false;
       }
     }
 }
@@ -269,6 +272,7 @@ export default {
         cursor: pointer;
     }
 
+    .fa-square-o,
     .fa-circle-thin {
         color: $input-border;
         font-size: 1.5em;

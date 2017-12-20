@@ -1,6 +1,6 @@
 <template>
   <div class="checklist position-relative" :class="checklistClass">
-    <div class="panel main-panel">
+    <div class="panel main-panel" v-show="!editableSubItem.id">
       <div class="panel-heading">
           <h4 class="checklist-title">
             <i class="fa fa-fw fa-list"
@@ -105,10 +105,47 @@
       </div>
     </div>
 
+    <div class="panel side-panel checklist-item-tree" v-if="!selectedIsMovable&&editableSubItem.id">
+      <div class="panel-body">
+        <ul>
+          <li>
+            <i class="fa fa-fw fa-list-ul" aria-hidden="true"></i>
+            {{checklist.title}}
+          </li>
+          <li>
+            <ul class="left-border">
+              <li>
+                <i class="fa fa-fw fa-check" aria-hidden="true" v-if="editableItem.checked_at"></i>
+                <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-if="!editableItem.checked_at"></i>
+                {{editableItem.content}}
+              </li>
+              <li>
+                <ul class="left-border">
+                  <li v-for="item in editableItem.child_list_items">
+                    <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"></i>
+                    <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="!item.checked_at"></i>
+                    {{item.content}}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <edit-checklist-item
-      v-if="!selectedIsMovable&&editableChecklistItem.id"
+      v-if="!selectedIsMovable&&editableItem.id"
       :list-type="checklist.list_type"
-      :item="editableChecklistItem"
+      :item="editableItem"
+      parent-model="checklist"
+    ></edit-checklist-item>
+
+    <edit-checklist-item
+      v-if="!selectedIsMovable&&editableSubItem.id"
+      :list-type="checklist.list_type"
+      :item="editableSubItem"
+      parent-model="checklist-item"
     ></edit-checklist-item>
 
     <move-to-checklist v-if="selectedIsMovable"></move-to-checklist>
@@ -149,22 +186,27 @@ export default {
       ...mapGetters([
         'checklist',
         'checklistItems',
-        'editableChecklistItem',
-        'currentEditableItemIsExpanded',
+        'editableItem',
+        'editableSubItem',
+        'editableItemIsExpanded',
+        'editableSubItemIsExpanded',
         'selectedIsMovable',
         'filters'
       ]),
       checklistClass: function() {
-        return ! this.editableChecklistItem.id ? null :
-                 this.currentEditableItemIsExpanded ? 'has-expanded-editable-item' : 'has-editable-item'
+        return  this.editableSubItemIsExpanded ? 'has-expanded-editable-sub-item':
+                this.editableSubItem.id        ? 'has-editable-sub-item'         :
+                this.editableItemIsExpanded    ? 'has-expanded-editable-item'    :
+                this.editableItem.id           ? 'has-editable-item'             :
+                                                  null                           ;
       },
       checklistIconClass: function() {
-      return ! this.checklist.list_type         ? 'fa-list'         :
-               this.checklist.list_type == 'ch' ? 'fa-list'         :
-               this.checklist.list_type == 'ta' ? 'fa-check-square' :
-               this.checklist.list_type == 'bu' ? 'fa-list-ul'      :
-               this.checklist.list_type == 'nu' ? 'fa-list-ol'      :
-                                                  'fa-list'         ;
+        return ! this.checklist.list_type         ? 'fa-list'         :
+                 this.checklist.list_type == 'ch' ? 'fa-list'         :
+                 this.checklist.list_type == 'ta' ? 'fa-check-square' :
+                 this.checklist.list_type == 'bu' ? 'fa-list-ul'      :
+                 this.checklist.list_type == 'nu' ? 'fa-list-ol'      :
+                                                    'fa-list'         ;
       },
       checkedFilterText: function() {
         var text
@@ -272,3 +314,25 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+  .checklist-item-tree {
+    font-size: 1.1em;
+    ul {
+      list-style: none;
+      padding-left: 20px;
+      margin-top: 0;
+    }
+    .left-border {
+      border-left: 1px dashed $base-border-color;
+      margin-left: 10px;
+    }
+    .fa-circle-thin,
+    .fa-square-o {
+        color: $input-border;
+    }
+    .fa-list-ul {
+      color: $list-primary;
+    }
+  }
+</style>

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import ChecklistItems from './ChecklistItems.vue'
 export default {
   name: 'sub-checklist-items',
@@ -32,13 +32,13 @@ export default {
     }
   },
   methods: {
-    toggleSelection: function(payload) {
-      console.log(payload);
-    }
+    ...mapActions([
+      'toggleSelection'
+    ])
   },
   computed: {
     ...mapGetters([
-      'editableChecklistItem'
+      'editableItem'
     ])
   },
   components: {

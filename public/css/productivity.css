@@ -309,6 +309,26 @@
 
 
 
+.checklist-item-tree {
+  font-size: 1.1em;
+}
+.checklist-item-tree ul {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 0;
+}
+.checklist-item-tree .left-border {
+    border-left: 1px dashed #d3e0e9;
+    margin-left: 10px;
+}
+.checklist-item-tree .fa-circle-thin,
+  .checklist-item-tree .fa-square-o {
+    color: #ccd0d2;
+}
+.checklist-item-tree .fa-list-ul {
+    color: #41C15F;
+}
+
 .show-item {
   border-bottom: 1px solid #f5f8fa;
   font-family: "Asap", sans-serif;
@@ -424,7 +444,8 @@
 .checkbox-container .fa {
     cursor: pointer;
 }
-.checkbox-container .fa-circle-thin {
+.checkbox-container .fa-square-o,
+  .checkbox-container .fa-circle-thin {
     color: #ccd0d2;
     font-size: 1.5em;
 }
@@ -1692,6 +1713,30 @@
 
 
 
+
+
+
+
+
+.checklist-item-tree {
+  font-size: 1.1em;
+}
+.checklist-item-tree ul {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 0;
+}
+.checklist-item-tree .left-border {
+    border-left: 1px dashed #d3e0e9;
+    margin-left: 10px;
+}
+.checklist-item-tree .fa-circle-thin,
+  .checklist-item-tree .fa-square-o {
+    color: #ccd0d2;
+}
+.checklist-item-tree .fa-list-ul {
+    color: #41C15F;
+}
 
 .edit-checklist .list-type-option-inner,
 .edit-checklist .list-type-option {
@@ -10386,6 +10431,95 @@ button.close {
   width: 100%;
 }
 
+.checklist.has-expanded-editable-sub-item .side-panel.checklist-item-tree,
+.checklist.has-expanded-editable-sub-item .side-panel.checklist-item,
+.checklist.has-expanded-editable-sub-item .main-panel {
+  display: none;
+}
+
+.checklist.has-expanded-editable-sub-item .side-panel.sub-checklist-item {
+  width: 100%;
+}
+
+@media (min-width: 769px) {
+  .checklist.has-editable-sub-item .main-panel,
+  .checklist.has-editable-sub-item .side-panel,
+  .checklist.has-editable-item .main-panel,
+  .checklist.has-editable-item .side-panel {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+.checklist.has-editable-sub-item .show-item-content-input,
+.checklist.has-editable-sub-item .show-item-content,
+.checklist.has-editable-item .show-item-content-input,
+.checklist.has-editable-item .show-item-content {
+  width: 60%;
+  font-size: 0.9em;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .checklist.has-editable-sub-item .show-item-content-input,
+  .checklist.has-editable-sub-item .show-item-content,
+  .checklist.has-editable-item .show-item-content-input,
+  .checklist.has-editable-item .show-item-content {
+    width: 50%;
+    padding: 5px 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .checklist.has-editable-sub-item .show-item-content-input,
+  .checklist.has-editable-sub-item .show-item-content,
+  .checklist.has-editable-item .show-item-content-input,
+  .checklist.has-editable-item .show-item-content {
+    width: 50%;
+    padding: 7px 0;
+    font-size: 1em;
+    line-height: 0.7em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (min-width: 992px) and (min-width: 768px) {
+  .checklist.has-editable-sub-item .show-item-content-input,
+  .checklist.has-editable-sub-item .show-item-content,
+  .checklist.has-editable-item .show-item-content-input,
+  .checklist.has-editable-item .show-item-content {
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 1200px) {
+  .checklist.has-editable-sub-item .show-item-content-input,
+  .checklist.has-editable-sub-item .show-item-content,
+  .checklist.has-editable-item .show-item-content-input,
+  .checklist.has-editable-item .show-item-content {
+    width: 60%;
+    padding: 10px 0;
+    font-size: 1.1em;
+    line-height: 1em;
+  }
+}
+
+@media (min-width: 1400px) {
+  .checklist.has-editable-sub-item .show-item-content-input,
+  .checklist.has-editable-sub-item .show-item-content,
+  .checklist.has-editable-item .show-item-content-input,
+  .checklist.has-editable-item .show-item-content {
+    width: 60%;
+  }
+}
+
+.checklist.has-editable-sub-item .show-item-content-input,
+.checklist.has-editable-item .show-item-content-input {
+  border: 0;
+  outline: none;
+}
+
 @media (max-width: 768px) {
   .checklist.has-editable-item .main-panel {
     display: none;
@@ -10401,12 +10535,6 @@ button.close {
 }
 
 @media (min-width: 769px) {
-  .checklist.has-editable-item .main-panel,
-  .checklist.has-editable-item .side-panel {
-    display: inline-block;
-    vertical-align: top;
-  }
-
   .checklist.has-editable-item .main-panel {
     width: 40%;
   }
@@ -10428,60 +10556,45 @@ button.close {
   }
 }
 
-.checklist.has-editable-item .show-item-content-input,
-.checklist.has-editable-item .show-item-content {
-  width: 60%;
-  font-size: 0.9em;
-  line-height: 1.2;
+.checklist.has-editable-sub-item .side-panel.checklist-item,
+.checklist.has-editable-sub-item .main-panel {
+  display: none;
 }
 
-@media (min-width: 768px) {
-  .checklist.has-editable-item .show-item-content-input,
-  .checklist.has-editable-item .show-item-content {
-    width: 50%;
-    padding: 5px 0;
+@media (max-width: 768px) {
+  .checklist.has-editable-sub-item .side-panel.checklist-item-tree {
+    display: none;
+  }
+
+  .checklist.has-editable-sub-item .side-panel.sub-checklist-item {
+    position: absolute;
+    top: 56px;
+    left: 10px;
+    right: 10px;
+    width: auto;
   }
 }
 
-@media (min-width: 992px) {
-  .checklist.has-editable-item .show-item-content-input,
-  .checklist.has-editable-item .show-item-content {
-    width: 50%;
-    padding: 7px 0;
-    font-size: 1em;
-    line-height: 0.7em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+@media (min-width: 769px) {
+  .checklist.has-editable-sub-item .side-panel.checklist-item-tree {
+    width: 40%;
   }
-}
 
-@media (min-width: 992px) and (min-width: 768px) {
-  .checklist.has-editable-item .show-item-content-input,
-  .checklist.has-editable-item .show-item-content {
-    overflow: hidden;
+  .checklist.has-editable-sub-item .side-panel.sub-checklist-item {
+    width: 58%;
+    margin-left: 1%;
   }
 }
 
 @media (min-width: 1200px) {
-  .checklist.has-editable-item .show-item-content-input,
-  .checklist.has-editable-item .show-item-content {
-    width: 60%;
-    padding: 10px 0;
-    font-size: 1.1em;
-    line-height: 1em;
+  .checklist.has-editable-sub-item .side-panel.checklist-item-tree {
+    width: 45%;
   }
-}
 
-@media (min-width: 1400px) {
-  .checklist.has-editable-item .show-item-content-input,
-  .checklist.has-editable-item .show-item-content {
-    width: 60%;
+  .checklist.has-editable-sub-item .side-panel.sub-checklist-item {
+    width: 53%;
+    margin-left: 1%;
   }
-}
-
-.checklist.has-editable-item .show-item-content-input {
-  border: 0;
-  outline: none;
 }
 
 .checklist .edit-checklist-btn,
@@ -10926,6 +11039,95 @@ li.listing.selected .item-count-tag {
   width: 100%;
 }
 
+.index-tasks.has-expanded-editable-sub-item .side-panel.checklist-item-tree,
+.index-tasks.has-expanded-editable-sub-item .side-panel.checklist-item,
+.index-tasks.has-expanded-editable-sub-item .main-panel {
+  display: none;
+}
+
+.index-tasks.has-expanded-editable-sub-item .side-panel.sub-checklist-item {
+  width: 100%;
+}
+
+@media (min-width: 769px) {
+  .index-tasks.has-editable-sub-item .main-panel,
+  .index-tasks.has-editable-sub-item .side-panel,
+  .index-tasks.has-editable-item .main-panel,
+  .index-tasks.has-editable-item .side-panel {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+.index-tasks.has-editable-sub-item .show-item-content-input,
+.index-tasks.has-editable-sub-item .show-item-content,
+.index-tasks.has-editable-item .show-item-content-input,
+.index-tasks.has-editable-item .show-item-content {
+  width: 60%;
+  font-size: 0.9em;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .index-tasks.has-editable-sub-item .show-item-content-input,
+  .index-tasks.has-editable-sub-item .show-item-content,
+  .index-tasks.has-editable-item .show-item-content-input,
+  .index-tasks.has-editable-item .show-item-content {
+    width: 50%;
+    padding: 5px 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .index-tasks.has-editable-sub-item .show-item-content-input,
+  .index-tasks.has-editable-sub-item .show-item-content,
+  .index-tasks.has-editable-item .show-item-content-input,
+  .index-tasks.has-editable-item .show-item-content {
+    width: 50%;
+    padding: 7px 0;
+    font-size: 1em;
+    line-height: 0.7em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (min-width: 992px) and (min-width: 768px) {
+  .index-tasks.has-editable-sub-item .show-item-content-input,
+  .index-tasks.has-editable-sub-item .show-item-content,
+  .index-tasks.has-editable-item .show-item-content-input,
+  .index-tasks.has-editable-item .show-item-content {
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 1200px) {
+  .index-tasks.has-editable-sub-item .show-item-content-input,
+  .index-tasks.has-editable-sub-item .show-item-content,
+  .index-tasks.has-editable-item .show-item-content-input,
+  .index-tasks.has-editable-item .show-item-content {
+    width: 60%;
+    padding: 10px 0;
+    font-size: 1.1em;
+    line-height: 1em;
+  }
+}
+
+@media (min-width: 1400px) {
+  .index-tasks.has-editable-sub-item .show-item-content-input,
+  .index-tasks.has-editable-sub-item .show-item-content,
+  .index-tasks.has-editable-item .show-item-content-input,
+  .index-tasks.has-editable-item .show-item-content {
+    width: 60%;
+  }
+}
+
+.index-tasks.has-editable-sub-item .show-item-content-input,
+.index-tasks.has-editable-item .show-item-content-input {
+  border: 0;
+  outline: none;
+}
+
 @media (max-width: 768px) {
   .index-tasks.has-editable-item .main-panel {
     display: none;
@@ -10941,12 +11143,6 @@ li.listing.selected .item-count-tag {
 }
 
 @media (min-width: 769px) {
-  .index-tasks.has-editable-item .main-panel,
-  .index-tasks.has-editable-item .side-panel {
-    display: inline-block;
-    vertical-align: top;
-  }
-
   .index-tasks.has-editable-item .main-panel {
     width: 40%;
   }
@@ -10968,60 +11164,45 @@ li.listing.selected .item-count-tag {
   }
 }
 
-.index-tasks.has-editable-item .show-item-content-input,
-.index-tasks.has-editable-item .show-item-content {
-  width: 60%;
-  font-size: 0.9em;
-  line-height: 1.2;
+.index-tasks.has-editable-sub-item .side-panel.checklist-item,
+.index-tasks.has-editable-sub-item .main-panel {
+  display: none;
 }
 
-@media (min-width: 768px) {
-  .index-tasks.has-editable-item .show-item-content-input,
-  .index-tasks.has-editable-item .show-item-content {
-    width: 50%;
-    padding: 2px;
+@media (max-width: 768px) {
+  .index-tasks.has-editable-sub-item .side-panel.checklist-item-tree {
+    display: none;
+  }
+
+  .index-tasks.has-editable-sub-item .side-panel.sub-checklist-item {
+    position: absolute;
+    top: 56px;
+    left: 10px;
+    right: 10px;
+    width: auto;
   }
 }
 
-@media (min-width: 992px) {
-  .index-tasks.has-editable-item .show-item-content-input,
-  .index-tasks.has-editable-item .show-item-content {
-    width: 50%;
-    padding: 2px;
-    font-size: 1em;
-    line-height: 0.7em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+@media (min-width: 769px) {
+  .index-tasks.has-editable-sub-item .side-panel.checklist-item-tree {
+    width: 40%;
   }
-}
 
-@media (min-width: 992px) and (min-width: 768px) {
-  .index-tasks.has-editable-item .show-item-content-input,
-  .index-tasks.has-editable-item .show-item-content {
-    overflow: hidden;
+  .index-tasks.has-editable-sub-item .side-panel.sub-checklist-item {
+    width: 58%;
+    margin-left: 1%;
   }
 }
 
 @media (min-width: 1200px) {
-  .index-tasks.has-editable-item .show-item-content-input,
-  .index-tasks.has-editable-item .show-item-content {
-    width: 60%;
-    padding: 2px;
-    font-size: 1.1em;
-    line-height: 1em;
+  .index-tasks.has-editable-sub-item .side-panel.checklist-item-tree {
+    width: 45%;
   }
-}
 
-@media (min-width: 1400px) {
-  .index-tasks.has-editable-item .show-item-content-input,
-  .index-tasks.has-editable-item .show-item-content {
-    width: 60%;
+  .index-tasks.has-editable-sub-item .side-panel.sub-checklist-item {
+    width: 53%;
+    margin-left: 1%;
   }
-}
-
-.index-tasks.has-editable-item .show-item-content-input {
-  border: 0;
-  outline: none;
 }
 
 .index-tasks .edit-checklist-btn,

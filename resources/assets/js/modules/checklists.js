@@ -16,6 +16,7 @@ import {
     SET_EDITABLE_CHECKLIST_ITEM,
     SET_EDITABLE_CHECKLIST_ITEM_COMMENTS,
     SET_EDITABLE_CHECKLIST_ITEM_DEADLINE,
+    SET_EDITABLE_SUB_CHECKLIST_ITEM,
     SORT_CHECKLIST_ITEMS,
     SORT_SUB_CHECKLIST_ITEMS,
     TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK,
@@ -37,8 +38,10 @@ const state = {
     checklist: Productivity.checklist ? Productivity.checklist: [],
     checklistItems: Productivity.checklistItems ? Productivity.checklistItems : [],
     unfilteredItems: [],
-    editableChecklistItem: {},
-    currentEditableItemIsExpanded: false,
+    editableItem: {},
+    editableSubItem: {},
+    editableItemIsExpanded: false,
+    editableSubItemIsExpanded: false,
     delistedItems: [],
     filters: {
         checked: 'unchecked',
@@ -139,28 +142,60 @@ const mutations = {
     },
     [SET_EDITABLE_CHECKLIST_ITEM] (state, item) {
         let i = _.findIndex(state.checklistItems, ['id', item.id]);
-        if( i !== -1 ) state.editableChecklistItem = state.checklistItems[i]
+        if( i !== -1 ) state.editableItem = state.checklistItems[i]
     },
-    [SET_EDITABLE_CHECKLIST_ITEM_COMMENTS] (state, html = null) {
-      state.editableChecklistItem.comments = html
+    [SET_EDITABLE_SUB_CHECKLIST_ITEM] (state, item) {
+        let i = _.findIndex(state.editableItem.child_list_items, ['id', item.id]);
+        if( i !== -1 ) state.editableSubItem = state.editableItem.child_list_items[i]
     },
-    [SET_EDITABLE_CHECKLIST_ITEM_DEADLINE] (state, date = null) {
-      state.editableChecklistItem.deadline = date ? moment(date).format('YYYY-MM-DD') : null
+    [SET_EDITABLE_CHECKLIST_ITEM_COMMENTS] (state, payload) {
+      if (payload.isSubItem) {
+        state.editableSubItem.comments = payload.html
+      } else {
+        state.editableItem.comments = payload.html
+      }
     },
-    [UNSET_EDITABLE_CHECKLIST_ITEM] (state) {
-        state.editableChecklistItem = {}
+    [SET_EDITABLE_CHECKLIST_ITEM_DEADLINE] (state, payload) {
+      if (payload.isSubItem) {
+        state.editableSubItem.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
+      } else {
+        state.editableItem.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
+      }
     },
-    [TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK] (state) {
-      state.editableChecklistItem.checked_at = state.editableChecklistItem.checked_at ? null : moment().format()
+    [UNSET_EDITABLE_CHECKLIST_ITEM] (state, payload = {isSubItem: false}) {
+        if (payload.isSubItem) {
+          state.editableSubItem = {}
+        } else {
+          state.editableItem = {}
+        }
     },
-    [TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION] (state) {
-        state.currentEditableItemIsExpanded = ! state.currentEditableItemIsExpanded
+    [TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK] (state, payload = {isSubItem: false}) {
+      if (payload.isSubItem) {
+        state.editableSubItem.checked_at = state.editableSubItem.checked_at ? null : moment().format()
+      } else {
+        state.editableItem.checked_at = state.editableItem.checked_at ? null : moment().format()
+      }
     },
-    [TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE] (state) {
-        state.editableChecklistItem.is_important = ! state.editableChecklistItem.is_important
+    [TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION] (state, payload = {isSubItem: false}) {
+        if (payload.isSubItem) {
+          state.editableSubItemIsExpanded = ! state.editableSubItemIsExpanded
+        } else {
+          state.editableItemIsExpanded = ! state.editableItemIsExpanded
+        }
     },
-    [TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY] (state) {
-        state.editableChecklistItem.is_urgent = ! state.editableChecklistItem.is_urgent
+    [TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE] (state, payload = {isSubItem: false}) {
+        if (payload.isSubItem) {
+          state.editableSubItem.is_important = ! state.editableSubItem.is_important
+        } else {
+          state.editableItem.is_important = ! state.editableItem.is_important
+        }
+    },
+    [TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY] (state, payload = {isSubItem: false}) {
+        if (payload.isSubItem) {
+          state.editableSubItem.is_urgent = ! state.editableSubItem.is_urgent
+        } else {
+          state.editableItem.is_urgent = ! state.editableItem.is_urgent
+        }
     },
     [SORT_CHECKLIST_ITEMS] (state) {
       state.checklistItems = sort(state.checklistItems).asc(i => i.sort_order)
@@ -258,10 +293,26 @@ const actions = {
       }
     })
   },
-  addCurrentlyEditable({commit}, item) {
+  // addCurrentlyEditable({commit}, payload) {
+  //     return new Promise((resolve, reject) => {
+  //       switch (payload.parentModel) {
+  //         case 'checklist-item':
+  //           commit(SET_EDITABLE_SUB_CHECKLIST_ITEM, payload.item)
+  //           break;
+  //         default: commit(SET_EDITABLE_CHECKLIST_ITEM, payload.item)
+  //
+  //       }
+  //       resolve()
+  //     })
+  // },
+  addCurrentlyEditable({commit}, payload = {isSubItem: false}) {
       return new Promise((resolve, reject) => {
-          commit(SET_EDITABLE_CHECKLIST_ITEM, item)
-          resolve()
+        if (payload.isSubItem) {
+          commit(SET_EDITABLE_SUB_CHECKLIST_ITEM, payload.item)
+        } else {
+          commit(SET_EDITABLE_CHECKLIST_ITEM, payload.item)
+        }
+        resolve()
       })
   },
   deleteChecklist({ dispatch, commit }, checklist) {
@@ -301,14 +352,16 @@ const actions = {
   },
   deleteChecklistItem({dispatch, commit}, checklistItem) {
     return new Promise((resolve, reject) => {
+      let parentModel = checklistItem.parent_checklist_item_id ? 'checklist-item' : 'checklist',
+          isSubItem = checklistItem.parent_checklist_item_id ? true : false;
       dispatch('delistChecklistItem', checklistItem).then(
         () => dispatch('deselect', { model: 'checklist-item', listing: checklistItem }, {root: true}).then(
-          () => dispatch('removeCurrentlyEditable').then(
+          () => dispatch('removeCurrentlyEditable', {isSubItem: isSubItem}).then(
             () => {
               commit(DECREMENT_ITEM_COUNT, checklistItem.checklist_id)
               commit(DELETE_CHECKLIST_ITEM, checklistItem)
               commit(UPDATE_SORT_ORDER)
-              dispatch('saveSortOrder', {checklistItems: state.checklistItems, parent: state.checklist, parentModel: 'checklist'})
+              dispatch('saveSortOrder', {checklistItems: state.checklistItems, parent: state.checklist, parentModel})
               resolve(checklistItem)
             }
           )
@@ -329,13 +382,13 @@ const actions = {
         resolve(checklistItem)
     })
   },
-  removeCurrentlyEditable({commit}) {
+  removeCurrentlyEditable({commit, state}, payload = {isSubItem: false}) {
       return new Promise((resolve, reject) => {
-          if (state.currentEditableItemIsExpanded) {
-              commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
-          }
-          commit(UNSET_EDITABLE_CHECKLIST_ITEM)
-          resolve()
+        if (payload.isSubItem && state.editableSubItemIsExpanded || ! payload.isSubItem && state.editableItemIsExpanded) {
+          commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION, payload)
+        }
+        commit(UNSET_EDITABLE_CHECKLIST_ITEM, payload)
+        resolve()
       })
   },
   replacePendingTask({ commit }, payload) {
@@ -387,14 +440,16 @@ const actions = {
 
     })
   },
-  saveCurrentEditableItem({dispatch, commit}, item = null) {
+  saveCurrentEditableItem({dispatch, commit}, payload = { isSubItem: false }) {
       return new Promise((resolve, reject) => {
-        if (item == null) {
-            item = state.editableChecklistItem.id !== undefined ? state.editableChecklistItem : reject('There is no item or currently editable item')
+        if (payload.isSubItem) {
+          var item = state.editableSubItem.id !== undefined ? state.editableSubItem : reject('There is no item or currently editable sub item')
+        } else {
+          var item = state.editableItem.id !== undefined ? state.editableItem : reject('There is no item or currently editable item')
         }
         commit(ADD_UNFILTERED, item)
         axios.patch('/lists/item/' + item.id + '/update', {item:item})
-             .then( response => resolve(dispatch('saveCurrentEditableItemHandler', response)) )
+             .then( response => resolve(dispatch('saveCurrentItemHandler', response)) )
              .catch( error => reject(error) )
       })
   },
@@ -403,11 +458,11 @@ const actions = {
         item.checked_at = item.checked_at ? null : moment().format();
         commit(ADD_UNFILTERED, item)
         axios.patch('/lists/item/' + item.id + '/check', {item:item})
-             .then( response => resolve(dispatch('saveCurrentEditableItemHandler', response)) )
+             .then( response => resolve(dispatch('saveCurrentItemHandler', response)) )
              .catch( error => reject(error) )
       })
   },
-  saveCurrentEditableItemHandler({dispatch, commit}, response) {
+  saveCurrentItemHandler({dispatch, commit}, response) {
       return new Promise((resolve, reject) => {
         if (response.data.tokenMismatch) {
           Vue.handleTokenMismatch(response.data)
@@ -443,10 +498,10 @@ const actions = {
      resolve()
     })
   },
-  setCurentEditableItemDeadline({dispatch, commit}, date = null) {
+  setCurrentEditableItemDeadline({dispatch, commit}, payload = {date: null, isSubItem: false}) {
       return new Promise((resolve, reject) => {
-        commit(SET_EDITABLE_CHECKLIST_ITEM_DEADLINE, date)
-        dispatch('saveCurrentEditableItem')
+        commit(SET_EDITABLE_CHECKLIST_ITEM_DEADLINE, payload)
+        dispatch('saveCurrentEditableItem', {isSubItem: payload.isSubItem})
         .then( (success) => resolve(success) )
         .catch( (error) => {
           dispatch(
@@ -462,9 +517,9 @@ const actions = {
         })
       })
   },
-  setCurentEditableItemComments({dispatch, commit}, html = null) {
+  setCurrentEditableItemComments({dispatch, commit}, payload = {html: null, isSubItem: false}) {
       return new Promise((resolve, reject) => {
-        commit(SET_EDITABLE_CHECKLIST_ITEM_COMMENTS, html)
+        commit(SET_EDITABLE_CHECKLIST_ITEM_COMMENTS, payload)
         resolve()
       })
   },
@@ -538,34 +593,34 @@ const actions = {
       }
     })
   },
-  toggleCurrentEditableItemCheckMark({ dispatch, commit }) {
+  toggleCurrentEditableItemCheckMark({ dispatch, commit }, payload) {
     return new Promise((resolve, reject) => {
-        commit(TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK)
-        dispatch('saveCurrentEditableItem').then(
-          () => resolve()
-        ).catch(
-          (error) => reject(error)
-        )
+      commit(TOGGLE_CURRENT_EDITABLE_ITEM_CHECK_MARK, payload)
+      dispatch('saveCurrentEditableItem', payload).then(
+        () => resolve()
+      ).catch(
+        (error) => reject(error)
+      )
     })
   },
-  toggleCurrentEditableItemExpansion({ commit }) {
+  toggleCurrentEditableItemExpansion({ commit }, payload) {
     return new Promise((resolve, reject) => {
-        commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION)
+        commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION, payload)
         resolve()
     })
   },
-  toggleCurentEditableItemImportance({ dispatch, commit }) {
+  toggleCurentEditableItemImportance({ dispatch, commit }, payload) {
     return new Promise((resolve, reject) => {
-        commit(TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE)
-        dispatch('saveCurrentEditableItem')
+        commit(TOGGLE_CURRENT_EDITABLE_ITEM_IMPORTANCE, payload)
+        dispatch('saveCurrentEditableItem', payload)
         .then( () => resolve() )
         .catch( (error) => reject(error) )
     })
   },
-  toggleCurentEditableItemUrgency({ dispatch, commit }) {
+  toggleCurentEditableItemUrgency({ dispatch, commit }, payload) {
     return new Promise((resolve, reject) => {
-        commit(TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY)
-        dispatch('saveCurrentEditableItem')
+        commit(TOGGLE_CURRENT_EDITABLE_ITEM_URGENCY, payload)
+        dispatch('saveCurrentEditableItem', payload)
         .then( () => resolve() )
         .catch( (error) => reject(error) )
     })
@@ -597,10 +652,11 @@ const getters = {
     unfilteredItems: state => state.unfilteredItems,
     delistedItems: state => state.delistedItems,
     filters: state => state.filters,
-    editableChecklistItem: state => state.editableChecklistItem,
-    currentEditableItemIsExpanded: state => state.currentEditableItemIsExpanded,
+    editableItem: state => state.editableItem,
+    editableSubItem: state => state.editableSubItem,
+    editableItemIsExpanded: state => state.editableItemIsExpanded,
+    editableSubItemIsExpanded: state => state.editableSubItemIsExpanded,
     checklistItems: state => state.checklistItems,
-    deadlinePlaceholder: state => state.editableChecklistItem&&state.editableChecklistItem.deadline ? 'Due: ' + moment(state.editableChecklistItem.deadline).format('MMM D, YYYY') : 'No Due Date'
 }
 
 export default {
