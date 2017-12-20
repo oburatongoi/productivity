@@ -2,7 +2,7 @@
   <ul class="productivity-notices" v-if="notices&&notices.length">
     <notice v-for="notice in notices"
             :notice="notice"
-            :key="getKey()"
+            :key="notice.id"
     ></notice>
   </ul>
 </template>
@@ -13,11 +13,6 @@ import Notice from './Notice.vue'
 
 export default {
   name: 'notices',
-  methods: {
-    getKey: function() {
-      return _.uniqueId()
-    }
-  },
   computed: {
     ...mapGetters([
       'notices'

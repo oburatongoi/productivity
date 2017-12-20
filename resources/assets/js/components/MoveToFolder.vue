@@ -45,6 +45,7 @@
             v-for="folder in folders"
             @click.prevent="highlightFolder(folder)"
             @dblclick.prevent="selectFolder(folder)"
+            :key="folder.id"
         >
           <span>
             <i class="fa fa-fw fa-folder" aria-hidden="true" v-if="folder.id!==selectedFolder.id"></i>

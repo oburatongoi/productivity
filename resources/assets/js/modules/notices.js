@@ -15,11 +15,13 @@ const state = {
       //   persist: true,
       //   buttons: [
       //     {
+      //       id: _.uniqueId()
       //       text: 'close',
       //       class: 'btn-xs btn-default',
       //       action: 'this.deleteNotice'
       //     },
       //     {
+      //       id: _.uniqueId()
       //       text: 'cancel',
       //       class: 'btn-xs btn-primary',
       //       action: 'this.deleteNotice'
@@ -43,6 +45,7 @@ const mutations = {
 const actions = {
     addNotice({ commit }, payload) {
       return new Promise((resolve, reject) => {
+          if (!payload.id) payload.id = _.uniqueId()
           commit(ADD_NOTICE, payload)
 
           if(!payload.persist) setTimeout(function() {

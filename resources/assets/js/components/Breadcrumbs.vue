@@ -7,7 +7,7 @@
           Home
         </a>
       </li>
-      <li v-if="ancestors.length" v-for="ancestor in ancestors" :class="{ 'current-folder': checklist&&checklist.folder_id==ancestor.id }">
+      <li v-if="ancestors.length" v-for="ancestor in ancestors" :class="{ 'current-folder': checklist&&checklist.folder_id==ancestor.id }" :key="ancestor.id">
         <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
         <a :href="'/folders/'+ancestor.fake_id">
           <i class="fa fa-fw fa-folder-o" aria-hidden="true"></i>

@@ -34,7 +34,7 @@
               </li>
               <li>
                 <ul class="left-border">
-                  <li v-for="item in editableItem.child_list_items">
+                  <li v-for="item in editableItem.child_list_items" :key="item.id">
                     <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"></i>
                     <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="!item.checked_at"></i>
                     {{item.content}}
