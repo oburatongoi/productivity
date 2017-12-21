@@ -109,6 +109,8 @@
       v-if="!selectedIsMovable&&editableSubItem.id"
       :item="editableItem"
       :checklist="checklist"
+      :folder="parentFolder"
+      parent-component="checklist"
       @onSelection="toggleSelection"
     ></checklist-item-tree>
 
@@ -166,6 +168,7 @@ export default {
       ...mapGetters([
         'checklist',
         'checklistItems',
+        'currentFolder',
         'editableItem',
         'editableSubItem',
         'editableItemIsExpanded',
@@ -222,6 +225,9 @@ export default {
           default: text = this.filters.priority
         }
         return text
+      },
+      parentFolder: function() {
+        return this.checklist.folder ? this.checklist.folder : this.checklist.folder_id && this.currentFolder && this.checklist.folder_id == this.currentFolder.id ? this.currentFolder : null
       }
     },
     methods: {

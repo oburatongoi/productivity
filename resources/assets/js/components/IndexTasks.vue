@@ -21,6 +21,10 @@
     <checklist-item-tree
       v-if="editableSubItem.id"
       :item="editableItem"
+      :checklist="editableItem.checklist"
+      :folder="editableItem.checklist.folder"
+      parent-component="index-tasks"
+      @onSelection="toggleSelection"
     ></checklist-item-tree>
 
     <edit-checklist-item

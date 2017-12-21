@@ -98,10 +98,12 @@ const actions = {
     toggleDeletable({ commit }) {
         commit(TOGGLE_DELETABLE)
     },
-    toggleSelection({ dispatch, commit, state, rootState }, payload) {
+    toggleSelection({ dispatch, commit, state, rootState }, payload = {selection: null, model:null, event: null, parentModel: null}) {
       let isInSelectedArray
       let isSubItem
       let isChecklistItem = false
+      let isChecklist = false
+      let isHome = false
       let modifierKeyPressed = payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey ? true : false
 
       switch (payload.selection.model) {
@@ -110,12 +112,28 @@ const actions = {
           break;
         case 'checklist':
           isInSelectedArray = _.findIndex(state.selected.checklists, ['id', payload.selection.listing.id]) !== -1
+          isChecklist = true
           break;
         case 'checklist-item':
           isInSelectedArray = _.findIndex(state.selected.checklistItems, ['id', payload.selection.listing.id]) !== -1
           isChecklistItem = true
           isSubItem = payload.selection.parentModel === 'checklist-item'
           break;
+        case 'home':
+          isHome = true
+          break;
+      }
+
+      if (isChecklist || isHome) {
+
+        if (rootState.checklists.editableSubItem && rootState.checklists.editableSubItem.id) {
+          dispatch('removeCurrentlyEditable', {isSubItem: true}, {root: true})
+        }
+
+        if (rootState.checklists.editableItem && rootState.checklists.editableItem.id) {
+          dispatch('removeCurrentlyEditable', {isSubItem: false}, {root: true})
+        }
+
       }
 
       if (isChecklistItem) {
@@ -132,10 +150,9 @@ const actions = {
           }
 
       } else { // If it is not in the selected array
-          // Add if modifier key was pressed
-          if (modifierKeyPressed) {
+          if (modifierKeyPressed) { // Add to selection if modifier key was pressed
             commit(ADD_TO_SELECTED, payload.selection)
-          } else { // If a modifier key was not pressed
+          } else { // If a modifier key was not pressed, clear the selection and then add the current item
             commit(CLEAR_SELECTED)
             commit(ADD_TO_SELECTED, payload.selection)
           }
