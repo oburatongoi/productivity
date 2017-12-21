@@ -43,7 +43,7 @@
 
           <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }" v-if="parentModel=='checklist'">
             <i class="fa fa-check-square" aria-hidden="true"></i>
-            Items <span class="list-items-count" v-if="uncheckedSubItemsCount">({{uncheckedSubItemsCount}})</span>
+            Checklist <span class="list-items-count" v-if="uncheckedSubItemsCount">({{uncheckedSubItemsCount}})</span>
           </li>
         </ul>
 

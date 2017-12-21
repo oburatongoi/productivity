@@ -53,38 +53,6 @@
           <!-- End Nested ChecklistItem -->
         </ul></li>
 
-
-
-
-
-
-        <!-- <li>
-          <ul class="nested-tree">
-            <li
-            class="item"
-            @click="emitClick({selection: {model: 'checklist-item', listing: item, parentModel: 'checklist'}, event: $event})"
-            >
-              <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"></i>
-              <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-if="!item.checked_at"></i>
-              {{item.content}}
-            </li>
-            <li>
-              <ul class="nested-tree">
-                <li
-                v-for="subItem in item.child_list_items"
-                class="item"
-                :class="{selected: subItem.id==editableSubItem.id}"
-                @click="emitClick({selection: {model: 'checklist-item', listing: subItem, parentModel: 'checklist-item'}, event: $event})"
-                :key="subItem.id"
-                >
-                  <i class="fa fa-fw fa-check" aria-hidden="true" v-if="subItem.checked_at"></i>
-                  <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="!subItem.checked_at"></i>
-                  {{subItem.content}}
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li> -->
       </ul>
     </div>
   </div>
@@ -113,6 +81,9 @@ export default {
       if (payload.selection.model == 'checklist' && this.parentComponent == 'index-tasks') {
         return window.location.href = '/lists/'+payload.selection.listing.fake_id
       }
+      if (payload.selection.model == 'home' && this.parentComponent == 'checklist') {
+        return window.location.href = '/'
+      }
       if (payload.selection.model == 'folder') {
         return window.location.href = '/folders/'+payload.selection.listing.fake_id
       }
@@ -137,7 +108,8 @@ export default {
 
   ul {
     list-style: none;
-    padding-left: 20px;
+    // padding-left: 20px;
+    padding: 0;
     margin-top: 0;
   }
   li.item {
@@ -154,6 +126,7 @@ export default {
   .nested-tree {
     border-left: 1px dashed $base-border-color;
     margin-left: 10px;
+    padding-left: 10px;
   }
 
   .fa-square-o {

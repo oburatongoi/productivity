@@ -33,13 +33,18 @@
     </p>
 
     <div v-if="itemIsCurrentlyEditable&&item.checklist" class="show-item-breadcrumbs">
-      <span v-if="item.checklist.folder">
+      <span
+        v-if="item.checklist.folder"
+        @click="navigateTo('folders', item.checklist.folder.fake_id)"
+      >
         <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
         {{item.checklist.folder.name}}
         <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
       </span>
 
-      <span>
+      <span
+        @click="navigateTo('lists', item.checklist.fake_id)"
+      >
         <i class="fa fa-fw fa-list" aria-hidden="true"></i> {{item.checklist.title}}
       </span>
     </div>
@@ -83,6 +88,9 @@ export default {
       },
       emitClick: function(payload) {
         this.$emit('onEmitClick', payload)
+      },
+      navigateTo: function(model, id) {
+        return window.location.href = '/'+model+'/'+id
       }
     },
     computed: {
@@ -259,6 +267,17 @@ export default {
         span {
             margin-right: 5px;
         }
+    }
+    .show-item-breadcrumbs {
+      cursor: pointer;
+      & span:hover {
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        text-decoration-color: $brand-primary;
+        .fa {
+          text-decoration: none;
+        }
+      }
     }
 
 }
