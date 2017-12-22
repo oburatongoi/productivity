@@ -47,6 +47,11 @@ class ProductivityServiceProvider extends ServiceProvider
         $this->app->register('Laracasts\Utilities\JavaScript\JavaScriptServiceProvider');
         $this->app->register('Laravel\Scout\ScoutServiceProvider');
         $this->app->register('GeneaLabs\LaravelCaffeine\Providers\LaravelCaffeineService');
+        // $this->app->register('Silber\Bouncer\BouncerServiceProvider');
+        //
+        // // Register dependancies' facades
+        // $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        // $loader->alias('Bouncer', 'Silber\Bouncer\BouncerFacade');
     }
 
 }

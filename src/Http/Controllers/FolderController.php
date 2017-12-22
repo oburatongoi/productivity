@@ -16,6 +16,7 @@ use Oburatongoi\Productivity\Folder;
 use AlgoliaSearch\AlgoliaException as AlgoliaException;
 
 use JavaScript, Bugsnag, Exception;
+use Bouncer;
 
 class FolderController extends Controller
 {
