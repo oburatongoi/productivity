@@ -5,15 +5,16 @@
       @end="beforeUpdateSortOrder"
       :list="items"
     >
+      <template v-if="items">
         <checklist-item
-          v-if="items"
           v-for="item in items"
           :item="item"
           :list-type="listType"
           :key="item.id"
           :parent-model="parentModel"
           @onEmitClick="emitChecklistItemClick"
-        ></checklist-item>
+        />
+      </template>
     </draggable>
 </template>
 
@@ -25,6 +26,10 @@ import Draggable from 'vuedraggable'
 
 export default {
     name: 'checklist-items',
+    components: {
+        ChecklistItem,
+        Draggable
+    },
     props: {
       items: {
         type: Array,
@@ -48,6 +53,9 @@ export default {
         return this.checklist&&this.checklist.list_type&&this.checklist.list_type == 'nu' ? 'ol' : 'ul';
       }
     },
+    created: function() {
+      return this.sortChecklistItems({parentModel: this.parentModel, parent: this.parent})
+    },
     methods: {
       ...mapActions([
         'sortChecklistItems',
@@ -60,13 +68,6 @@ export default {
         return this.$emit('onChecklistItemClick', payload)
       }
     },
-    components: {
-        ChecklistItem,
-        Draggable
-    },
-    created: function() {
-      return this.sortChecklistItems({parentModel: this.parentModel, parent: this.parent})
-    }
 }
 </script>
 

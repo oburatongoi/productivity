@@ -5,7 +5,7 @@
       class="btn btn-sm btn-folder"
       @click.prevent="saveAndClose"
     >
-      <i class="fa" :class="saveButtonIcon" aria-hidden="true"></i>
+      <i class="fa" :class="saveButtonIcon" aria-hidden="true"/>
       Save &amp; Close
     </button>
 
@@ -15,13 +15,13 @@
         :class="deletabilityIcon"
         aria-hidden="true"
         @click="toggleDeletability"
-      ></i>
+      />
       <i
         v-if="isDeletable"
         class="fa fa-fw fa-trash delete-item-btn"
         aria-hidden="true"
         @click="deleteItem"
-      ></i>
+      />
 
     </div>
   </div>

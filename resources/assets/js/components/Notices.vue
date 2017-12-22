@@ -3,7 +3,7 @@
     <notice v-for="notice in notices"
             :notice="notice"
             :key="notice.id"
-    ></notice>
+    />
   </ul>
 </template>
 
@@ -13,14 +13,14 @@ import Notice from './Notice.vue'
 
 export default {
   name: 'notices',
+  components: {
+    Notice
+  },
   computed: {
     ...mapGetters([
       'notices'
     ])
   },
-  components: {
-    Notice
-  }
 }
 </script>
 

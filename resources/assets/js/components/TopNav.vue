@@ -5,14 +5,14 @@
             v-if="!showCreatingNewButtons"
             @click="toggleCreatingNewButtons"
     >
-      <i class="fa fa-plus" aria-hidden="true"></i>
+      <i class="fa fa-plus" aria-hidden="true"/>
     </button>
 
-    <create-new v-if="showCreatingNewButtons||creatingNew"></create-new>
+    <create-new v-if="showCreatingNewButtons||creatingNew"/>
 
-    <breadcrumbs v-if="!showCreatingNewButtons" :current-view="currentView"></breadcrumbs>
+    <breadcrumbs v-if="!showCreatingNewButtons" :current-view="currentView"/>
 
-    <action-nav v-if="listingIsActionable"></action-nav>
+    <action-nav v-if="listingIsActionable"/>
 
   </div>
 </template>
@@ -26,7 +26,17 @@ import ActionNav from './ActionNav.vue'
 
 export default {
   name: 'top-nav',
-  props: ['currentView'],
+  components: {
+    CreateNew,
+    Breadcrumbs,
+    ActionNav
+  },
+  props: {
+    currentView: {
+      type: String,
+      default: null
+    }
+  },
   computed: {
     ...mapGetters([
       'showCreatingNewButtons',
@@ -39,11 +49,7 @@ export default {
       'toggleCreatingNewButtons'
     ])
   },
-  components: {
-    CreateNew,
-    Breadcrumbs,
-    ActionNav
-  }
+
 }
 </script>
 

@@ -1,11 +1,14 @@
 <template lang="html">
-  <ul class="list-unstyled" @click.self="clearSelected">
+  <ul
+    v-if="checklists"
+    class="list-unstyled"
+    @click.self="clearSelected"
+  >
       <index-checklists
-        v-if="checklists"
         v-for="checklist in orderBy(checklists, 'title')"
         :checklist="checklist"
         :key="checklist.fake_id"
-      ></index-checklists>
+      />
   </ul>
 </template>
 
@@ -15,10 +18,8 @@ import IndexChecklists from './IndexChecklists.vue'
 
 export default {
   name: 'index-files',
-  methods: {
-    ...mapActions([
-      'clearSelected'
-    ])
+  components: {
+    IndexChecklists
   },
   computed: {
     ...mapGetters([
@@ -26,9 +27,11 @@ export default {
       'selected'
     ])
   },
-  components: {
-    IndexChecklists
-  }
+  methods: {
+    ...mapActions([
+      'clearSelected'
+    ])
+  },
 }
 </script>
 

@@ -5,9 +5,9 @@
           <h4 class="checklist-title">
             <i class="fa fa-fw fa-list"
               :class="[{'grey-color-scheme':isEditable}, checklistIconClass]"
-              aria-hidden="true"></i>
+              aria-hidden="true"/>
             <span v-if="!isEditable" @click="toggleEditability(true)">
-              {{checklist.title}}
+              {{ checklist.title }}
             </span>
             <input type="text"
                    class="edit-checklist-input"
@@ -20,35 +20,35 @@
                    @change="debounceSaveChanges"
                    @blur="debounceSaveChanges"
                    v-focus
-            />
+            >
             <i class="fa fa-fw edit-checklist-icon"
               :class="inputIcon"
               aria-hidden="true"
               v-if="isEditable"
               @click="saveAndClose"
-            ></i>
+            />
           </h4>
 
           <div class="checklist-filters">
             <div class="pull-right">
               <div class="checked-filter" v-if="checklist.list_type!=='nu'">
                 <span v-if="!selectingCheckedFilter" @click="toggleFilter('checked')">
-                  {{checkedFilterText}}
-                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                  {{ checkedFilterText }}
+                  <i class="fa fa-angle-down" aria-hidden="true"/>
                 </span>
                 &nbsp;
 
                 <ul :class="{ open: selectingCheckedFilter }" v-if="selectingCheckedFilter">
                   <li v-if="selectingCheckedFilter||filters.checked=='all'" @click="setCheckedFilter('all')">
-                    <i class="fa fa-fw fa-globe" aria-hidden="true"></i>
+                    <i class="fa fa-fw fa-globe" aria-hidden="true"/>
                     All
                   </li>
                   <li v-if="selectingCheckedFilter||filters.checked=='unchecked'" @click="setCheckedFilter('unchecked')">
-                    <i class="fa fa-fw fa-square-o" aria-hidden="true"></i>
+                    <i class="fa fa-fw fa-square-o" aria-hidden="true"/>
                     Incomplete
                   </li>
                   <li v-if="selectingCheckedFilter||filters.checked=='checked'" @click="setCheckedFilter('checked')">
-                    <i class="fa fa-fw fa-check-square" aria-hidden="true"></i>
+                    <i class="fa fa-fw fa-check-square" aria-hidden="true"/>
                     Completed
                   </li>
                 </ul>
@@ -56,33 +56,33 @@
 
               <div class="priority-filter">
                 <span v-if="!selectingPriorityFilter" @click="toggleFilter('priority')">
-                  {{priorityFilterText}}
-                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                  {{ priorityFilterText }}
+                  <i class="fa fa-angle-down" aria-hidden="true"/>
                 </span>
                 &nbsp;
 
                 <ul :class="{ open: selectingPriorityFilter }" v-if="selectingPriorityFilter">
                   <li v-if="selectingPriorityFilter||filters.priority=='none'" @click="setPriorityFilter('none')">
-                    <i class="fa fa-fw fa-globe" aria-hidden="true"></i>
+                    <i class="fa fa-fw fa-globe" aria-hidden="true"/>
                     All (No Priority)
                   </li>
                   <li v-if="selectingPriorityFilter||filters.priority=='both'" @click="setPriorityFilter('both')">
-                    <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+                    <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"/>
                     Important &amp; Urgent
                   </li>
                   <li v-if="selectingPriorityFilter||filters.priority=='important'" @click="setPriorityFilter('important')">
-                    <i class="fa fa-fw fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-fw fa-star" aria-hidden="true"/>
                     Important
                   </li>
                   <li v-if="selectingPriorityFilter||filters.priority=='urgent'" @click="setPriorityFilter('urgent')">
-                    <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
+                    <i class="fa fa-fw fa-clock-o" aria-hidden="true"/>
                     Urgent
                   </li>
                 </ul>
               </div>
             </div>
           </div>
-          <add-item v-if="!isEditable" :parent="checklist" parent-model="checklist"></add-item>
+          <add-item v-if="!isEditable" :parent="checklist" parent-model="checklist"/>
       </div>
 
       <div class="checklist-index-panel panel-body">
@@ -93,7 +93,7 @@
             parent-model="checklist"
             :parent="checklist"
             @onChecklistItemClick="toggleSelection"
-          ></checklist-items>
+          />
 
           <edit-checklist
             v-if="isEditable"
@@ -101,7 +101,7 @@
             @saveChanges="saveChanges"
             :checklist="checklist"
             :is-saving="isSaving"
-          ></edit-checklist>
+          />
       </div>
     </div>
 
@@ -112,23 +112,23 @@
       :folder="parentFolder"
       parent-component="checklist"
       @onSelection="toggleSelection"
-    ></checklist-item-tree>
+    />
 
     <edit-checklist-item
       v-if="!selectedIsMovable&&editableItem.id"
       :list-type="checklist.list_type"
       :item="editableItem"
       parent-model="checklist"
-    ></edit-checklist-item>
+    />
 
     <edit-checklist-item
       v-if="!selectedIsMovable&&editableSubItem.id"
       :list-type="checklist.list_type"
       :item="editableSubItem"
       parent-model="checklist-item"
-    ></edit-checklist-item>
+    />
 
-    <move-to-checklist v-if="selectedIsMovable"></move-to-checklist>
+    <move-to-checklist v-if="selectedIsMovable"/>
   </div>
 </template>
 
@@ -145,6 +145,15 @@ import MoveToChecklist from './MoveToChecklist.vue'
 
 export default {
     name: 'checklist',
+    components: {
+        ChecklistItems,
+        ChecklistItemTree,
+        Breadcrumbs,
+        AddItem,
+        EditChecklist,
+        EditChecklistItem,
+        MoveToChecklist
+    },
     data () {
       return {
         isEditable: false,
@@ -154,15 +163,6 @@ export default {
         selectingCheckedFilter: false,
         selectingPriorityFilter: false
       }
-    },
-    components: {
-        ChecklistItems,
-        ChecklistItemTree,
-        Breadcrumbs,
-        AddItem,
-        EditChecklist,
-        EditChecklistItem,
-        MoveToChecklist
     },
     computed: {
       ...mapGetters([
@@ -233,6 +233,13 @@ export default {
         return this.checklist.list_type && this.checklist.list_type == 'ta' ? ((this.checklistItems.length - _.countBy(this.checklistItems, i => i.checked_at == null).true) / this.checklistItems.length) * 100 : null
       }
     },
+    mounted: function() {
+      this.$nextTick(function () {
+        if (!this.checklist.list_type) {
+          return this.toggleEditability(true)
+        }
+      })
+    },
     methods: {
       ...mapActions([
         'saveChecklist',
@@ -294,13 +301,6 @@ export default {
         }
       },
     },
-    mounted: function() {
-      this.$nextTick(function () {
-        if (!this.checklist.list_type) {
-          return this.toggleEditability(true)
-        }
-      })
-    }
 }
 </script>
 

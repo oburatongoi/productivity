@@ -1,9 +1,9 @@
 <template>
   <li v-show="itemIsVisible" class="show-item" :class="{'is-selected':itemIsSelected}" @click.self="emitClick({selection: {model, listing: item, parentModel}, event: $event})" draggable>
     <span class="checkbox-container">
-      <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"></i>
-      <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"></i>
-      <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{item.sort_order + 1}}.</span>
+      <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"/>
+      <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"/>
+      <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{ item.sort_order + 1 }}.</span>
     </span>
 
     <p class="show-item-content" @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})" @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})">
@@ -12,19 +12,19 @@
 
     <p class="preview-deadline" @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})" @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})">
       <span v-if="item.is_important">
-        <i class="fa fa-fw fa-star" aria-hidden="true"></i>
+        <i class="fa fa-fw fa-star" aria-hidden="true"/>
       </span>
 
       <span v-if="item.is_urgent">
-        <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
+        <i class="fa fa-fw fa-clock-o" aria-hidden="true"/>
       </span>
 
       <span v-if="item.comments">
-        <i class="fa fa-fw fa-comment-o" aria-hidden="true"></i>
+        <i class="fa fa-fw fa-comment-o" aria-hidden="true"/>
       </span>
 
       <span v-if="item.child_list_items&&item.child_list_items.length">
-        <i class="fa fa-fw fa-check-square" aria-hidden="true"></i>
+        <i class="fa fa-fw fa-check-square" aria-hidden="true"/>
       </span>
 
       <span v-if="deadlinePlaceholder">
@@ -37,15 +37,15 @@
         v-if="item.checklist.folder"
         @click="navigateTo('folders', item.checklist.folder.fake_id)"
       >
-        <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
-        {{item.checklist.folder.name}}
-        <i class="fa fa-fw fa-angle-right" aria-hidden="true"></i>
+        <i class="fa fa-fw fa-folder" aria-hidden="true"/>
+        {{ item.checklist.folder.name }}
+        <i class="fa fa-fw fa-angle-right" aria-hidden="true"/>
       </span>
 
       <span
         @click="navigateTo('lists', item.checklist.fake_id)"
       >
-        <i class="fa fa-fw fa-list" aria-hidden="true"></i> {{item.checklist.title}}
+        <i class="fa fa-fw fa-list" aria-hidden="true"/> {{ item.checklist.title }}
       </span>
     </div>
   </li>
@@ -59,7 +59,8 @@ export default {
     name: 'checklist-item',
     props: {
       item: {
-        type: Object
+        type: Object,
+        required: true
       },
       listType: {
         type: String,
@@ -74,23 +75,6 @@ export default {
       return {
         checkboxClassOverride: null,
         model: 'checklist-item'
-      }
-    },
-    methods: {
-      ...mapActions([
-        'checkChecklistItem',
-      ]),
-      checkItem: function() {
-        this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
-        this.checkChecklistItem(this.item)
-            .then( () => this.checkboxClassOverride = null )
-            .catch( () => this.checkboxClassOverride = null )
-      },
-      emitClick: function(payload) {
-        this.$emit('onEmitClick', payload)
-      },
-      navigateTo: function(model, id) {
-        return window.location.href = '/'+model+'/'+id
       }
     },
     computed: {
@@ -167,7 +151,24 @@ export default {
       isSubItem: function() {
         return this.parentModel == 'checklist-item' ? true : false;
       }
-    }
+    },
+    methods: {
+      ...mapActions([
+        'checkChecklistItem',
+      ]),
+      checkItem: function() {
+        this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
+        this.checkChecklistItem(this.item)
+            .then( () => this.checkboxClassOverride = null )
+            .catch( () => this.checkboxClassOverride = null )
+      },
+      emitClick: function(payload) {
+        this.$emit('onEmitClick', payload)
+      },
+      navigateTo: function(model, id) {
+        return window.location.href = '/'+model+'/'+id
+      }
+    },
 }
 </script>
 

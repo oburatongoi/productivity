@@ -4,16 +4,16 @@
         :class="noticeClass"
         @click.self="deleteNotice(notice)"
     >
-      <h5 class="heading" v-if="notice.heading">{{notice.heading}}</h5>
-      <p class="message" v-if="notice.message">{{notice.message}}</p>
-      <div class="inner-html" v-if="notice.rawHTML" v-html="notice.rawHTML"></div>
+      <h5 class="heading" v-if="notice.heading">{{ notice.heading }}</h5>
+      <p class="message" v-if="notice.message">{{ notice.message }}</p>
+      <div class="inner-html" v-if="notice.rawHTML" v-html="notice.rawHTML"/>
       <div class="buttons" v-if="notice.buttons&&notice.buttons.length">
         <button v-for="button in notice.buttons"
                 class="btn"
                 :class="button.class"
                 @click="callAction(button.action, notice)"
                 :key="button.key">
-          {{button.text}}
+          {{ button.text }}
         </button>
       </div>
     </li>
@@ -26,7 +26,15 @@ import { mapActions } from 'vuex'
 export default {
   name: 'notice',
   props: {
-    notice: Object
+    notice: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    noticeClass: function() {
+      return this.notice.type
+    }
   },
   methods: {
     ...mapActions([
@@ -39,11 +47,6 @@ export default {
       return eval(fn);
     }
   },
-  computed: {
-    noticeClass: function() {
-      return this.notice.type
-    }
-  }
 }
 </script>
 

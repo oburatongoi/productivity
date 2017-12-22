@@ -1,11 +1,11 @@
 <template lang="html">
   <div class="home">
-    <index-tasks></index-tasks>
+    <index-tasks/>
 
     <edit-checklist-item
       v-if="currentEditableItem.id&&currentEditableItem.index"
       :current-editable-item="checklistItems[currentEditableItem.index]"
-    ></edit-checklist-item>
+    />
   </div>
 </template>
 

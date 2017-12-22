@@ -13,10 +13,10 @@
     <span class="item-form-date">
       <label for="deadline">Deadline</label>
       <p @click="showDatePicker">
-        <i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
-        {{deadlinePlaceholder}}
+        <i class="fa fa-fw fa-calendar" aria-hidden="true"/>
+        {{ deadlinePlaceholder }}
       </p>
-      <i class="fa fa-fw fa-times delete-checklist-item" aria-hidden="true" v-if="this.item.deadline" @click="removeDeadline"></i>
+      <i class="fa fa-fw fa-times delete-checklist-item" aria-hidden="true" v-if="item.deadline" @click="removeDeadline"/>
     </span>
   </div>
 </template>

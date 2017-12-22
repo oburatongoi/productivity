@@ -6,7 +6,7 @@
         class="item"
         @click="emitClick({ selection: {model: 'home'}, event: $event})"
         >
-          <i class="fa fa-fw fa-home" aria-hidden="true"></i>
+          <i class="fa fa-fw fa-home" aria-hidden="true"/>
           Home
         </li>
 
@@ -15,7 +15,7 @@
             v-if="folder"
             :folder="folder"
             @onClick="emitClick"
-          ></checklist-item-tree-folder>
+          />
 
           <!-- Nested Checklist -->
           <li><ul class="nested-tree">
@@ -23,13 +23,13 @@
                 v-if="checklist"
                 :checklist="checklist"
                 @onClick="emitClick"
-              ></checklist-item-tree-checklist>
+              />
               <!-- Nested ChecklistItem -->
               <li>
                 <checklist-item-tree-item
                   :item="item"
                   @onClick="emitClick"
-                ></checklist-item-tree-item>
+                />
               </li>
               <!-- End Nested ChecklistItem -->
           </ul></li>
@@ -42,13 +42,13 @@
             v-if="checklist"
             :checklist="checklist"
             @onClick="emitClick"
-          ></checklist-item-tree-checklist>
+          />
           <!-- Nested ChecklistItem -->
           <li>
             <checklist-item-tree-item
               :item="item"
               @onClick="emitClick"
-            ></checklist-item-tree-item>
+            />
           </li>
           <!-- End Nested ChecklistItem -->
         </ul></li>
@@ -64,9 +64,20 @@ import ChecklistItemTreeChecklist from './ChecklistItemTreeChecklist.vue'
 import ChecklistItemTreeItem from './ChecklistItemTreeItem.vue'
 export default {
   name: 'checklist-item-tree',
+  components: {
+    ChecklistItemTreeFolder,
+    ChecklistItemTreeChecklist,
+    ChecklistItemTreeItem
+  },
   props: {
-    folder: undefined,
-    checklist: undefined,
+    folder: {
+      type: String,
+      default: null
+    },
+    checklist: {
+      type: String,
+      default: null
+    },
     item: {
       type: Object,
       required: true
@@ -90,11 +101,6 @@ export default {
       this.$emit('onSelection', payload)
     }
   },
-  components: {
-    ChecklistItemTreeFolder,
-    ChecklistItemTreeChecklist,
-    ChecklistItemTreeItem
-  }
 }
 </script>
 

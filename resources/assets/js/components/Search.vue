@@ -1,11 +1,9 @@
 <template lang="html">
   <div class="search-wrapper">
     <form class="search-form" :class="searchFormClass">
-      <i class="fa fa-search" aria-hidden="true"></i>
-
-      <search-input></search-input>
-
-      <i class="fa fa-times cancel-search-btn" aria-hidden="true" v-if="search.query" @click="cancel"></i>
+      <i class="fa fa-search" aria-hidden="true"/>
+      <search-input/>
+      <i class="fa fa-times cancel-search-btn" aria-hidden="true" v-if="search.query" @click="cancel"/>
     </form>
   </div>
 
@@ -18,6 +16,17 @@ import SearchInput from './SearchInput.vue'
 
 export default {
   name: 'search',
+  components: {
+    SearchInput
+  },
+  computed: {
+    ...mapGetters([
+      'search'
+    ]),
+    searchFormClass: function() {
+      return this.search.query ? 'has-query' : null
+    }
+  },
   methods: {
     ...mapActions([
       'clearSearchResults',
@@ -31,17 +40,6 @@ export default {
       return this.setIsSearching(false)
     }
   },
-  computed: {
-    ...mapGetters([
-      'search'
-    ]),
-    searchFormClass: function() {
-      return this.search.query ? 'has-query' : null
-    }
-  },
-  components: {
-    SearchInput
-  }
 }
 </script>
 

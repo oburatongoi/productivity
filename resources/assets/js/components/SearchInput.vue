@@ -4,12 +4,12 @@
     class="search-input"
     v-model="search.query"
     placeholder="SEARCH"
-    v-on:keyup="debounceSearch"
-    v-on:keydown="debounceSearch"
-    v-on:change="debounceSearch"
-    v-on:keydown.enter.prevent="debounceSearch"
-    v-on:keyup.enter.prevent="debounceSearch"
-    v-on:keyup.delete="clearSearchResults"
+    @keyup="debounceSearch"
+    @keydown="debounceSearch"
+    @change="debounceSearch"
+    @keydown.enter.prevent="debounceSearch"
+    @keyup.enter.prevent="debounceSearch"
+    @keyup.delete="clearSearchResults"
   >
 </template>
 
@@ -19,6 +19,12 @@ import Mark from 'mark.js'
 
 export default {
   name: 'search-input',
+  computed: {
+    ...mapGetters([
+      'search',
+      'currentFolder'
+    ])
+  },
   methods: {
     ...mapActions([
       'clearSearchResults',
@@ -78,12 +84,6 @@ export default {
       this.search.query = undefined
       return this.setIsSearching(false)
     }
-  },
-  computed: {
-    ...mapGetters([
-      'search',
-      'currentFolder'
-    ])
   },
 }
 </script>

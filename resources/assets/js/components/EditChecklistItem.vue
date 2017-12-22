@@ -2,22 +2,22 @@
   <div class="edit-checklist-item panel side-panel" :class="editChecklistItemClass" :id="'edit-checklist-item-'+item.id">
     <div class="position-relative">
       <div class="sizing-buttons" :id="'sizing-buttons-'+item.id">
-        <i class="fa fa-fw fa-times pull-right" v-if="!savingChanges" aria-hidden="true" title="Save and Close" @click="saveAndClose"></i>
+        <i class="fa fa-fw fa-times pull-right" v-if="!savingChanges" aria-hidden="true" title="Save and Close" @click="saveAndClose"/>
         <span class="fa-stack pull-right" v-if="savingChanges">
-          <i class="fa fa-circle-o-notch fa-spin fa-stack-2x"></i>
-          <i class="fa fa-floppy-o fa-stack-1x"></i>
+          <i class="fa fa-circle-o-notch fa-spin fa-stack-2x"/>
+          <i class="fa fa-floppy-o fa-stack-1x"/>
         </span>
-        <i class="fa fa-fw fa-exchange pull-right" aria-hidden="true" title="Move"  @click="toggleMovable"></i>
-        <i class="fa fa-fw pull-left" :class="toggleExpansionClass" aria-hidden="true" :title="toggleExpansionTitle" @click="toggleExpansion"></i>
+        <i class="fa fa-fw fa-exchange pull-right" aria-hidden="true" title="Move" @click="toggleMovable"/>
+        <i class="fa fa-fw pull-left" :class="toggleExpansionClass" aria-hidden="true" :title="toggleExpansionTitle" @click="toggleExpansion"/>
       </div>
 
       <div class="panel-heading" :id="'panel-heading-'+item.id">
         <div class="edit-content">
           <h4 class="edit-checklist-item-content-textarea">
             <span class="checkbox-container">
-              <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"></i>
-              <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"></i>
-              <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{item.sort_order + 1}}.</span>
+              <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"/>
+              <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"/>
+              <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{ item.sort_order + 1 }}.</span>
             </span>
 
             <textarea
@@ -29,44 +29,44 @@
               @delete="debounceSaveChanges"
               @change="debounceSaveChanges"
               maxlength="255"
-            ></textarea>
+            />
           </h4>
         </div>
 
-        <manage-item-form-meta :item="item" :is-sub-item="isSubItem"></manage-item-form-meta>
+        <manage-item-form-meta :item="item" :is-sub-item="isSubItem"/>
 
         <ul class="manage-item-menu">
           <li @click="switchView('notes')" :class="{ selected: view=='notes' }">
-            <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+            <i class="fa fa-sticky-note-o" aria-hidden="true"/>
             Notes
           </li>
 
           <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }" v-if="parentModel=='checklist'">
-            <i class="fa fa-check-square" aria-hidden="true"></i>
-            Checklist <span class="list-items-count" v-if="uncheckedSubItemsCount">({{uncheckedSubItemsCount}})</span>
+            <i class="fa fa-check-square" aria-hidden="true"/>
+            Checklist <span class="list-items-count" v-if="uncheckedSubItemsCount">({{ uncheckedSubItemsCount }})</span>
           </li>
         </ul>
 
         <div id="quill-toolbar" v-if="view=='notes'">
           <span class="ql-formats">
-            <button class="ql-bold" type="button"></button>
-            <button class="ql-italic" type="button"></button>
-            <button class="ql-underline" type="button"></button>
-            <button class="ql-strike" type="button"></button>
+            <button class="ql-bold" type="button"/>
+            <button class="ql-italic" type="button"/>
+            <button class="ql-underline" type="button"/>
+            <button class="ql-strike" type="button"/>
           </span>
 
           <span class="ql-formats">
-            <button class="ql-list" value="ordered" type="button"></button>
-            <button class="ql-list" value="bullet" type="button"></button>
-            <button class="ql-indent" value="-1" type="button"></button>
-            <button class="ql-indent" value="+1" type="button"></button>
+            <button class="ql-list" value="ordered" type="button"/>
+            <button class="ql-list" value="bullet" type="button"/>
+            <button class="ql-indent" value="-1" type="button"/>
+            <button class="ql-indent" value="+1" type="button"/>
           </span>
 
           <span class="ql-formats">
-            <button class="ql-link" type="button"></button>
-            <button class="ql-script" value="sub" type="button"></button>
-            <button class="ql-script" value="super" type="button"></button>
-            <button class="ql-code-block" type="button"></button>
+            <button class="ql-link" type="button"/>
+            <button class="ql-script" value="sub" type="button"/>
+            <button class="ql-script" value="super" type="button"/>
+            <button class="ql-code-block" type="button"/>
           </span>
         </div>
 
@@ -74,7 +74,7 @@
           v-if="parentModel=='checklist'&&view=='sub-items'"
           :parent="item"
           parent-model="checklist-item"
-        ></add-item>
+        />
       </div>
 
       <div class="panel-body notes" :id="'notes-panel-'+item.id" v-if="view=='notes'">
@@ -82,15 +82,15 @@
           @saveChanges="saveChanges"
           :item="item"
           :is-sub-item="isSubItem"
-        ></manage-item-form-comments>
+        />
       </div>
 
       <div class="panel-footer" :id="'notes-buttons-'+item.id" v-if="view=='notes'">
         <manage-item-form-buttons
-          :isSaving="savingChanges"
+          :is-saving="savingChanges"
           @resetForm="saveAndClose"
           @saveChanges="saveChanges"
-        ></manage-item-form-buttons>
+        />
       </div>
 
       <div class="panel-body sub-items" :id="'sub-items-panel-'+item.id" v-if="view=='sub-items'">
@@ -99,7 +99,7 @@
           :parent="item"
           parent-model="checklist-item"
           :list-type="item.sub_list_type"
-        ></sub-checklist-items>
+        />
       </div>
 
     </div>
@@ -119,6 +119,13 @@ import autosize from 'autosize';
 
 export default {
   name: 'edit-checklist-item',
+  components: {
+    AddItem,
+      ManageItemFormMeta,
+      ManageItemFormComments,
+      ManageItemFormButtons,
+      SubChecklistItems
+  },
   props: {
     item: {
       type: Object,
@@ -140,6 +147,37 @@ export default {
       view: 'notes',
       notesHeight: '70%'
     }
+  },
+  computed: {
+    ...mapGetters([
+      'editableItemIsExpanded',
+    ]),
+    checkboxClass: function() {
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
+    },
+    editChecklistItemClass: function() {
+      return this.item.checklist_id ? 'checklist-item' : 'sub-checklist-item'
+    },
+    toggleExpansionClass: function() {
+      return this.editableItemIsExpanded ? 'fa-compress' : 'fa-expand'
+    },
+    toggleExpansionTitle: function() {
+      return this.editableItemIsExpanded ? 'Compress' : 'Expand'
+    },
+    uncheckedSubItemsCount: function() {
+      return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
+    },
+    isSubItem: function() {
+      return this.parentModel == 'checklist-item' ? true : false;
+    }
+  },
+  mounted: function() {
+    this.$nextTick(function() {
+      // autosize(document.querySelector('.content-textarea'));
+      autosize(document.querySelector('.comments-textarea'));
+      this.adjustNotesHeight()
+      window.addEventListener("resize", this.adjustNotesHeight, false);
+    })
   },
   methods: {
     ...mapActions([
@@ -203,44 +241,6 @@ export default {
       target.style.height = notesHeight+'px'
     }
   },
-  computed: {
-    ...mapGetters([
-      'editableItemIsExpanded',
-    ]),
-    checkboxClass: function() {
-      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
-    },
-    editChecklistItemClass: function() {
-      return this.item.checklist_id ? 'checklist-item' : 'sub-checklist-item'
-    },
-    toggleExpansionClass: function() {
-      return this.editableItemIsExpanded ? 'fa-compress' : 'fa-expand'
-    },
-    toggleExpansionTitle: function() {
-      return this.editableItemIsExpanded ? 'Compress' : 'Expand'
-    },
-    uncheckedSubItemsCount: function() {
-      return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
-    },
-    isSubItem: function() {
-      return this.parentModel == 'checklist-item' ? true : false;
-    }
-  },
-  components: {
-    AddItem,
-      ManageItemFormMeta,
-      ManageItemFormComments,
-      ManageItemFormButtons,
-      SubChecklistItems
-  },
-  mounted: function() {
-    this.$nextTick(function() {
-      // autosize(document.querySelector('.content-textarea'));
-      autosize(document.querySelector('.comments-textarea'));
-      this.adjustNotesHeight()
-      window.addEventListener("resize", this.adjustNotesHeight, false);
-    })
-  }
 }
 </script>
 

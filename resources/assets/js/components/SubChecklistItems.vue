@@ -6,7 +6,7 @@
       :parent-model="parentModel"
       :parent="parent"
       @onChecklistItemClick="toggleSelection"
-    ></checklist-items>
+    />
   </div>
 </template>
 
@@ -15,12 +15,17 @@ import { mapActions, mapGetters } from 'vuex'
 import ChecklistItems from './ChecklistItems.vue'
 export default {
   name: 'sub-checklist-items',
+  components: {
+    ChecklistItems
+  },
   props: {
     parent: {
-      type: Object
+      type: Object,
+      required: true
     },
     items: {
-      type: Array
+      type: Array,
+      required: true
     },
     listType: {
       type: String,
@@ -31,18 +36,15 @@ export default {
       default: 'checklist-item'
     }
   },
-  methods: {
-    ...mapActions([
-      'toggleSelection'
-    ])
-  },
   computed: {
     ...mapGetters([
       'editableItem'
     ])
   },
-  components: {
-    ChecklistItems
+  methods: {
+    ...mapActions([
+      'toggleSelection'
+    ])
   },
 }
 </script>

@@ -3,28 +3,28 @@
   <div class="main-menu">
 
     <div class="main-logo">
-      <!-- <i class="fa fa-bars" aria-hidden="true"></i> -->
+      <!-- <i class="fa fa-bars" aria-hidden="true"/> -->
         <a href="/">
-            {{logoText}}
+            {{ logo }}
         </a>
     </div>
 
-    <search></search>
+    <search/>
 
     <ul class="main-menu-options">
 
       <li class="menu-option">
           <a href="/">
-              <i class="fa fa-fw fa-home" aria-hidden="true"></i>
-              Home
+            <i class="fa fa-fw fa-home" aria-hidden="true"/>
+            Home
           </a>
       </li>
 
       <li class="menu-option">
         <button type="button" @click="toggleNestedOptions">
-          <i class="fa fa-fw fa-inbox" aria-hidden="true"></i>
+          <i class="fa fa-fw fa-inbox" aria-hidden="true"/>
           Browse
-          <i class="fa" :class="showNestedOptionsClass" aria-hidden="true"></i>
+          <i class="fa" :class="showNestedOptionsClass" aria-hidden="true"/>
         </button>
       </li>
 
@@ -32,15 +32,15 @@
         <ul>
           <li>
             <a href="/folders">
-                <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
-                Folders
+              <i class="fa fa-fw fa-folder" aria-hidden="true"/>
+              Folders
             </a>
           </li>
 
           <li>
             <a href="/lists">
-                <i class="fa fa-fw fa-list" aria-hidden="true"></i>
-                Lists
+              <i class="fa fa-fw fa-list" aria-hidden="true"/>
+              Lists
             </a>
           </li>
         </ul>
@@ -54,37 +54,37 @@ import { mapActions, mapGetters } from 'vuex'
 import Search from './Search.vue'
 
 export default {
-    name: 'main-menu',
-    props: [
-      'logo'
-    ],
-    data () {
-      return {
-        showNestedOptions: false
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'showCreatingNewButtons',
-        'selected'
-      ]),
-      showNestedOptionsClass: function() {
-        return this.showNestedOptions ? 'fa-caret-up' : 'fa-caret-down'
-      },
-      logoText: function() {
-        return this.logo ? this.logo : 'Productivity'
-      }
-    },
-    methods: {
-      ...mapActions([
-        'toggleCreatingNewButtons'
-      ]),
-      toggleNestedOptions: function() {
-        this.showNestedOptions = ! this.showNestedOptions
-      }
-    },
-    components: {
-      Search
+  name: 'main-menu',
+  components: {
+    Search
+  },
+  props: {
+    logo: {
+      type: String,
+      default: 'Productivity'
     }
+  },
+  data () {
+    return {
+      showNestedOptions: false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'showCreatingNewButtons',
+      'selected'
+    ]),
+    showNestedOptionsClass: function() {
+      return this.showNestedOptions ? 'fa-caret-up' : 'fa-caret-down'
+    }
+  },
+  methods: {
+    ...mapActions([
+      'toggleCreatingNewButtons'
+    ]),
+    toggleNestedOptions: function() {
+      this.showNestedOptions = ! this.showNestedOptions
+    }
+  },
 }
 </script>

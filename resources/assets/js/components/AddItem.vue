@@ -9,7 +9,7 @@
         v-if="hasContent"
         :item="newItem"
         @showDatePicker="showDatePicker"
-      ></add-item-form-meta>
+      />
     </div>
 
     <template v-if="hasUserInput">
@@ -19,19 +19,19 @@
           @selected="setDate"
           :inline="true"
           :highlighted="highlightedDate"
-        ></datepicker>
+        />
       </div>
 
       <add-item-form-comments
         :item="newItem"
-      ></add-item-form-comments>
+      />
 
       <add-item-form-buttons
-        :hasUserInput=hasUserInput
-        :isSaving=isSaving
+        :has-user-input="hasUserInput"
+        :is-saving="isSaving"
         @resetForm="resetNewItem"
         @submitForm="submitForm"
-      ></add-item-form-buttons>
+      />
     </template>
   </form>
 </template>
@@ -46,6 +46,12 @@ import Datepicker from 'vuejs-datepicker';
 
 export default {
   name: 'add-item',
+  components: {
+    Datepicker,
+    AddItemFormButtons,
+    AddItemFormComments,
+    AddItemFormMeta
+  },
   props: {
     parent: {
       type: Object,
@@ -83,6 +89,9 @@ export default {
       || this.newItem.is_urgent
       || this.newItem.deadline ? true : false
     }
+  },
+  created: function() {
+    this.resetNewItem()
   },
   methods: {
     ...mapActions([
@@ -135,14 +144,5 @@ export default {
       }
     }
   },
-  components: {
-    Datepicker,
-    AddItemFormButtons,
-    AddItemFormComments,
-    AddItemFormMeta
-  },
-  created: function() {
-    this.resetNewItem()
-  }
 }
 </script>

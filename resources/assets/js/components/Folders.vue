@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
-    <index-all></index-all>
-    <move-to-folder v-if="selectedIsMovable"></move-to-folder>
+    <index-all/>
+    <move-to-folder v-if="selectedIsMovable"/>
   </div>
 </template>
 
@@ -12,14 +12,14 @@ import MoveToFolder from './MoveToFolder.vue'
 
 export default {
   name: 'folders',
+  components: {
+    IndexAll,
+    MoveToFolder
+  },
   computed: {
     ...mapGetters([
       'selectedIsMovable'
     ])
   },
-  components: {
-    IndexAll,
-    MoveToFolder
-  }
 }
 </script>

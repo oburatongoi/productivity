@@ -1,7 +1,10 @@
 <template lang="html">
-  <ul class="list-unstyled" @click.self="clearSelected">
+  <ul
+    v-if="folders"
+    class="list-unstyled"
+    @click.self="clearSelected"
+  >
       <li
-        v-if="folders"
         v-for="folder in orderBy(folders, 'name')"
         class="listing folder-color-scheme"
         :class="{selected: selected.folders.indexOf(folder) !== -1 }"
@@ -12,15 +15,15 @@
         :key="folder.fake_id"
       >
           <h5>
-            <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
-            {{folder.name}}
+            <i class="fa fa-fw fa-folder" aria-hidden="true"/>
+            {{ folder.name }}
           </h5>
 
           <a :href="'/folders/' + folder.fake_id"
               class="go-to-listing"
               v-if="selected.folders.indexOf(folder) !== -1"
           >
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <i class="fa fa-angle-double-right" aria-hidden="true"/>
           </a>
       </li>
   </ul>
@@ -30,6 +33,12 @@
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'index-folders',
+  computed: {
+    ...mapGetters([
+      'folders',
+      'selected'
+    ])
+  },
   methods: {
     ...mapActions([
       'clearSelected',
@@ -42,12 +51,6 @@ export default {
       return this.selected.folders.indexOf(listing) !== -1
     }
   },
-  computed: {
-    ...mapGetters([
-      'folders',
-      'selected'
-    ])
-  }
 }
 </script>
 

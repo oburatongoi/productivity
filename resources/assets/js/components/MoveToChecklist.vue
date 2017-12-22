@@ -1,16 +1,16 @@
 <template lang="html">
   <div class="move-to-checklist">
     <div class="move-to-checklist-heading">
-      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="selectFolder(currentFolder.folder)" v-if="currentFolder.folder"></i>
-      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFoldersAndChecklists()" v-if="currentFolder.id&&!currentFolder.folder"></i>
+      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="selectFolder(currentFolder.folder)" v-if="currentFolder.folder"/>
+      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFoldersAndChecklists()" v-if="currentFolder.id&&!currentFolder.folder"/>
       <span
         class="current-folder"
         v-if="currentFolder&&!addingFolder"
         :class="{ active: currentFolder.id==selectedChecklist.folder_id }"
         @click.prevent="resetSelectedChecklist"
       >
-        <i class="fa fa-home" aria-hidden="true" v-if="!currentFolder.id&&!currentFolder.folder"></i>
-        {{currentFolder.name}}
+        <i class="fa fa-home" aria-hidden="true" v-if="!currentFolder.id&&!currentFolder.folder"/>
+        {{ currentFolder.name }}
       </span>
 
       <form class="form-horizontal add-folder-form" v-if="addingFolder" @submit.prevent="createNewFolder">
@@ -19,44 +19,45 @@
         </div>
         <div class="add-folder-form-buttons">
           <button type="submit" class="btn btn-primary btn-sm">
-            <i class="fa fa-fw fa-check" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-check" aria-hidden="true"/>
           </button>
           <button type="button" class="btn btn-default btn-sm" @click.prevent="toggleAddingFolder('false')">
-            <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-times" aria-hidden="true"/>
           </button>
         </div>
       </form>
 
-      <i class="fa fa-times heading-right" aria-hidden="true" @click="toggleMovable"></i>
+      <i class="fa fa-times heading-right" aria-hidden="true" @click="toggleMovable"/>
     </div>
 
     <div class="move-to-checklist-body" @click.self="resetSelectedChecklist">
       <h4>Folders</h4>
       <div class="info-message" v-if="showFolderInfoMessage">
-        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"></i>
+        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"/>
         <p :class="[folderInfoMessage.type]" v-if="folderInfoMessage.content&&folderInfoMessage.type">{{ folderInfoMessage.content }}</p>
       </div>
 
       <ul class="list-unstyled" v-if="folders&&!isLoading">
         <li v-if="isStoringFolder">
-          <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"></i>
+          <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"/>
         </li>
         <li class="nested-folder"
             v-for="folder in folders"
             @click.prevent="openFolder(folder)"
             @dblclick.prevent="openFolder(folder)"
+            :key="folder.id"
         >
           <span>
-            <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
-            {{folder.name}}
+            <i class="fa fa-fw fa-folder" aria-hidden="true"/>
+            {{ folder.name }}
           </span>
-          <i class="fa fa-angle-right" aria-hidden="true" @click="openFolder(folder)"></i>
+          <i class="fa fa-angle-right" aria-hidden="true" @click="openFolder(folder)"/>
         </li>
       </ul>
 
       <h4>Lists</h4>
       <div class="info-message" v-if="showChecklistInfoMessage">
-        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"></i>
+        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"/>
         <p :class="[checklistInfoMessage.type]" v-if="checklistInfoMessage.content&&checklistInfoMessage.type">{{ checklistInfoMessage.content }}</p>
       </div>
 
@@ -66,12 +67,13 @@
             v-for="checklist in checklists"
             @click.prevent="highlightChecklist(checklist)"
             @dblclick.prevent="selectChecklist(checklist)"
+            :key="checklist.id"
         >
           <span>
-            <i class="fa fa-fw fa-list" aria-hidden="true"></i>
-            {{checklist.title}}
+            <i class="fa fa-fw fa-list" aria-hidden="true"/>
+            {{ checklist.title }}
           </span>
-          <i class="fa fa-angle-right" aria-hidden="true" @click="selectChecklist(checklist)"></i>
+          <i class="fa fa-angle-right" aria-hidden="true" @click="selectChecklist(checklist)"/>
         </li>
       </ul>
     </div>
@@ -93,13 +95,13 @@
 
       <p v-if="footerText">
         <span v-if="!isAlreadyInChecklist">Move to</span>
-        <span class="footer-text"> {{footerText}}</span>
+        <span class="footer-text"> {{ footerText }}</span>
       </p>
 
       <span class="fa-stack toggle-add-folder-btn" @click="toggleAddingFolder">
-        <i class="fa fa-folder fa-stack-2x folder-color-scheme"></i>
-        <i class="fa fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"></i>
-        <i class="fa fa-times fa-stack-1x fa-inverse" v-if="addingFolder"></i>
+        <i class="fa fa-folder fa-stack-2x folder-color-scheme"/>
+        <i class="fa fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"/>
+        <i class="fa fa-times fa-stack-1x fa-inverse" v-if="addingFolder"/>
       </span>
     </div>
   </div>
@@ -135,6 +137,37 @@ export default {
       isStoringFolder: false,
       newFolder: { name: undefined },
       selectedChecklist: {}
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'selected'
+    ]),
+    footerText: function() {
+      return this.selectedChecklist.title && this.addingFolder ? 'Add to ' + this.selectedChecklist.title : this.isAlreadyInChecklist && ! this.selectedChecklist.id ? 'Please select a list' : this.isAlreadyInChecklist ? 'Item is already in this list' : this.selectedChecklist.title ? this.selectedChecklist.title : undefined
+    },
+    headerText: function() {
+      return this.selectedChecklist && this.selectedChecklist.title ? this.selectedChecklist.title : 'Choose a list'
+    },
+    isAlreadyInChecklist: function() {
+      return this.isInSelectedChecklist
+    },
+    isInSelectedChecklist: function() {
+      return this.selectedChecklist.id && this.selected.listing && this.selected.listing.checklist_id && this.selectedChecklist.id == this.selected.listing.checklist_id ? true : false
+    },
+    showFolderInfoMessage: function() {
+      return this.isLoading || this.folderInfoMessage.content && this.folderInfoMessage.type
+    },
+    showChecklistInfoMessage: function() {
+      return this.isLoading || this.checklistInfoMessage.content && this.checklistInfoMessage.type
+    },
+    moveButtonClass: function() {
+      switch (this.selected.model) {
+        case 'checklist': return 'btn-list'
+          break;
+        default: return 'btn-folder'
+
+      }
     }
   },
   created: function() {
@@ -301,37 +334,6 @@ export default {
       return boolean && boolean === 'false' ? this.addingFolder = false : this.addingFolder = ! this.addingFolder
     }
   },
-  computed: {
-    ...mapGetters([
-      'selected'
-    ]),
-    footerText: function() {
-      return this.selectedChecklist.title && this.addingFolder ? 'Add to ' + this.selectedChecklist.title : this.isAlreadyInChecklist && ! this.selectedChecklist.id ? 'Please select a list' : this.isAlreadyInChecklist ? 'Item is already in this list' : this.selectedChecklist.title ? this.selectedChecklist.title : undefined
-    },
-    headerText: function() {
-      return this.selectedChecklist && this.selectedChecklist.title ? this.selectedChecklist.title : 'Choose a list'
-    },
-    isAlreadyInChecklist: function() {
-      return this.isInSelectedChecklist
-    },
-    isInSelectedChecklist: function() {
-      return this.selectedChecklist.id && this.selected.listing && this.selected.listing.checklist_id && this.selectedChecklist.id == this.selected.listing.checklist_id ? true : false
-    },
-    showFolderInfoMessage: function() {
-      return this.isLoading || this.folderInfoMessage.content && this.folderInfoMessage.type
-    },
-    showChecklistInfoMessage: function() {
-      return this.isLoading || this.checklistInfoMessage.content && this.checklistInfoMessage.type
-    },
-    moveButtonClass: function() {
-      switch (this.selected.model) {
-        case 'checklist': return 'btn-list'
-          break;
-        default: return 'btn-folder'
-
-      }
-    }
-  }
 }
 </script>
 

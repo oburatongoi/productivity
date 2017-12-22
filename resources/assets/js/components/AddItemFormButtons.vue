@@ -2,7 +2,7 @@
   <div class="item-form-buttons">
     <div class="form-group" v-if="hasUserInput">
       <button type="button" class="btn btn-xs btn-list save-button" @click.prevent="submit">
-        <i class="fa" :class="saveButtonIcon" aria-hidden="true"></i>
+        <i class="fa" :class="saveButtonIcon" aria-hidden="true"/>
         Save
       </button>
 

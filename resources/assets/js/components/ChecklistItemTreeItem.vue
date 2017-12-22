@@ -4,9 +4,9 @@
     class="item"
     @click="emitClick({selection: {model: 'checklist-item', listing: item, parentModel: 'checklist'}, event: $event})"
     >
-      <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"></i>
-      <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-if="!item.checked_at"></i>
-      {{item.content}}
+      <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"/>
+      <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-if="!item.checked_at"/>
+      {{ item.content }}
     </li>
     <li>
       <ul class="nested-tree">
@@ -17,9 +17,9 @@
         @click="emitClick({selection: {model: 'checklist-item', listing: subItem, parentModel: 'checklist-item'}, event: $event})"
         :key="subItem.id"
         >
-          <i class="fa fa-fw fa-check" aria-hidden="true" v-if="subItem.checked_at"></i>
-          <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="!subItem.checked_at"></i>
-          {{subItem.content}}
+          <i class="fa fa-fw fa-check" aria-hidden="true" v-if="subItem.checked_at"/>
+          <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="!subItem.checked_at"/>
+          {{ subItem.content }}
         </li>
       </ul>
     </li>
@@ -36,15 +36,15 @@ export default {
       required: true
     }
   },
-  methods: {
-    emitClick: function(payload) {
-      this.$emit('onClick', payload)
-    }
-  },
   computed: {
     ...mapGetters([
       'editableSubItem'
     ])
+  },
+  methods: {
+    emitClick: function(payload) {
+      this.$emit('onClick', payload)
+    }
   },
 }
 </script>

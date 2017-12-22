@@ -1,15 +1,15 @@
 <template lang="html">
   <div class="move-to-folder" id="move-to-folder">
     <div class="move-to-folder-heading">
-      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="selectFolder(currentFolder.folder)" v-if="currentFolder.folder"></i>
-      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFolders()" v-if="currentFolder.id&&!currentFolder.folder"></i>
+      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="selectFolder(currentFolder.folder)" v-if="currentFolder.folder"/>
+      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFolders()" v-if="currentFolder.id&&!currentFolder.folder"/>
       <span
         class="current-folder"
         v-if="currentFolder&&!addingFolder"
         :class="{ active: currentFolder.id==selectedFolder.id }"
         @click.prevent="highlightFolder(currentFolder)"
       >
-        <i class="fa fa-home" aria-hidden="true" v-if="!currentFolder.id&&!currentFolder.folder"></i>
+        <i class="fa fa-home" aria-hidden="true" v-if="!currentFolder.id&&!currentFolder.folder"/>
         {{ currentFolder.name }}
       </span>
 
@@ -19,26 +19,26 @@
         </div>
         <div class="add-folder-form-buttons">
           <button type="submit" class="btn btn-primary btn-sm">
-            <i class="fa fa-fw fa-check" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-check" aria-hidden="true"/>
           </button>
           <button type="button" class="btn btn-default btn-sm" @click.prevent="toggleAddingFolder('false')">
-            <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-times" aria-hidden="true"/>
           </button>
         </div>
       </form>
 
-      <i class="fa fa-times heading-right" aria-hidden="true" @click="toggleMovable"></i>
+      <i class="fa fa-times heading-right" aria-hidden="true" @click="toggleMovable"/>
     </div>
 
     <div class="move-to-folder-body" @click.self="highlightFolder(currentFolder)">
       <div class="info-message" v-if="showInfoMessage">
-        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"></i>
+        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"/>
         <p :class="[infoMessage.type]" v-if="infoMessage.content&&infoMessage.type">{{ infoMessage.content }}</p>
       </div>
 
       <ul class="list-unstyled" v-if="folders&&!isLoading">
         <li v-if="isStoringFolder">
-          <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"></i>
+          <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"/>
         </li>
         <li class="nested-folder"
             :class="{ active: folder.id==selectedFolder.id }"
@@ -48,11 +48,11 @@
             :key="folder.id"
         >
           <span>
-            <i class="fa fa-fw fa-folder" aria-hidden="true" v-if="folder.id!==selectedFolder.id"></i>
-            <i class="fa fa-fw fa-folder-open" aria-hidden="true" v-if="folder.id==selectedFolder.id"></i>
-            {{folder.name}}
+            <i class="fa fa-fw fa-folder" aria-hidden="true" v-if="folder.id!==selectedFolder.id"/>
+            <i class="fa fa-fw fa-folder-open" aria-hidden="true" v-if="folder.id==selectedFolder.id"/>
+            {{ folder.name }}
           </span>
-          <i class="fa fa-angle-right" aria-hidden="true" @click="selectFolder(folder)"></i>
+          <i class="fa fa-angle-right" aria-hidden="true" @click="selectFolder(folder)"/>
         </li>
       </ul>
     </div>
@@ -86,13 +86,13 @@
 
       <p v-if="footerText">
         <span v-if="!isCurrentFolder&&!isAlreadyInFolder">Move to</span>
-        <span class="footer-text"> {{footerText}}</span>
+        <span class="footer-text"> {{ footerText }}</span>
       </p>
 
       <span class="fa-stack toggle-add-folder-btn" @click="toggleAddingFolder">
-        <i class="fa fa-folder fa-stack-2x folder-color-scheme"></i>
-        <i class="fa fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"></i>
-        <i class="fa fa-times fa-stack-1x fa-inverse" v-if="addingFolder"></i>
+        <i class="fa fa-folder fa-stack-2x folder-color-scheme"/>
+        <i class="fa fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"/>
+        <i class="fa fa-times fa-stack-1x fa-inverse" v-if="addingFolder"/>
       </span>
     </div>
   </div>
@@ -116,6 +116,49 @@ export default {
       isStoringFolder: false,
       newFolder: { name: undefined },
       selectedFolder: {}
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'selected'
+    ]),
+    currentFolderIsSelected: function() {
+      return this.currentFolder.id && this.selectedFolder.id && this.currentFolder.id == this.selectedFolder.id
+    },
+    footerText: function() {
+      return this.currentFolder.name && this.addingFolder ? 'Add to ' + this.currentFolder.name : this.isCurrentFolder ? 'Cannot move a folder into itself' : this.isAlreadyInFolder && ! this.selectedFolder.id ? 'Please select a folder' : this.isAlreadyInFolder ? 'Item is already in this folder' : this.selectedFolder.name ? this.selectedFolder.name : this.currentFolder.name ?  this.currentFolder.name : undefined
+    },
+    headerText: function() {
+      return this.currentFolder.name ? this.currentFolder.name : 'Choose a folder'
+    },
+    isAlreadyInFolder: function() {
+      return this.isInSelectedFolder || ! this.selectedFolder.id && this.isOnlyChildOfCurrentFolder
+    },
+    isCurrentFolder: function() {
+      return this.selected.folders.length == 1 && this.selected.folders.indexOf(this.currentFolder) !== -1 || this.selected.folders.indexOf(this.selectedFolder) !== -1
+    },
+    checklistIsOnlyChildOfCurrentFolder: function() {
+      return this.currentFolder.id && this.selected.checklists.length == 1 && this.selected.checklists[0].folder_id == this.currentFolder.id ? true : false
+    },
+    folderIsOnlyChildOfCurrentFolder: function() {
+      return this.currentFolder.id && this.selected.folders.length == 1 && this.selected.folders[0].folder_id == this.currentFolder.id ? true : false
+    },
+    isOnlyChildOfCurrentFolder: function() {
+      return this.folderIsOnlyChildOfCurrentFolder || this.checklistIsOnlyChildOfCurrentFolder ? true : false
+    },
+    isInSelectedFolder: function() {
+      return this.selectedFolder && this.selected.folders.indexOf(this.selectedFolder) !== -1 ? true : false
+    },
+    showInfoMessage: function() {
+      return this.isLoading || this.infoMessage.content && this.infoMessage.type
+    },
+    moveButtonClass: function() {
+      switch (this.selected.model) {
+        case 'checklist': return 'btn-list'
+          break;
+        default: return 'btn-folder'
+
+      }
     }
   },
   created: function() {
@@ -244,49 +287,6 @@ export default {
       return boolean && boolean === 'false' ? this.addingFolder = false : this.addingFolder = ! this.addingFolder
     }
   },
-  computed: {
-    ...mapGetters([
-      'selected'
-    ]),
-    currentFolderIsSelected: function() {
-      return this.currentFolder.id && this.selectedFolder.id && this.currentFolder.id == this.selectedFolder.id
-    },
-    footerText: function() {
-      return this.currentFolder.name && this.addingFolder ? 'Add to ' + this.currentFolder.name : this.isCurrentFolder ? 'Cannot move a folder into itself' : this.isAlreadyInFolder && ! this.selectedFolder.id ? 'Please select a folder' : this.isAlreadyInFolder ? 'Item is already in this folder' : this.selectedFolder.name ? this.selectedFolder.name : this.currentFolder.name ?  this.currentFolder.name : undefined
-    },
-    headerText: function() {
-      return this.currentFolder.name ? this.currentFolder.name : 'Choose a folder'
-    },
-    isAlreadyInFolder: function() {
-      return this.isInSelectedFolder || ! this.selectedFolder.id && this.isOnlyChildOfCurrentFolder
-    },
-    isCurrentFolder: function() {
-      return this.selected.folders.length == 1 && this.selected.folders.indexOf(this.currentFolder) !== -1 || this.selected.folders.indexOf(this.selectedFolder) !== -1
-    },
-    checklistIsOnlyChildOfCurrentFolder: function() {
-      return this.currentFolder.id && this.selected.checklists.length == 1 && this.selected.checklists[0].folder_id == this.currentFolder.id ? true : false
-    },
-    folderIsOnlyChildOfCurrentFolder: function() {
-      return this.currentFolder.id && this.selected.folders.length == 1 && this.selected.folders[0].folder_id == this.currentFolder.id ? true : false
-    },
-    isOnlyChildOfCurrentFolder: function() {
-      return this.folderIsOnlyChildOfCurrentFolder || this.checklistIsOnlyChildOfCurrentFolder ? true : false
-    },
-    isInSelectedFolder: function() {
-      return this.selectedFolder && this.selected.folders.indexOf(this.selectedFolder) !== -1 ? true : false
-    },
-    showInfoMessage: function() {
-      return this.isLoading || this.infoMessage.content && this.infoMessage.type
-    },
-    moveButtonClass: function() {
-      switch (this.selected.model) {
-        case 'checklist': return 'btn-list'
-          break;
-        default: return 'btn-folder'
-
-      }
-    }
-  }
 }
 </script>
 

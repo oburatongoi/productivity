@@ -3,8 +3,8 @@
   class="item"
   @click="emitClick({selection: {model: 'folder', listing: folder, parentModel: 'folder'}, event: $event})"
   >
-    <i class="fa fa-fw fa-folder-open-o" aria-hidden="true"></i>
-    {{folder.name}}
+    <i class="fa fa-fw fa-folder-open-o" aria-hidden="true"/>
+    {{ folder.name }}
   </li>
 </template>
 

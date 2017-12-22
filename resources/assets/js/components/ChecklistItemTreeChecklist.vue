@@ -3,8 +3,8 @@
   class="item"
   @click="emitClick({selection: {model: 'checklist', listing: checklist, parentModel: 'folder'}, event: $event})"
   >
-    <i class="fa fa-fw fa-list-ul" aria-hidden="true"></i>
-    {{checklist.title}}
+    <i class="fa fa-fw fa-list-ul" aria-hidden="true"/>
+    {{ checklist.title }}
   </li>
 </template>
 

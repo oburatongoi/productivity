@@ -6,37 +6,37 @@
          @click="toggleImportance"
          :class="{'folder-color-scheme':item.is_important}"
          class="fa fa-fw fa-star-o"
-         aria-hidden="true"></i>
+         aria-hidden="true"/>
       <i v-if="item.is_important"
          @click="toggleImportance"
          :class="{'folder-color-scheme':item.is_important, 'fa-spin':importanceIsLoading}"
          class="fa fa-fw fa-star"
-         aria-hidden="true"></i>
+         aria-hidden="true"/>
     </span>
 
     <span class="is-urgent">
       <label for="is-urgent">Urgent</label>
-      <i  @click="toggleUrgency"
-          :class="{'folder-color-scheme':item.is_urgent, 'fa-spin':urgencyIsLoading}"
-          class="fa fa-fw fa-clock-o"
-          aria-hidden="true"></i>
+      <i @click="toggleUrgency"
+        :class="{'folder-color-scheme':item.is_urgent, 'fa-spin':urgencyIsLoading}"
+        class="fa fa-fw fa-clock-o"
+        aria-hidden="true"/>
     </span>
 
     <span class="deadline">
-      <label for="deadline">{{deadlinePlaceholder}}</label>
-      <i  @click="showDatePicker"
+      <label for="deadline">{{ deadlinePlaceholder }}</label>
+      <i @click="showDatePicker"
         :class="{'folder-color-scheme':item.deadline, 'fa-spin':deadlineIsLoading}"
         class="fa fa-fw fa-calendar-o"
-        aria-hidden="true"></i>
+        aria-hidden="true"/>
 
         <div class="datepicker-container" v-if="chooseDate">
           <div class="delete-deadline">
             <button v-if="item.deadline" type="button" class="btn btn-xs btn-default" @click="setDate(null)">
-              <i class="fa fa-fw fa-calendar-times-o" aria-hidden="true"></i>
+              <i class="fa fa-fw fa-calendar-times-o" aria-hidden="true"/>
                  Remove Due Date
             </button>
             <button type="button" class="btn btn-xs btn-default" @click="hideDatePicker">
-              <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+              <i class="fa fa-fw fa-times" aria-hidden="true"/>
                  Cancel
             </button>
           </div>
@@ -47,7 +47,7 @@
             :inline="true"
             :format="dateFormatter"
             :highlighted="highlightedDate"
-          ></datepicker>
+          />
         </div>
     </span>
   </div>
@@ -59,6 +59,9 @@ import Datepicker from 'vuejs-datepicker';
 
 export default {
   name: 'manage-item-form-meta',
+  components: {
+      Datepicker
+  },
   props: {
     item: {
       type: Object,
@@ -128,9 +131,6 @@ export default {
           .then( () => this.urgencyIsLoading = false )
           .catch( (error) => console.log(error) )
     }
-  },
-  components: {
-      Datepicker
   },
 }
 </script>

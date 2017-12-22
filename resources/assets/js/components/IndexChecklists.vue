@@ -8,18 +8,18 @@
     v-tooltip.bottom-left="checklist.title"
   >
       <h5>
-        <i class="fa fa-fw" :class="checklistIconClass" aria-hidden="true"></i>
-        {{checklist.title}}
+        <i class="fa fa-fw" :class="checklistIconClass" aria-hidden="true"/>
+        {{ checklist.title }}
       </h5>
 
       <a :href="'/lists/' + checklist.fake_id"
           class="go-to-listing"
           v-if="selected.checklists.indexOf(checklist) !== -1"
       >
-        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+        <i class="fa fa-angle-double-right" aria-hidden="true"/>
       </a>
       <span class="item-count-tag" v-if="checklist.list_type=='ta'&&checklist.items_count">
-        <span class="item-count">{{checklist.items_count}}</span>
+        <span class="item-count">{{ checklist.items_count }}</span>
       </span>
   </li>
 </template>
@@ -29,17 +29,9 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'index-checklists',
   props: {
-    checklist: Object
-  },
-  methods: {
-    ...mapActions([
-      'toggleSelection'
-    ]),
-    goToListing: function(model, id) {
-      return window.location = '/' + model + 's/' + id
-    },
-    isSelected: function(listing) {
-      return this.selected.checklists.indexOf(listing) !== -1
+    checklist: {
+      type: Object,
+      required: true
     }
   },
   computed: {
@@ -54,6 +46,17 @@ export default {
              this.checklist.list_type == 'nu' ? 'fa-list-ol'      :
                                                 'fa-list'         ;
     },
+  },
+  methods: {
+    ...mapActions([
+      'toggleSelection'
+    ]),
+    goToListing: function(model, id) {
+      return window.location = '/' + model + 's/' + id
+    },
+    isSelected: function(listing) {
+      return this.selected.checklists.indexOf(listing) !== -1
+    }
   },
 }
 </script>

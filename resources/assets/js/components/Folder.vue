@@ -6,13 +6,13 @@
     </ul>
 
     <template v-if="view=='files'">
-      <index-all></index-all>
-      <move-to-folder v-if="selectedIsMovable"></move-to-folder>
+      <index-all/>
+      <move-to-folder v-if="selectedIsMovable"/>
     </template>
 
     <template v-if="view=='tasks'">
-      <index-tasks></index-tasks>
-      <move-to-checklist v-if="selectedIsMovable" :replace-after-move="true"></move-to-checklist>
+      <index-tasks/>
+      <move-to-checklist v-if="selectedIsMovable" :replace-after-move="true"/>
     </template>
   </div>
 </template>
@@ -26,6 +26,12 @@ import MoveToChecklist from './MoveToChecklist.vue'
 
 export default {
   name: 'folder',
+  components: {
+    IndexAll,
+    IndexTasks,
+    MoveToFolder,
+    MoveToChecklist
+  },
   data () {
     return {
       view: 'files'
@@ -45,11 +51,5 @@ export default {
       return this.view = view
     }
   },
-  components: {
-    IndexAll,
-    IndexTasks,
-    MoveToFolder,
-    MoveToChecklist
-  }
 }
 </script>

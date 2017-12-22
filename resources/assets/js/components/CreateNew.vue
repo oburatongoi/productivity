@@ -4,27 +4,27 @@
 
     <template v-if="showCreatingNewButtons&&!creatingNew">
       <button type="button" class="btn btn-sm btn-primary" @click="toggleCreateNew('folder')">
-        <i class="fa fa-fw fa-folder" aria-hidden="true"></i>
+        <i class="fa fa-fw fa-folder" aria-hidden="true"/>
         Folder
       </button>
 
       <button type="button" class="btn btn-sm btn-list" @click="toggleCreateNew('list')">
-        <i class="fa fa-fw fa-list" aria-hidden="true"></i>
+        <i class="fa fa-fw fa-list" aria-hidden="true"/>
         List
       </button>
 
       <!-- <button type="button" class="btn btn-sm btn-note" @click="toggleCreateNew('note')">
-        <i class="fa fa-fw fa-sticky-note-o" aria-hidden="true"></i>
+        <i class="fa fa-fw fa-sticky-note-o" aria-hidden="true"/>
         New Note
       </button>
 
       <button type="button" class="btn btn-sm btn-goal" @click="toggleCreateNew('goal')">
-        <i class="fa fa-fw fa-check-square" aria-hidden="true"></i>
+        <i class="fa fa-fw fa-check-square" aria-hidden="true"/>
         New Goal
       </button> -->
 
       <button type="button" class="btn btn-sm btn-default" @click="toggleCreatingNewButtons">
-        <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+        <i class="fa fa-fw fa-times" aria-hidden="true"/>
       </button>
     </template>
 
