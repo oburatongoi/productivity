@@ -131,3 +131,4 @@ When adding Productivity to a fresh Laravel installation, consider doing the fol
 * Install Bugsnag
 * Install and Configure Algolia
 * Install and Configure Redis
+* Install and Configure JosephSilber/bouncer package

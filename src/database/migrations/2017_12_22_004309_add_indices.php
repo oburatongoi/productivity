@@ -24,7 +24,7 @@ class AddIndices extends Migration
 
       Schema::table('productivity_checklist_items', function (Blueprint $table) {
         $table->foreign('checklist_id')->references('id')->on('productivity_checklists');
-      });    
+      });
     }
 
     /**
@@ -34,6 +34,17 @@ class AddIndices extends Migration
      */
     public function down()
     {
-        //
+      Schema::table('productivity_folders', function (Blueprint $table) {
+        $table->dropUnique('productivity_folders_fake_id_unique');
+      });
+
+      Schema::table('productivity_checklists', function (Blueprint $table) {
+        $table->dropUnique('productivity_checklists_fake_id_unique');
+        $table->dropForeign(['folder_id']);
+      });
+
+      Schema::table('productivity_checklist_items', function (Blueprint $table) {
+        $table->dropForeign(['checklist_id']);
+      });
     }
 }
