@@ -46,3 +46,14 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.delete-checklist-item {
+    font-size: 0.8em;
+    cursor: pointer;
+    float: right;
+    &:hover {
+        color: $brand-danger;
+    }
+}
+</style>

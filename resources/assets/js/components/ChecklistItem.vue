@@ -6,11 +6,19 @@
       <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{ item.sort_order + 1 }}.</span>
     </span>
 
-    <p class="show-item-content" @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})" @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})">
+    <p
+      class="show-item-content"
+      @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})"
+      @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})"
+    >
       {{ item.content }}
     </p>
 
-    <p class="preview-deadline" @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})" @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})">
+    <p
+      class="preview-deadline"
+      @click="emitClick({selection: {model, listing: item, parentModel}, event: $event})"
+      @dblclick="emitClick({selection: {model, listing: item, parentModel}, event: $event})"
+    >
       <span v-if="item.is_important">
         <i class="fa fa-fw fa-star" aria-hidden="true"/>
       </span>
@@ -269,16 +277,41 @@ export default {
             margin-right: 5px;
         }
     }
+    // .show-item-breadcrumbs {
+    //   cursor: pointer;
+    //   & span:hover {
+    //     text-decoration: underline;
+    //     text-decoration-style: dotted;
+    //     text-decoration-color: $brand-primary;
+    //     .fa {
+    //       text-decoration: none;
+    //     }
+    //   }
+    // }
+
     .show-item-breadcrumbs {
-      cursor: pointer;
-      & span:hover {
-        text-decoration: underline;
-        text-decoration-style: dotted;
-        text-decoration-color: $brand-primary;
-        .fa {
-          text-decoration: none;
+        margin: 0;
+        padding-left: 35px;
+        cursor: pointer;
+        span {
+            font-size:0.8em;
+            color: $brand-primary;
+            .fa {
+                font-size: 0.8em;
+            }
+            .fa-angle-right {
+                color: $grey-text-color;
+            }
+
+            &:hover {
+              text-decoration: underline;
+              text-decoration-style: dotted;
+              text-decoration-color: $brand-primary;
+              .fa {
+                text-decoration: none;
+              }
+            }
         }
-      }
     }
 
 }

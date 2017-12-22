@@ -98,13 +98,13 @@ const actions = {
     toggleDeletable({ commit }) {
         commit(TOGGLE_DELETABLE)
     },
-    toggleSelection({ dispatch, commit, state, rootState }, payload = {selection: null, model:null, event: null, parentModel: null}) {
+    toggleSelection({ dispatch, commit, state, rootState }, payload = { selection: {model:null, listing: null, parentModel: null}, event: null }) {
       let isInSelectedArray
       let isSubItem
       let isChecklistItem = false
       let isChecklist = false
       let isHome = false
-      let modifierKeyPressed = payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey ? true : false
+      let modifierKeyPressed = ! payload.event ? false : payload.event.shiftKey || payload.event.ctrlKey || payload.event.metaKey ? true : false
 
       switch (payload.selection.model) {
         case 'folder':

@@ -68,3 +68,21 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.add-item-form-comments {
+    .comments-label {
+        display: block;
+        margin: 10px 0 0;
+        cursor: pointer;
+        color: $text-color;
+        font-size: 0.7em;
+        p {
+            margin: 0 3px;
+            font-family: $font-family-sans-serif;
+            font-weight: 600;
+            display: inline-block;
+        }
+    }
+}
+</style>

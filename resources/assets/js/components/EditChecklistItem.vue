@@ -179,19 +179,20 @@ export default {
       window.addEventListener("resize", this.adjustNotesHeight, false);
     })
   },
+  beforeDestroy: function () {
+    window.removeEventListener("resize", this.adjustNotesHeight, false)
+  },
   methods: {
     ...mapActions([
-      'clearSelected',
+      'toggleSelection',
       'toggleCurrentEditableItemCheckMark',
       'toggleCurrentEditableItemExpansion',
       'saveCurrentEditableItem',
-      'removeCurrentlyEditable',
       'toggleMovable'
     ]),
     saveAndClose: function() {
       this.saveChanges()
-      this.removeCurrentlyEditable({isSubItem: this.isSubItem})
-      this.clearSelected()
+      this.toggleSelection({selection: {model: 'checklist-item', listing: this.item, parentModel: this.parentModel}, event: null})
     },
     debounceSaveChanges: _.debounce(function() {
       this.saveChanges()
@@ -203,7 +204,6 @@ export default {
       this.saveCurrentEditableItem({isSubItem: this.isSubItem})
       .then( () => this.savingChanges = false )
       .catch( (error) => console.log(error) )
-
     },
     checkItem: function() {
       this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
@@ -238,7 +238,7 @@ export default {
       }
       var target = document.getElementById(this.view+'-panel-'+this.item.id);
       var notesHeight = panelHeight - (headerHeight+bottomButtonsHeight+topButtonsHeight)
-      target.style.height = notesHeight+'px'
+      target.style.height = notesHeight > 200 ? notesHeight+'px' : '200px'
     }
   },
 }

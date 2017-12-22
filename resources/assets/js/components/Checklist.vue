@@ -306,4 +306,306 @@ export default {
 
 <style lang="scss">
 
+.deadline-input {
+    width: 150px;
+    display: inline-block;
+    vertical-align: middle;
+    label {
+        margin:0;
+        margin-right: 10px;
+    }
+}
+
+
+
+
+
+
+
+.checklist {
+    height: 100%;
+    @include desktop-overflow-y;
+
+    .main-panel {
+        height: 100%;
+        @include desktop-overflow-y;
+        .panel-heading {
+            padding-bottom: 0;
+        }
+    }
+
+    .side-panel {
+        @include desktop-overflow-y;
+        height: 100%;
+    }
+    .checklist-index-panel {
+        height: 75%;
+        overflow-y: scroll;
+        padding-top: 0;
+    }
+    .show-item-content-input,
+    .show-item-content {
+        font-weight: $font-weight-normal;
+        color: $grey-text-color;
+    }
+    &.has-expanded-editable-item {
+        .main-panel {
+            display: none;
+        }
+
+        .side-panel {
+            width: 100%;
+        }
+    }
+    &.has-expanded-editable-sub-item {
+      .side-panel.checklist-item-tree,
+      .side-panel.checklist-item,
+      .main-panel {
+          display: none;
+      }
+
+      .side-panel.sub-checklist-item {
+          width: 100%;
+      }
+    }
+
+    &.has-editable-sub-item,
+    &.has-editable-item {
+      @media(min-width:769px){
+          .main-panel,
+          .side-panel {
+              display: inline-block;
+              vertical-align: top;
+          }
+        }
+
+        .show-item-content-input,
+        .show-item-content {
+            width: 60%;
+            font-size: 0.9em;
+            line-height: 1.2;
+            @media(min-width:768px){
+                width: 50%;
+                padding: 5px 0;
+            }
+            @media(min-width:992px){
+                width: 50%;
+                padding: 7px 0;
+                font-size: 1em;
+                line-height: 0.7em;
+                white-space: nowrap;
+                @include desktop-overflow-y;
+                text-overflow: ellipsis;
+            }
+            @media(min-width:1200px){
+                width: 60%;
+                padding: 10px 0;
+                font-size: 1.1em;
+                line-height: 1em;
+            }
+            @media(min-width:1400px){
+                width: 60%;
+            }
+        }
+
+        .show-item-content-input {
+            border: 0;
+            outline: none;
+        }
+    }
+
+    &.has-editable-item {
+        @media(max-width:768px){
+            .main-panel {
+                display: none;
+            }
+            .side-panel {
+                position: absolute;
+                top: 56px;
+                left: 10px;
+                right: 10px;
+                width: auto;
+            }
+        }
+
+        @media(min-width:769px){
+            .main-panel {
+                width: 40%;
+            }
+            .side-panel {
+                width: 58%;
+                margin-left: 1%;
+            }
+        }
+
+        @media(min-width:1200px){
+            .main-panel {
+                width: 45%;
+            }
+            .side-panel {
+                width: 53%;
+                margin-left: 1%;
+            }
+        }
+    }
+
+    &.has-editable-sub-item {
+      .side-panel.checklist-item,
+      .main-panel {
+          display: none;
+      }
+        @media(max-width:768px){
+            .side-panel.checklist-item-tree {
+                display: none;
+            }
+            .side-panel.sub-checklist-item {
+                position: absolute;
+                top: 56px;
+                left: 10px;
+                right: 10px;
+                width: auto;
+            }
+        }
+
+        @media(min-width:769px){
+            .side-panel.checklist-item-tree {
+                width: 40%;
+            }
+            .side-panel.sub-checklist-item {
+                width: 58%;
+                margin-left: 1%;
+            }
+        }
+
+        @media(min-width:1200px){
+            .side-panel.checklist-item-tree {
+                width: 45%;
+            }
+            .side-panel.sub-checklist-item {
+                width: 53%;
+                margin-left: 1%;
+            }
+        }
+    }
+
+    .edit-checklist-btn,
+    .edit-checklist-icon {
+        float: right;
+    }
+    .edit-checklist-btn {
+        margin-top: 5px;
+    }
+
+    .edit-checklist-icon {
+        margin-top: 8px;
+        margin-left: 5px;
+        font-size: 0.6em;
+        cursor: pointer;
+        color: $input-border;
+        &.fa-circle-o-notch,
+        &:hover {
+            color: $brand-primary;
+        }
+    }
+
+    .checklist-title span,
+    .checklist-title .fa-list,
+    .edit-checklist-input {
+        vertical-align: text-top;
+    }
+
+    .checklist-title,
+    .edit-checklist-input {
+        font-weight: $font-weight-normal;
+        font-family: $title-font-family;
+    }
+    .checklist-title span,
+    .checklist-title .fa-list,
+    .edit-checklist-input {
+        line-height: 1.2;
+        font-size: 1.25em;
+    }
+    .checklist-title span,
+    .edit-checklist-input {
+        width: 85%;
+        padding: 0;
+        margin:0;
+    }
+
+
+    .checklist-title  span{
+        display: inline-block;
+    }
+
+    .checklist-title {
+        color: $blue-text-color;
+    }
+
+    .edit-checklist-input {
+        border: 0;
+        color: $grey-text-color;
+        outline: none;
+    }
+
+}
+
+.checklist-filters {
+    margin-bottom: 10px;
+    @include clearfix;
+
+    .checked-filter {
+        ul {
+            left: 0;
+        }
+    }
+    .priority-filter {
+        ul {
+            right: 0;
+        }
+    }
+
+    .checked-filter,
+    .priority-filter {
+        position: relative;
+        display: inline-block;
+        min-width: 100px;
+        cursor: pointer;
+        font-size: 0.9em;
+
+        ul {
+            position: absolute;
+            top: 0;
+            margin: 0;
+            padding: 3px 6px;
+            list-style: none;
+            border-radius: $base-border-radius;
+            min-width: 175px;
+
+            &.open {
+                border: 1px solid $base-border-color;
+                z-index: 1000;
+                background: white;
+            }
+
+            li {
+                display: block;
+                padding: 2px;
+                border-radius: 2px;
+
+                i.fa {
+                    color: darken($base-border-color, 20%);
+                }
+                &:hover {
+                    background: rgba(224,224,224,0.3);
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+}
+
+
 </style>

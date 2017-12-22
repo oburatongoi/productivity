@@ -134,3 +134,21 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.datepicker-container {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    z-index: 99;
+
+    .delete-deadline {
+        border-top: 1px solid $base-border-color;
+        border-left: 1px solid $base-border-color;
+        border-right: 1px solid $base-border-color;
+        background: white;
+        padding: 10px;
+        text-align: center;
+    }
+}
+</style>

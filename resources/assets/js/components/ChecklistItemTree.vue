@@ -71,11 +71,11 @@ export default {
   },
   props: {
     folder: {
-      type: String,
+      type: Object,
       default: null
     },
     checklist: {
-      type: String,
+      type: Object,
       default: null
     },
     item: {
