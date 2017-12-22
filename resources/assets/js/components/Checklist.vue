@@ -228,6 +228,9 @@ export default {
       },
       parentFolder: function() {
         return this.checklist.folder ? this.checklist.folder : this.checklist.folder_id && this.currentFolder && this.checklist.folder_id == this.currentFolder.id ? this.currentFolder : null
+      },
+      percentComplete: function() {
+        return this.checklist.list_type && this.checklist.list_type == 'ta' ? ((this.checklistItems.length - _.countBy(this.checklistItems, i => i.checked_at == null).true) / this.checklistItems.length) * 100 : null
       }
     },
     methods: {

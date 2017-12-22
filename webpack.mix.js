@@ -1,15 +1,8 @@
 let mix = require('laravel-mix');
-let WebpackShellPlugin = require('webpack-shell-plugin');
-var path = require('path');
+let path = require('path');
 
-var plugins = [];
 
-// This plugin allows you to run any shell commands before or after webpack builds
-plugins.push(new WebpackShellPlugin({
-  onBuildStart:[],
-  onBuildEnd:[],
-  onBuildExit:['echo vendor-pub && echo "Vendor files have been published"']
-}));
+// var plugins = [];
 
 // This is for ESLint functionality
 let rules = [
@@ -36,9 +29,9 @@ let rules = [
 mix.js('resources/assets/js/productivity.js', 'public/js')
    .sass('resources/assets/sass/productivity.scss', 'public/css')
    .webpackConfig({
-     resolve: {
-       plugins: plugins,
-     },
+    //  resolve: {
+    //    plugins: plugins,
+    //  },
      module: {  // This is for ESLint functionality
        rules: rules,
      }
@@ -46,4 +39,11 @@ mix.js('resources/assets/js/productivity.js', 'public/js')
    .options({
      extractVueStyles: true, // Extract .vue component styling to file, rather than inline.
      globalVueStyles: path.resolve('resources/assets/sass/_vue_global.scss'), // Variables file to be imported in every component.
-  });
+  })
+  .copyDirectory('public/js', '../../../public/vendor/productivity/js')
+  .copyDirectory('public/css', '../../../public/vendor/productivity/css');
+
+  // if (mix.inProduction()) {
+  //     mix.version();
+  //         // .copy('mix-manifest');
+  // }

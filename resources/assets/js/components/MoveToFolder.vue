@@ -10,7 +10,7 @@
         @click.prevent="highlightFolder(currentFolder)"
       >
         <i class="fa fa-home" aria-hidden="true" v-if="!currentFolder.id&&!currentFolder.folder"></i>
-        {{currentFolder.name}}
+        {{ currentFolder.name }}
       </span>
 
       <form class="form-horizontal add-folder-form" v-if="addingFolder" @submit.prevent="createNewFolder">

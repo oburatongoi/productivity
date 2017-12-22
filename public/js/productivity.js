@@ -96620,6 +96620,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     parentFolder: function parentFolder() {
       return this.checklist.folder ? this.checklist.folder : this.checklist.folder_id && this.currentFolder && this.checklist.folder_id == this.currentFolder.id ? this.currentFolder : null;
+    },
+    percentComplete: function percentComplete() {
+      return this.checklist.list_type && this.checklist.list_type == 'ta' ? (this.checklistItems.length - _.countBy(this.checklistItems, function (i) {
+        return i.checked_at == null;
+      }).true) / this.checklistItems.length * 100 : null;
     }
   }),
   methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['saveChecklist', 'toggleSelection', 'setFilters']), {

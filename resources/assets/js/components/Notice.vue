@@ -1,8 +1,8 @@
 <template lang="html">
   <transition name="fade" leave enter>
     <li class="productivity-notice"
-      :class="noticeClass"
-      @click.self="deleteNotice(notice)"
+        :class="noticeClass"
+        @click.self="deleteNotice(notice)"
     >
       <h5 class="heading" v-if="notice.heading">{{notice.heading}}</h5>
       <p class="message" v-if="notice.message">{{notice.message}}</p>
