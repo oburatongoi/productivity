@@ -9,6 +9,8 @@ use Oburatongoi\Productivity\Traits\Enfoldable;
 use Oburatongoi\Productivity\Traits\Encryptable;
 use Laravel\Scout\Searchable;
 use App\Jobs\ReindexParentModels;
+use App\Jobs\CascadeDelete;
+use App\Jobs\CascadeRestore;
 
 class Checklist extends Model
 {
@@ -79,13 +81,13 @@ class Checklist extends Model
         parent::boot();
         static::deleting(function(Checklist $checklist) {
             if ($checklist->isForceDeleting()) {
-                $checklist->items()->forceDelete();
+                CascadeDelete::dispatch($checklist, true);
             } else {
-                $checklist->items()->delete();
+                CascadeDelete::dispatch($checklist, false);
             }
         });
         static::restoring(function(Checklist $checklist) {
-            $checklist->items()->restore();
+            CascadeRestore::dispatch($checklist);
         });
         static::saved(function(Checklist $checklist) {
           ReindexParentModels::dispatch($checklist);

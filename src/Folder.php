@@ -9,6 +9,8 @@ use Oburatongoi\Productivity\Traits\Nestable;
 use Oburatongoi\Productivity\Traits\Encryptable;
 use Oburatongoi\Productivity\Traits\Enfoldable;
 use App\Jobs\ReindexParentModels;
+use App\Jobs\CascadeDelete;
+use App\Jobs\CascadeRestore;
 use Laravel\Scout\Searchable;
 
 class Folder extends Model
@@ -95,16 +97,13 @@ class Folder extends Model
     });
     static::deleting(function(Folder $folder) {
         if ($folder->isForceDeleting()) {
-            $folder->subfolders()->forceDelete();
-            $folder->checklists()->forceDelete();
+          CascadeDelete::dispatch($folder, true);
         } else {
-            $folder->subfolders()->delete();
-            $folder->checklists()->delete();
+          CascadeDelete::dispatch($folder, false);
         }
     });
     static::restoring(function(Folder $folder) {
-        $folder->subfolders()->restore();
-        $folder->checklists()->restore();
+        CascadeRestore::dispatch($folder);
     });
   }
 }
