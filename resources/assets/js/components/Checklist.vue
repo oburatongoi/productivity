@@ -82,7 +82,12 @@
               </div>
             </div>
           </div>
-          <add-item v-if="!isEditable" :parent="checklist" parent-model="checklist"/>
+          <add-item
+            v-if="!isEditable"
+            :parent="checklist"
+            parent-model="checklist"
+            @onResize="debounceResizeInput"
+          />
       </div>
 
       <div class="checklist-index-panel panel-body">
@@ -92,7 +97,6 @@
             :items="checklistItems"
             parent-model="checklist"
             :parent="checklist"
-            @onChecklistItemClick="toggleSelection"
           />
 
           <edit-checklist
@@ -103,6 +107,7 @@
             :is-saving="isSaving"
           />
       </div>
+      <resize-observer @notify="debounceResizeInput" />
     </div>
 
     <checklist-item-tree
@@ -119,6 +124,7 @@
       :list-type="checklist.list_type"
       :item="editableItem"
       parent-model="checklist"
+      @onResize="debounceResizeInput"
     />
 
     <edit-checklist-item
@@ -126,6 +132,7 @@
       :list-type="checklist.list_type"
       :item="editableSubItem"
       parent-model="checklist-item"
+      @onResize="debounceResizeInput"
     />
 
     <move-to-checklist v-if="selectedIsMovable"/>
@@ -144,182 +151,251 @@ import EditChecklistItem from './EditChecklistItem.vue'
 import MoveToChecklist from './MoveToChecklist.vue'
 
 export default {
-    name: 'checklist',
-    components: {
-        ChecklistItems,
-        ChecklistItemTree,
-        Breadcrumbs,
-        AddItem,
-        EditChecklist,
-        EditChecklistItem,
-        MoveToChecklist
+  name: 'checklist',
+  components: {
+      ChecklistItems,
+      ChecklistItemTree,
+      Breadcrumbs,
+      AddItem,
+      EditChecklist,
+      EditChecklistItem,
+      MoveToChecklist
+  },
+  data () {
+    return {
+      isEditable: false,
+      isSaving: false,
+      inputIcon: 'fa-times',
+      unsavedChanges: false,
+      selectingCheckedFilter: false,
+      selectingPriorityFilter: false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'checklist',
+      'checklistItems',
+      'currentFolder',
+      'editableItem',
+      'editableSubItem',
+      'editableItemIsExpanded',
+      'editableSubItemIsExpanded',
+      'selectedIsMovable',
+      'filters'
+    ]),
+    checklistClass: function() {
+      return  this.editableSubItemIsExpanded ? 'has-expanded-editable-sub-item':
+              this.editableSubItem.id        ? 'has-editable-sub-item'         :
+              this.editableItemIsExpanded    ? 'has-expanded-editable-item'    :
+              this.editableItem.id           ? 'has-editable-item'             :
+                                                null                           ;
     },
-    data () {
-      return {
-        isEditable: false,
-        isSaving: false,
-        inputIcon: 'fa-times',
-        unsavedChanges: false,
-        selectingCheckedFilter: false,
-        selectingPriorityFilter: false
+    checklistIconClass: function() {
+      return ! this.checklist.list_type         ? 'fa-list'         :
+               this.checklist.list_type == 'ch' ? 'fa-list'         :
+               this.checklist.list_type == 'ta' ? 'fa-check-square' :
+               this.checklist.list_type == 'bu' ? 'fa-list-ul'      :
+               this.checklist.list_type == 'nu' ? 'fa-list-ol'      :
+                                                  'fa-list'         ;
+    },
+    checkedFilterText: function() {
+      var text
+      switch (this.filters.checked) {
+        case 'all':
+          text = 'All'
+          break;
+        case 'checked':
+          text = 'Completed'
+          break;
+        case 'unchecked':
+          text = 'Incomplete'
+          break;
+        default: text = this.filters.checked
+      }
+      return text
+    },
+    priorityFilterText: function() {
+      var text
+      switch (this.filters.priority) {
+        case 'none':
+          text = 'No Priority'
+          break;
+        case 'both':
+          text = 'Important & Urgent'
+          break;
+        case 'important':
+          text = 'Important'
+          break;
+        case 'urgent':
+          text = 'Urgent'
+          break;
+        default: text = this.filters.priority
+      }
+      return text
+    },
+    parentFolder: function() {
+      return this.checklist.folder ? this.checklist.folder : this.checklist.folder_id && this.currentFolder && this.checklist.folder_id == this.currentFolder.id ? this.currentFolder : null
+    },
+    percentComplete: function() {
+      return this.checklist.list_type && this.checklist.list_type == 'ta' ? ((this.checklistItems.length - _.countBy(this.checklistItems, i => i.checked_at == null).true) / this.checklistItems.length) * 100 : null
+    }
+  },
+  mounted: function() {
+    this.$nextTick(function () {
+      if (!this.checklist.list_type) {
+        return this.toggleEditability(true)
+      }
+    })
+  },
+  created: function() {
+    this.$eventHub.$on('debounceResizeInput', this.debounceResizeInput);
+    this.$eventHub.$on('toggleSelection', this.toggleSelection);
+  },
+  beforeDestroy: function() {
+    this.$eventHub.$off('debounceResizeInput', this.debounceResizeInput);
+    this.$eventHub.$off('toggleSelection', this.toggleSelection);
+  },
+  methods: {
+    ...mapActions([
+      'saveChecklist',
+      'toggleSelection',
+      'setFilters'
+    ]),
+    saveAndClose: function() {
+      if (this.unsavedChanges == true) {
+        this.saveChanges()
+      }
+      this.toggleEditability(false)
+    },
+    debounceSaveChanges: _.debounce(function() {
+      this.unsavedChanges = true
+      this.saveChanges()
+    }, 1000),
+    saveChanges: function() {
+        this.inputIcon = 'fa-spin fa-circle-o-notch'
+        this.isSaving = true
+        this.saveChecklist(this.checklist)
+            .then(
+              (checklist) => {
+                this.inputIcon = 'fa-times'
+                this.isSaving = this.unsavedChanges = false
+              })
+            .catch(
+              () => {
+                this.inputIcon = 'fa-times'
+                console.log('Error saving List');
+              })
+    },
+    setCheckedFilter: function(filter){
+      this.setFilters({type: 'checked', value: filter})
+      return this.toggleFilter()
+    },
+    setPriorityFilter: function(filter){
+      this.setFilters({type: 'priority', value: filter})
+      return this.toggleFilter()
+    },
+    toggleFilter: function(type = null){
+      this.selectingCheckedFilter = this.selectingPriorityFilter = false
+      switch (type) {
+        case 'checked':
+          return this.selectingCheckedFilter = ! this.selectingCheckedFilter
+          break;
+        case 'priority':
+          return this.selectingPriorityFilter = ! this.selectingPriorityFilter
+          break;
+        default: return
+
       }
     },
-    computed: {
-      ...mapGetters([
-        'checklist',
-        'checklistItems',
-        'currentFolder',
-        'editableItem',
-        'editableSubItem',
-        'editableItemIsExpanded',
-        'editableSubItemIsExpanded',
-        'selectedIsMovable',
-        'filters'
-      ]),
-      checklistClass: function() {
-        return  this.editableSubItemIsExpanded ? 'has-expanded-editable-sub-item':
-                this.editableSubItem.id        ? 'has-editable-sub-item'         :
-                this.editableItemIsExpanded    ? 'has-expanded-editable-item'    :
-                this.editableItem.id           ? 'has-editable-item'             :
-                                                  null                           ;
-      },
-      checklistIconClass: function() {
-        return ! this.checklist.list_type         ? 'fa-list'         :
-                 this.checklist.list_type == 'ch' ? 'fa-list'         :
-                 this.checklist.list_type == 'ta' ? 'fa-check-square' :
-                 this.checklist.list_type == 'bu' ? 'fa-list-ul'      :
-                 this.checklist.list_type == 'nu' ? 'fa-list-ol'      :
-                                                    'fa-list'         ;
-      },
-      checkedFilterText: function() {
-        var text
-        switch (this.filters.checked) {
-          case 'all':
-            text = 'All'
-            break;
-          case 'checked':
-            text = 'Completed'
-            break;
-          case 'unchecked':
-            text = 'Incomplete'
-            break;
-          default: text = this.filters.checked
-        }
-        return text
-      },
-      priorityFilterText: function() {
-        var text
-        switch (this.filters.priority) {
-          case 'none':
-            text = 'No Priority'
-            break;
-          case 'both':
-            text = 'Important & Urgent'
-            break;
-          case 'important':
-            text = 'Important'
-            break;
-          case 'urgent':
-            text = 'Urgent'
-            break;
-          default: text = this.filters.priority
-        }
-        return text
-      },
-      parentFolder: function() {
-        return this.checklist.folder ? this.checklist.folder : this.checklist.folder_id && this.currentFolder && this.checklist.folder_id == this.currentFolder.id ? this.currentFolder : null
-      },
-      percentComplete: function() {
-        return this.checklist.list_type && this.checklist.list_type == 'ta' ? ((this.checklistItems.length - _.countBy(this.checklistItems, i => i.checked_at == null).true) / this.checklistItems.length) * 100 : null
+    toggleEditability: function(bool = "unset") {
+
+      if (bool !== "unset") {
+        this.isEditable = bool
+      } else {
+        this.isEditable = ! this.isEditable
       }
     },
-    mounted: function() {
-      this.$nextTick(function () {
-        if (!this.checklist.list_type) {
-          return this.toggleEditability(true)
+    debounceResizeInput: _.debounce(function() {
+      this.resizeInput()
+    }, 300),
+    resizeInput: function() {
+      console.log('resizing...');
+      this.$nextTick( function() {
+        let count = 1,
+            minWidth = 275;
+
+        for (let form of document.getElementsByClassName('item-form')) {
+          let content = form.querySelector('.item-form-content'),
+              input = form.querySelector('.item-form-input'),
+              icon = form.querySelector('.item-form-icon'),
+              meta = form.querySelector('.item-form-meta');
+
+          let resetStyles = function() {
+            if (icon) icon.style = ''
+            if (meta) meta.style = ''
+            if (content) content.style = ''
+            if (input) input.style = ''
+          }
+
+          resetStyles()
+
+          let formWidth = form ? $(form).outerWidth(true) : 0,
+              contentWidth = content ? $(content).outerWidth(true) : 0,
+              inputWidth = input ? $(input).outerWidth(true) : 0,
+              iconWidth = icon ? $(icon).outerWidth(true) : 0,
+              metaWidth = meta ? $(meta).outerWidth(true) : 0;
+
+          // console.log('formWidth = '+formWidth);
+          // console.log('contentWidth = '+contentWidth);
+          // console.log('inputWidth = '+inputWidth);
+          // console.log('iconWidth = '+iconWidth);
+          // console.log('metaWidth = '+metaWidth);
+
+          let computedContentWidth = contentWidth > minWidth && formWidth - metaWidth > minWidth ? formWidth - metaWidth : null;
+
+          let computedInputWidth = computedContentWidth && computedContentWidth - iconWidth - 10 >= minWidth ? computedContentWidth - iconWidth - 10 : null;
+
+
+
+          // console.log('form number '+ count);
+          count ++
+
+          if(computedContentWidth) {
+            content.style.width = computedContentWidth+'px'
+          };
+
+          if(computedInputWidth) {
+            input.style.width = computedInputWidth+'px'
+          } else {
+            icon.style.display = 'none'
+            content.style.padding = '0'
+            content.style.width = input.style.width = '100%'
+            if (meta) {
+              meta.style.width = '100%'
+              meta.style.position = 'relative'
+              meta.style.display = 'block'
+              meta.style.borderLeft = '0'
+              meta.style.borderTop = '1px solid #ccd0d2'
+            }
+          };
         }
       })
-    },
-    methods: {
-      ...mapActions([
-        'saveChecklist',
-        'toggleSelection',
-        'setFilters'
-      ]),
-      saveAndClose: function() {
-        if (this.unsavedChanges == true) {
-          this.saveChanges()
-        }
-        this.toggleEditability(false)
-      },
-      debounceSaveChanges: _.debounce(function() {
-        this.unsavedChanges = true
-        this.saveChanges()
-      }, 1000),
-      saveChanges: function() {
-          this.inputIcon = 'fa-spin fa-circle-o-notch'
-          this.isSaving = true
-          this.saveChecklist(this.checklist)
-              .then(
-                (checklist) => {
-                  this.inputIcon = 'fa-times'
-                  this.isSaving = this.unsavedChanges = false
-                })
-              .catch(
-                () => {
-                  this.inputIcon = 'fa-times'
-                  console.log('Error saving List');
-                })
-      },
-      setCheckedFilter: function(filter){
-        this.setFilters({type: 'checked', value: filter})
-        return this.toggleFilter()
-      },
-      setPriorityFilter: function(filter){
-        this.setFilters({type: 'priority', value: filter})
-        return this.toggleFilter()
-      },
-      toggleFilter: function(type = null){
-        this.selectingCheckedFilter = this.selectingPriorityFilter = false
-        switch (type) {
-          case 'checked':
-            return this.selectingCheckedFilter = ! this.selectingCheckedFilter
-            break;
-          case 'priority':
-            return this.selectingPriorityFilter = ! this.selectingPriorityFilter
-            break;
-          default: return
-
-        }
-      },
-      toggleEditability: function(bool = "unset") {
-
-        if (bool !== "unset") {
-          this.isEditable = bool
-        } else {
-          this.isEditable = ! this.isEditable
-        }
-      },
-    },
+    }, // End resizeInput
+  }, // End methods
 }
 </script>
 
 <style lang="scss">
 
-.deadline-input {
-    width: 150px;
-    display: inline-block;
-    vertical-align: middle;
-    label {
-        margin:0;
-        margin-right: 10px;
-    }
-}
-
-
-
-
-
+// .deadline-input {
+//     width: 150px;
+//     display: inline-block;
+//     vertical-align: middle;
+//     label {
+//         margin:0;
+//         margin-right: 10px;
+//     }
+// }
 
 
 .checklist {

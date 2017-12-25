@@ -8,6 +8,7 @@
           <i class="fa fa-floppy-o fa-stack-1x"/>
         </span>
         <i class="fa fa-fw fa-exchange pull-right" aria-hidden="true" title="Move" @click="toggleMovable"/>
+        <i class="fa fa-fw pull-left fa-chevron-left" aria-hidden="true" title="Back" v-if="parentModel=='checklist-item'" @click="saveAndClose"/>
         <i class="fa fa-fw pull-left" :class="toggleExpansionClass" aria-hidden="true" :title="toggleExpansionTitle" @click="toggleExpansion"/>
       </div>
 
@@ -101,7 +102,6 @@
           :list-type="item.sub_list_type"
         />
       </div>
-
     </div>
   </div>
 </template>
@@ -151,6 +151,7 @@ export default {
   computed: {
     ...mapGetters([
       'editableItemIsExpanded',
+      'editableSubItemIsExpanded',
     ]),
     checkboxClass: function() {
       return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
@@ -159,10 +160,10 @@ export default {
       return this.item.checklist_id ? 'checklist-item' : 'sub-checklist-item'
     },
     toggleExpansionClass: function() {
-      return this.editableItemIsExpanded ? 'fa-compress' : 'fa-expand'
+      return this.editableItemIsExpanded || this.editableSubItemIsExpanded ? 'fa-compress' : 'fa-expand'
     },
     toggleExpansionTitle: function() {
-      return this.editableItemIsExpanded ? 'Compress' : 'Expand'
+      return this.editableItemIsExpanded || this.editableSubItemIsExpanded ? 'Compress' : 'Expand'
     },
     uncheckedSubItemsCount: function() {
       return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
@@ -185,9 +186,9 @@ export default {
   methods: {
     ...mapActions([
       'toggleSelection',
-      'toggleCurrentEditableItemCheckMark',
+      'toggleItemCheckMark',
       'toggleCurrentEditableItemExpansion',
-      'saveCurrentEditableItem',
+      'saveChecklistItem',
       'toggleMovable'
     ]),
     saveAndClose: function() {
@@ -201,13 +202,13 @@ export default {
       this.savingChanges = true
       this.adjustNotesHeight()
 
-      this.saveCurrentEditableItem({isSubItem: this.isSubItem})
+      this.saveChecklistItem({isSubItem: this.isSubItem})
       .then( () => this.savingChanges = false )
       .catch( (error) => console.log(error) )
     },
     checkItem: function() {
       this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
-      this.toggleCurrentEditableItemCheckMark({isSubItem: this.isSubItem})
+      this.toggleItemCheckMark({isSubItem: this.isSubItem})
           .then( () => this.checkboxClassOverride = null )
           .catch( (error) => console.log(error))
     },
@@ -240,6 +241,9 @@ export default {
       var notesHeight = panelHeight - (headerHeight+bottomButtonsHeight+topButtonsHeight)
       target.style.height = notesHeight > 200 ? notesHeight+'px' : '200px'
     }
+  },
+  emitResize: function() {
+    return this.$eventHub.$emit('resizeInput');
   },
 }
 </script>

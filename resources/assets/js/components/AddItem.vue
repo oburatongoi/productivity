@@ -1,19 +1,42 @@
 <template lang="html">
   <form class="add-item" @submit.prevent="submitForm">
     <div class="item-form">
-      <div class="item-form-content col-sm-12 col-md-8">
-        <input type="text" v-model="newItem.content" placeholder="Add item..." maxlength="255">
+      <div class="item-form-content">
+        <i
+          class="fa fa-fw fa-plus item-form-icon"
+          aria-hidden="true"
+        />
+        <input
+          type="text"
+          v-model="newItem.content"
+          placeholder="Add item..."
+          maxlength="255"
+          class="item-form-input"
+        >
       </div>
 
-      <add-item-form-meta
+      <item-form-meta
         v-if="hasContent"
         :item="newItem"
+        :is-sub-item="isSubItem"
+        :parent-model="parentModel"
         @showDatePicker="showDatePicker"
       />
     </div>
 
     <template v-if="hasUserInput">
       <div class="datepicker-container" v-if="chooseDate">
+        <div class="delete-deadline">
+          <button v-if="newItem.deadline" type="button" class="btn btn-xs btn-default" @click="setDate(null)">
+            <i class="fa fa-fw fa-calendar-times-o" aria-hidden="true"/>
+               Remove Deadline
+          </button>
+          <button type="button" class="btn btn-xs btn-default" @click="hideDatePicker">
+            <i class="fa fa-fw fa-times" aria-hidden="true"/>
+               Cancel
+          </button>
+        </div>
+
         <datepicker
           value="newItem.deadline"
           @selected="setDate"
@@ -33,6 +56,7 @@
         @submitForm="submitForm"
       />
     </template>
+    <resize-observer @notify="emitResize" />
   </form>
 </template>
 
@@ -41,7 +65,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 import AddItemFormButtons from './AddItemFormButtons.vue'
 import AddItemFormComments from './AddItemFormComments.vue'
-import AddItemFormMeta from './AddItemFormMeta.vue'
+import ItemFormMeta from './ItemFormMeta.vue'
 import Datepicker from 'vuejs-datepicker';
 
 export default {
@@ -50,7 +74,7 @@ export default {
     Datepicker,
     AddItemFormButtons,
     AddItemFormComments,
-    AddItemFormMeta
+    ItemFormMeta
   },
   props: {
     parent: {
@@ -66,7 +90,7 @@ export default {
     return {
       chooseDate: false,
       isSaving: false,
-      newItem: undefined //set when created
+      newItem: undefined, //set when created
     }
   },
   computed: {
@@ -88,6 +112,9 @@ export default {
       || this.newItem.is_important
       || this.newItem.is_urgent
       || this.newItem.deadline ? true : false
+    },
+    isSubItem: function() {
+      return this.parentModel == 'checklist-item' ? true : false;
     }
   },
   created: function() {
@@ -100,19 +127,21 @@ export default {
     ]),
     resetNewItem: function() {
       this.newItem = {
-          content: undefined,
+          content: null,
           is_urgent: undefined,
           is_important: undefined,
           deadline: undefined,
           comments: undefined,
-          sort_order: undefined
+          sort_order: undefined,
+          isNewItem: true,
       }
       this.setSortOrder()
       this.isSaving = false
     },
     setDate: function(date) {
       date ? this.newItem.deadline = moment(date).format('YYYY-MM-DD') : this.newItem.deadline = undefined
-      return this.hideDatePicker()
+      this.hideDatePicker()
+      return this.$eventHub.$emit('resizeInput');
     },
     setSortOrder: function() {
       switch (this.parentModel) {
@@ -130,7 +159,7 @@ export default {
     },
     submitForm: function() {
       this.hideDatePicker()
-      if (!this.hasContent) { return }
+      if (!this.hasContent) return
       this.isSaving = true
       switch (this.parentModel) {
         case 'checklist-item':
@@ -142,7 +171,10 @@ export default {
                             .then( () => this.resetNewItem() )
                             .catch( () => console.log('Error has occured') )
       }
-    }
+    },
+    emitResize: function() {
+      return this.$eventHub.$emit('resizeInput');
+    },
   },
 }
 </script>

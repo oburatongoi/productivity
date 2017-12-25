@@ -12,7 +12,6 @@
           :list-type="listType"
           :key="item.id"
           :parent-model="parentModel"
-          @onEmitClick="emitChecklistItemClick"
         />
       </template>
     </draggable>
@@ -64,9 +63,6 @@ export default {
       beforeUpdateSortOrder: function() {
         return this.updateSortOrder({checklistItems: this.items, parent: this.parent, parentModel: this.parentModel})
       },
-      emitChecklistItemClick: function(payload) {
-        return this.$emit('onChecklistItemClick', payload)
-      }
     },
 }
 </script>

@@ -64,9 +64,13 @@ $navbar-default-bg: #fff;
 $btn-default-color: $text-color;
 
 // Inputs
-$input-border: lighten($grey-text-color, 40%);
+$input-border: lighten($grey-text-color, 40%); // #ccd0d2
 $input-border-focus: lighten($brand-primary, 25%);
 $input-color-placeholder: lighten($grey-text-color, 30%);
 
 // Panels
 $panel-default-heading-bg: #fff;
+
+
+$item-form-height: 35px;
+$item-form-border-color: lighten($base-border-color, 2%);

@@ -1,16 +1,16 @@
 import { createLocalVue, shallow } from 'vue-test-utils'
-import AddItemFormMeta from '../../components/AddItemFormMeta.vue'
+import ItemFormMeta from '../../components/ItemFormMeta.vue'
 
 const localVue = createLocalVue()
 
-describe('AddItemFormMeta', () => {
+describe('ItemFormMeta', () => {
   let wrapper
   let label
   let datePlaceholder
 
   beforeEach(() => {
 
-    wrapper = shallow(AddItemFormMeta, {
+    wrapper = shallow(ItemFormMeta, {
       localVue,
       propsData: {
         item: { deadline: null }

@@ -321,26 +321,22 @@
 .show-item {
   border-bottom: 1px solid #f5f8fa;
   font-family: "Asap", sans-serif;
+  position: relative;
 }
-@media (min-width: 768px) {
-.show-item {
-      overflow: hidden;
-}
-}
-.show-item.is-selected, .show-item:hover {
+.show-item.selected, .show-item:hover {
     background: #f8fafc;
 }
-.show-item.is-selected .fa-angle-down.toggle, .show-item:hover .fa-angle-down.toggle {
+.show-item.selected .fa-angle-down.toggle, .show-item:hover .fa-angle-down.toggle {
       color: #00A0E5;
       -webkit-transform: rotate(-90deg);
       transform: rotate(-90deg);
 }
-.show-item.is-selected {
+.show-item.selected {
     border: 1px solid #00A0E5;
     border-radius: 2px;
     padding-left: 10px;
 }
-.show-item.is-selected .show-item-content {
+.show-item.selected .show-item-content {
       color: #00A0E5;
 }
 .show-item p, .show-item i {
@@ -370,6 +366,15 @@
 }
 .show-item .show-item-content {
     width: 60%;
+}
+.show-item .show-item-content .unchecked-sub-items-count {
+      color: #c9d9e4;
+      font-size: 0.85em;
+      line-height: inherit;
+}
+.show-item .show-item-content .unchecked-sub-items-count .fa {
+        font-size: 1em;
+        margin: 0;
 }
 @media (min-width: 768px) {
 .show-item .show-item-content {
@@ -478,6 +483,64 @@
 .checkbox-container .fa-circle {
     color: #00A0E5;
     font-size: 0.7em;
+}
+
+.item-form-meta {
+  display: block;
+  width: 100%;
+  border-top: 1px solid #dae5ec;
+  background: white;
+  margin: 0;
+  height: 35px;
+  padding: 0 5px;
+  text-align: center;
+  color: #c9d9e4;
+}
+.show-item.selected .item-form-meta,
+  .show-item:hover .item-form-meta {
+    background: #f5f8fa;
+}
+.item-form-meta.new-item {
+    border-left: 1px solid #dae5ec;
+    background: #f5f8fa;
+}
+@media (min-width: 768px) {
+.item-form-meta {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 99;
+      width: auto;
+      vertical-align: middle;
+      border-top: 0;
+}
+}
+.item-form-meta:hover {
+    color: #b8cddb;
+}
+.item-form-meta .meta-span {
+    padding: 0;
+    margin: 0;
+    margin-left: 5px;
+    display: inline-block;
+    font-size: 0.85em;
+    line-height: 35px;
+    cursor: pointer;
+}
+.item-form-meta .meta-span:last-child {
+      margin-right: 5px;
+}
+.item-form-meta .meta-span.item-deadline {
+      text-align: left;
+}
+.item-form-meta .meta-span.item-deadline .date {
+        display: inline-block;
+        width: 40px;
+}
+.show-item .item-form-meta .meta-span .fa {
+      font-size: 1.1em;
 }
 
 .checklist-item-tree {
@@ -753,20 +816,11 @@
     display: inline-block;
 }
 
-.delete-checklist-item {
-  font-size: 0.8em;
-  cursor: pointer;
-  float: right;
-}
-.delete-checklist-item:hover {
-    color: #FF2A74;
-}
-
 .datepicker-container {
   position: absolute;
   right: 10px;
   top: 15px;
-  z-index: 99;
+  z-index: 100;
 }
 .datepicker-container .delete-deadline {
     border-top: 1px solid #d3e0e9;
@@ -1826,15 +1880,6 @@
 
 
 
-.deadline-input {
-  width: 150px;
-  display: inline-block;
-  vertical-align: middle;
-}
-.deadline-input label {
-    margin: 0;
-    margin-right: 10px;
-}
 .checklist {
   height: 100%;
 }
@@ -11219,35 +11264,61 @@ li.listing.selected .item-count-tag {
 
 .add-item {
   position: relative;
-  margin-bottom: 10px;
+}
+
+.edit-checklist-item .add-item {
+  margin-top: 10px;
 }
 
 .item-form {
   width: 100%;
   padding: 0px;
-  border: 1px solid #ccd0d2;
-  border-radius: 20px;
+  border: 1px solid #dae5ec;
+  border-radius: 5px;
+  overflow: hidden;
   background: white;
-}
-
-@media (min-width: 768px) {
-  .item-form {
-    overflow: hidden;
-  }
+  position: relative;
 }
 
 .item-form .item-form-content {
   vertical-align: middle;
-  position: relative;
-  height: 38px;
+  width: 100%;
+  height: 35px;
   padding: 0;
+  padding-left: 5px;
   background: transparent;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .item-form .item-form-content {
+    width: 70%;
+  }
+}
+
+@media (min-width: 992px) {
+  .item-form .item-form-content {
+    width: 70%;
+    min-width: 300px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .item-form .item-form-content {
+    width: 80%;
+  }
+}
+
+.item-form .item-form-content .fa-plus {
+  line-height: 35px;
+  font-size: 1.1em;
+  color: #00A0E5;
 }
 
 .item-form .item-form-content input {
   border: 0;
   outline: none;
-  width: 100%;
+  width: 85%;
   height: 100%;
   padding-left: 10px;
   background: transparent;
@@ -11255,74 +11326,23 @@ li.listing.selected .item-count-tag {
   font-family: "Asap", sans-serif;
 }
 
-.item-form .item-form-meta {
-  display: inline-block;
-  margin: 0;
-  height: 38px;
-  float: right;
-  vertical-align: middle;
-  border-left: 1px solid #ccd0d2;
-  background: #f5f8fa;
-  padding: 0;
-  width: 215px;
-}
-
-.item-form .item-form-meta .item-form-bool,
-.item-form .item-form-meta .item-form-date {
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  vertical-align: middle;
-}
-
-.item-form .item-form-meta .item-form-bool:nth-child(2),
-.item-form .item-form-meta .item-form-date:nth-child(2) {
-  border-right: 1px solid #ccd0d2;
-  border-left: 1px solid #ccd0d2;
-}
-
-.item-form .item-form-meta .item-form-bool label,
-.item-form .item-form-meta .item-form-date label {
-  display: block;
-  font-size: 0.7em;
-  margin: 0;
-}
-
-.item-form .item-form-meta .item-form-bool p,
-.item-form .item-form-meta .item-form-bool input,
-.item-form .item-form-meta .item-form-date p,
-.item-form .item-form-meta .item-form-date input {
-  height: 20px;
-  line-height: 20px;
-  padding: 0;
-  margin: 0;
-  display: inline-block;
-}
-
-.item-form .item-form-meta .item-form-bool p,
-.item-form .item-form-meta .item-form-date p {
-  cursor: pointer;
-}
-
-.item-form .item-form-meta .item-form-bool {
-  text-align: center;
-  width: 60px;
-}
-
 @media (min-width: 768px) {
-  .item-form .item-form-meta .item-form-bool {
-    overflow: hidden;
+  .item-form .item-form-content input {
+    width: 85%;
+    padding-left: 5px;
   }
 }
 
-.item-form .item-form-meta .item-form-date {
-  position: relative;
-  width: 80px;
+@media (min-width: 992px) {
+  .item-form .item-form-content input {
+    width: 85%;
+  }
 }
 
-.item-form .item-form-meta .item-form-date p {
-  font-size: 0.85em;
+@media (min-width: 1200px) {
+  .item-form .item-form-content input {
+    width: 85%;
+  }
 }
 
 .main-menu {

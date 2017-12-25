@@ -117,7 +117,7 @@ const actions = {
         case 'checklist-item':
           isInSelectedArray = _.findIndex(state.selected.checklistItems, ['id', payload.selection.listing.id]) !== -1
           isChecklistItem = true
-          isSubItem = payload.selection.parentModel === 'checklist-item'
+          isSubItem = payload.selection.parentModel === 'checklist-item' || ! payload.selection.listing.checklist_id
           break;
         case 'home':
           isHome = true

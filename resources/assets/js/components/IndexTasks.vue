@@ -75,6 +75,14 @@ export default {
                                                 null                           ;
     }
   },
+  created: function() {
+    this.$eventHub.$on('debounceResizeInput', this.debounceResizeInput);
+    this.$eventHub.$on('toggleSelection', this.toggleSelection);
+  },
+  beforeDestroy: function() {
+    this.$eventHub.$off('debounceResizeInput', this.debounceResizeInput);
+    this.$eventHub.$off('toggleSelection', this.toggleSelection);
+  },
   methods: {
     ...mapActions([
       'toggleSelection'

@@ -36,10 +36,18 @@ import store from './store.js'
 import VTooltip from 'v-tooltip'
 import Vue2Filters from 'vue2-filters'
 import VueTokenMismatch from './plugins/vue-token-mismatch.js'
+import VueResize from 'vue-resize'
+import 'vue-resize/dist/vue-resize.css'
+
+
+
 
 Vue.use(VTooltip)
 Vue.use(Vue2Filters)
+Vue.use(VueResize)
 Vue.use(VueTokenMismatch)
+
+Vue.prototype.$eventHub = new Vue(); // Global event bus
 
 const app = new Vue({
     el: '#productivity-app',

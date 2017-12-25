@@ -4,7 +4,6 @@
       <label for="is-important">Important</label>
       <i v-if="!item.is_important"
          @click="toggleImportance"
-         :class="{'folder-color-scheme':item.is_important}"
          class="fa fa-fw fa-star-o"
          aria-hidden="true"/>
       <i v-if="item.is_important"
@@ -33,7 +32,7 @@
           <div class="delete-deadline">
             <button v-if="item.deadline" type="button" class="btn btn-xs btn-default" @click="setDate(null)">
               <i class="fa fa-fw fa-calendar-times-o" aria-hidden="true"/>
-                 Remove Due Date
+                 Remove Deadline
             </button>
             <button type="button" class="btn btn-xs btn-default" @click="hideDatePicker">
               <i class="fa fa-fw fa-times" aria-hidden="true"/>
@@ -89,14 +88,14 @@ export default {
       }
     },
     deadlinePlaceholder: function() {
-      return this.item.deadline ? 'Due: ' + moment(this.item.deadline).format('MMM D, YYYY') : 'No Due Date'
+      return this.item.deadline ? 'Due: ' + moment(this.item.deadline).format('MMM D, YYYY') : 'No Deadline'
     }
   },
   methods: {
     ...mapActions([
-      'setCurrentEditableItemDeadline',
-      'toggleCurentEditableItemImportance',
-      'toggleCurentEditableItemUrgency'
+      'setChecklistItemDeadline',
+      'toggleChecklistItemImportance',
+      'toggleChecklistItemUrgency'
     ]),
     dateFormatter(date) {
       return moment(date).format('YYYY-MM-DD');
@@ -109,7 +108,7 @@ export default {
     },
     setDate: function(date = null) {
       this.deadlineIsLoading = true
-      this.setCurrentEditableItemDeadline({date, isSubItem: this.isSubItem})
+      this.setChecklistItemDeadline({date, isSubItem: this.isSubItem})
           .then( (success) => {
             this.hideDatePicker()
             this.deadlineIsLoading = false
@@ -121,34 +120,34 @@ export default {
     },
     toggleImportance: function() {
       this.importanceIsLoading = true
-      this.toggleCurentEditableItemImportance({isSubItem: this.isSubItem})
+      this.toggleChecklistItemImportance({isSubItem: this.isSubItem})
           .then( () => this.importanceIsLoading = false )
           .catch( (error) => console.log(error) )
     },
     toggleUrgency: function() {
       this.urgencyIsLoading = true
-      this.toggleCurentEditableItemUrgency({isSubItem: this.isSubItem})
+      this.toggleChecklistItemUrgency({isSubItem: this.isSubItem})
           .then( () => this.urgencyIsLoading = false )
           .catch( (error) => console.log(error) )
-    }
+    },
   },
 }
 </script>
 
 <style lang="scss">
 .datepicker-container {
-    position: absolute;
-    right: 10px;
-    top: 15px;
-    z-index: 99;
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  z-index: 100;
 
-    .delete-deadline {
-        border-top: 1px solid $base-border-color;
-        border-left: 1px solid $base-border-color;
-        border-right: 1px solid $base-border-color;
-        background: white;
-        padding: 10px;
-        text-align: center;
-    }
+  .delete-deadline {
+    border-top: 1px solid $base-border-color;
+    border-left: 1px solid $base-border-color;
+    border-right: 1px solid $base-border-color;
+    background: white;
+    padding: 10px;
+    text-align: center;
+  }
 }
 </style>
