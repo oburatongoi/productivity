@@ -28,9 +28,9 @@ describe('Breadcrumbs', () => {
 
   });
 
-  it ('defaults to a hasCurrentView of false', () => {
-    expect(wrapper.vm.hasCurrentView).toBe(false)
-  });
+  // it ('defaults to a hasCurrentView of false', () => {
+  //   expect(wrapper.vm.hasCurrentView).toBe(false)
+  // });
 
   // it ('computes currentFolderIsAncestor', () => {
   //   wrapper.setComputed({

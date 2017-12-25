@@ -20,25 +20,25 @@ describe('ItemFormMeta', () => {
   });
 
   it ('displays a placeholder of -- when deadline is null', () => {
-    datePlaceholder = wrapper.find('.item-form-date > p')
-    expect(datePlaceholder.html()).toContain('--')
+    datePlaceholder = wrapper.find('.date')
+    expect(datePlaceholder.html()).toContain('---  --')
     wrapper.setProps({ item: { deadline: '2017-12-18' } })
-    expect(datePlaceholder.html()).not.toContain('--')
+    expect(datePlaceholder.html()).not.toContain('---  --')
     wrapper.setProps({ item: { deadline: null } })
-    expect(datePlaceholder.html()).toContain('--')
+    expect(datePlaceholder.html()).toContain('---  --')
   });
 
   it ('formats deadline as \'MMM D\' when deadline is set', () => {
-    datePlaceholder = wrapper.find('.item-form-date > p')
+    datePlaceholder = wrapper.find('.date')
     wrapper.setProps({ item: { deadline: '2017-12-18' } })
     expect(datePlaceholder.html()).toContain('Dec 18')
   });
 
-  it ('sets deadline to null when removeDeadline is called', () => {
-    wrapper.setProps({ item: { deadline: '2017-12-18' } })
-    wrapper.vm.removeDeadline()
-    expect(wrapper.vm.item.deadline).toBe(null)
-  });
+  // it ('sets deadline to null when removeDeadline is called', () => {
+  //   wrapper.setProps({ item: { deadline: '2017-12-18' } })
+  //   wrapper.vm.removeDeadline()
+  //   expect(wrapper.vm.item.deadline).toBe(null)
+  // });
 
   it ('emits showDatePicker when showDatePicker is called', () => {
     wrapper.vm.showDatePicker()

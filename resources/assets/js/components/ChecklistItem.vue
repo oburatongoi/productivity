@@ -282,9 +282,7 @@ export default {
       font-size: 0.85em;
       line-height: inherit;
       .fa {
-        // font-size: 1.1em;
-        font-size: 1em;
-        margin: 0;
+        font-size: 0.9em;
       }
     }
 
