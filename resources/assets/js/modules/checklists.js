@@ -168,7 +168,7 @@ const mutations = {
       } else {
 
         if (state.editableItem && state.editableItem.id) {
-          state.state.editableItem.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
+          state.editableItem.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
         } else {
           let i = _.findIndex(state.checklistItems, ['id', payload.item.id]);
           if( i !== -1 ) state.checklistItems[i].deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null

@@ -1,5 +1,17 @@
 <template lang="html">
   <div class="item-form-meta" :class="{ 'new-item':item.isNewItem }">
+    <span class="meta-span"
+      @click="showDatePicker"
+      v-tooltip.bottom="deadlineTooltip"
+      :class="{ 'item-deadline':!item.isNewItem }"
+    >
+      <span class="date">{{ deadlinePlaceholder }}</span>
+      <i
+        class="fa fa-fw fa-calendar"
+        aria-hidden="true"
+      />
+    </span>
+
     <span class="meta-span">
       <i
         @click="toggleImportance"
@@ -26,37 +38,11 @@
       <i
         @click="toggleSelection({selection: {model, listing:item, parentModel}, event: $event})"
         :class="{ 'folder-color-scheme':item.comments }"
-        class="fa fa-fw fa-comment-o"
+        class="fa fa-fw fa-sticky-note-o"
         aria-hidden="true"
         v-tooltip.bottom="commentsTooltip"
       />
     </span>
-
-    <span class="meta-span"
-      @click="showDatePicker"
-      v-tooltip.bottom="deadlineTooltip"
-      :class="{ 'item-deadline':!item.isNewItem }"
-    >
-      <i
-        class="fa fa-fw fa-calendar"
-        aria-hidden="true"
-      />
-      <span class="date">{{ deadlinePlaceholder }}</span>
-    </span>
-
-    <!-- <span
-      class="meta-span child-list-item-count"
-      v-tooltip.bottom="checklistTooltip"
-      v-if="!isSubItem&&!item.isNewItem"
-    >
-      <i
-        @click="toggleSelection({selection: {model, listing:item, parentModel}, event: $event})"
-        class="fa fa-fw fa-check-square"
-        aria-hidden="true"
-      />
-      <span class="count">{{ uncheckedSubItemsCount }}</span>
-    </span> -->
-
   </div>
 </template>
 
@@ -89,7 +75,8 @@ export default {
   },
   computed: {
     deadlinePlaceholder: function () {
-      return this.item.deadline ? moment(this.item.deadline).format('MMM D') : this.item.isNewItem ? '' : '---  --'
+      // return this.item.deadline ? moment(this.item.deadline).format('MMM D') : this.item.isNewItem ? '' : '---  --'
+      return this.item.deadline ? moment(this.item.deadline).format('MMM D') : ''
     },
     urgencyTooltip: function () {
       return this.item.is_urgent ? 'Mark as not urgent' : 'Mark as urgent'
@@ -101,14 +88,8 @@ export default {
       return this.item.deadline ? 'Change or remove deadline' : 'Add a deadline'
     },
     commentsTooltip: function () {
-      return this.item.comments ? 'Has comments' : 'Does not have any comments'
+      return this.item.comments ? 'Has notes' : 'Does not have any notes'
     },
-    // checklistTooltip: function () {
-    //   return this.item.child_list_items && this.item.child_list_items.length ? this.uncheckedSubItemsCount +' unchecked items' : 'Does not have any checklist items'
-    // },
-    // uncheckedSubItemsCount: function() {
-    //   return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
-    // },
     importanceIcon: function () {
       return this.item.is_important ? 'fa-star folder-color-scheme' : 'fa-star-o'
     },
@@ -195,20 +176,12 @@ export default {
     }
 
     &.item-deadline {
-      text-align: left;
+      text-align: right;
       .date {
         display: inline-block;
         width: 40px;
       }
     }
-
-    // &.child-list-item-count {
-    //   text-align: left;
-    //   .count {
-    //     display: inline-block;
-    //     width: 20px;
-    //   }
-    // }
 
     .show-item & .fa {
       font-size: 1.1em;

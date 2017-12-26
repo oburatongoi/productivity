@@ -34,7 +34,6 @@
         "webpack": "^3.8.1"
     },
     "dependencies": {
-        "autosize": "^4.0.0",
         "axios": "^0.17",
         "babel-polyfill": "^6.23.0",
         "es6-promise": "^4.1.0",

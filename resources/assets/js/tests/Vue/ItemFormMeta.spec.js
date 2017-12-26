@@ -19,14 +19,14 @@ describe('ItemFormMeta', () => {
 
   });
 
-  it ('displays a placeholder of -- when deadline is null', () => {
-    datePlaceholder = wrapper.find('.date')
-    expect(datePlaceholder.html()).toContain('---  --')
-    wrapper.setProps({ item: { deadline: '2017-12-18' } })
-    expect(datePlaceholder.html()).not.toContain('---  --')
-    wrapper.setProps({ item: { deadline: null } })
-    expect(datePlaceholder.html()).toContain('---  --')
-  });
+  // it ('displays a placeholder of -- when deadline is null', () => {
+  //   datePlaceholder = wrapper.find('.date')
+  //   expect(datePlaceholder.html()).toContain('---  --')
+  //   wrapper.setProps({ item: { deadline: '2017-12-18' } })
+  //   expect(datePlaceholder.html()).not.toContain('---  --')
+  //   wrapper.setProps({ item: { deadline: null } })
+  //   expect(datePlaceholder.html()).toContain('---  --')
+  // });
 
   it ('formats deadline as \'MMM D\' when deadline is set', () => {
     datePlaceholder = wrapper.find('.date')

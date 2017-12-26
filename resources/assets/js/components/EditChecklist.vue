@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="edit-checklist" @change="saveChanges">
     <h4>{{ listTypeTitle }}</h4>
+    <p class="text-muted">Don't think too hard &#8212; you can change this later</p>
     <div class="list-type-option">
       <div class="list-type-option-inner">
         <input type="radio" id="ch" value="ch" v-model="checklist.list_type">
@@ -9,7 +10,7 @@
             <i class="fa fa-fw fa-list" aria-hidden="true"/>
             Check List
           </label>
-          <p class="notice">List items will have a checkbox, but will not be treated as tasks</p>
+          <p>List items will have a checkbox, but will not be treated as tasks</p>
         </span>
       </div>
       <div class="list-type-option-inner">
@@ -19,7 +20,7 @@
             <i class="fa fa-fw fa-check-square" aria-hidden="true"/>
             Task List
           </label>
-          <p class="notice">List items will be treated as tasks which must be completed</p>
+          <p>List items will be treated as tasks which must be completed</p>
         </span>
       </div>
     </div>
@@ -31,7 +32,7 @@
           <i class="fa fa-fw fa-list-ul" aria-hidden="true"/>
           Bulletted List
         </label>
-        <p class="notice">List items will have bullets</p>
+        <p>List items will have bullets</p>
       </span>
     </div>
 
@@ -42,7 +43,7 @@
           <i class="fa fa-fw fa-list-ol" aria-hidden="true"/>
           Numbered List
         </label>
-        <p class="notice">List Items will have numbers</p>
+        <p>List Items will have numbers</p>
       </span>
     </div>
 

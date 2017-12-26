@@ -2,19 +2,33 @@
   <div class="edit-checklist-item panel side-panel" :class="editChecklistItemClass" :id="'edit-checklist-item-'+item.id">
     <div class="position-relative">
       <div class="sizing-buttons" :id="'sizing-buttons-'+item.id">
-        <i class="fa fa-fw fa-times pull-right" v-if="!savingChanges" aria-hidden="true" title="Save and Close" @click="saveAndClose"/>
-        <span class="fa-stack pull-right" v-if="savingChanges">
-          <i class="fa fa-circle-o-notch fa-spin fa-stack-2x"/>
-          <i class="fa fa-floppy-o fa-stack-1x"/>
+        <span class="pull-right icon-and-label" v-if="!savingChanges&&!isSubItem" @click="saveAndClose">
+          <i class="fa fa-times" aria-hidden="true" title="Save and Close"/>
+          Close
         </span>
-        <i class="fa fa-fw fa-exchange pull-right" aria-hidden="true" title="Move" @click="toggleMovable"/>
-        <i class="fa fa-fw pull-left fa-chevron-left" aria-hidden="true" title="Back" v-if="parentModel=='checklist-item'" @click="saveAndClose"/>
-        <i class="fa fa-fw pull-left" :class="toggleExpansionClass" aria-hidden="true" :title="toggleExpansionTitle" @click="toggleExpansion"/>
+
+        <span class="pull-right icon-and-label" v-if="savingChanges">
+          <span class="fa-stack">
+            <i class="fa fa-circle-o-notch fa-spin fa-stack-2x"/>
+            <i class="fa fa-floppy-o fa-stack-1x"/>
+          </span>
+          Saving
+        </span>
+
+        <span class="pull-left icon-and-label" @click="saveAndClose">
+          <i class="fa fa-chevron-left" aria-hidden="true" title="Back"/>
+          Back
+        </span>
+
+        <span class="pull-left icon-and-label" @click="toggleExpansion">
+          <i class="fa" :class="toggleExpansionClass" aria-hidden="true" :title="toggleExpansionTitle"/>
+          {{ toggleExpansionTitle }}
+        </span>
       </div>
 
       <div class="panel-heading" :id="'panel-heading-'+item.id">
         <div class="edit-content">
-          <h4 class="edit-checklist-item-content-textarea">
+          <h4 class="edit-checklist-item-content-container">
             <span class="checkbox-container">
               <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"/>
               <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"/>
@@ -28,13 +42,15 @@
               @keyup="debounceSaveChanges"
               @keydown="debounceSaveChanges"
               @delete="debounceSaveChanges"
+              @paste="debounceSaveChanges"
+              @cut="debounceSaveChanges"
               @change="debounceSaveChanges"
               maxlength="255"
             />
           </h4>
         </div>
 
-        <manage-item-form-meta :item="item" :is-sub-item="isSubItem"/>
+        <edit-checklist-item-meta :item="item" :is-sub-item="isSubItem"/>
 
         <ul class="manage-item-menu">
           <li @click="switchView('notes')" :class="{ selected: view=='notes' }">
@@ -79,7 +95,7 @@
       </div>
 
       <div class="panel-body notes" :id="'notes-panel-'+item.id" v-if="view=='notes'">
-        <manage-item-form-comments
+        <edit-checklist-item-comments
           @saveChanges="saveChanges"
           :item="item"
           :is-sub-item="isSubItem"
@@ -87,7 +103,7 @@
       </div>
 
       <div class="panel-footer" :id="'notes-buttons-'+item.id" v-if="view=='notes'">
-        <manage-item-form-buttons
+        <edit-checklist-item-buttons
           :is-saving="savingChanges"
           @resetForm="saveAndClose"
           @saveChanges="saveChanges"
@@ -103,6 +119,7 @@
         />
       </div>
     </div>
+    <resize-observer @notify="debounceResizeNotes" />
   </div>
 </template>
 
@@ -110,20 +127,18 @@
 import { mapActions, mapGetters } from 'vuex'
 
 import AddItem from './AddItem.vue'
-import ManageItemFormMeta from './ManageItemFormMeta.vue'
-import ManageItemFormComments from './ManageItemFormComments.vue'
-import ManageItemFormButtons from './ManageItemFormButtons.vue'
+import EditChecklistItemMeta from './EditChecklistItemMeta.vue'
+import EditChecklistItemComments from './EditChecklistItemComments.vue'
+import EditChecklistItemButtons from './EditChecklistItemButtons.vue'
 import SubChecklistItems from './SubChecklistItems.vue'
-
-import autosize from 'autosize';
 
 export default {
   name: 'edit-checklist-item',
   components: {
     AddItem,
-      ManageItemFormMeta,
-      ManageItemFormComments,
-      ManageItemFormButtons,
+      EditChecklistItemMeta,
+      EditChecklistItemComments,
+      EditChecklistItemButtons,
       SubChecklistItems
   },
   props: {
@@ -160,10 +175,20 @@ export default {
       return this.item.checklist_id ? 'checklist-item' : 'sub-checklist-item'
     },
     toggleExpansionClass: function() {
-      return this.editableItemIsExpanded || this.editableSubItemIsExpanded ? 'fa-compress' : 'fa-expand'
+      if (this.isSubItem) {
+        return this.editableSubItemIsExpanded ? 'fa-compress' : 'fa-expand'
+      } else {
+        return this.editableItemIsExpanded ? 'fa-compress' : 'fa-expand'
+      }
     },
     toggleExpansionTitle: function() {
-      return this.editableItemIsExpanded || this.editableSubItemIsExpanded ? 'Compress' : 'Expand'
+      // return this.editableItemIsExpanded || this.editableSubItemIsExpanded ? 'Compress' : 'Expand'
+      if (this.isSubItem) {
+        return this.editableSubItemIsExpanded ? 'Shrink' : 'Expand'
+      } else {
+        return this.editableItemIsExpanded ? 'Shrink' : 'Expand'
+      }
+
     },
     uncheckedSubItemsCount: function() {
       return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
@@ -174,14 +199,8 @@ export default {
   },
   mounted: function() {
     this.$nextTick(function() {
-      // autosize(document.querySelector('.content-textarea'));
-      autosize(document.querySelector('.comments-textarea'));
-      this.adjustNotesHeight()
-      window.addEventListener("resize", this.adjustNotesHeight, false);
+      this.resizeNotes()
     })
-  },
-  beforeDestroy: function () {
-    window.removeEventListener("resize", this.adjustNotesHeight, false)
   },
   methods: {
     ...mapActions([
@@ -200,7 +219,7 @@ export default {
     }, 1000),
     saveChanges: function() {
       this.savingChanges = true
-      this.adjustNotesHeight()
+      this.resizeNotes()
 
       this.saveChecklistItem({isSubItem: this.isSubItem})
       .then( () => this.savingChanges = false )
@@ -218,10 +237,13 @@ export default {
     switchView: function(view) {
       this.view = view
       this.$nextTick(function() {
-        this.adjustNotesHeight()
+        this.resizeNotes()
       })
     },
-    adjustNotesHeight: function() {
+    debounceResizeNotes: _.debounce(function() {
+      this.resizeNotes()
+    }, 300),
+    resizeNotes: function() {
       var panel = document.getElementById('edit-checklist-item-'+this.item.id);
       var header = document.getElementById('panel-heading-'+this.item.id);
       var topButtons = document.getElementById('sizing-buttons-'+this.item.id);
@@ -277,19 +299,43 @@ export default {
         @include clearfix;
         text-align: center;
 
-        .fa {
-            cursor: pointer;
-            color: $base-border-color;
-            &:hover {
-                color: $brand-primary;
-            }
+        // .fa {
+        //   cursor: pointer;
+        //   color: $base-border-color;
+        //   &:hover {
+        //       color: $brand-primary;
+        //   }
+        // }
+
+        .icon-and-label {
+          cursor: pointer;
+          color: $base-border-color;
+          font-size: 0.85em;
+          line-height: 1.2em;
+
+          .fa {
+            font-size: 1.2em;
+            line-height: inherit;
+          }
+
+          &:hover {
+            color: $brand-primary;
+          }
+
+          &.pull-right {
+            margin-left: 15px;
+          }
+
+          &.pull-left {
+            margin-right: 15px;
+          }
         }
 
 
 
         .fa-stack {
-            margin-top: -5px;
-            font-size: 0.75em;
+            // margin-top: -5px;
+            // font-size: 0.75em;
             .fa-flopy-o {
                 color: darken($base-border-color, 10%);
             }
@@ -365,7 +411,7 @@ export default {
         }
     }
 
-    .edit-checklist-item-content-textarea {
+    .edit-checklist-item-content-container {
         margin: 0;
         padding: 0 0 3px 0;
 
@@ -441,7 +487,7 @@ export default {
         }
     }
 
-    .manage-item-form-meta {
+    .edit-checklist-item-meta {
         background: lighten($body-bg, 1%);
         // background: transparent;
         padding: 3px;

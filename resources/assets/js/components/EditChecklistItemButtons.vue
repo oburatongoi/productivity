@@ -31,7 +31,7 @@
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'manage-item-form-buttons',
+  name: 'edit-checklist-item-buttons',
   props: {
     isSaving: {
       type: Boolean,

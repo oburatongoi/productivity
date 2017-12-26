@@ -27,7 +27,7 @@ import { mapActions } from 'vuex'
 import QuillEditor from './QuillEditor.vue'
 
 export default {
-  name: 'manage-item-form-comments',
+  name: 'edit-checklist-item-comments',
   components: {
     QuillEditor
   },

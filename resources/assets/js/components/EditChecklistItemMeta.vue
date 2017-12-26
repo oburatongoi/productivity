@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="manage-item-form-meta">
+  <div class="edit-checklist-item-meta">
     <span class="is-important">
       <label for="is-important">Important</label>
       <i v-if="!item.is_important"
@@ -57,7 +57,7 @@ import { mapActions } from 'vuex'
 import Datepicker from 'vuejs-datepicker';
 
 export default {
-  name: 'manage-item-form-meta',
+  name: 'edit-checklist-item-meta',
   components: {
       Datepicker
   },
@@ -140,6 +140,10 @@ export default {
   right: 10px;
   top: 15px;
   z-index: 100;
+
+  .fa {
+    font-size: 1em;
+  }
 
   .delete-deadline {
     border-top: 1px solid $base-border-color;
