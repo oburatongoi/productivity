@@ -108,7 +108,7 @@ export default {
     },
     setDate: function(date = null) {
       this.deadlineIsLoading = true
-      this.setChecklistItemDeadline({date, isSubItem: this.isSubItem})
+      this.setChecklistItemDeadline({item: this.item, date, isSubItem: this.isSubItem})
           .then( (success) => {
             this.hideDatePicker()
             this.deadlineIsLoading = false

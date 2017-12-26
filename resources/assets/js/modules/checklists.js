@@ -156,13 +156,24 @@ const mutations = {
       }
     },
     [SET_CHECKLIST_ITEM_DEADLINE] (state, payload) {
-      if (payload.item) {
-        let i = _.findIndex(state.checklistItems, ['id', payload.item.id]);
-        state.checklistItems[i].deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
-      } else if (payload.isSubItem) {
-        state.editableSubItem.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
+      if (payload.isSubItem) {
+
+        if (state.editableSubItem && state.editableSubItem.id) {
+          state.editableSubItem.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
+        } else {
+          let i = _.findIndex(state.editableItem.child_list_items, ['id', payload.item.id]);
+          if( i !== -1 ) state.editableItem.child_list_items[i].deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
+        }
+
       } else {
-        state.editableItem.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
+
+        if (state.editableItem && state.editableItem.id) {
+          state.state.editableItem.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
+        } else {
+          let i = _.findIndex(state.checklistItems, ['id', payload.item.id]);
+          if( i !== -1 ) state.checklistItems[i].deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
+        }
+
       }
     },
     [UNSET_EDITABLE_CHECKLIST_ITEM] (state, payload = {isSubItem: false}) {
@@ -187,7 +198,7 @@ const mutations = {
           state.editableItemIsExpanded = ! state.editableItemIsExpanded
         }
     },
-    [TOGGLE_CHECKLIST_ITEM_IMPORTANCE] (state, payload = {item: null, isSubItem: false}) {
+    [TOGGLE_CHECKLIST_ITEM_IMPORTANCE] (state, payload = {isSubItem: false}) {
       if (payload.isSubItem) {
         console.log('is sub item');
         let i = _.findIndex(state.editableItem.child_list_items, ['id', payload.item.id]);
@@ -198,7 +209,7 @@ const mutations = {
         state.checklistItems[i].is_important = ! state.checklistItems[i].is_important
       }
     },
-    [TOGGLE_CHECKLIST_ITEM_URGENCY] (state, payload = {item: null, isSubItem: false}) {
+    [TOGGLE_CHECKLIST_ITEM_URGENCY] (state, payload = {isSubItem: false}) {
       if (payload.isSubItem) {
         let i = _.findIndex(state.editableItem.child_list_items, ['id', payload.item.id]);
         state.editableItem.child_list_items[i].is_urgent = ! state.editableItem.child_list_items[i].is_urgent
@@ -452,15 +463,18 @@ const actions = {
   },
   saveChecklistItem({dispatch, commit, state}, payload = { item: null, isSubItem: false }) {
       return new Promise((resolve, reject) => {
-        if(!payload.item) {
+        let item
+        if(! payload.item) {
           if (payload.isSubItem) {
-            payload.item = state.editableSubItem.id !== undefined ? state.editableSubItem : reject('There is no item or currently editable sub item')
+            item = state.editableSubItem.id !== undefined ? state.editableSubItem : reject('There is no item or currently editable sub item')
           } else {
-            payload.item = state.editableItem.id !== undefined ? state.editableItem : reject('There is no item or currently editable item')
+            item = state.editableItem.id !== undefined ? state.editableItem : reject('There is no item or currently editable item')
           }
+        } else {
+          item = payload.item
         }
-        commit(ADD_UNFILTERED, payload.item)
-        axios.patch('/lists/item/' + payload.item.id + '/update', {item:payload.item})
+        commit(ADD_UNFILTERED, item)
+        axios.patch('/lists/item/' + item.id + '/update', {item:item})
              .then( response => resolve(dispatch('saveChecklistItemHandler', response)) )
              .catch( error => reject(error) )
       })
@@ -512,15 +526,8 @@ const actions = {
   },
   setChecklistItemDeadline({dispatch, commit, state}, payload = {item: null, date: null, isSubItem: false}) {
       return new Promise((resolve, reject) => {
-        if(!payload.item) {
-          if (payload.isSubItem) {
-            payload.item = state.editableSubItem.id !== undefined ? state.editableSubItem : reject('There is no item or currently editable sub item')
-          } else {
-            payload.item = state.editableItem.id !== undefined ? state.editableItem : reject('There is no item or currently editable item')
-          }
-        }
         commit(SET_CHECKLIST_ITEM_DEADLINE, payload)
-        dispatch('saveChecklistItem', {item: payload.item, isSubItem: payload.isSubItem})
+        dispatch('saveChecklistItem', payload)
         .then( (success) => resolve(success) )
         .catch( (error) => {
           dispatch(
