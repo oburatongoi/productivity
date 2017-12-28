@@ -102,13 +102,13 @@
         />
       </div>
 
-      <div class="panel-footer" :id="'notes-buttons-'+item.id" v-if="view=='notes'">
+      <!-- <div class="panel-footer" :id="'notes-buttons-'+item.id" v-if="view=='notes'">
         <edit-checklist-item-buttons
           :is-saving="savingChanges"
           @resetForm="saveAndClose"
           @saveChanges="saveChanges"
         />
-      </div>
+      </div> -->
 
       <div class="panel-body sub-items" :id="'sub-items-panel-'+item.id" v-if="view=='sub-items'">
         <sub-checklist-items
@@ -248,17 +248,11 @@ export default {
       var header = document.getElementById('panel-heading-'+this.item.id);
       var topButtons = document.getElementById('sizing-buttons-'+this.item.id);
 
-      var panelHeight = panel.innerHeight || panel.clientHeight;
-      var headerHeight = header.outerHeight || header.clientHeight;
-      var topButtonsHeight = topButtons.outerHeight || topButtons.clientHeight;
+      var panelHeight = $(panel).outerHeight();
+      var headerHeight = $(header).outerHeight(true);
+      var topButtonsHeight = $(topButtons).outerHeight(true);
+      var bottomButtonsHeight = 5;
 
-      switch (this.view) {
-        case 'sub-items':
-          var bottomButtonsHeight = 10;
-          break;
-        default: var bottomButtonsHeight = 50;
-
-      }
       var target = document.getElementById(this.view+'-panel-'+this.item.id);
       var notesHeight = panelHeight - (headerHeight+bottomButtonsHeight+topButtonsHeight)
       target.style.height = notesHeight > 200 ? notesHeight+'px' : '200px'
@@ -519,6 +513,10 @@ export default {
             }
         }
     }
+}
+
+#quill-toolbar {
+  padding: 2px;
 }
 
 </style>

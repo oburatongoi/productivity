@@ -319,7 +319,6 @@ export default {
       this.resizeInput()
     }, 300),
     resizeInput: function() {
-      console.log('resizing...');
       this.$nextTick( function() {
         let count = 1,
             minWidth = 275;

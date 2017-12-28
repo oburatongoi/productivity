@@ -6,14 +6,15 @@
       <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{ item.sort_order + 1 }}.</span>
     </span>
 
-    <p
-      class="show-item-content"
+    <p class="show-item-content"
       @click="toggleSelection({selection: {model, listing: item, parentModel}, event: $event})"
       @dblclick="toggleSelection({selection: {model, listing: item, parentModel}, event: $event})"
     >
-      {{ item.content }}
-      <span
-        class="unchecked-sub-items-count"
+      <span class="item-content">
+        {{ item.content }}
+      </span>
+
+      <span class="unchecked-sub-items-count"
         v-if="uncheckedSubItemsCount"
         v-tooltip.bottom="checklistTooltip"
       >
@@ -73,154 +74,154 @@ import ItemFormMeta from './ItemFormMeta.vue'
 import Datepicker from 'vuejs-datepicker';
 
 export default {
-    name: 'checklist-item',
-    components: {
-      Datepicker,
-      ItemFormMeta
+  name: 'checklist-item',
+  components: {
+    Datepicker,
+    ItemFormMeta
+  },
+  props: {
+    item: {
+      type: Object,
+      required: true
     },
-    props: {
-      item: {
-        type: Object,
-        required: true
-      },
-      listType: {
-        type: String,
-        default: 'ch'
-      },
-      parentModel: {
-        type: String,
-        default: 'checklist'
-      }
+    listType: {
+      type: String,
+      default: 'ch'
     },
-    data () {
+    parentModel: {
+      type: String,
+      default: 'checklist'
+    }
+  },
+  data () {
+    return {
+      checkboxClassOverride: null,
+      model: 'checklist-item',
+      chooseDate: false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'selected',
+      'unfilteredItems',
+      'editableItem',
+      'delistedItems',
+      'filters'
+    ]),
+    checkboxClass: function() {
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
+    },
+    highlightedDate () {
       return {
-        checkboxClassOverride: null,
-        model: 'checklist-item',
-        chooseDate: false
+        dates: [
+          this.item.deadline ? new Date(this.item.deadline) : new Date()
+        ]
       }
     },
-    computed: {
-      ...mapGetters([
-        'selected',
-        'unfilteredItems',
-        'editableItem',
-        'delistedItems',
-        'filters'
-      ]),
-      checkboxClass: function() {
-        return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
-      },
-      highlightedDate () {
-        return {
-          dates: [
-            this.item.deadline ? new Date(this.item.deadline) : new Date()
-          ]
-        }
-      },
-      itemBypassesFilters: function() {
-        return this.unfilteredItems.indexOf(this.item.id) !== -1
-      },
-      itemIsDelisted: function() {
-        return this.delistedItems.indexOf(this.item.id) !== -1
-      },
-      itemPassesCheckedFilter: function() {
-        if (this.parentModel == 'checklist-item') return true
-
-        if (this.listType == 'nu' || this.listType == 'bu' || this.filters.checked == 'all') return true
-
-        if (this.filters.checked == 'checked') {
-          if (this.item.checked_at && this.item.checked_at !== null) {
-            return true
-          }
-          return false
-        }
-        if (this.filters.checked == 'unchecked') {
-          if (!this.item.checked_at || this.item.checked_at == null) {
-            return true
-          }
-          return false
-        }
-        return true
-      },
-      itemPassesPriorityFilter: function() {
-        if (this.filters.priority == 'none') return true
-
-        if (this.filters.priority == 'both') {
-          if (this.item.is_important && this.item.is_urgent) {
-            return true
-          }
-          return false
-        }
-        if (this.filters.priority == 'important') {
-          if (this.item.is_important && ! this.item.is_urgent) {
-            return true
-          }
-          return false
-        }
-        if (this.filters.priority == 'urgent') {
-          if (this.item.is_urgent && ! this.item.is_important) {
-            return true
-          }
-          return false
-        }
-        return true
-      },
-      itemIsVisible: function() {
-        return this.itemBypassesFilters || !this.itemIsDelisted && !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
-      },
-      itemIsCurrentlyEditable: function() {
-        return this.editableItem.id && this.item.id == this.editableItem.id
-      },
-      itemIsSelected: function() {
-        return this.selected.checklistItems.indexOf(this.item) !== -1
-      },
-      deadlinePlaceholder: function () {
-        return this.item.deadline ? moment(this.item.deadline).format('MMM DD') : undefined
-      },
-      isSubItem: function() {
-        return this.parentModel == 'checklist-item' || ! this.item.checklist_id ? true : false;
-      },
-      uncheckedSubItemsCount: function() {
-        return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
-      },
-      checklistTooltip: function () {
-        return this.item.child_list_items && this.item.child_list_items.length ? this.uncheckedSubItemsCount +' unchecked items' : 'Does not have any checklist items'
-      },
+    itemBypassesFilters: function() {
+      return this.unfilteredItems.indexOf(this.item.id) !== -1
     },
-    methods: {
-      ...mapActions([
-        'checkChecklistItem',
-        'setChecklistItemDeadline',
-      ]),
-      checkItem: function() {
-        this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
-        this.checkChecklistItem(this.item)
-            .then( () => this.checkboxClassOverride = null )
-            .catch( () => this.checkboxClassOverride = null )
-      },
-      toggleSelection: function(payload) {
-        return this.$eventHub.$emit('toggleSelection', payload);
-      },
-      showDatePicker: function() {
-        return this.chooseDate = true
-      },
-      hideDatePicker: function() {
-        return this.chooseDate = false
-      },
-      navigateTo: function(model, id) {
-        return window.location.href = '/'+model+'/'+id
-      },
-      setDate: function(date = null) {
-        this.setChecklistItemDeadline({item: this.item, date, isSubItem: this.isSubItem})
-            .then( (success) => {
-              this.hideDatePicker()
-            })
-            .catch( (error) => {
-              this.hideDatePicker()
-              console.log(error)
-            })
-      },
+    itemIsDelisted: function() {
+      return this.delistedItems.indexOf(this.item.id) !== -1
     },
+    itemPassesCheckedFilter: function() {
+      if (this.parentModel == 'checklist-item') return true
+
+      if (this.listType == 'nu' || this.listType == 'bu' || this.filters.checked == 'all') return true
+
+      if (this.filters.checked == 'checked') {
+        if (this.item.checked_at && this.item.checked_at !== null) {
+          return true
+        }
+        return false
+      }
+      if (this.filters.checked == 'unchecked') {
+        if (!this.item.checked_at || this.item.checked_at == null) {
+          return true
+        }
+        return false
+      }
+      return true
+    },
+    itemPassesPriorityFilter: function() {
+      if (this.filters.priority == 'none') return true
+
+      if (this.filters.priority == 'both') {
+        if (this.item.is_important && this.item.is_urgent) {
+          return true
+        }
+        return false
+      }
+      if (this.filters.priority == 'important') {
+        if (this.item.is_important && ! this.item.is_urgent) {
+          return true
+        }
+        return false
+      }
+      if (this.filters.priority == 'urgent') {
+        if (this.item.is_urgent && ! this.item.is_important) {
+          return true
+        }
+        return false
+      }
+      return true
+    },
+    itemIsVisible: function() {
+      return this.itemBypassesFilters || !this.itemIsDelisted && !this.itemIsDeleted && this.itemPassesCheckedFilter && this.itemPassesPriorityFilter
+    },
+    itemIsCurrentlyEditable: function() {
+      return this.editableItem.id && this.item.id == this.editableItem.id
+    },
+    itemIsSelected: function() {
+      return this.selected.checklistItems.indexOf(this.item) !== -1
+    },
+    deadlinePlaceholder: function () {
+      return this.item.deadline ? moment(this.item.deadline).format('MMM DD') : undefined
+    },
+    isSubItem: function() {
+      return this.parentModel == 'checklist-item' || ! this.item.checklist_id ? true : false;
+    },
+    uncheckedSubItemsCount: function() {
+      return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
+    },
+    checklistTooltip: function () {
+      return this.item.child_list_items && this.item.child_list_items.length ? this.uncheckedSubItemsCount +' unchecked items' : 'Does not have any checklist items'
+    },
+  },
+  methods: {
+    ...mapActions([
+      'checkChecklistItem',
+      'setChecklistItemDeadline',
+    ]),
+    checkItem: function() {
+      this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
+      this.checkChecklistItem(this.item)
+          .then( () => this.checkboxClassOverride = null )
+          .catch( () => this.checkboxClassOverride = null )
+    },
+    toggleSelection: function(payload) {
+      return this.$eventHub.$emit('toggleSelection', payload);
+    },
+    showDatePicker: function() {
+      return this.chooseDate = true
+    },
+    hideDatePicker: function() {
+      return this.chooseDate = false
+    },
+    navigateTo: function(model, id) {
+      return window.location.href = '/'+model+'/'+id
+    },
+    setDate: function(date = null) {
+      this.setChecklistItemDeadline({item: this.item, date, isSubItem: this.isSubItem})
+          .then( (success) => {
+            this.hideDatePicker()
+          })
+          .catch( (error) => {
+            this.hideDatePicker()
+            console.log(error)
+          })
+    },
+  },
 }
 </script>
 
