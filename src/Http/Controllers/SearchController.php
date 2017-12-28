@@ -17,11 +17,17 @@ class SearchController extends Controller
 
     public function search($account, Request $request)
     {
+        // $folders = Folder::search($request->input('query'))->get();
+        // $checklists = Checklist::search($request->input('query'))->get();
+        //
+        // if($folders) $folders = $folders->where('user_id', $request->user()->id)->all();
+        // if($checklists) $checklists = $checklists->where('user_id', $request->user()->id)->all();
+
         $folders = Folder::search($request->input('query'))->get();
         $checklists = Checklist::search($request->input('query'))->get();
 
-        if($folders) $folders = $folders->where('user_id', $request->user()->id)->all();
-        if($checklists) $checklists = $checklists->where('user_id', $request->user()->id)->all();
+        $folders = $folders ? $folders->where('user_id', $request->user()->id)->all() : null;
+        $checklists = $checklists ? $checklists->where('user_id', $request->user()->id)->all() : null;
 
         $results = [
             'folders' => $folders,
