@@ -45,4 +45,18 @@ class ChecklistPolicy
       return $user->id === $checklist->user_id;
 
     }
+
+    /**
+     * Determine if the given user can admin the given checklist.
+     *
+     * @param  User  $user
+     * @param  Checklist  $checklist
+     * @return bool
+     */
+    public function admin(User $user, Checklist $checklist)
+    {
+
+      return $user->id === $checklist->user_id;
+
+    }
 }

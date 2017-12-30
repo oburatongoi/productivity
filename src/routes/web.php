@@ -31,7 +31,8 @@ Route::group(['domain' => '{'.(string)(config('productivity.subdomain')).'}.'.(s
         Route::get('/maintenance/add-missing-fake-ids', 'Maintenance\MissingFakeIdController@addMissingFakeIds');
         Route::get('/maintenance/set-item-sort-order', 'Maintenance\ItemSortOrderController@setSortOrder');
 
-        Route::get('/allow-user/{user}/to/{access}/folder/{folder}', 'AuthController@grantFolderAccess');
+        Route::get('/{verb}/{user}/to/{access}/{model}/{id}', 'AuthController@setAccess');
+        Route::get('/get-abilities', 'AuthController@getAbilities');
     });
 
 });

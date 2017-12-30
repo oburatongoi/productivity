@@ -46,4 +46,18 @@ class FolderPolicy
     //   // return $user->id === $folder->user_id;
     //
     // }
+
+    /**
+     * Determine if the given user can admin the given folder.
+     *
+     * @param  User  $user
+     * @param  Folder  $folder
+     * @return bool
+     */
+    public function admin(User $user, Folder $folder)
+    {
+
+      return $user->id === $folder->user_id;
+
+    }
 }

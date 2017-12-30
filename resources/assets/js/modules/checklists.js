@@ -688,7 +688,7 @@ const actions = {
 }
 
 const getters = {
-    checklists: state => state.checklists,
+    checklists: state => _.orderBy(state.checklists, 'title'),
     checklist: state => state.checklist,
     unfilteredItems: state => state.unfilteredItems,
     delistedItems: state => state.delistedItems,

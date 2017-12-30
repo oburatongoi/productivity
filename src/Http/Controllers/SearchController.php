@@ -17,25 +17,20 @@ class SearchController extends Controller
 
     public function search($account, Request $request)
     {
-        // $folders = Folder::search($request->input('query'))->get();
-        // $checklists = Checklist::search($request->input('query'))->get();
-        //
-        // if($folders) $folders = $folders->where('user_id', $request->user()->id)->all();
-        // if($checklists) $checklists = $checklists->where('user_id', $request->user()->id)->all();
+      $results = [];
 
-        $folders = Folder::search($request->input('query'))->get();
-        $checklists = Checklist::search($request->input('query'))->get();
+      $folders = Folder::search($request->input('query'))->get();
+      $checklists = Checklist::search($request->input('query'))->get();
 
-        $folders = $folders ? $folders->where('user_id', $request->user()->id)->all() : null;
-        $checklists = $checklists ? $checklists->where('user_id', $request->user()->id)->all() : null;
 
-        $results = [
-            'folders' => $folders,
-            'checklists' => $checklists
-        ];
+      $results['folders'] = $folders ? $folders->where('user_id', $request->user()->id)->all() : null;
+      $results['checklists'] = $checklists ? $checklists->where('user_id', $request->user()->id)->all() : null;
 
-        return response()->json([
-            'results' => $results
-        ]);
-    }
+
+      // dd($results);
+
+      return response()->json([
+          'results' => $results
+      ]);
+  }
 }

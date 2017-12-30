@@ -16,45 +16,50 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('web');
+        $this->middleware('auth');
     }
 
-    public function grantFolderAccess($account, Request $request, User $user, $access, Folder $folder)
+    /**
+     * Change a user's access to a resource.
+     * @param $verb. Options are: allow, disallow
+     * @return \Illuminate\Http\Response
+     */
+    public function setAccess($account, Request $request, $verb, User $user, $access, $model, $id)
     {
-      if($access) {
-        $user->allow($access, $folder);
+      if (! $verb || ! $user || ! $access || ! $model || ! $id) {
+        return response()->json(['error' => 'Hmmm, we seem to be missing some parameters.']);
+      }
+
+      switch ($model) {
+        case 'folder':
+          $resource = Folder::where('fake_id', $id)->first();
+          break;
+        case 'checklist':
+          $resource = Checklist::where('fake_id', $id)->first();
+          break;
+      }
+
+      $this->authorize('admin', $resource);
+
+      if($resource) {
+        $user->$verb($access, $resource);
         Bouncer::refreshFor($user);
         return response()->json(['success' => true]);
       }
-      return response()->json(['error' => 'No permission was specified']);
+      return response()->json(['error' => 'Hmmm, the resource could not be found.']);
+
     }
 
-    public function revokeFolderAccess($account, Request $request, User $user, $access, Folder $folder)
+    /**
+     * Change a user's access to a resource.
+     * @param $verb. Options are: allow, disallow
+     * @return \Illuminate\Http\Response
+     */
+    public function getAbilities($account, Request $request)
     {
-      if($access) {
-        $user->disallow($access, $folder);
-        Bouncer::refreshFor($user);
-        return response()->json(['success' => true]);
-      }
-      return response()->json(['error' => 'No permission was specified']);
-    }
+      return response()->json([
+        'abilities' => $request->user()->getAbilities()->where('entity_type', 'Oburatongoi\Productivity\Checklist')
+      ]);
 
-    public function grantChecklistAccess($account, Request $request, User $user, $access, Checklist $checklist)
-    {
-      if($access) {
-        $user->allow($access, $checklist);
-        Bouncer::refreshFor($user);
-        return response()->json(['success' => true]);
-      }
-      return response()->json(['error' => 'No permission was specified']);
-    }
-
-    public function revokeChecklistAccess($account, Request $request, User $user, $access, Checklist $checklist)
-    {
-      if($access) {
-        $user->disallow($access, $checklist);
-        Bouncer::refreshFor($user);
-        return response()->json(['success' => true]);
-      }
-      return response()->json(['error' => 'No permission was specified']);
     }
 }

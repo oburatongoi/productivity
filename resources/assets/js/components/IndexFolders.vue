@@ -5,7 +5,7 @@
     @click.self="clearSelected"
   >
       <li
-        v-for="folder in orderBy(folders, 'name')"
+        v-for="folder in folders"
         class="listing folder-color-scheme"
         :class="{selected: selected.folders.indexOf(folder) !== -1 }"
         draggable="true"

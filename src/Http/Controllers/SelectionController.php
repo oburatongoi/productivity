@@ -28,14 +28,20 @@ class SelectionController extends Controller
       try {
 
         $folders = Folder::select('name', 'fake_id', 'id')
-                    ->where('folder_id', $request->input('folder_id'))
+                    ->where([
+                      ['folder_id', $request->input('folder_id')],
+                      ['user_id', $request->user()->id],
+                    ])
                     ->orderBy('name', 'asc')
                     ->with('folder')
                     ->get();
 
         if ($request->has('includeChecklists')) {
           $checklists = Checklist::select('title', 'fake_id', 'id')
-                      ->where('folder_id', $request->input('folder_id'))
+                      ->where([
+                        ['folder_id', $request->input('folder_id')],
+                        ['user_id', $request->user()->id],
+                      ])
                       ->orderBy('title', 'asc')
                       ->get();
 

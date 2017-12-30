@@ -140,7 +140,7 @@ const actions = {
 }
 
 const getters = {
-    folders: state => state.folders,
+    folders: state => _.orderBy(state.folders, 'name'),
     currentFolder: state => state.currentFolder
 }
 

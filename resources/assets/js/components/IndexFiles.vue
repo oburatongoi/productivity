@@ -5,7 +5,7 @@
     @click.self="clearSelected"
   >
       <index-checklists
-        v-for="checklist in orderBy(checklists, 'title')"
+        v-for="checklist in checklists"
         :checklist="checklist"
         :key="checklist.fake_id"
       />
