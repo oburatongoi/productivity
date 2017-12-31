@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="edit-checklist" @change="saveChanges">
     <h4>{{ listTypeTitle }}</h4>
-    <p class="text-muted">Don't think too hard &#8212; you can change this later</p>
+    <p class="text-muted">No worries &#8212; you can change this later</p>
     <div class="list-type-option">
       <div class="list-type-option-inner">
         <input type="radio" id="ch" value="ch" v-model="checklist.list_type">

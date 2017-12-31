@@ -1,37 +1,40 @@
 <template lang="html">
   <div class="search-results" v-if="search.isSearching||search.query">
+    <div class="search-results-wrapper">
+      <div class="secondary-search-input">
+        <i class="fa fa-search" aria-hidden="true"/>
+        <search-input/>
+        <i class="fa fa-times" aria-hidden="true" @click="cancel"/>
+      </div>
 
-    <div class="secondary-search-input">
-      <i class="fa fa-search" aria-hidden="true"/>
-      <search-input/>
-      <i class="fa fa-times" aria-hidden="true" @click="cancel"/>
-    </div>
+      <div class="results-container">
+        <i class="fa fa-spinner fa-spin" aria-hidden="true" v-if="search.isSearching"/>
 
-    <i class="fa fa-spinner fa-spin" aria-hidden="true" v-if="search.isSearching"/>
+        <ul class="list-unstyled folder-color-scheme" v-if="searchResultHasFolders">
+          <li v-for="folder in alphabeticalFolderSearchResults" :key="folder.id">
+            <a :href="'/folders/'+folder.fake_id">
+              <i class="fa fa-fw fa-folder" aria-hidden="true"/>
+              {{ folder.name }}
+            </a>
+          </li>
+        </ul>
 
-    <ul class="list-unstyled folder-color-scheme" v-if="searchResultHasFolders">
-      <li v-for="folder in alphabeticalFolderSearchResults" :key="folder.id">
-        <a :href="'/folders/'+folder.fake_id">
-          <i class="fa fa-fw fa-folder" aria-hidden="true"/>
-          {{ folder.name }}
-        </a>
-      </li>
-    </ul>
+        <ul class="list-unstyled list-color-scheme" v-if="searchResultHasChecklists">
+          <li v-for="checklist in alphabeticalChecklistSearchResults" :key="checklist.id">
+            <a :href="'/lists/'+checklist.fake_id">
+              <i class="fa fa-fw fa-list" aria-hidden="true"/>
+              {{ checklist.title }}
+            </a>
+          </li>
+        </ul>
 
-    <ul class="list-unstyled list-color-scheme" v-if="searchResultHasChecklists">
-      <li v-for="checklist in alphabeticalChecklistSearchResults" :key="checklist.id">
-        <a :href="'/lists/'+checklist.fake_id">
-          <i class="fa fa-fw fa-list" aria-hidden="true"/>
-          {{ checklist.title }}
-        </a>
-      </li>
-    </ul>
-
-    <p v-if="search.errorMessage" class="error-message">{{ search.errorMessage }}</p>
-    <!-- <p v-if="search.query&&!search.isSearching&&!hasSearchResults" class="info-message">There were no files or folders matching your search.</p> -->
-
-    <div class="algolia-image">
-      powered by <img src="/vendor/productivity/images/Algolia_logo_bg-white.jpg" alt="Powered by Algolia">
+        <p v-if="search.errorMessage" class="error-message">{{ search.errorMessage }}</p>
+        <!-- <p v-if="search.query&&!search.isSearching&&!hasSearchResults" class="info-message">There were no files or folders matching your search.</p> -->
+        <div class="algolia-image">
+          powered by <img src="/vendor/productivity/images/Algolia_logo_bg-white.jpg" alt="Powered by Algolia">
+        </div>
+      </div>
+      <div class="search-results-bottom-gradient"/>
     </div>
   </div>
 </template>
@@ -102,6 +105,26 @@ export default {
   .secondary-search-input,
   .error-message {
       font-weight: $font-weight-normal;
+  }
+
+  .search-results-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .results-container {
+    height: 90%;
+    padding-bottom: 10%;
+    overflow-y: scroll;
+  }
+  .search-results-bottom-gradient {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    @include transparent-linear-gradient;
   }
 
   ul {

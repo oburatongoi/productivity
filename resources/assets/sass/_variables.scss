@@ -52,6 +52,7 @@ $font-weight-bold: 500;
 $font-weight-light: 300;
 $line-height-base: 1.6;
 $grey-text-color: #636b6f;
+$light-grey-text-color: lighten($grey-text-color, 20%);
 $text-color: #000;
 // $text-color: $brand-primary;
 // $text-color: $grey-text-color;

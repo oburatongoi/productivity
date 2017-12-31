@@ -5,6 +5,7 @@ import {
   SET_CREATING_NEW,
   TOGGLE_CREATING_NEW_BUTTONS,
   TOGGLE_DELETABLE,
+  TOGGLE_EDITABILITY,
   TOGGLE_MOVABLE
 } from '../mutations'
 
@@ -20,7 +21,8 @@ const state = {
         checklistItems: [],
         movable: false,
         deletable: false
-    }
+    },
+    isEditable: false,
 }
 
 const mutations = {
@@ -38,6 +40,13 @@ const mutations = {
     },
     [TOGGLE_CREATING_NEW_BUTTONS] (state) {
         state.showCreatingNewButtons = ! state.showCreatingNewButtons
+    },
+    [TOGGLE_EDITABILITY] (state, bool) {
+      if (bool !== "unset") {
+        state.isEditable = bool
+      } else {
+        state.isEditable = ! state.isEditable
+      }
     },
     [TOGGLE_MOVABLE] (state) {
         state.selected.movable = ! state.selected.movable
@@ -91,6 +100,9 @@ const actions = {
     },
     toggleCreatingNewButtons({ commit }) {
         commit(TOGGLE_CREATING_NEW_BUTTONS)
+    },
+    toggleEditability({ commit }, bool = "unset") {
+        commit(TOGGLE_EDITABILITY, bool)
     },
     toggleMovable({ commit }) {
         commit(TOGGLE_MOVABLE)
@@ -274,8 +286,10 @@ const getters = {
     showCreatingNewButtons: state => state.showCreatingNewButtons,
     ancestors: state => state.ancestors,
     selected: state => state.selected,
-    selectedIsMovable: state => state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length),
-    listingIsActionable: state => !state.selected.movable && (state.selected.folders.length || state.selected.checklists.length || state.selected.checklistItems.length)
+    selectedCount: state => state.selected.folders.length + state.selected.checklists.length + state.selected.checklistItems.length,
+    isEditable: state => state.isEditable,
+    selectedIsMovable: (state, getters) => state.selected.movable && getters.selectedCount,
+    listingIsActionable: (state, getters) => !state.selected.movable && getters.selectedCount
 }
 
 export default {

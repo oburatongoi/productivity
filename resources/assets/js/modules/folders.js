@@ -69,39 +69,30 @@ const actions = {
 
       })
     },
-    saveFolder({ commit }, folder) {
+    saveFolder({ dispatch }, folder) {
         return new Promise((resolve, reject) => {
-
-          axios.patch('/folders/'+folder.fake_id, folder)
-          .then(function(response) {
-              if (response.data.tokenMismatch) {
-                  Vue.handleTokenMismatch(response.data).then(
-                      (response) => {
-                          if (response.data.folder) {
-                              commit(UPDATE_FOLDER, response.data.folder)
-                              resolve(response.data.folder)
-                          } else if (response.data.error) {
-                              reject(response.data.error)
-                          } else {
-                              reject()
-                          }
-                      }
-                  ).catch(
-                      (error) => reject(error)
-                  )
-              } else if (response.data.folder) {
-                  commit(UPDATE_FOLDER, response.data.folder)
-                  resolve(response.data.folder)
-              } else if (response.data.error) {
-                  reject(response.data.error)
-              } else {
-                  reject()
-              }
-          })
-          .catch(function(error) {
-              reject(error)
-          })
-
+          axios.patch('/folders/'+folder.fake_id, {folder})
+               .then( response => resolve(dispatch('saveFolderHandler', response)))
+               .catch( error => reject(error))
+        })
+    },
+    saveFolderHandler({commit}, response) {
+        return new Promise((resolve, reject) => {
+          if (response.data.tokenMismatch) {
+              Vue.handleTokenMismatch(response.data)
+                  .then( response => {
+                    if (response.data.folder) {
+                      resolve(response.data.folder)
+                    } else if (response.data.error)
+                        reject(response.data.error)
+                      else reject()
+                  })
+                  .catch( error => reject(error) )
+          } else if (response.data.folder) {
+              resolve(response.data.folder)
+          } else if (response.data.error)
+              reject(response.data.error)
+            else reject()
         })
     },
     storeFolder({commit}, folder) {

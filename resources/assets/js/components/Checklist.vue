@@ -163,7 +163,6 @@ export default {
   },
   data () {
     return {
-      isEditable: false,
       isSaving: false,
       inputIcon: 'fa-times',
       unsavedChanges: false,
@@ -180,6 +179,7 @@ export default {
       'editableSubItem',
       'editableItemIsExpanded',
       'editableSubItemIsExpanded',
+      'isEditable',
       'selectedIsMovable',
       'filters'
     ]),
@@ -258,6 +258,7 @@ export default {
   methods: {
     ...mapActions([
       'saveChecklist',
+      'toggleEditability',
       'toggleSelection',
       'setFilters'
     ]),
@@ -307,14 +308,14 @@ export default {
 
       }
     },
-    toggleEditability: function(bool = "unset") {
-
-      if (bool !== "unset") {
-        this.isEditable = bool
-      } else {
-        this.isEditable = ! this.isEditable
-      }
-    },
+    // toggleEditability: function(bool = "unset") {
+    //
+    //   if (bool !== "unset") {
+    //     this.isEditable = bool
+    //   } else {
+    //     this.isEditable = ! this.isEditable
+    //   }
+    // },
     debounceResizeInput: _.debounce(function() {
       this.resizeInput()
     }, 300),
