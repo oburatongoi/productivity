@@ -150,6 +150,13 @@ class FolderController extends Controller
     public function update($account, Request $request, Folder $folder)
     {
       $this->authorize('modify', $folder);
+
+      $this->validate($request, [
+          'folder.name' => 'required|max:255',
+          'folder.id' => 'required|integer',
+          'folder.fake_id' => 'required|integer',
+      ]);
+
       $response = [];
 
       try {
