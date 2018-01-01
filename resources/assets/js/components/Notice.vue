@@ -52,7 +52,7 @@ export default {
 
 <style lang="scss">
   li.productivity-notice {
-    z-index: 99999999999999999;
+    @include high-z-index(3);
     width: 100%;
     float: right;
     padding: 10px;

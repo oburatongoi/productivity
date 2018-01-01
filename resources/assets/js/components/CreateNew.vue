@@ -152,3 +152,35 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+.create-new {
+    display: inline-block;
+    width: 100%;
+}
+
+.create-new-input {
+    border: 0;
+    border-right: 1px solid $base-border-color;
+    outline: none;
+    background: white;
+    display: block;
+    line-height: 2;
+    &:active {
+        outline: none;
+    }
+    @media(min-width:768px){
+        width: 100%;
+    }
+}
+
+.create-new-form {
+    .input-wrap {
+        padding-right: 5px;
+    }
+    .button-wrap {
+        padding-left: 5px;
+    }
+}
+
+</style>

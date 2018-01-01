@@ -7,13 +7,13 @@
           Home
         </a>
       </li>
-      
+
       <template v-if="ancestors.length">
         <li v-for="ancestor in ancestors" :class="{ 'current-folder': checklist&&checklist.folder_id==ancestor.id }" :key="ancestor.id">
           <i class="fa fa-fw fa-angle-right" aria-hidden="true"/>
           <a :href="'/folders/'+ancestor.fake_id">
             <i class="fa fa-fw fa-folder-o" aria-hidden="true"/>
-            {{ ancestor.name }}
+            {{ ancestor.name | truncate(35) }}
           </a>
         </li>
       </template>
@@ -21,7 +21,7 @@
       <li v-if="currentFolder&&currentFolder.name&&!hasCurrentView&&!currentFolderIsAncestor" class="current-folder">
           <i class="fa fa-fw fa-angle-right" aria-hidden="true"/>
           <i class="fa fa-fw fa-folder-open" aria-hidden="true"/>
-          {{ currentFolder.name }}
+          {{ currentFolder.name | truncate(35) }}
       </li>
 
       <!-- this section renders the name of the current view of the Home screen -->
@@ -67,3 +67,47 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.productivity-breadcrumbs {
+    border-left: 1px solid $base-border-color;
+    padding-left: 10px;
+    display: inline-block;
+    width: 80%;
+    font-size: 1em;
+    line-height: 2;
+    margin: 0;
+    margin-top: 2px;
+    vertical-align: middle;
+    // overflow-x: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -ms-overflow-style: none;
+    color: $brand-primary;
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    font-weight: 300;
+
+    .current-view,
+    .current-folder {
+        font-weight: $font-weight-bold;
+    }
+
+    ul {
+        display: inline-block;
+        margin: 0;
+    }
+
+    li {
+        display: inline-block;
+    }
+
+    .fa-angle-right {
+        color: darken($base-border-color, 10%);
+    }
+}
+
+</style>

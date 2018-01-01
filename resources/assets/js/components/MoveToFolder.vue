@@ -290,5 +290,172 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+.move-to-folder {
+    position: fixed;
+    background: white;
+    border: 1px solid $base-border-color;
+    border-radius: 3px;
+    padding: 0;
+
+    @media(max-width:767px){
+        top: 10%;
+        left: 5%;
+        right: 5%;
+    }
+    @media(min-width:768px){
+        top: 10%;
+        left: 15%;
+        right: 15%;
+    }
+    @media(min-width:992px){
+        top: 10%;
+        left: 30%;
+        right: 30%;
+    }
+    @media(min-width:1200px){
+        top: 10%;
+        left: 30%;
+        right: 30%;
+    }
+
+    .move-to-folder-heading {
+        background: $body-bg;
+        border-bottom: 1px solid $base-border-color;
+        padding: 10px;
+        text-align: left;
+        .fa-times,
+        .fa-arrow-left {
+            cursor: pointer;
+            &:hover {
+                color: $folder-primary;
+            }
+        }
+        .heading-right {
+            float: right;
+            margin-top: 5px;
+        }
+        .heading-left {
+            float: left;
+            margin-top: 5px;
+        }
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+        .current-folder {
+            margin-left: 10px;
+            font-size: 1.2em;
+            cursor: default;
+            &.active {
+                color: $folder-primary
+            }
+        }
+        .add-folder-form {
+            display: inline-block;
+            width: 90%;
+            margin: 0;
+            margin-left: 10px;
+
+            .add-folder-form-input {
+                width: 70%;
+                display: inline-block;
+            }
+            .add-folder-form-buttons {
+                width: 28%;
+                display: inline-block;
+            }
+        }
+
+    }
+    .move-to-folder-body {
+        height: 200px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding: 10px 10px 10px 30px;
+        position: relative;
+        .info-message {
+            .fa-spin {
+                color: $folder-primary;
+            }
+            .error {
+                color: $brand-warning;
+            }
+            .info {
+                color: $brand-info;
+            }
+        }
+        .nested-folder {
+            display: block;
+            padding: 5px 5px 0px;
+            border-radius: 3px;
+            cursor: default;
+            .fa-angle-right {
+                float: right;
+                cursor: pointer;
+                padding: 3px 8px;
+                border: 1px solid transparent;
+                display: none;
+                &:hover {
+                    border: 1px solid;
+                    border-radius: 3px;
+                }
+            }
+            .fa {
+                color: $folder-primary;
+            }
+            &.active {
+                color: $folder-primary;
+                border: 1px dotted $folder-primary;
+            }
+            &:hover {
+                background: lighten($body-bg, 0.5%);
+                .fa-angle-right {
+                    display: inline-block;
+                }
+            }
+            span {
+                display: inline-block;
+                width: 93%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                margin: 0;
+                padding: 0;
+                line-height: 1.5;
+            }
+
+        }
+    }
+    .move-to-folder-footer {
+        border-top: 1px solid $base-border-color;
+        padding: 10px;
+        p {
+            margin: 0;
+            margin-left: 10px;
+            font-size: 0.8em;
+            display: inline-block;
+            span.footer-text {
+                color: $folder-primary;
+                font-weight: 600;
+            }
+        }
+        .toggle-add-folder-btn {
+            float: right;
+            cursor: pointer;
+            margin-top: 8px;
+            .fa-folder {
+                font-size: 1.5em;
+                line-height: 16px;
+            }
+            .fa-times,
+            .fa-plus {
+                font-size: 0.7em;
+                line-height: 18px;
+            }
+        }
+    }
+}
+
 </style>

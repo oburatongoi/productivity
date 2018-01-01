@@ -24,13 +24,13 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
   .productivity-notices {
     position: absolute;
     top: 20px;
     right: 20px;
     width: 40%;
-    z-index: 9999999999999999;
+    @include high-z-index(2);
     background: transparent;
   }
   .productivity-notices:after {

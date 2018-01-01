@@ -144,10 +144,10 @@ export default {
   @media(min-width:768px){
     display: inline-block;
     position: absolute;
+    @include high-z-index(1);
     top: 0;
     bottom: 0;
     right: 0;
-    z-index: 99;
     width: auto;
     vertical-align: middle;
     border-top: 0;

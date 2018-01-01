@@ -76,7 +76,7 @@ export default {
     text-align: center;
     padding: 0 10px;
     position: absolute;
-    z-index: 9999999;
+    @include high-z-index(0);
     top: 5px;
     right: 20px;
     @include clearfix;

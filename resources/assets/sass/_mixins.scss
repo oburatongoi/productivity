@@ -24,6 +24,10 @@
     height: 40px;
 }
 
+@mixin high-z-index($add) {
+    z-index: $base-z-index + $add;
+}
+
 @mixin transparent-linear-gradient {
   background: -webkit-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
   background: -o-linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,1));
@@ -35,4 +39,14 @@
     -webkit-box-shadow: $base-box-shadow;
     -moz-box-shadow: $base-box-shadow;
     box-shadow: $base-box-shadow;
+}
+
+@mixin main-nav {
+    display: block;
+    background: white;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid $base-border-color;
+    width: 100%;
+
 }

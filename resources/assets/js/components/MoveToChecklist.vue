@@ -337,5 +337,173 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+.move-to-checklist {
+    background: white;
+    border: 1px solid $base-border-color;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0;
+    @include high-z-index(2);
+    height: 100%;
+
+    .move-to-checklist-heading {
+        background: $body-bg;
+        border-bottom: 1px solid $base-border-color;
+        padding: 10px;
+        text-align: left;
+        .fa-times,
+        .fa-arrow-left {
+            cursor: pointer;
+            &:hover {
+                color: $folder-primary;
+            }
+        }
+        .heading-right {
+            float: right;
+            margin-top: 5px;
+        }
+        .heading-left {
+            float: left;
+            margin-top: 5px;
+        }
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+        .current-folder {
+            margin-left: 10px;
+            font-size: 1.2em;
+            cursor: default;
+            &.active {
+                color: $folder-primary
+            }
+        }
+        .add-folder-form {
+            display: inline-block;
+            width: 90%;
+            margin: 0;
+            margin-left: 10px;
+
+            .add-folder-form-input {
+                width: 70%;
+                display: inline-block;
+            }
+            .add-folder-form-buttons {
+                width: 28%;
+                display: inline-block;
+            }
+        }
+
+    }
+    .move-to-checklist-body {
+        height: 85%;
+        overflow-x: hidden;
+        padding: 10px 10px 10px 30px;
+        position: relative;
+        @include desktop-overflow-y-scroll;
+        .info-message {
+            .fa-spin {
+                color: $folder-primary;
+            }
+            .error {
+                color: $brand-warning;
+            }
+            .info {
+                color: $brand-info;
+            }
+        }
+        .nested-checklist,
+        .nested-folder {
+            display: block;
+            padding: 5px 5px 0px;
+            border-radius: 3px;
+            cursor: default;
+            .fa-angle-right {
+                float: right;
+                cursor: pointer;
+                padding: 3px 8px;
+                border: 1px solid transparent;
+                display: none;
+                &:hover {
+                    border: 1px solid;
+                    border-radius: 3px;
+                }
+            }
+            &:hover {
+                background: lighten($body-bg, 0.5%);
+                .fa-angle-right {
+                    display: inline-block;
+                }
+            }
+            span {
+                display: inline-block;
+                width: 93%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                margin: 0;
+                padding: 0;
+                line-height: 1.5;
+            }
+
+        }
+        .nested-folder {
+          cursor: pointer;
+            .fa {
+                color: $folder-primary;
+            }
+            &.active {
+                color: $folder-primary;
+                border: 1px dotted $folder-primary;
+            }
+        }
+        .nested-checklist {
+            .fa {
+                color: $list-primary;
+            }
+            &.active {
+                color: $list-primary;
+                border: 1px dotted $list-primary;
+            }
+        }
+    }
+    .move-to-checklist-footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        // border-top: 1px solid $base-border-color;
+        padding: 10px;
+        @include transparent-linear-gradient;
+        p {
+            margin: 0;
+            margin-left: 10px;
+            font-size: 0.8em;
+            display: inline-block;
+            span.footer-text {
+                color: $list-primary;
+                font-weight: 600;
+            }
+        }
+        .toggle-add-folder-btn {
+            float: right;
+            cursor: pointer;
+            margin-top: 8px;
+            .fa-folder {
+                font-size: 1.5em;
+                line-height: 16px;
+            }
+            .fa-times,
+            .fa-plus {
+                font-size: 0.7em;
+                line-height: 18px;
+            }
+        }
+    }
+}
+
 </style>

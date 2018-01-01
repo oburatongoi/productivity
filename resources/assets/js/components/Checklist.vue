@@ -386,18 +386,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-// .deadline-input {
-//     width: 150px;
-//     display: inline-block;
-//     vertical-align: middle;
-//     label {
-//         margin:0;
-//         margin-right: 10px;
-//     }
-// }
-
-
 .checklist {
     height: 100%;
     @include desktop-overflow-y;
@@ -659,7 +647,7 @@ export default {
 
             &.open {
                 border: 1px solid $base-border-color;
-                z-index: 1000;
+                @include high-z-index(0);
                 background: white;
             }
 

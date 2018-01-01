@@ -63,3 +63,13 @@ body,
         padding: 5px;
     }
 }
+
+.nav-sizer {
+    width: 100%;
+    margin: 0;
+    @include top-menu-height;
+}
+
+.position-relative {
+    position: relative;
+}
