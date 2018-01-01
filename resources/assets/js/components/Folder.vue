@@ -1,13 +1,13 @@
 <template lang="html">
   <div class="folder">
-    <div class="folder-name-wrapper" :class="{ editable: isEditable }">
+    <div class="folder-name-wrapper" :class="{ editable: isEditable }" v-if="currentFolder.fake_id">
       <h4 @click="toggleEditability" id="folder-name">
         <i class="fa fw" :class="headingIcon" aria-hidden="true"/>
         <input type="text"
           id="folder-name-input"
           class="edit-folder-input"
           v-model="currentFolder.name"
-          @keyup.enter="debounceSaveChanges"
+          @keyup.enter="saveChanges"
           @keyup="debounceSaveChanges"
           @keydown="debounceSaveChanges"
           @cut="debounceSaveChanges"
@@ -15,10 +15,6 @@
           @blur="toggleEditability(false)"
         >
       </h4>
-      <!-- <span v-if="isSaving" class="saving">
-        <i class="fa" :class="savingIcon" aria-hidden="true"/>
-        {{ savingText }}
-      </span> -->
       <span v-if="isEditable" class="btn-folder btn-sm save-button" @click="saveChanges">
         <i class="fa" :class="savingIcon" aria-hidden="true"/>
         {{ savingText }}
@@ -82,6 +78,7 @@ export default {
   },
   methods: {
     ...mapActions([
+      'addNotice',
       'clearSelected',
       'saveFolder',
       'toggleEditability',
@@ -97,6 +94,15 @@ export default {
     saveChanges: function() {
         this.isSaving = true
         this.hasSavingError = false
+        console.log(this.currentFolder.name);
+        if ( ! this.currentFolder.name) {
+           this.addNotice({
+            type: 'error',
+            heading: 'Error',
+            message: 'Please provide a folder name.',
+            persist: false,
+          })
+        }
         this.saveFolder(this.currentFolder)
             .then(
               () => this.isSaving = false
@@ -125,9 +131,12 @@ export default {
     color: $folder-primary;
     display: block;
     position: relative;
-    // margin: 0;
-    // margin-bottom: 20px;
+    width: 100%;
     padding: 0;
+
+    input {
+      width: 70%;
+    }
 
     &.editable {
       color: black;
@@ -141,10 +150,6 @@ export default {
       padding: 5px;
     }
 
-    // .saving {
-    //   font-size: 0.85em;
-    //   color: $list-primary;
-    // }
   }
 
   .toggle-edit-btn {
