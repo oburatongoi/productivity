@@ -255,7 +255,7 @@ export default {
 
       var target = document.getElementById(this.view+'-panel-'+this.item.id);
       var notesHeight = panelHeight - (headerHeight+bottomButtonsHeight+topButtonsHeight)
-      target.style.height = notesHeight > 200 ? notesHeight+'px' : '200px'
+      if(!! target && !! notesHeight) target.style.height = notesHeight > 200 ? notesHeight+'px' : '200px'
     }
   },
   emitResize: function() {

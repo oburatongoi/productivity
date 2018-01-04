@@ -1,16 +1,44 @@
 <template lang="html">
   <div class="move-to-checklist">
     <div class="move-to-checklist-heading">
-      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="selectFolder(currentFolder.folder)" v-if="currentFolder.folder"/>
-      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFoldersAndChecklists()" v-if="currentFolder.id&&!currentFolder.folder"/>
-      <span
-        class="current-folder"
-        v-if="currentFolder&&!addingFolder"
-        :class="{ active: currentFolder.id==selectedChecklist.folder_id }"
-        @click.prevent="resetSelectedChecklist"
-      >
-        <i class="fa fa-home" aria-hidden="true" v-if="!currentFolder.id&&!currentFolder.folder"/>
-        {{ currentFolder.name }}
+      <template>
+        <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="openFolder(currentFolder.folder)" v-if="currentFolder.folder"/>
+        <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFoldersAndChecklists()" v-if="currentFolder.id&&!currentFolder.folder"/>
+        <span
+          class="current-folder"
+          v-if="currentFolder"
+          :class="{ active: currentFolder.id==selectedChecklist.folder_id }"
+          @click.prevent="resetSelected"
+        >
+          <i class="fa fa-home" aria-hidden="true" v-if="!currentFolder.id&&!currentFolder.folder"/>
+          {{ currentFolder.name }}
+        </span>
+      </template>
+
+      <span class="heading-right" @click="toggleMovable">
+        <i class="fa fa-times" aria-hidden="true"/>
+        Cancel Move
+      </span>
+
+    </div>
+
+    <div class="move-to-checklist-body" @click.self="resetSelected">
+      <div class="movable-selected-items">
+        <span><h4>Move: </h4></span>
+        <span v-for="item in selected.checklistItems" :key="item.id">
+          <i class="fa fa-fw fa-circle-thin" aria-hidden="true"/>
+          {{ item.content }}
+        </span>
+      </div>
+
+      <span @click="toggleAddingFolder" v-if="!addingFolder">
+        <span class="fa-stack toggle-add-folder-btn">
+          <i class="fa fa-folder fa-stack-2x folder-color-scheme"/>
+          <i class="fa fa-plus fa-stack-1x fa-inverse"/>
+          <!-- <i class="fa fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"/> -->
+          <!-- <i class="fa fa-times fa-stack-1x fa-inverse" v-if="addingFolder"/> -->
+        </span>
+        <span v-if="!addingFolder">Add Folder</span>
       </span>
 
       <form class="form-horizontal add-folder-form" v-if="addingFolder" @submit.prevent="createNewFolder">
@@ -19,72 +47,45 @@
         </div>
         <div class="add-folder-form-buttons">
           <button type="submit" class="btn btn-primary btn-sm">
-            <i class="fa fa-fw fa-check" aria-hidden="true"/>
+            <i class="fa fa-fw fa-plus" aria-hidden="true"/>
+            Add
           </button>
           <button type="button" class="btn btn-default btn-sm" @click.prevent="toggleAddingFolder('false')">
             <i class="fa fa-fw fa-times" aria-hidden="true"/>
+            Cancel
           </button>
         </div>
       </form>
 
-      <i class="fa fa-times heading-right" aria-hidden="true" @click="toggleMovable"/>
-    </div>
+      <template>
+        <move-target-folders
+          :folders="folders"
+          :is-loading="isLoading"
+          :folder-info-message="folderInfoMessage"
+          :is-storing-folder="isStoringFolder"
+        />
 
-    <div class="move-to-checklist-body" @click.self="resetSelectedChecklist">
-      <h4>Folders</h4>
-      <div class="info-message" v-if="showFolderInfoMessage">
-        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"/>
-        <p :class="[folderInfoMessage.type]" v-if="folderInfoMessage.content&&folderInfoMessage.type">{{ folderInfoMessage.content }}</p>
-      </div>
-
-      <ul class="list-unstyled" v-if="folders&&!isLoading">
-        <li v-if="isStoringFolder">
-          <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"/>
-        </li>
-        <li class="nested-folder"
-            v-for="folder in folders"
-            @click.prevent="openFolder(folder)"
-            @dblclick.prevent="openFolder(folder)"
-            :key="folder.id"
-        >
-          <span>
-            <i class="fa fa-fw fa-folder" aria-hidden="true"/>
-            {{ folder.name }}
-          </span>
-          <i class="fa fa-angle-right" aria-hidden="true" @click="openFolder(folder)"/>
-        </li>
-      </ul>
-
-      <h4>Lists</h4>
-      <div class="info-message" v-if="showChecklistInfoMessage">
-        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"/>
-        <p :class="[checklistInfoMessage.type]" v-if="checklistInfoMessage.content&&checklistInfoMessage.type">{{ checklistInfoMessage.content }}</p>
-      </div>
-
-      <ul class="list-unstyled" v-if="checklists&&!isLoading">
-        <li class="nested-checklist"
-            :class="{ active: checklist.id==selectedChecklist.id }"
-            v-for="checklist in checklists"
-            @click.prevent="highlightChecklist(checklist)"
-            @dblclick.prevent="selectChecklist(checklist)"
-            :key="checklist.id"
-        >
-          <span>
-            <i class="fa fa-fw fa-list" aria-hidden="true"/>
-            {{ checklist.title }}
-          </span>
-          <i class="fa fa-angle-right" aria-hidden="true" @click="selectChecklist(checklist)"/>
-        </li>
-      </ul>
+        <move-target-checklists
+          :checklists="checklists"
+          :checklist-items="checklistItems"
+          :is-loading="isLoading"
+          :checklist-info-message="checklistInfoMessage"
+          :checklist-item-info-message="checklistItemInfoMessage"
+          :is-storing-checklist="isStoringChecklist"
+          :selected-checklist-id="selectedChecklist.id"
+          :selected-checklist-item="selectedChecklistItem"
+          :open-checklist-id="openChecklistId"
+        />
+      </template>
     </div>
 
     <div class="move-to-checklist-footer">
-      <template v-if="!isAlreadyInChecklist">
+      <template v-if="!isInSelectedChecklist&&!isSelectedChecklist">
         <button type="button"
-                class="btn btn-sm"
-                :class="moveButtonClass"
-                v-if="selectedChecklist.id"
-                @click.prevent="moveTo"
+          class="btn btn-sm"
+          :class="moveButtonClass"
+          v-if="selectedChecklist.id||selectedChecklistItem.id"
+          @click.prevent="moveTo"
         >Move</button>
       </template>
 
@@ -94,15 +95,15 @@
       >Cancel</button>
 
       <p v-if="footerText">
-        <span v-if="!isAlreadyInChecklist">Move to</span>
+        <span v-if="!isInSelectedChecklist&&!isSelectedChecklist">Move to</span>
         <span class="footer-text"> {{ footerText }}</span>
       </p>
 
-      <span class="fa-stack toggle-add-folder-btn" @click="toggleAddingFolder">
+      <!-- <span class="fa-stack toggle-add-folder-btn" @click="toggleAddingFolder">
         <i class="fa fa-folder fa-stack-2x folder-color-scheme"/>
         <i class="fa fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"/>
         <i class="fa fa-times fa-stack-1x fa-inverse" v-if="addingFolder"/>
-      </span>
+      </span> -->
     </div>
   </div>
 
@@ -111,9 +112,15 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex'
+import MoveTargetFolders from './MoveTargetFolders.vue'
+import MoveTargetChecklists from './MoveTargetChecklists.vue'
 
 export default {
   name: 'move-to-checklist',
+  components: {
+    MoveTargetFolders,
+    MoveTargetChecklists,
+  },
   props: {
     replaceAfterMove: {
       type: Boolean,
@@ -127,16 +134,22 @@ export default {
   data () {
     return {
       addingFolder: false,
+      addingChecklist: false,
       currentFolder: Productivity.currentFolder ? Productivity.currentFolder : {},
-      destinationFolder: {},
       folders: [],
       checklists: [],
+      checklistItems: [],
       folderInfoMessage: { content: undefined, type: undefined },
       checklistInfoMessage: { content: undefined, type: undefined },
+      checklistItemInfoMessage: { content: undefined, type: undefined },
       isLoading: false,
       isStoringFolder: false,
+      isStoringChecklist: false,
       newFolder: { name: undefined },
-      selectedChecklist: {}
+      selectedFolder: {},
+      selectedChecklist: {},
+      selectedChecklistItem: {},
+      openChecklistId: null,
     }
   },
   computed: {
@@ -144,22 +157,24 @@ export default {
       'selected'
     ]),
     footerText: function() {
-      return this.selectedChecklist.title && this.addingFolder ? 'Add to ' + this.selectedChecklist.title : this.isAlreadyInChecklist && ! this.selectedChecklist.id ? 'Please select a list' : this.isAlreadyInChecklist ? 'Item is already in this list' : this.selectedChecklist.title ? this.selectedChecklist.title : undefined
+      return this.isSelectedChecklist ?
+                'You can not move an item into itself' :
+              this.isInSelectedChecklist ?
+                'Item is already in this list' :
+              this.selectedChecklist.title ?
+                this.selectedChecklist.title :
+              this.selectedChecklistItem.content ?
+                this.selectedChecklistItem.content : null
     },
     headerText: function() {
       return this.selectedChecklist && this.selectedChecklist.title ? this.selectedChecklist.title : 'Choose a list'
     },
-    isAlreadyInChecklist: function() {
-      return this.isInSelectedChecklist
-    },
     isInSelectedChecklist: function() {
-      return this.selectedChecklist.id && this.selected.listing && this.selected.listing.checklist_id && this.selectedChecklist.id == this.selected.listing.checklist_id ? true : false
+      return this.selectedChecklist.id && _.findIndex(this.selected.checklistItems, ['checklist_id', this.selectedChecklist.id]) !== -1
+          || this.selectedChecklistItem.id && _.findIndex(this.selected.checklistItems, ['parent_checklist_item_id', this.selectedChecklistItem.id]) !== -1
     },
-    showFolderInfoMessage: function() {
-      return this.isLoading || this.folderInfoMessage.content && this.folderInfoMessage.type
-    },
-    showChecklistInfoMessage: function() {
-      return this.isLoading || this.checklistInfoMessage.content && this.checklistInfoMessage.type
+    isSelectedChecklist: function() {
+      return _.findIndex(this.selected.checklistItems, ['id', this.selectedChecklistItem.id]) !== -1
     },
     moveButtonClass: function() {
       switch (this.selected.model) {
@@ -168,22 +183,38 @@ export default {
         default: return 'btn-folder'
 
       }
-    }
+    },
   },
   created: function() {
+    this.resetAll()
     this.fetchInitialFoldersAndChecklists(this.currentFolder.id)
+    this.$eventHub.$on('selectChecklist', this.selectChecklist);
+    this.$eventHub.$on('openChecklist', this.openChecklist);
+    this.$eventHub.$on('openFolder', this.openFolder);
+    this.$eventHub.$on('selectChecklistItem', this.selectChecklistItem);
+  },
+  beforeDestroy: function() {
+    this.$eventHub.$off('selectChecklist', this.selectChecklist);
+    this.$eventHub.$off('openChecklist', this.openChecklist);
+    this.$eventHub.$off('openFolder', this.openFolder);
+    this.$eventHub.$off('selectChecklistItem', this.selectChecklistItem);
   },
   methods: {
     ...mapActions([
       'delistChecklistItem',
       'deselect',
+      'moveChecklistItem',
       'removeCurrentlyEditable',
-      'replacePendingTask',
       'storeFolder',
-      'toggleMovable'
+      'toggleMovable',
+      'updateChecklistItem',
     ]),
     cancel: function() {
       return this.toggleMovable()
+    },
+    closeChecklist: function() {
+      this.openChecklistId = null
+      this.refreshChecklistItems()
     },
     createNewFolder: function() {
       this.isStoringFolder = true
@@ -206,11 +237,24 @@ export default {
         }
       )
     },
+    fetchChecklistItems: function(checklist) {
+      axios.post('/lists/'+checklist.fake_id+'/fetch-list-items')
+      .then( response => this.checklistItems = response.data.checklist.items ? response.data.checklist.items : [] )
+      .catch( error => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error', 'checklist') )
+    },
+    // fetchChecklistItemChildren: function(item) {
+    //   axios.post('/lists/items/'+item.id+'/fetch-child-list-items')
+    //   .then( response => {
+    //     // WIP: fix this
+    //     // this.refreshCurrentFolder(response.data.folder)
+    //     // this.refreshFolders(response.data.folder.subfolders)
+    //   })
+    //   .catch( error => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error', 'checklist-item') )
+    // },
     fetchInitialFoldersAndChecklists: function(id = null) {
       this.isLoading = true
-      this.resetFolderInfoMessage()
-      this.resetChecklistInfoMessage()
-      this.resetSelectedChecklist()
+      this.resetInfoMessage()
+      this.resetSelected()
       axios.post('/fetch-initial-tree', {folder_id: id, includeChecklists: true})
            .then(
               (response) => {
@@ -220,14 +264,13 @@ export default {
               }
             )
            .catch(
-              (response) => this.setFolderInfoMessage('An error has occurred. Please refresh this page.', 'error')
+              (response) => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error', 'folder')
             )
     },
     fetchNewFoldersAndChecklists: function(folder) {
       this.isLoading = true
-      this.resetFolderInfoMessage()
-      this.resetChecklistInfoMessage()
-      this.resetSelectedChecklist()
+      this.resetInfoMessage()
+      this.resetSelected()
       axios.post('/'+folder.fake_id+'/fetch-new-tree', {includeChecklists: true})
       .then(
         (response) => {
@@ -237,7 +280,7 @@ export default {
         }
       )
       .catch(
-        (response) => this.setFolderInfoMessage('An error has occurred. Please refresh this page.', 'error')
+        (response) => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error', 'folder')
       )
     },
     handleSuccessfulFolderCreation: function(folder) {
@@ -247,28 +290,24 @@ export default {
     },
     handleSuccessfulMove: function(response) {
       if (
-        this.replaceAfterMove // if replace-after-move prop is set to true
-        && response.checklist.list_type == 'ta' // and the target checklist is a task list
+        response.list_type == 'ta' // if the target checklist is a task list
+        && this.replaceAfterMove //  and replace-after-move prop is set to true
+        || response.switchParent //  and replace-after-move prop is set to true
       ) {
-
-        if (response.selected && response.selected.checklistItems && response.selected.checklistItems.length) {
-          for (var i = 0; i < response.selected.checklistItems.length; i++) {
-
-            this.replacePendingTask(response.selected.checklistItems[i]).then(
-              (checklistItem) => this.deselect( {model: 'checklist-item', listing: checklistItem.old })
-            ).catch( (response) => console.log(response) )
-          }
+        for (var i = 0; i < response.selected.checklistItems.length; i++) {
+          this.updateChecklistItem( response.selected.checklistItems[i] )
+              .then( item => this.deselect( { model: 'checklist-item', listing: item.old } ) )
+              .catch( error => console.log(error) )
         }
-
       } else {
+
+        // WIP: ensure subItems are covered
 
         if (this.selected.checklistItems && this.selected.checklistItems.length) {
           for (var i = 0; i < this.selected.checklistItems.length; i++) {
             this.delistChecklistItem(this.selected.checklistItems[i])
-                .then(
-                  (checklistItem) => this.deselect( {model: 'checklist-item', listing: checklistItem }) )
-                .catch(
-                  (response) => {console.log('error delisting item');console.log(response);} )
+                .then( checklistItem => this.deselect( {model: 'checklist-item', listing: checklistItem }) )
+                .catch( response => {console.log('error delisting item');console.log(response);} )
           }
         }
 
@@ -276,63 +315,103 @@ export default {
 
       this.removeCurrentlyEditable({ parentModel: this.parentModel })
     },
-    highlightChecklist: function(checklist) {
-      this.toggleAddingFolder('false')
-      return checklist.id ? this.selectedChecklist = checklist : this.selectedChecklist = {}
-    },
     moveTo: function() {
-      axios.patch('/move-to-checklist/'+this.selectedChecklist.fake_id, {selected: {checklistItems: this.selected.checklistItems} })
-      .then(
-        (response) => response.data.success ? this.handleSuccessfulMove(response.data) : alert('Error moving (1)')
-      )
-      .catch(
-        // (response) => response.data.selected.checklistItems ? this.handleSuccessfulMove(response) : alert('Error moving (2)')
-        (response) => console.log(response)
-      )
+      var isSubItem = !! this.selectedChecklistItem.checklist_id,
+          route = isSubItem && this.selectedChecklistItem.id ?
+                    '/move-to-checklist-item/'+this.selectedChecklistItem.id :
+                    '/move-to-checklist/'     +this.selectedChecklist.fake_id
+      axios.patch(route, {selected: {checklistItems: this.selected.checklistItems} })
+           .then( response => response.data.success ? this.handleSuccessfulMove(response.data) : console.log('Error moving (1)') )
+           .catch( response => console.log(response) )
     },
-    refreshFolders: function(freshFolders) {
-      this.isLoading = false
-      this.resetFolderInfoMessage()
-      freshFolders ? this.folders = freshFolders : this.folders = {}
-      if (_.isEmpty(freshFolders)) this.setFolderInfoMessage('This folder has no subfolders', 'info')
-    },
-    refreshChecklists: function(freshChecklists) {
-      this.isLoading = false
-      this.resetChecklistInfoMessage()
-      freshChecklists ? this.checklists = freshChecklists : this.checklists = {}
-      if (_.isEmpty(freshChecklists)) this.setChecklistInfoMessage('This folder has no lists', 'info')
-    },
-    refreshCurrentFolder: function(folder) {
-      return folder.id ? this.currentFolder = folder : this.setFolderInfoMessage('The folder could not be retrieved', 'error')
-    },
-    resetSelectedChecklist: function() {
-      return this.selectedChecklist = {}
-    },
-    resetFolderInfoMessage: function() {
-      return this.folderInfoMessage = { content: undefined, type: undefined }
-    },
-    resetChecklistInfoMessage: function() {
-      return this.checklistInfoMessage = { content: undefined, type: undefined }
+    openChecklist: function(checklist) {
+      this.openChecklistId = checklist.id
+      this.fetchChecklistItems(checklist)
     },
     openFolder: function(folder) {
       return this.fetchNewFoldersAndChecklists(folder)
     },
-    selectFolder: function(folder) {
-      return this.fetchNewFoldersAndChecklists(folder)
+    refreshFolders: function(freshFolders = null) {
+      this.isLoading = false
+      this.resetInfoMessage('folder')
+      freshFolders ? this.folders = freshFolders : this.folders = {}
+      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no subfolders', 'info', 'folder')
     },
-    selectChecklist: function(checklist) {
-      return this.selectedChecklist = checklist
+    refreshChecklists: function(freshChecklists = null) {
+      this.isLoading = false
+      this.resetInfoMessage('checklist')
+      freshChecklists ? this.checklists = freshChecklists : this.checklists = {}
+      if (_.isEmpty(freshChecklists)) this.setInfoMessage('This folder has no lists', 'info', 'checklist')
     },
-    setFolderInfoMessage: function(content, type) {
-      return this.folderInfoMessage = { content:content, type:type }
+    refreshChecklistItems: function(freshChecklistItems = null) {
+      this.isLoading = false
+      this.resetInfoMessage('checklist-item')
+      freshChecklistItems ? this.checklistItems = freshChecklistItems : this.checklistItems = {}
     },
-    setChecklistInfoMessage: function(content, type) {
-      return this.checklistInfoMessage = { content:content, type:type }
+    refreshCurrentFolder: function(folder) {
+      return folder.id ? this.currentFolder = folder : this.setInfoMessage('The folder could not be retrieved', 'error', 'folder')
+    },
+    resetAll: function() {
+      this.resetSelected()
+      this.refreshFolders()
+      this.refreshChecklists()
+      this.refreshChecklistItems()
+    },
+    resetSelected: function() {
+      return this.selectedChecklist = this.selectedChecklistItem = {}
+    },
+    resetInfoMessage: function(model = null) {
+      switch (model) {
+        case 'folder':
+          return this.folderInfoMessage = { content: undefined, type: undefined }
+          break;
+        case 'checklist':
+          return this.checklistInfoMessage = { content: undefined, type: undefined }
+          break;
+        case 'checklist-item':
+          return this.checklistItemInfoMessage = { content: undefined, type: undefined }
+          break;
+        default:
+          return this.folderInfoMessage = this.checklistInfoMessage = this.checklistItemInfoMessage = { content: undefined, type: undefined }
+      }
+    },
+    selectChecklist: function(checklist = null) {
+      this.toggleAddingFolder('false')
+      this.toggleAddingChecklist('false')
+      this.resetSelected()
+      this.refreshChecklistItems()
+      if (checklist.id == this.openChecklistId) this.closeChecklist() // toggle openChecklistId
+      return this.selectedChecklist = checklist && checklist.id ? checklist : {}
+    },
+    selectChecklistItem: function(item = null) {
+      this.toggleAddingFolder('false')
+      this.toggleAddingChecklist('false')
+      this.resetSelected()
+      return this.selectedChecklistItem = item && item.id ? item : {}
+    },
+    setInfoMessage: function(content, type, model = null) {
+      switch (model) {
+        case 'folder':
+          return this.folderInfoMessage = { content:content, type:type }
+          break;
+        case 'checklist':
+          return this.checklistInfoMessage = { content:content, type:type }
+          break;
+        case 'checklist-item':
+          return this.checklistItemInfoMessage = { content:content, type:type }
+          break;
+        default:
+          return this.folderInfoMessage = this.checklistInfoMessage = this.checklistItemInfoMessage = { content:content, type:type }
+      }
     },
     toggleAddingFolder: function(boolean = null) {
-      this.resetSelectedChecklist()
+      this.resetSelected()
       return boolean && boolean === 'false' ? this.addingFolder = false : this.addingFolder = ! this.addingFolder
-    }
+    },
+    toggleAddingChecklist: function(boolean = null) {
+      this.resetSelected()
+      return boolean && boolean === 'false' ? this.addingChecklist = false : this.addingChecklist = ! this.addingChecklist
+    },
   },
 }
 </script>
@@ -354,6 +433,7 @@ export default {
         border-bottom: 1px solid $base-border-color;
         padding: 10px;
         text-align: left;
+        position: relative;
         .fa-times,
         .fa-arrow-left {
             cursor: pointer;
@@ -362,8 +442,13 @@ export default {
             }
         }
         .heading-right {
-            float: right;
-            margin-top: 5px;
+            // float: right;
+            // margin-top: 5px;
+            position: absolute;
+            top: 15px;
+            right: 10px;
+            @include high-z-index(0);
+            cursor: pointer;
         }
         .heading-left {
             float: left;
@@ -382,22 +467,25 @@ export default {
                 color: $folder-primary
             }
         }
-        .add-folder-form {
-            display: inline-block;
-            width: 90%;
-            margin: 0;
-            margin-left: 10px;
 
-            .add-folder-form-input {
-                width: 70%;
-                display: inline-block;
-            }
-            .add-folder-form-buttons {
-                width: 28%;
-                display: inline-block;
+    }
+    .add-folder-form {
+        display: inline-block;
+        width: 100%;
+        margin: 0;
+        margin-left: 10px;
+
+        .add-folder-form-input {
+            width: 60%;
+            display: inline-block;
+        }
+        .add-folder-form-buttons {
+            width: 38%;
+            display: inline-block;
+            .fa-check {
+              color: white;
             }
         }
-
     }
     .move-to-checklist-body {
         height: 85%;
@@ -416,6 +504,7 @@ export default {
                 color: $brand-info;
             }
         }
+        .nested-checklist-item,
         .nested-checklist,
         .nested-folder {
             display: block;
@@ -461,6 +550,7 @@ export default {
                 border: 1px dotted $folder-primary;
             }
         }
+        .nested-checklist-item,
         .nested-checklist {
             .fa {
                 color: $list-primary;
@@ -469,6 +559,13 @@ export default {
                 color: $list-primary;
                 border: 1px dotted $list-primary;
             }
+        }
+
+        .nested-checklist {
+          &.opened {
+            padding-bottom: 5px;
+            background: lighten($body-bg, 0.5%);
+          }
         }
     }
     .move-to-checklist-footer {
@@ -503,6 +600,17 @@ export default {
                 line-height: 18px;
             }
         }
+    }
+
+    .movable-selected-items {
+      padding: 5px 5px 10px;
+      background: $body-bg;
+      margin-bottom: 20px;
+      span:not(:first-child) {
+        padding: 5px;
+        background: white;
+        color: $light-grey-text-color;
+      }
     }
 }
 

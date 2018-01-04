@@ -29,8 +29,15 @@ class Checklists implements ChecklistsInterface {
 
     public function forFolder(User $user, Folder $folder)
     {
+        // return $folder->checklists()->withCount(['items' => function($query) {
+        //     $query->where('checked_at', null);
+        // }])->orderBy('title', 'asc')->get();
+
         return $folder->checklists()->withCount(['items' => function($query) {
-            $query->where('checked_at', null);
+            $query->where([
+              ['checked_at', null],
+              ['list_type', 'ta']
+            ]);
         }])->orderBy('title', 'asc')->get();
     }
 

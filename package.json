@@ -8,8 +8,8 @@
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "test-vue": "mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --require resources/assets/js/tests/Vue/setup.js resources/assets/js/tests/**/*.spec.js",
-        "watch-test-vue": "mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --watch --require resources/assets/js/tests/Vue/setup.js resources/assets/js/tests/**/*.spec.js"
+        "test-vue": "cross-env NODE_ENV=test mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --require resources/assets/js/tests/Vue/setup.js resources/assets/js/tests/**/*.spec.js",
+        "watch-test-vue": "cross-env NODE_ENV=test mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --watch --require resources/assets/js/tests/Vue/setup.js resources/assets/js/tests/**/*.spec.js"
     },
     "devDependencies": {
         "bootstrap-sass": "^3.3.7",

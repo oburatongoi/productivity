@@ -8,11 +8,9 @@ import {
     DELETE_UNFILTERED,
     DELETE_CHECKLIST_ITEM,
     DELIST_CHECKLIST_ITEM,
-    INCREMENT_ITEM_COUNT,
     UPDATE_FILTERS,
     UPDATE_CHECKLIST,
-    UPDATE_ITEM_COUNTS,
-    REPLACE_PENDING_TASK,
+    UPDATE_CHECKLIST_ITEM,
     SET_EDITABLE_CHECKLIST_ITEM,
     SET_EDITABLE_CHECKLIST_ITEM_COMMENTS,
     SET_CHECKLIST_ITEM_DEADLINE,
@@ -62,9 +60,8 @@ const mutations = {
       state.checklistItems.push(item)
     },
     [ADD_SUB_ITEM_TO_CHECKLIST_ITEM] (state, payload) {
-      let i = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
-      if( i == -1 ) return false;
-      state.checklistItems[i].child_list_items.push(payload.child)
+      state.checklistItems.find(checklistItem => checklistItem.id == payload.parent.id)
+                          .child_list_items.push(payload.child)
     },
     [DECREMENT_ITEM_COUNT] (state, checklistID) {
       if (
@@ -83,12 +80,20 @@ const mutations = {
       }
     },
     [DELETE_CHECKLIST_ITEM] (state, checklistItem) {
-        if (
-          ! _.isEmpty(state.checklistItems)
-        ) {
-          let i = _.findIndex(state.checklistItems, ['id', checklistItem.id]);
-          state.checklistItems.splice(i,1)
-        }
+      let isSubitem = !! checklistItem.checklist_id,
+          // source = isSubitem ? state.editableItem.child_list_items : state.checklistItems,
+          source = isSubitem ? state.checklistItem.child_list_items : state.checklistItems,
+          index = _.findIndex(source, ['id', checklistItem.id])
+
+      // if (isSubitem && ! _.isEmpty(state.editableItem.child_list_items)) {
+      //   let i = _.findIndex(state.editableItem.child_list_items, ['id', checklistItem.id]);
+      //   state.editableItem.child_list_items.splice(i,1)
+      // } else if (!isSubitem && ! _.isEmpty(state.checklistItems) {
+      //   let i = _.findIndex(state.checklistItems, ['id', checklistItem.id]);
+      //   state.checklistItems.splice(i,1)
+      // }
+
+      if (! _.isEmpty(source)) source.splice(index, 1)
     },
     [DELIST_CHECKLIST_ITEM] (state, checklistItem) {
         state.delistedItems.unshift(checklistItem.id)
@@ -99,14 +104,6 @@ const mutations = {
             ~ i && state.unfilteredItems.splice(i,1)
         }
         state.unfilteredItems = []
-    },
-    [INCREMENT_ITEM_COUNT] (state, checklistID) {
-      if (
-        ! _.isEmpty(state.checklists)
-      ) {
-        let i = _.findIndex(state.checklists, ['id', checklistID]);
-        state.checklists[i].items_count = ++ state.checklists[i].items_count
-      }
     },
     [UPDATE_FILTERS] (state, payload) {
       switch (payload.type) {
@@ -123,22 +120,31 @@ const mutations = {
           state.checklist = updatedChecklist
       }
     },
-    [UPDATE_ITEM_COUNTS] (state, payload) {
-      if (
-           ! _.isEmpty(state.checklists)
-        && ! _.isEmpty(payload.old.checklist_id)
-        && ! _.isEmpty(payload.new.checklist_id)
-      ) {
-        let o = _.findIndex(state.checklists, ['id', payload.old.checklist_id]);
-        state.checklists[o].items_count = -- state.checklists[o].items_count
+    [UPDATE_CHECKLIST_ITEM] (state, item) {
+      let newItem = item.new,
+          oldItem = item.old,
+          isSubitem = !! newItem.parent_checklist_item_id,
+          wasSubitem = !! oldItem.parent_checklist_item_id,
+          parentItem = isSubitem ? state.checklistItems.find(checklistItem => checklistItem.id == item.new.parent_checklist_item_id) : null,
+          source = wasSubitem ? state.editableItem.child_list_items : state.checklistItems,
+          destination = ! isSubitem ? state.checklistItems : parentItem ? parentItem.child_list_items : null,
+          index = _.findIndex(source, ['id', oldItem.id])
 
-        let n = _.findIndex(state.checklists, ['id', payload.new.checklist_id]);
-        state.checklists[n].items_count = ++ state.checklists[n].items_count
+      if (isSubitem == wasSubitem) {
+        if (source) source.splice(index, 1, newItem)
+      } else {
+        if (source) source.splice(index, 1)
+        if (destination) destination.push(newItem)
       }
-    },
-    [REPLACE_PENDING_TASK] (state, payload) {
-        let i = _.findIndex(state.checklistItems, ['id', payload.old.id]);
-        state.checklistItems.splice(i,1,payload.new)
+
+      if (! wasSubitem) { // If the old item was not a subitem, update item counts
+        let oldChecklist = state.checklists.find(checklist => checklist.id == oldItem.checklist_id)
+        if (oldChecklist) oldChecklist.items_count = -- oldChecklist.items_count
+
+        let newChecklist = state.checklists.find(checklist => checklist.id == newItem.checklist_id)
+        if (newChecklist) newChecklist.items_count = ++ newChecklist.items_count
+      }
+
     },
     [SET_EDITABLE_CHECKLIST_ITEM] (state, item) {
         let i = _.findIndex(state.checklistItems, ['id', item.id]);
@@ -176,12 +182,12 @@ const mutations = {
 
       }
     },
-    [UNSET_EDITABLE_CHECKLIST_ITEM] (state, payload = {isSubItem: false}) {
-        if (payload.isSubItem) {
-          state.editableSubItem = {}
-        } else {
-          state.editableItem = state.editableSubItem = {}
-        }
+    [SORT_CHECKLIST_ITEMS] (state) {
+      state.checklistItems = sort(state.checklistItems).asc(i => i.sort_order)
+    },
+    [SORT_SUB_CHECKLIST_ITEMS] (state, payload) {
+      let i = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
+      state.checklistItems[i].child_list_items = sort(state.checklistItems[i].child_list_items).asc(item => item.sort_order)
     },
     [TOGGLE_ITEM_CHECK_MARK] (state, payload = {isSubItem: false}) {
       if (payload.isSubItem) {
@@ -218,15 +224,15 @@ const mutations = {
         state.checklistItems[i].is_urgent = ! state.checklistItems[i].is_urgent
       }
     },
-    [SORT_CHECKLIST_ITEMS] (state) {
-      state.checklistItems = sort(state.checklistItems).asc(i => i.sort_order)
-    },
-    [SORT_SUB_CHECKLIST_ITEMS] (state, payload) {
-      let i = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
-      state.checklistItems[i].child_list_items = sort(state.checklistItems[i].child_list_items).asc(item => item.sort_order)
-    },
     [UNDO_UPDATE_SORT_ORDER] (state) {
       // Maybe use https://github.com/pinguinjkeke/vue-local-storage or some other way to store/retrieve items
+    },
+    [UNSET_EDITABLE_CHECKLIST_ITEM] (state, payload = {isSubItem: false}) {
+        if (payload.isSubItem) {
+          state.editableSubItem = {}
+        } else {
+          state.editableItem = state.editableSubItem = {}
+        }
     },
     [UPDATE_SORT_ORDER] (state) {
       for (var i = 0; i < state.checklistItems.length; i++) {
@@ -412,11 +418,23 @@ const actions = {
         resolve()
       })
   },
-  replacePendingTask({ commit }, payload) {
+  updateChecklistItem({ commit }, item) {
     return new Promise((resolve, reject) => {
-        commit(REPLACE_PENDING_TASK, payload)
-        commit(UPDATE_ITEM_COUNTS, payload)
-        resolve(payload)
+        commit(UPDATE_CHECKLIST_ITEM, item)
+
+        // if (!! item.old.checklist_id) {
+        //   dispatch('saveSortOrder', { checklistItems: state.checklistItem.child_list_items, parent: state.checklistItem, parentModel: 'checklist-item' })
+        // } else {
+        //   dispatch('saveSortOrder', { checklistItems: state.checklistItems, parent: state.checklist, parentModel: 'checklist' })
+        // }
+        //
+        // if (!! item.new.checklist_id) {
+        //   dispatch('saveSortOrder', { checklistItems: state.checklistItem.child_list_items, parent: state.checklistItem, parentModel: 'checklist-item' })
+        // } else {
+        //   dispatch('saveSortOrder', { checklistItems: state.checklistItems, parent: state.checklist, parentModel: 'checklist' })
+        // }
+
+        resolve(item)
     })
   },
   // resetNewChecklistItem({commit}) {

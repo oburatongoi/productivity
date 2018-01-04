@@ -216,15 +216,11 @@ export default {
       this.resetInfoMessage()
       this.resetSelectedFolder()
       axios.post('/'+folder.fake_id+'/fetch-new-tree')
-      .then(
-        (response) => {
-          this.refreshCurrentFolder(response.data.folder)
-          this.refreshFolders(response.data.folder.subfolders)
-        }
-      )
-      .catch(
-        (response) => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error')
-      )
+      .then( response => {
+        this.refreshCurrentFolder(response.data.folder)
+        this.refreshFolders(response.data.folder.subfolders)
+      })
+      .catch( error => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error') )
     },
     handleSuccessfulFolderCreation: function(folder) {
       this.toggleAddingFolder('false')

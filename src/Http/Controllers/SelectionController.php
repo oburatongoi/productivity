@@ -70,25 +70,54 @@ class SelectionController extends Controller
     {
 
       try {
+        $relations = ['folder', 'subfolders'];
 
-        if ($request->has('includeChecklists')) {
+        if ($request->has('includeChecklists')) $relations[] = 'checklists';
 
-          $folder->load('folder', 'subfolders', 'checklists');
-
-        } else {
-
-          $folder->load('folder', 'subfolders');
-
-        }
+        $folder->load($relations);
 
         return response()->json([
             'folder' => $folder
         ]);
 
       } catch (Exception $e) {
-
         $this->handleException($e);
+      }
 
+    }
+
+    public function fetchListItems($account, Request $request, Checklist $checklist)
+    {
+
+      try {
+        $relations = ['items'];
+
+        $checklist->load($relations);
+
+        return response()->json([
+            'checklist' => $checklist
+        ]);
+
+      } catch (Exception $e) {
+        $this->handleException($e);
+      }
+
+    }
+
+    public function fetchChildListItems($account, Request $request, ChecklistItem $item)
+    {
+
+      try {
+        $relations = ['checklist', 'child_list_items'];
+
+        $item->load($relations);
+
+        return response()->json([
+            'item' => $item
+        ]);
+
+      } catch (Exception $e) {
+        $this->handleException($e);
       }
 
     }
@@ -162,8 +191,20 @@ class SelectionController extends Controller
         $this->authorize('modify', $child);
 
         try {
-          if($child) $child->checklist()->associate($checklist)->save();;
-          $success = true;
+
+          if($child) {
+            $child->parent_list_item()->dissociate();
+            $child->checklist()->associate($checklist);
+            $child->save();
+
+            $selected['checklistItems'][] = [
+              'old' => $item,
+              'new' => $child
+            ];
+
+            $success = true;
+          }
+
         } catch (AlgoliaException $e) {
           // WIP: Add to some sort of queue to sync to algolia
           Bugsnag::notifyException($e);
@@ -173,17 +214,67 @@ class SelectionController extends Controller
           $this->handleException($e);
         }
 
-        $selected['checklistItems'][] = [
-          'old' => $item,
-          'new' => $child
-        ];
       }
 
       return response()->json([
           'success' => $success,
-          'checklist' => $checklist,
+          'list_type' => $checklist->list_type,
           'selected' => $selected
       ]);
+
+    }
+
+    public function moveToChecklistItem($account, Request $request, ChecklistItem $checklistItem)
+    {
+
+      $this->authorize('modify', $checklistItem);
+
+      $success = false;
+
+      $selected = [];
+
+      $checklistItems = $request->has('selected.checklistItems') ? $request->input('selected.checklistItems') : [];
+
+      foreach ($checklistItems as $item) {
+        $child = ChecklistItem::where('id', $item['id'])->first();
+
+        $this->authorize('modify', $child);
+
+        try {
+          if($child) {
+            $child->checklist()->dissociate();
+            $child->parent_list_item()->associate($checklistItem);
+            $child->save();
+
+            $selected['checklistItems'][] = [
+              'old' => $item,
+              'new' => $child
+            ];
+          }
+
+          $success = true;
+
+        } catch (AlgoliaException $e) {
+          // WIP: Add to some sort of queue to sync to algolia
+          Bugsnag::notifyException($e);
+          $success = true;
+        } catch (Exception $e) {
+          Bugsnag::notifyException($e);
+          $this->handleException($e);
+        }
+
+        // $selected['checklistItems'][] = [
+        //   'old' => $item,
+        //   'new' => $child
+        // ];
+      }
+
+      return response()->json([
+          'success' => $success,
+          'list_type' => $checklistItem->child_list_item_type,
+          'selected' => $selected,
+          'switchParent' => true
+        ]);
 
     }
 

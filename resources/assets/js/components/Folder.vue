@@ -94,7 +94,6 @@ export default {
     saveChanges: function() {
         this.isSaving = true
         this.hasSavingError = false
-        console.log(this.currentFolder.name);
         if ( ! this.currentFolder.name) {
            this.addNotice({
             type: 'error',

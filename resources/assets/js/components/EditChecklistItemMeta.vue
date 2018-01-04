@@ -139,7 +139,7 @@ export default {
   position: absolute;
   right: 10px;
   top: 15px;
-  @include high-z-index(1);
+  @include high-z-index(2);
 
   .fa {
     font-size: 1em;

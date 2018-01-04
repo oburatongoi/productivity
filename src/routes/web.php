@@ -21,9 +21,12 @@ Route::group(['domain' => '{'.(string)(config('productivity.subdomain')).'}.'.(s
 
         Route::post('/fetch-initial-tree', 'SelectionController@fetchInitialTree');
         Route::post('/{folder}/fetch-new-tree', 'SelectionController@fetchNewTree');
+        Route::post('/lists/items/{item}/fetch-child-list-items', 'SelectionController@fetchChildListItems');
+        Route::post('/lists/{list}/fetch-list-items', 'SelectionController@fetchListItems');
 
         Route::patch('/move-to-folder/{folder}', 'SelectionController@moveToFolder');
         Route::patch('/move-to-checklist/{list}', 'SelectionController@moveToChecklist');
+        Route::patch('/move-to-checklist-item/{item}', 'SelectionController@moveToChecklistItem');
         Route::patch('/move-to-home', 'SelectionController@moveToHome');
         Route::get('/fix-folder-tree', 'SelectionController@fixTree');
         Route::post('/selection', 'SelectionController@delete');

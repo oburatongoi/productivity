@@ -25,7 +25,7 @@
 }
 
 @mixin high-z-index($add) {
-    z-index: $base-z-index + $add;
+    z-index: $base-z-index + $add !important;
 }
 
 @mixin transparent-linear-gradient {
