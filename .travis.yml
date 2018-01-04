@@ -3,10 +3,23 @@ php:
   - '7.1'
 before_script:
   - cp .env.travis .env
-  - composer self-update
-  - composer install --no-interaction
+  # - composer install --no-interaction
 
 before_install:
-  - mysql -e 'create database productivity;'
+  - composer self-update
+  - composer create-project laravel/laravel
+  - cd ./laravel
+  - composer config repositories.oburatongoi vcs https://github.com/oburatongoi/productivity.git
+  - composer require oburatongoi/productivity master
+  - composer update
+  - cp ./vendor/oburatongoi/productivity/tests/config/.env ./
+  - rm ./config/app.php
+  - cp ./vendor/oburatongoi/productivity/tests/config/app.php ./config
+  - php artisan vendor:publish
+  - mysql -e 'create database IF NOT EXISTS productivity;' -uroot
+  - php artisan migrate
+  - cd ./vendor/oburatongoi/productivity
 services:
   - mysql
+
+script: "phpunit"
