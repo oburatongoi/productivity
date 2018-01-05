@@ -2,14 +2,14 @@ language: php
 php:
   - '7.1'
 before_script:
-  - cp .env.travis .env
+  # - cp .env.travis .env
   # - composer install --no-interaction
 
 before_install:
   - composer self-update
   - composer create-project laravel/laravel
   - cd ./laravel
-  - composer config repositories.oburatongoi vcs https://github.com/oburatongoi/productivity.git
+  - composer config repositories.oburatongoi vcs https://5e258c4a61bc82deb9c943e09271add4d676df79@github.com/oburatongoi/productivity.git
   - composer require oburatongoi/productivity master
   - composer update
   - cp ./vendor/oburatongoi/productivity/tests/config/.env ./
