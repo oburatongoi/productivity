@@ -24,9 +24,13 @@
 
     <div class="move-to-checklist-body" @click.self="resetSelected">
       <div class="movable-selected-items">
-        <span><h4>Move: </h4></span>
+        <h6>Move the following list items: </h6>
         <span v-for="item in selected.checklistItems" :key="item.id">
-          <i class="fa fa-fw fa-circle-thin" aria-hidden="true"/>
+          <i class="fa fa-fw fa-times"
+            aria-hidden="true"
+            v-if="selected.checklistItems.length > 1"
+            @click="removeItem({ model: 'checklist-item', listing: item, preserveState: true })"/>
+          <i class="fa fa-fw fa-square-o" aria-hidden="true"/>
           {{ item.content }}
         </span>
       </div>
@@ -35,8 +39,6 @@
         <span class="fa-stack toggle-add-folder-btn">
           <i class="fa fa-folder fa-stack-2x folder-color-scheme"/>
           <i class="fa fa-plus fa-stack-1x fa-inverse"/>
-          <!-- <i class="fa fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"/> -->
-          <!-- <i class="fa fa-times fa-stack-1x fa-inverse" v-if="addingFolder"/> -->
         </span>
         <span v-if="!addingFolder">Add Folder</span>
       </span>
@@ -154,7 +156,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'selected'
+      'editableSubItem',
+      'selected',
     ]),
     footerText: function() {
       return this.isSelectedChecklist ?
@@ -350,6 +353,15 @@ export default {
     },
     refreshCurrentFolder: function(folder) {
       return folder.id ? this.currentFolder = folder : this.setInfoMessage('The folder could not be retrieved', 'error', 'folder')
+    },
+    removeItem: function(payload) {
+      this.deselect(payload)
+          .then( () => {
+            if (payload.listing.id == this.editableSubItem.id) {
+              this.removeCurrentlyEditable( { parentModel: this.parentModel } )
+            }
+          })
+          .catch( (error) => console.log(error) )
     },
     resetAll: function() {
       this.resetSelected()
@@ -606,10 +618,13 @@ export default {
       padding: 5px 5px 10px;
       background: $body-bg;
       margin-bottom: 20px;
-      span:not(:first-child) {
+      span {
         padding: 5px;
         background: white;
         color: $light-grey-text-color;
+        margin-right: 5px;
+        border-radius: $base-border-radius;
+        border-color: $base-border-color;
       }
     }
 }

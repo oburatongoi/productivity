@@ -80,15 +80,15 @@ const mutations = {
       }
     },
     [DELETE_CHECKLIST_ITEM] (state, checklistItem) {
-      let isSubitem = !! checklistItem.checklist_id,
-          // source = isSubitem ? state.editableItem.child_list_items : state.checklistItems,
-          source = isSubitem ? state.checklistItem.child_list_items : state.checklistItems,
+      let isSubItem = !! checklistItem.checklist_id,
+          // source = isSubItem ? state.editableItem.child_list_items : state.checklistItems,
+          source = isSubItem ? state.checklistItem.child_list_items : state.checklistItems,
           index = _.findIndex(source, ['id', checklistItem.id])
 
-      // if (isSubitem && ! _.isEmpty(state.editableItem.child_list_items)) {
+      // if (isSubItem && ! _.isEmpty(state.editableItem.child_list_items)) {
       //   let i = _.findIndex(state.editableItem.child_list_items, ['id', checklistItem.id]);
       //   state.editableItem.child_list_items.splice(i,1)
-      // } else if (!isSubitem && ! _.isEmpty(state.checklistItems) {
+      // } else if (!isSubItem && ! _.isEmpty(state.checklistItems) {
       //   let i = _.findIndex(state.checklistItems, ['id', checklistItem.id]);
       //   state.checklistItems.splice(i,1)
       // }
@@ -123,14 +123,14 @@ const mutations = {
     [UPDATE_CHECKLIST_ITEM] (state, item) {
       let newItem = item.new,
           oldItem = item.old,
-          isSubitem = !! newItem.parent_checklist_item_id,
+          isSubItem = !! newItem.parent_checklist_item_id,
           wasSubitem = !! oldItem.parent_checklist_item_id,
-          parentItem = isSubitem ? state.checklistItems.find(checklistItem => checklistItem.id == item.new.parent_checklist_item_id) : null,
+          parentItem = isSubItem ? state.checklistItems.find(checklistItem => checklistItem.id == item.new.parent_checklist_item_id) : null,
           source = wasSubitem ? state.editableItem.child_list_items : state.checklistItems,
-          destination = ! isSubitem ? state.checklistItems : parentItem ? parentItem.child_list_items : null,
+          destination = ! isSubItem ? state.checklistItems : parentItem ? parentItem.child_list_items : null,
           index = _.findIndex(source, ['id', oldItem.id])
 
-      if (isSubitem == wasSubitem) {
+      if (isSubItem == wasSubitem) {
         if (source) source.splice(index, 1, newItem)
       } else {
         if (source) source.splice(index, 1)
@@ -320,18 +320,6 @@ const actions = {
       }
     })
   },
-  // addCurrentlyEditable({commit}, payload) {
-  //     return new Promise((resolve, reject) => {
-  //       switch (payload.parentModel) {
-  //         case 'checklist-item':
-  //           commit(SET_EDITABLE_SUB_CHECKLIST_ITEM, payload.item)
-  //           break;
-  //         default: commit(SET_EDITABLE_CHECKLIST_ITEM, payload.item)
-  //
-  //       }
-  //       resolve()
-  //     })
-  // },
   addCurrentlyEditable({commit}, payload = {isSubItem: false}) {
       return new Promise((resolve, reject) => {
         if (payload.isSubItem) {
@@ -409,10 +397,14 @@ const actions = {
         resolve(checklistItem)
     })
   },
-  removeCurrentlyEditable({commit, state}, payload = {isSubItem: false}) {
+  removeCurrentlyEditable({commit, state, dispatch}, payload = {isSubItem: false, deselect: false}) {
       return new Promise((resolve, reject) => {
         if (payload.isSubItem && state.editableSubItemIsExpanded || ! payload.isSubItem && state.editableItemIsExpanded || ! payload.isSubItem && state.editableSubItemIsExpanded) {
           commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION, payload)
+        }
+        if (!! payload.deselect) {
+          let listing = payload.isSubItem ? state.editableSubItem : state.editableItem
+          dispatch('deselect', {listing, model: 'checklist-item', preserveState: true}, {root: true})
         }
         commit(UNSET_EDITABLE_CHECKLIST_ITEM, payload)
         resolve()
@@ -437,12 +429,6 @@ const actions = {
         resolve(item)
     })
   },
-  // resetNewChecklistItem({commit}) {
-  //     return new Promise((resolve, reject) => {
-  //         commit(RESET_NEW_CHECKLIST_ITEM)
-  //         resolve()
-  //     })
-  // },
   saveChecklist({ dispatch, commit }, checklist) {
       return new Promise((resolve, reject) => {
         axios.patch('/lists/'+checklist.fake_id, {checklist:checklist})

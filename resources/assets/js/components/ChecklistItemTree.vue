@@ -120,13 +120,20 @@ export default {
   }
   li.item {
     cursor: pointer;
-    &:hover {
-      background: $body-bg;
+    // &:hover {
+    //   background: $body-bg;
+    // }
+    &.selected,
+    &.active {
+      border-radius: 2px;
     }
     &.selected {
-      border: 1px dashed $base-border-color;
-      border-radius: 2px;
+      border: 1px dotted $base-border-color;
       background: $body-bg;
+    }
+    &.active {
+      color: $brand-primary;
+      border: 1px solid $brand-primary;
     }
   }
   .nested-tree {

@@ -1,8 +1,7 @@
 <template lang="html">
   <ul class="nested-tree">
-    <li
-    class="item"
-    @click="emitClick({selection: {model: 'checklist-item', listing: item, parentModel: 'checklist'}, event: $event})"
+    <li class="item"
+      @click="emitClick({selection: {model: 'checklist-item', listing: item, parentModel: 'checklist'}, event: $event})"
     >
       <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"/>
       <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-if="!item.checked_at"/>
@@ -13,7 +12,7 @@
         <li
         v-for="subItem in item.child_list_items"
         class="item"
-        :class="{selected: subItem.id==editableSubItem.id}"
+        :class="{active: subItem.id==editableSubItem.id, selected: selected.checklistItems.indexOf(subItem)!== -1 }"
         @click="emitClick({selection: {model: 'checklist-item', listing: subItem, parentModel: 'checklist-item'}, event: $event})"
         :key="subItem.id"
         >
@@ -38,7 +37,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'editableSubItem'
+      'editableSubItem',
+      'selected',
     ])
   },
   methods: {

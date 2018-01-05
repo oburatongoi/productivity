@@ -58,6 +58,8 @@
             Notes
           </li>
 
+          <!-- The line below is commented out until nested checklist item functionality is added -->
+          <!-- <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }" v-if="parentModel=='checklist'||!!item.child_list_items.length"> -->
           <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }" v-if="parentModel=='checklist'">
             <i class="fa fa-check-square" aria-hidden="true"/>
             Checklist <span class="list-items-count" v-if="uncheckedSubItemsCount">({{ uncheckedSubItemsCount }})</span>
@@ -204,15 +206,14 @@ export default {
   },
   methods: {
     ...mapActions([
-      'toggleSelection',
-      'toggleItemCheckMark',
-      'toggleCurrentEditableItemExpansion',
+      'removeCurrentlyEditable',
       'saveChecklistItem',
-      'toggleMovable'
+      'toggleCurrentEditableItemExpansion',
+      'toggleItemCheckMark',
     ]),
     saveAndClose: function() {
       this.saveChanges()
-      this.toggleSelection({selection: {model: 'checklist-item', listing: this.item, parentModel: this.parentModel}, event: null})
+      this.removeCurrentlyEditable( { isSubItem: this.isSubItem, deselect: true } )
     },
     debounceSaveChanges: _.debounce(function() {
       this.saveChanges()
