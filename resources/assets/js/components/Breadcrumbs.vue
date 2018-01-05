@@ -18,7 +18,7 @@
         </li>
       </template>
 
-      <li v-if="currentFolder&&currentFolder.name&&!hasCurrentView&&!currentFolderIsAncestor" class="current-folder">
+      <li v-if="currentFolder&&currentFolder.name&&!hasCurrentView&&!currentFolderIsAncestor" class="current-folder open-folder">
           <i class="fa fa-fw fa-angle-right" aria-hidden="true"/>
           <i class="fa fa-fw fa-folder-open" aria-hidden="true"/>
           {{ currentFolder.name | truncate(35) }}
@@ -94,6 +94,9 @@ export default {
     .current-view,
     .current-folder {
         font-weight: $font-weight-bold;
+    }
+    .current-folder.open-folder {
+        color: $light-grey-text-color;
     }
 
     ul {
