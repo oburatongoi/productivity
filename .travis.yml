@@ -15,12 +15,9 @@ before_install:
   # - composer require oburatongoi/productivity dev-master
   - composer require oburatongoi/productivity @dev
   - composer update
-  - pwd
-  - cd ./vendor/oburatongoi/productivity/tests/config
-  - ls
-  # - cp ./vendor/oburatongoi/productivity/tests/config/.env.travis ./.env
-  - rm ./config/app.php
-  - cp ./vendor/oburatongoi/productivity/tests/config/app.php ./config
+  - cp ~/home/travis/build/oburatongoi/productivity/tests/config/.env.travis ./.env
+  - rm ~/home/travis/build/config/app.php
+  - cp ~/home/travis/build/oburatongoi/productivity/tests/config/app.php ./config
   - php artisan vendor:publish
   - mysql -e 'create database IF NOT EXISTS productivity;' -uroot
   - php artisan migrate
