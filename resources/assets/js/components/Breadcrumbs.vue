@@ -18,7 +18,10 @@
         </li>
       </template>
 
-      <li v-if="currentFolder&&currentFolder.name&&!hasCurrentView&&!currentFolderIsAncestor" class="current-folder open-folder">
+      <li class="current-folder open-folder"
+        v-if="currentFolder&&currentFolder.name&&!hasCurrentView&&!currentFolderIsAncestor"
+        v-tooltip.bottom-left="'This folder is currently open.'"
+      >
           <i class="fa fa-fw fa-angle-right" aria-hidden="true"/>
           <i class="fa fa-fw fa-folder-open" aria-hidden="true"/>
           {{ currentFolder.name | truncate(35) }}
