@@ -16,7 +16,9 @@ before_install:
   - composer require oburatongoi/productivity @dev
   - composer update
   - pwd
-  - cp ./vendor/oburatongoi/productivity/tests/config/.env.travis ./.env
+  - cd ./vendor/oburatongoi/productivity/tests/config
+  - ls
+  # - cp ./vendor/oburatongoi/productivity/tests/config/.env.travis ./.env
   - rm ./config/app.php
   - cp ./vendor/oburatongoi/productivity/tests/config/app.php ./config
   - php artisan vendor:publish
