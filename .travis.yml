@@ -11,7 +11,7 @@ before_install:
   - cd ./laravel
   - composer config repositories.oburatongoi vcs https://5e258c4a61bc82deb9c943e09271add4d676df79@github.com/oburatongoi/productivity.git
   # - composer require oburatongoi/productivity dev-master
-  - composer require oburatongoi/productivity
+  - composer require oburatongoi/productivity @dev
   - composer update
   - cp ./vendor/oburatongoi/productivity/tests/config/.env ./
   - rm ./config/app.php
