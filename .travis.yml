@@ -5,6 +5,8 @@ before_script:
   # - cp .env.travis .env
   # - composer install --no-interaction
 
+sudo: false
+
 before_install:
   - composer self-update
   - composer create-project laravel/laravel
@@ -13,7 +15,8 @@ before_install:
   # - composer require oburatongoi/productivity dev-master
   - composer require oburatongoi/productivity @dev
   - composer update
-  - cp ./vendor/oburatongoi/productivity/tests/config/.env ./
+  - pwd
+  - cp ./vendor/oburatongoi/productivity/tests/config/.env.travis ./.env
   - rm ./config/app.php
   - cp ./vendor/oburatongoi/productivity/tests/config/app.php ./config
   - php artisan vendor:publish
@@ -22,5 +25,7 @@ before_install:
   - cd ./vendor/oburatongoi/productivity
 services:
   - mysql
+  - redis-server
 
-script: "phpunit"
+# script: "phpunit"
+script: vendor/bin/phpunit
