@@ -1,6 +1,8 @@
 <template lang="html">
   <div class="panel side-panel checklist-item-tree">
     <div class="panel-body">
+      <h4 class="rabbit-hole">{{ rabbitHoleText }}</h4>
+      <small class="text-muted">...here are some breadcrumbs to find your way back. {{ rabbitHoleHashtag }}</small>
       <ul>
         <li
         class="item"
@@ -87,6 +89,18 @@ export default {
       required: true
     }
   },
+  computed: {
+    rabbitHoleText: function() {
+      let phrases = ['Uh, this is getting deep...', 'Hmmm, nice rabbit hole...', 'You\'re taking this to a whole other level...' ],
+          randomIndex = Math.floor(Math.random()*phrases.length);
+      return phrases[randomIndex]
+    },
+    rabbitHoleHashtag: function() {
+      let phrases = ['#GotYourSix', '#ThankMeNow', '#KeepItClassy' ],
+          randomIndex = Math.floor(Math.random()*phrases.length);
+      return phrases[randomIndex]
+    },
+  },
   methods: {
     emitClick: function(payload) {
       if (payload.selection.model == 'checklist' && this.parentComponent == 'index-tasks') {
@@ -110,6 +124,13 @@ export default {
   .panel-body {
     height: 100%;
     overflow-y: scroll;
+    & > ul {
+      margin-top: 20px;
+    }
+  }
+
+  .rabbit-hole {
+    margin-bottom: 5px;
   }
 
   ul {
