@@ -59,6 +59,7 @@
           </li>
 
           <!-- The line below is commented out until nested checklist item functionality is added -->
+          <!-- <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }"> -->
           <!-- <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }" v-if="parentModel=='checklist'||!!item.child_list_items.length"> -->
           <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }" v-if="parentModel=='checklist'">
             <i class="fa fa-check-square" aria-hidden="true"/>
@@ -94,6 +95,11 @@
           :parent="item"
           parent-model="checklist-item"
         />
+        <!-- <add-item
+          v-if="view=='sub-items'"
+          :parent="item"
+          parent-model="checklist-item"
+        /> -->
       </div>
 
       <div class="panel-body notes" :id="'notes-panel-'+item.id" v-if="view=='notes'">
