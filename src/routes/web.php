@@ -28,9 +28,9 @@ Route::group(['domain' => '{'.(string)(config('productivity.subdomain')).'}.'.(s
         Route::patch('/move-to-checklist/{list}', 'SelectionController@moveToChecklist');
         Route::patch('/move-to-checklist-item/{item}', 'SelectionController@moveToChecklistItem');
         Route::patch('/move-to-home', 'SelectionController@moveToHome');
-        Route::get('/fix-folder-tree', 'SelectionController@fixTree');
         Route::post('/selection', 'SelectionController@delete');
 
+        Route::get('/maintenance/fix-folder-tree', 'Maintenance\NestedSetController@fixTree');
         Route::get('/maintenance/add-missing-fake-ids', 'Maintenance\MissingFakeIdController@addMissingFakeIds');
         Route::get('/maintenance/set-item-sort-order', 'Maintenance\ItemSortOrderController@setSortOrder');
 

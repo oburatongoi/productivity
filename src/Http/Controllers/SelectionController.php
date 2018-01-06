@@ -419,34 +419,4 @@ class SelectionController extends Controller
 
     }
 
-    public function fixTree()
-    {
-        try {
-
-          $tree = Folder::fixTree();
-
-          return response()->json([
-              'fixed' => $tree
-          ]);
-
-        } catch (AlgoliaException $e) {
-          // WIP: Add to some sort of queue to sync to algolia
-          Folder::withoutSyncingToSearch(function () {
-              $tree = Folder::fixTree();
-          });
-
-          return response()->json([
-              'fixed' => $tree
-          ]);
-        } catch (Exception $e) {
-
-          // $this->handleException($e);
-
-          return response()->json([
-              'exception' => $e->getMessage()
-          ]);
-
-        }
-
-    }
 }
