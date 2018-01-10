@@ -44,7 +44,6 @@
               @delete="debounceSaveChanges"
               @paste="debounceSaveChanges"
               @cut="debounceSaveChanges"
-              @change="debounceSaveChanges"
               maxlength="255"
             />
           </h4>
@@ -53,17 +52,14 @@
         <edit-checklist-item-meta :item="item" :is-sub-item="isSubItem"/>
 
         <ul class="manage-item-menu">
+          <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }">
+            <i class="fa fa-check-square" aria-hidden="true"/>
+            Items <span class="list-items-count" v-if="uncheckedSubItemsCount">({{ uncheckedSubItemsCount }})</span>
+          </li>
+
           <li @click="switchView('notes')" :class="{ selected: view=='notes' }">
             <i class="fa fa-sticky-note-o" aria-hidden="true"/>
             Notes
-          </li>
-
-          <!-- The line below is commented out until nested checklist item functionality is added -->
-          <!-- <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }"> -->
-          <!-- <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }" v-if="parentModel=='checklist'||!!item.child_list_items.length"> -->
-          <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }" v-if="parentModel=='checklist'">
-            <i class="fa fa-check-square" aria-hidden="true"/>
-            Checklist <span class="list-items-count" v-if="uncheckedSubItemsCount">({{ uncheckedSubItemsCount }})</span>
           </li>
         </ul>
 
@@ -91,15 +87,10 @@
         </div>
 
         <add-item
-          v-if="parentModel=='checklist'&&view=='sub-items'"
-          :parent="item"
-          parent-model="checklist-item"
-        />
-        <!-- <add-item
           v-if="view=='sub-items'"
           :parent="item"
           parent-model="checklist-item"
-        /> -->
+        />
       </div>
 
       <div class="panel-body notes" :id="'notes-panel-'+item.id" v-if="view=='notes'">
@@ -120,7 +111,7 @@
 
       <div class="panel-body sub-items" :id="'sub-items-panel-'+item.id" v-if="view=='sub-items'">
         <sub-checklist-items
-          :items="item.child_list_items"
+          :items="item.children"
           :parent="item"
           parent-model="checklist-item"
           :list-type="item.sub_list_type"
@@ -167,7 +158,8 @@ export default {
     return {
       savingChanges: false,
       checkboxClassOverride: null,
-      view: 'notes',
+      // view: 'notes',
+      view: 'sub-items',
       notesHeight: '70%'
     }
   },
@@ -199,7 +191,8 @@ export default {
 
     },
     uncheckedSubItemsCount: function() {
-      return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
+      // return this.item.children ? _.countBy(this.item.children, i => i.checked_at == null).true : 0
+      return this.item.children.filter( item => item.checked_at == null ).length
     },
     isSubItem: function() {
       return this.parentModel == 'checklist-item' ? true : false;
@@ -228,7 +221,7 @@ export default {
       this.savingChanges = true
       this.resizeNotes()
 
-      this.saveChecklistItem({isSubItem: this.isSubItem})
+      this.saveChecklistItem({ isSubItem: this.isSubItem })
       .then( () => this.savingChanges = false )
       .catch( (error) => console.log(error) )
     },

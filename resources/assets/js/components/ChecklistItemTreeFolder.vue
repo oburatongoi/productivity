@@ -1,10 +1,10 @@
 <template lang="html">
   <li
   class="item"
-  @click="emitClick({selection: {model: 'folder', listing: folder, parentModel: 'folder'}, event: $event})"
+  @click="selectTreeLeaf({selection: {model: 'folder', listing: folder, parentModel: 'folder'}, event: $event})"
   >
     <i class="fa fa-fw fa-folder-open-o" aria-hidden="true"/>
-    {{ folder.name }}
+    {{ folder.name | truncate(35) }}
   </li>
 </template>
 
@@ -18,8 +18,8 @@ export default {
     }
   },
   methods: {
-    emitClick: function(payload) {
-      this.$emit('onClick', payload)
+    selectTreeLeaf: function(payload) {
+      return this.$eventHub.$emit('selectTreeLeaf', payload);
     }
   }
 }

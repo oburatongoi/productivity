@@ -22,17 +22,13 @@ class Checklists implements ChecklistsInterface {
 
     public function rootForUser(User $user)
     {
-        return $user->checklists()->whereNull('folder_id')->withCount(['items' => function($query) {
+        return $user->checklists()->whereNull('folder_id')->whereNull('parent_id')->withCount(['items' => function($query) {
             $query->where('checked_at', null);
         }])->orderBy('title', 'asc')->get();
     }
 
     public function forFolder(User $user, Folder $folder)
     {
-        // return $folder->checklists()->withCount(['items' => function($query) {
-        //     $query->where('checked_at', null);
-        // }])->orderBy('title', 'asc')->get();
-
         return $folder->checklists()->withCount(['items' => function($query) {
             $query->where([
               ['checked_at', null],

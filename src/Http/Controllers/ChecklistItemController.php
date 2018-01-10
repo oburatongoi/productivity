@@ -51,7 +51,7 @@ class ChecklistItemController extends Controller
       try {
         if(isset($newItem) && ! empty($newItem)) {
           $response['item'] = $checklist->items()->create($newItem);
-          if(empty($response['item']['child_list_items'])) $response['item']['child_list_items'] = []; // fixes bug in Vue code
+          if(empty($response['item']['children'])) $response['item']['children'] = []; // fixes bug in Vue code
         } else {
           $response['exceptions'][] = 'The new item had no defined properties.';
         }
@@ -92,8 +92,8 @@ class ChecklistItemController extends Controller
 
       try {
         if(isset($newItem) && ! empty($newItem)) {
-          $response['item'] = $item->child_list_items()->create($newItem);
-          if(empty($response['item']['child_list_items'])) $response['item']['child_list_items'] = []; // fixes bug in Vue code
+          $response['item'] = $item->children()->create($newItem);
+          if(empty($response['item']['children'])) $response['item']['children'] = []; // fixes bug in Vue code
         } else {
           $response['exceptions'][] = 'The new item had no defined properties.';
         }

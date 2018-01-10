@@ -1,34 +1,30 @@
 <template lang="html">
-  <ul class="nested-tree">
+  <ul class="nested-tree" v-if="isAncestorOfEditableSubItem">
     <li class="item"
-      @click="emitClick({selection: {model: 'checklist-item', listing: item, parentModel: 'checklist'}, event: $event})"
+      @click="selectTreeLeaf({selection: {model: 'checklist-item', listing: item, parentModel: 'checklist'}, event: $event})"
     >
       <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"/>
       <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-if="!item.checked_at"/>
-      {{ item.content }}
+      {{ item.content | truncate(35) }}
     </li>
-    <li>
-      <ul class="nested-tree">
-        <li
-        v-for="subItem in item.child_list_items"
-        class="item"
-        :class="{active: subItem.id==editableSubItem.id, selected: selected.checklistItems.indexOf(subItem)!== -1 }"
-        @click="emitClick({selection: {model: 'checklist-item', listing: subItem, parentModel: 'checklist-item'}, event: $event})"
-        :key="subItem.id"
-        >
-          <i class="fa fa-fw fa-check" aria-hidden="true" v-if="subItem.checked_at"/>
-          <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="!subItem.checked_at"/>
-          {{ subItem.content }}
-        </li>
-      </ul>
+
+    <li v-if="subItemChain.length">
+      <checklist-item-tree-sub-item
+        :item="subItemChain[subItemChain.length-1]"
+        :depth="2"
+      />
     </li>
   </ul>
 </template>
 
 <script>
+import ChecklistItemTreeSubItem from './ChecklistItemTreeSubItem.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'checklist-item-tree-item',
+  components: {
+    ChecklistItemTreeSubItem
+  },
   props: {
     item: {
       type: Object,
@@ -39,11 +35,19 @@ export default {
     ...mapGetters([
       'editableSubItem',
       'selected',
-    ])
+      'subItemChain',
+    ]),
+    isAncestorOfEditableSubItem: function() {
+      // return _.some(this.subItemChain, ['parent_id', this.item.id]) && ! _.filter(this.subItemChain, (o) => o.id !== this.item.id])
+
+      let arr = _.intersectionBy(this.subItemChain, this.item.children, 'id')
+
+      return _.some(arr, ['parent_id', this.item.id])
+    }
   },
   methods: {
-    emitClick: function(payload) {
-      this.$emit('onClick', payload)
+    selectTreeLeaf: function(payload) {
+      return this.$eventHub.$emit('selectTreeLeaf', payload);
     }
   },
 }

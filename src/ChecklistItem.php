@@ -5,13 +5,14 @@ namespace Oburatongoi\Productivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Oburatongoi\Productivity\Traits\Encryptable;
+use Oburatongoi\Productivity\Traits\Listable;
 use App\Jobs\ReindexParentModels;
 use App\Jobs\CascadeDelete;
 use App\Jobs\CascadeRestore;
 
 class ChecklistItem extends Model
 {
-    use SoftDeletes, Encryptable;
+    use Encryptable, Listable, SoftDeletes;
 
     protected $table = 'productivity_checklist_items';
 
@@ -30,8 +31,8 @@ class ChecklistItem extends Model
 
     protected $fillable = [
         'checklist_id',
-        'parent_checklist_item_id',
-        'child_list_item_type',
+        'parent_id',
+        'sub_list_type',
         'fake_id',
         'content',
         'comments',
@@ -53,29 +54,29 @@ class ChecklistItem extends Model
         // 'deadline' => 'date',
     ];
 
-    protected $with = ['child_list_items'];
+    protected $with = ['children'];
 
-    public function checklist()
-    {
-      if ($this->parent_checklist_item_id) {
-        return $this->parent_list_item->checklist();
-      }
-      return $this->belongsTo('Oburatongoi\Productivity\Checklist', 'checklist_id');
-    }
+    // public function checklist()
+    // {
+    //   if ($this->parent_id) {
+    //     return $this->parent->checklist();
+    //   }
+    //   return $this->belongsTo('Oburatongoi\Productivity\Checklist', 'checklist_id');
+    // }
 
-    public function child_list_items()
-    {
-        return $this->hasMany('Oburatongoi\Productivity\ChecklistItem', 'parent_checklist_item_id');
-    }
-
-    public function parent_list_item()
-    {
-        return $this->belongsTo('Oburatongoi\Productivity\ChecklistItem', 'parent_checklist_item_id');
-    }
+    // public function children()
+    // {
+    //     return $this->hasMany('Oburatongoi\Productivity\ChecklistItem', 'parent_id');
+    // }
+    //
+    // public function parent()
+    // {
+    //     return $this->belongsTo('Oburatongoi\Productivity\ChecklistItem', 'parent_id');
+    // }
 
     protected $touches = [
       'checklist',
-      'parent_list_item'
+      'parent'
     ];
 
     protected static function boot() {

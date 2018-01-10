@@ -174,7 +174,7 @@ export default {
     },
     isInSelectedChecklist: function() {
       return this.selectedChecklist.id && _.findIndex(this.selected.checklistItems, ['checklist_id', this.selectedChecklist.id]) !== -1
-          || this.selectedChecklistItem.id && _.findIndex(this.selected.checklistItems, ['parent_checklist_item_id', this.selectedChecklistItem.id]) !== -1
+          || this.selectedChecklistItem.id && _.findIndex(this.selected.checklistItems, ['parent_id', this.selectedChecklistItem.id]) !== -1
     },
     isSelectedChecklist: function() {
       return _.findIndex(this.selected.checklistItems, ['id', this.selectedChecklistItem.id]) !== -1
@@ -250,7 +250,7 @@ export default {
     //   .then( response => {
     //     // WIP: fix this
     //     // this.refreshCurrentFolder(response.data.folder)
-    //     // this.refreshFolders(response.data.folder.subfolders)
+    //     // this.refreshFolders(response.data.folder.children)
     //   })
     //   .catch( error => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error', 'checklist-item') )
     // },
@@ -278,7 +278,7 @@ export default {
       .then(
         (response) => {
           this.refreshCurrentFolder(response.data.folder)
-          this.refreshFolders(response.data.folder.subfolders)
+          this.refreshFolders(response.data.folder.children)
           this.refreshChecklists(response.data.folder.checklists)
         }
       )
@@ -338,7 +338,7 @@ export default {
       this.isLoading = false
       this.resetInfoMessage('folder')
       freshFolders ? this.folders = freshFolders : this.folders = {}
-      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no subfolders', 'info', 'folder')
+      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no children', 'info', 'folder')
     },
     refreshChecklists: function(freshChecklists = null) {
       this.isLoading = false

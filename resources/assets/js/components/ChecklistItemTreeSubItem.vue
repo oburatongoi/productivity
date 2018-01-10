@@ -1,0 +1,51 @@
+<template lang="html">
+  <ul class="nested-tree">
+    <li class="item"
+      :class="{active: item.id==editableSubItem.id, selected: selected.checklistItems.indexOf(item)!== -1 }"
+      @click="selectTreeLeaf({selection: { model: 'checklist-item', listing: item, parentModel: 'checklist-item' }, removePrecedingSubItems: true, event: $event})"
+    >
+      <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"/>
+      <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="!item.checked_at"/>
+      {{ item.content | truncate(35) }}
+    </li>
+
+    <li v-if="subItemChain[subItemChainIndex]">
+      <checklist-item-tree-sub-item
+        :item="subItemChain[subItemChainIndex]"
+        :depth="depth+1"
+      />
+    </li>
+  </ul>
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+export default {
+  name: 'checklist-item-tree-sub-item',
+  props: {
+    item: {
+      type: Object,
+      required: true
+    },
+    depth: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'editableSubItem',
+      'selected',
+      'subItemChain',
+    ]),
+    subItemChainIndex: function() {
+      return this.subItemChain.length-this.depth
+    }
+  },
+  methods: {
+    selectTreeLeaf: function(payload) {
+      return this.$eventHub.$emit('selectTreeLeaf', payload);
+    }
+  },
+}
+</script>

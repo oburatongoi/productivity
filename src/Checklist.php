@@ -5,6 +5,7 @@ namespace Oburatongoi\Productivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Oburatongoi\Productivity\Traits\Fakable;
+use Oburatongoi\Productivity\Traits\Listable;
 use Oburatongoi\Productivity\Traits\Enfoldable;
 use Oburatongoi\Productivity\Traits\Encryptable;
 use Laravel\Scout\Searchable;
@@ -14,7 +15,7 @@ use App\Jobs\CascadeRestore;
 
 class Checklist extends Model
 {
-    use SoftDeletes, Fakable, Enfoldable, Encryptable, Searchable;
+    use Encryptable, Enfoldable, Fakable, Listable, Searchable, SoftDeletes;
 
     protected $table = 'productivity_checklists';
 
@@ -23,7 +24,7 @@ class Checklist extends Model
     protected $dates = ['published_at', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $fillable = [
-      'fake_id', 'user_id', 'folder_id', 'title', 'comments', 'list_type', 'visibility', 'published_at', 'created_at', 'updated_at', 'deleted_at',
+      'fake_id', 'user_id', 'folder_id', 'parent_id', 'title', 'comments', 'list_type', 'visibility', 'published_at', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     protected $casts = [
@@ -53,7 +54,7 @@ class Checklist extends Model
         $array = $this->toArray();
 
         $array['items'] = $this->items->map(function ($data) {
-          return array_only($data->toArray(), ['id', 'content', 'comments', 'child_list_items']);
+          return array_only($data->toArray(), ['id', 'content', 'comments', 'children']);
         })->toArray();
 
         $array = array_only($array, ['id', 'title', 'fake_id', 'folder_id', 'items']);
@@ -66,10 +67,20 @@ class Checklist extends Model
      return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
-    public function folder()
-    {
-     return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id', 'id');
-    }
+    // public function folder()
+    // {
+    //  return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id', 'id');
+    // }
+
+    // public function children()
+    // {
+    //     return $this->hasMany('Oburatongoi\Productivity\Checklist', 'parent_id');
+    // }
+    //
+    // public function parent()
+    // {
+    //     return $this->belongsTo('Oburatongoi\Productivity\Checklist', 'parent_id');
+    // }
 
     public function items()
     {
