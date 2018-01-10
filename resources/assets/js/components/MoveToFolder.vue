@@ -141,7 +141,7 @@ export default {
       return this.currentFolder.id && this.selected.checklists.length == 1 && this.selected.checklists[0].folder_id == this.currentFolder.id ? true : false
     },
     folderIsOnlyChildOfCurrentFolder: function() {
-      return this.currentFolder.id && this.selected.folders.length == 1 && this.selected.folders[0].folder_id == this.currentFolder.id ? true : false
+      return this.currentFolder.id && this.selected.folders.length == 1 && this.selected.folders[0].parent_id == this.currentFolder.id ? true : false
     },
     isOnlyChildOfCurrentFolder: function() {
       return this.folderIsOnlyChildOfCurrentFolder || this.checklistIsOnlyChildOfCurrentFolder ? true : false
@@ -218,7 +218,7 @@ export default {
       axios.post('/'+folder.fake_id+'/fetch-new-tree')
       .then( response => {
         this.refreshCurrentFolder(response.data.folder)
-        this.refreshFolders(response.data.folder.subfolders)
+        this.refreshFolders(response.data.folder.children)
       })
       .catch( error => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error') )
     },
@@ -261,7 +261,7 @@ export default {
       this.isLoading = false
       this.resetInfoMessage()
       freshFolders ? this.folders = freshFolders : this.folders = {}
-      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no subfolders', 'info')
+      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no children', 'info')
     },
     refreshCurrentFolder: function(folder) {
       return folder.id ? this.currentFolder = folder : this.setInfoMessage('The folder could not be retrieved', 'error')

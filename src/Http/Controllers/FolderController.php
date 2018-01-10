@@ -129,7 +129,7 @@ class FolderController extends Controller
 
         JavaScript::put([
             'folders' => $this->folders->rootForFolder($request->user(), $folder),
-            'currentFolder' => $folder->load('folder', 'subfolders'),
+            'currentFolder' => $folder->load('folder', 'children'),
             'checklists' => $this->checklists->forFolder($request->user(), $folder),
             'ancestors' => $folder->getAncestors(),
             'checklistItems' => $this->items->pendingForFolder($folder)

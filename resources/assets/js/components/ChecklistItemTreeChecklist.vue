@@ -1,10 +1,10 @@
 <template lang="html">
   <li
   class="item"
-  @click="emitClick({selection: {model: 'checklist', listing: checklist, parentModel: 'folder'}, event: $event})"
+  @click="selectTreeLeaf({selection: {model: 'checklist', listing: checklist, parentModel: 'folder'}, event: $event})"
   >
     <i class="fa fa-fw fa-list-ul" aria-hidden="true"/>
-    {{ checklist.title }}
+    {{ checklist.title | truncate(35) }}
   </li>
 </template>
 
@@ -18,8 +18,8 @@ export default {
     }
   },
   methods: {
-    emitClick: function(payload) {
-      this.$emit('onClick', payload)
+    selectTreeLeaf: function(payload) {
+      return this.$eventHub.$emit('selectTreeLeaf', payload);
     }
   }
 }

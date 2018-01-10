@@ -182,10 +182,11 @@ export default {
       return this.parentModel == 'checklist-item' || ! this.item.checklist_id ? true : false;
     },
     uncheckedSubItemsCount: function() {
-      return this.item.child_list_items ? _.countBy(this.item.child_list_items, i => i.checked_at == null).true : 0
+      // return this.item.children ? _.countBy(this.item.children, i => i.checked_at == null).true : 0
+      return this.item.children.filter( item => item.checked_at == null ).length
     },
     checklistTooltip: function () {
-      return this.item.child_list_items && this.item.child_list_items.length ? this.uncheckedSubItemsCount +' unchecked items' : 'Does not have any checklist items'
+      return this.item.children && this.item.children.length ? this.uncheckedSubItemsCount +' unchecked items' : 'Does not have any checklist items'
     },
   },
   methods: {

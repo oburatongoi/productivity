@@ -76,7 +76,7 @@ class ChecklistController extends Controller
           'checklist' => $checklist,
           'checklistItems' => $checklistItems,
           'ancestors' => $checklist->getFolderTree(),
-          'currentFolder' => $checklist->folderById()
+          'currentFolder' => $checklist->getFolderById()
         ]);
 
         return view('productivity::checklists.show')

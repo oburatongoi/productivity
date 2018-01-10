@@ -10,7 +10,6 @@ use Oburatongoi\Productivity\ChecklistItem;
 use Oburatongoi\Productivity\Interfaces\ChecklistItemsInterface;
 
 use DB;
-// use Crypt;
 
 class ChecklistItems implements ChecklistItemsInterface {
 
@@ -21,14 +20,9 @@ class ChecklistItems implements ChecklistItemsInterface {
 
     public function pendingForUser(User $user)
     {
-        // return $user->items()->where([
-        //     ['checked_at', null],
-        //     ['list_type', 'ta']
-        // ])->with('checklist.folder')->get();
-
         return $user->items()
             ->whereNull('checked_at')
-            ->with('checklist.folder', 'child_list_items')
+            ->with('checklist.folder', 'children')
             ->whereHas('checklist', function($query) {
                 $query->where('list_type', 'ta');
             })
@@ -83,7 +77,7 @@ class ChecklistItems implements ChecklistItemsInterface {
       try {
         $items = DB::table('productivity_checklist_items')
                  ->whereNull('checklist_id')
-                 ->where('parent_checklist_item_id', $parentItem->id)
+                 ->where('parent_id', $parentItem->id)
                  ->orderBy('sort_order')
                  ->latest()
                  ->get();
@@ -94,7 +88,7 @@ class ChecklistItems implements ChecklistItemsInterface {
                $updated = DB::table('productivity_checklist_items')
                             ->where([
                               ['id', $item->id],
-                              ['parent_checklist_item_id', $parentItem->id]
+                              ['parent_id', $parentItem->id]
                             ])
                             ->update([ 'sort_order' => $key ]);
                if($updated) $response['items'][] = $item->id;

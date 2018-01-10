@@ -237,7 +237,8 @@ export default {
       return this.checklist.folder ? this.checklist.folder : this.checklist.folder_id && this.currentFolder && this.checklist.folder_id == this.currentFolder.id ? this.currentFolder : null
     },
     percentComplete: function() {
-      return this.checklist.list_type && this.checklist.list_type == 'ta' ? ((this.checklistItems.length - _.countBy(this.checklistItems, i => i.checked_at == null).true) / this.checklistItems.length) * 100 : null
+      // return this.checklist.list_type && this.checklist.list_type == 'ta' ? ((this.checklistItems.length - _.countBy(this.checklistItems, i => i.checked_at == null).true) / this.checklistItems.length) * 100 : null
+      return this.checklist.list_type && this.checklist.list_type == 'ta' ? ((this.checklistItems.length - this.checklistItems.filter( item => item.checked_at == null ).length) / this.checklistItems.length) * 100 : null
     }
   },
   mounted: function() {
@@ -308,14 +309,6 @@ export default {
 
       }
     },
-    // toggleEditability: function(bool = "unset") {
-    //
-    //   if (bool !== "unset") {
-    //     this.isEditable = bool
-    //   } else {
-    //     this.isEditable = ! this.isEditable
-    //   }
-    // },
     debounceResizeInput: _.debounce(function() {
       this.resizeInput()
     }, 300),

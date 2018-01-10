@@ -16,7 +16,6 @@
           <checklist-item-tree-folder
             v-if="folder"
             :folder="folder"
-            @onClick="emitClick"
           />
 
           <!-- Nested Checklist -->
@@ -24,13 +23,11 @@
               <checklist-item-tree-checklist
                 v-if="checklist"
                 :checklist="checklist"
-                @onClick="emitClick"
               />
               <!-- Nested ChecklistItem -->
               <li>
                 <checklist-item-tree-item
                   :item="item"
-                  @onClick="emitClick"
                 />
               </li>
               <!-- End Nested ChecklistItem -->
@@ -43,13 +40,11 @@
           <checklist-item-tree-checklist
             v-if="checklist"
             :checklist="checklist"
-            @onClick="emitClick"
           />
           <!-- Nested ChecklistItem -->
           <li>
             <checklist-item-tree-item
               :item="item"
-              @onClick="emitClick"
             />
           </li>
           <!-- End Nested ChecklistItem -->
@@ -101,8 +96,14 @@ export default {
       return phrases[randomIndex]
     },
   },
+  created: function() {
+    this.$eventHub.$on('selectTreeLeaf', this.selectTreeLeaf);
+  },
+  beforeDestroy: function() {
+    this.$eventHub.$off('selectTreeLeaf', this.selectTreeLeaf);
+  },
   methods: {
-    emitClick: function(payload) {
+    selectTreeLeaf: function(payload) {
       if (payload.selection.model == 'checklist' && this.parentComponent == 'index-tasks') {
         return window.location.href = '/lists/'+payload.selection.listing.fake_id
       }
@@ -121,9 +122,11 @@ export default {
 <style lang="scss">
 .checklist-item-tree {
   font-size: 1.1em;
+  overflow-x: scroll;
   .panel-body {
     height: 100%;
     overflow-y: scroll;
+    width: auto;
     & > ul {
       margin-top: 20px;
     }
@@ -141,9 +144,9 @@ export default {
   }
   li.item {
     cursor: pointer;
-    // &:hover {
-    //   background: $body-bg;
-    // }
+    &:hover {
+      color: $brand-primary;
+    }
     &.selected,
     &.active {
       border-radius: 2px;
@@ -161,6 +164,7 @@ export default {
     border-left: 1px dashed $base-border-color;
     margin-left: 10px;
     padding-left: 10px;
+    min-width: 300px;
   }
 
   .fa-square-o {

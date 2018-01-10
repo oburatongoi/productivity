@@ -15,7 +15,7 @@ use Laravel\Scout\Searchable;
 
 class Folder extends Model
 {
-    use SoftDeletes, Nestable, Encryptable, Enfoldable, Fakable, Searchable;
+    use Encryptable, Enfoldable, Fakable, Nestable, Searchable, SoftDeletes;
 
     protected $table = 'productivity_folders';
 
@@ -30,7 +30,7 @@ class Folder extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
-        'folder_id' => 'integer',
+        'parent_id' => 'integer',
         'parent_model' => 'string',
         'fake_id' => 'integer',
         'description' => 'string',
@@ -61,10 +61,10 @@ class Folder extends Model
         })->toArray();
 
         $array['items'] = $this->items->map(function ($data) {
-          return array_only($data->toArray(), ['id', 'content', 'comments', 'child_list_items']);
+          return array_only($data->toArray(), ['id', 'content', 'comments', 'children']);
         })->toArray();
 
-        $array = array_only($array, ['id', 'name', 'fake_id', 'folder_id', 'checklists', 'items']);
+        $array = array_only($array, ['id', 'name', 'fake_id', 'parent_id', 'checklists', 'items']);
 
         return $array;
     }
@@ -74,10 +74,10 @@ class Folder extends Model
     return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
-    public function subfolders()
-    {
-        return $this->hasMany('Oburatongoi\Productivity\Folder', 'folder_id', 'id');
-    }
+    // public function children()
+    // {
+    //     return $this->hasMany('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
+    // }
 
     public function checklists()
     {

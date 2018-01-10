@@ -9,17 +9,19 @@ trait Enfoldable
 
     public function folder()
     {
-        return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id');
+      $foreign_key = $this instanceof Folder ? 'parent_id' : 'folder_id';
+      return $this->belongsTo('Oburatongoi\Productivity\Folder', $foreign_key);
     }
 
-    public function folderById()
+    public function getFolderById()
     {
-        return $this->folder()->where('id', $this->folder_id)->first();
+      $parentId = $this instanceof Folder ? $this->parent_id : $this->folder_id;
+      return $this->folder()->where('id', $parentId)->first();
     }
 
     public function getFolderTree()
     {
-        if ($folder = $this->folderById()) {
+        if ($folder = $this->getFolderById()) {
             $ancestors = $folder->getAncestors();
             return $ancestors->push($folder);
         }

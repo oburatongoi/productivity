@@ -146,7 +146,7 @@ export default {
     setSortOrder: function() {
       switch (this.parentModel) {
         case 'checklist-item':
-          this.newItem.sort_order = this.parent.child_list_items ? this.parent.child_list_items.length : 0
+          this.newItem.sort_order = this.parent.children ? this.parent.children.length : 0
           break;
         default: this.newItem.sort_order = this.checklistItems ? this.checklistItems.length : 0
       }

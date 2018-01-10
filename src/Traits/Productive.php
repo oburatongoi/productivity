@@ -2,6 +2,10 @@
 
 namespace Oburatongoi\Productivity\Traits;
 
+/**
+ * This trait adds Productivity-specific methods to a User model.
+ *
+ */
 trait Productive
 {
     public function folders()
