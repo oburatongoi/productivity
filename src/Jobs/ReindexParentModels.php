@@ -28,6 +28,13 @@ class ReindexParentModels implements ShouldQueue
     }
 
     /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 5;
+
+    /**
      * Execute the job.
      *
      * @return void
