@@ -105,11 +105,17 @@ const actions = {
   },
 
   clearSelected({ commit }) {
-    commit(CLEAR_SELECTED)
+    return new Promise((resolve, reject) => {
+      commit(CLEAR_SELECTED)
+      resolve()
+    })
   },
 
   createNew({ commit }, model) {
-    commit(SET_CREATING_NEW, model)
+    return new Promise((resolve, reject) => {
+      commit(SET_CREATING_NEW, model)
+      resolve()
+    })
   },
 
   deleteSelection({ dispatch }) {
@@ -200,23 +206,50 @@ const actions = {
     })
   },
 
+  removeFromSelected({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      commit(REMOVE_FROM_SELECTED, payload)
+      resolve()
+    })
+  },
+
+  replaceSelected({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      commit(CLEAR_SELECTED)
+      commit(ADD_TO_SELECTED, payload)
+      resolve()
+    })
+  },
+
   toggleCreatingNewButtons({ commit }) {
-    commit(TOGGLE_CREATING_NEW_BUTTONS)
+    return new Promise((resolve, reject) => {
+      commit(TOGGLE_CREATING_NEW_BUTTONS)
+      resolve()
+    })
   },
 
   toggleDeletable({ commit }) {
-    commit(TOGGLE_DELETABLE)
+    return new Promise((resolve, reject) => {
+      commit(TOGGLE_DELETABLE)
+      resolve()
+    })
   },
 
   toggleEditability({ commit }, bool = "unset") {
-    commit(TOGGLE_EDITABILITY, bool)
+    return new Promise((resolve, reject) => {
+      commit(TOGGLE_EDITABILITY, bool)
+      resolve()
+    })
   },
 
   toggleMovable({ commit }) {
+    return new Promise((resolve, reject) => {
     commit(TOGGLE_MOVABLE)
+    resolve()
+  })
   },
 
-  toggleSelection({ dispatch, commit, getters, state, rootState }, payload = { selection: { model:null, listing: null, parentModel: null }, removePrecedingSubItems: false, event: null }) {
+  toggleSelection({ dispatch, getters, state, rootGetters }, payload = { selection: { model:null, listing: null, parentModel: null }, removePrecedingSubItems: false, event: null }) {
     let isInSelectedArray = false,
         isHome = false,
         isChecklist = false,
@@ -225,12 +258,15 @@ const actions = {
         isChildOfEditableSubItem = false,
         isLoneSelected = false,
         modifierKeyPressed = ! payload.event ? false : !! payload.event.shiftKey || !! payload.event.ctrlKey || !! payload.event.metaKey,
-        editableItemIsSet = !! rootState.checklists.editableItem && !! rootState.checklists.editableItem.id,
-        editableSubItemIsSet = !! rootState.checklists.editableSubItem && !! rootState.checklists.editableSubItem.id,
+        editableItemIsSet = !! rootGetters.editableItem && !! rootGetters.editableItem.id,
+        editableSubItemIsSet = !! rootGetters.editableSubItem && !! rootGetters.editableSubItem.id,
         removePrecedingSubItems = payload.removePrecedingSubItems || false,
         currentlyEditableIsRemovable = false
 
     switch (payload.selection.model) {
+      case 'home':
+        isHome = true
+        break;
       case 'folder':
         isInSelectedArray = _.some(state.selected.folders, ['id', payload.selection.listing.id])
         isLoneSelected = isInSelectedArray && state.selected.folders.length === 1
@@ -245,13 +281,10 @@ const actions = {
         isChecklistItem = true
         isSubItem = payload.selection.parentModel == 'checklist-item' || ! payload.selection.listing.checklist_id
         isLoneSelected = isInSelectedArray && state.selected.checklistItems.length === 1
-        isChildOfEditableSubItem = isSubItem && payload.selection.listing.parent_id == getters.editableSubItem.id
+        isChildOfEditableSubItem = isSubItem && payload.selection.listing.parent_id == rootGetters.editableSubItem.id
         currentlyEditableIsRemovable = (! isSubItem || ! isChildOfEditableSubItem)
                                        && (editableItemIsSet || editableSubItemIsSet)
                                        && ! modifierKeyPressed
-        break;
-      case 'home':
-        isHome = true
         break;
     }
 
@@ -259,31 +292,15 @@ const actions = {
       if (editableSubItemIsSet) dispatch('removeCurrentlyEditable', {isSubItem: true}, {root: true})
       if (editableItemIsSet) dispatch('removeCurrentlyEditable', {isSubItem: false}, {root: true})
     } else if ( currentlyEditableIsRemovable ) {
-      // console.log('editable is set, and is checklist item, and modifier not pressed, so removing currently editable');
-      dispatch('removeCurrentlyEditable', {isSubItem, removePrecedingSubItems, item: payload.selection.listing }, {root: true})
+      dispatch('removeCurrentlyEditable', { isSubItem, removePrecedingSubItems, item: payload.selection.listing }, {root: true} )
     }
-
-    // console.log('number of listings already in selected: '+getters.selectedCount);
-    // if(isChecklistItem) console.log('selected already has items: '+ !! getters.selectedChecklistItemsCount);
-    // if(isChecklistItem) console.log('number of items already in selected: '+getters.selectedChecklistItemsCount);
-    // if(isChecklist) console.log('number of checklists already in selected: '+getters.selectedChecklistsCount);
-    // if(!isChecklistItem&&!isChecklist) console.log('number of folders already in selected: '+getters.selectedFoldersCount);
-    //
-    //
-    // console.log('isChecklistItem: '+isChecklistItem+'; isLoneSelected: '+isLoneSelected+'; isInSelectedArray: '+isInSelectedArray);
-    // console.log('should remove: '+ (isInSelectedArray && (isLoneSelected || modifierKeyPressed)));
 
     if (isInSelectedArray) {
         // Remove if modifier key was pressed
         if (isLoneSelected || modifierKeyPressed) {
-          // if (isLoneSelected && modifierKeyPressed) console.log('is loneSelected and modifier pressed so removing from selected');
-          // else if (isLoneSelected) console.log('is loneSelected so removing from selected');
-          // else if (modifierKeyPressed) console.log('modifier pressed so removing from selected');
-          commit(REMOVE_FROM_SELECTED, payload.selection)
+          dispatch('removeFromSelected', payload.selection)
         } else { // If a modifier key was not pressed
-          // console.log('is not loneSelected and modifier not pressed so adding to selected');
-          commit(CLEAR_SELECTED)
-          commit(ADD_TO_SELECTED, payload.selection)
+          dispatch('replaceSelected', payload.selection)
         }
 
     } else { // If it is not in the selected array
@@ -291,22 +308,19 @@ const actions = {
         let selectedHasItem = _.some(state.selected.checklistItems, ['parent_id', null]),
             selectedHasSubItem = _.some(state.selected.checklistItems, ['checklist_id', null]),
             selectedOnlyHasPeers = selectedHasItem != selectedHasSubItem,
-            isPeerItem = selectedOnlyHasPeers && isSubItem == selectedHasSubItem
+            isNotChildOfASelectedItem = ! _.some(state.selected.checklistItems, ['id', payload.selection.listing.parent_id]),
+            isPeerItem = selectedOnlyHasPeers && isSubItem == selectedHasSubItem && isNotChildOfASelectedItem
 
          // Add to selection if selected is empty, or a modifier key was pressed, or listing is a checklistItem and all currenlty selected items are peers of the current item
         if ( ! getters.selectedCount || modifierKeyPressed && (! isChecklistItem || isPeerItem && selectedOnlyHasPeers)) {
-          // console.log('add because selected is empty, or modifier pressed and is not a checklist item, is a peer item and selected has only peers');
-          commit(ADD_TO_SELECTED, payload.selection)
+          dispatch('addToSelected', payload.selection)
         } else { // else, clear the selection and then add the current item
-          // console.log('clear and add because selected is not empty, or modifier was not pressed and is either not a checklist item, or is a peer item and selected has only peers');
-          commit(CLEAR_SELECTED)
-          commit(ADD_TO_SELECTED, payload.selection)
+          dispatch('replaceSelected', payload.selection)
         }
     }
 
     // If the selected array has only one checklist item, make it editable
-    if (isChecklistItem && getters.selectedChecklistItemsCount === 1) {
-      // console.log('adding currently editable...');
+    if (isChecklistItem && getters.selectedChecklistItemsCount === 1 && ! modifierKeyPressed) {
       dispatch('addCurrentlyEditable', { isSubItem, item: state.selected.checklistItems[0] }, {root: true})
     }
 
@@ -314,25 +328,12 @@ const actions = {
       let selectedAlreadyHasChecklistItems = !! getters.selectedChecklistItemsCount,
           isAlreadySelected = selectedAlreadyHasChecklistItems && _.findIndex(state.selected.checklistItems, ['id', payload.selection.listing.id]) !== -1
 
-      // console.log('index of listing in selected items: '+_.findIndex(state.selected.checklistItems, ['id', payload.selection.listing.id]));
-      // console.log('editableSubItemIsSet: '+editableSubItemIsSet);
-      // console.log('editableItemIsSet: '+editableItemIsSet);
-      // console.log('isAlreadySelected: '+isAlreadySelected);
-      // console.log('has selected checklistItems: '+ selectedAlreadyHasChecklistItems);
-
       // Select the editableSubItem if it exists, or the editable Item if that exists
       if (! selectedAlreadyHasChecklistItems && (editableSubItemIsSet || editableItemIsSet) && ! isAlreadySelected) {
-        let listing = editableSubItemIsSet ? rootState.checklists.editableSubItem : rootState.checklists.editableItem
-        // if(editableSubItemIsSet && isSubItem) console.log('adding '+ payload.selection.listing.content +' to selected because editableSubItemIsSet and is not already selected');
-        // if(editableItemIsSet && ! isSubItem) console.log('adding '+ payload.selection.listing.content +' to selected because editableItemIsSet and is not already selected');
-        commit(ADD_TO_SELECTED, {model: 'checklist-item', listing})
+        let listing = editableSubItemIsSet ? rootGetters.editableSubItem : rootGetters.editableItem
+        dispatch('addToSelected', { model: 'checklist-item', listing })
       }
     }
-  },
-
-  replaceSelected({ commit }, payload) {
-    commit(CLEAR_SELECTED)
-    commit(ADD_TO_SELECTED, payload)
   },
 
 }
