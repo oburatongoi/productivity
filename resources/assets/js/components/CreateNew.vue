@@ -48,108 +48,108 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-    name: 'create-new',
-    data () {
-        return {
-            resource: {
-              name: undefined,
-              title: undefined,
-              folder_id: Productivity.currentFolder ? Productivity.currentFolder.id : {}
-            }
-        }
-    },
-    computed: {
-      ...mapGetters([
-        'currentFolder',
-        'creatingNew',
-        'showCreatingNewButtons',
-      ]),
-      buttonClass: function() {
-        switch (this.creatingNew) {
-          case 'list': return 'btn-list'
-            break;
-          default: return 'btn-folder'
-
-        }
-      },
-      placeholderText: function() {
-        return this.creatingNew == 'list' ? 'List title' : this.creatingNew == 'note' ? 'Note title' : this.creatingNew == 'goal' ? 'Goal title' : 'Title'
-      }
-    },
-    methods: {
-      ...mapActions([
-        'storeFolder',
-        'storeChecklist',
-        // 'storeNote',
-        // 'storeGoal',
-        'createNew',
-        'toggleCreatingNewButtons'
-      ]),
-      toggleCreateNew: function(model) {
-        this.createNew(model)
-      },
-      submitForm: function() {
-
-        switch (this.creatingNew) {
-          case 'folder':
-            this.storeFolder(this.resource).then(
-              (response) => {
-                this.createNew(undefined)
-                this.toggleCreatingNewButtons()
-                this.resetForm()
-              },
-              (response) => {
-                alert('error creating folder')
-              }
-            )
-            break;
-
-          case 'list':
-            this.storeChecklist(this.resource).then(
-              (response) => {
-                this.createNew(undefined)
-                this.toggleCreatingNewButtons()
-                this.resetForm()
-              },
-              (response) => {
-                alert('error creating list')
-              }
-            )
-            break;
-
-          // case 'note':
-          //   this.storeNote(this.resource).then(
-          //     (response) => {
-          //       this.createNew(undefined)
-          //       this.toggleCreatingNewButtons()
-          //       this.resetForm()
-          //     },
-          //     (response) => {
-          //       alert('error creating note')
-          //     }
-          //   )
-          //   break;
-          //
-          // case 'goal':
-          //   this.storeGoal(this.resource).then(
-          //     (response) => {
-          //       this.createNew(undefined)
-          //       this.toggleCreatingNewButtons()
-          //       this.resetForm()
-          //     },
-          //     (response) => {
-          //       alert('error creating goal')
-          //     }
-          //   )
-          //   break;
-
-        }
-
-      },
-      resetForm: function() {
-        return this.resource.name = this.resource.title = undefined
+  name: 'create-new',
+  data () {
+    return {
+      resource: {
+        name: undefined,
+        title: undefined,
+        folder_id: Productivity.currentFolder ? Productivity.currentFolder.id : {}
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'currentFolder',
+      'creatingNew',
+      'showCreatingNewButtons',
+    ]),
+    buttonClass: function() {
+      switch (this.creatingNew) {
+        case 'list': return 'btn-list'
+          break;
+        default: return 'btn-folder'
+
+      }
+    },
+    placeholderText: function() {
+      return this.creatingNew == 'list' ? 'List title' : this.creatingNew == 'note' ? 'Note title' : this.creatingNew == 'goal' ? 'Goal title' : 'Title'
+    }
+  },
+  methods: {
+    ...mapActions([
+      'storeFolder',
+      'storeChecklist',
+      // 'storeNote',
+      // 'storeGoal',
+      'createNew',
+      'toggleCreatingNewButtons'
+    ]),
+    toggleCreateNew: function(model) {
+      this.createNew(model)
+    },
+    submitForm: function() {
+
+      switch (this.creatingNew) {
+        case 'folder':
+          this.storeFolder(this.resource).then(
+            (response) => {
+              this.createNew(undefined)
+              this.toggleCreatingNewButtons()
+              this.resetForm()
+            },
+            (response) => {
+              alert('error creating folder')
+            }
+          )
+          break;
+
+        case 'list':
+          this.storeChecklist(this.resource).then(
+            (response) => {
+              this.createNew(undefined)
+              this.toggleCreatingNewButtons()
+              this.resetForm()
+            },
+            (response) => {
+              alert('error creating list')
+            }
+          )
+          break;
+
+        // case 'note':
+        //   this.storeNote(this.resource).then(
+        //     (response) => {
+        //       this.createNew(undefined)
+        //       this.toggleCreatingNewButtons()
+        //       this.resetForm()
+        //     },
+        //     (response) => {
+        //       alert('error creating note')
+        //     }
+        //   )
+        //   break;
+        //
+        // case 'goal':
+        //   this.storeGoal(this.resource).then(
+        //     (response) => {
+        //       this.createNew(undefined)
+        //       this.toggleCreatingNewButtons()
+        //       this.resetForm()
+        //     },
+        //     (response) => {
+        //       alert('error creating goal')
+        //     }
+        //   )
+        //   break;
+
+      }
+
+    },
+    resetForm: function() {
+      return this.resource.name = this.resource.title = undefined
+    }
+  }
 }
 </script>
 

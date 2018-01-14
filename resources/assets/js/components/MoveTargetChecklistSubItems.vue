@@ -1,14 +1,14 @@
 <template lang="html">
-  <div class="move-target-checklist-items">
+  <div class="move-target-checklist-sub-items">
     <div class="info-message" v-if="showInfoMessage">
       <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="moverIsLoading"/>
-      <p :class="[checklistItemInfoMessage.type]" v-if="checklistItemInfoMessage.content&&checklistItemInfoMessage.type">{{ checklistItemInfoMessage.content }}</p>
+      <p :class="[checklistSubItemInfoMessage.type]" v-if="checklistSubItemInfoMessage.content&&checklistSubItemInfoMessage.type">{{ checklistSubItemInfoMessage.content }}</p>
     </div>
 
-    <ul class="list-unstyled" v-if="movableChecklistItems&&!moverIsLoading">
+    <ul class="list-unstyled" v-if="movableChecklistSubItems&&!moverIsLoading">
       <li class="nested-checklist-item"
           :class="{ active: item.id==selectedMovableChecklistItem.id }"
-          v-for="item in movableChecklistItems"
+          v-for="item in movableChecklistSubItems"
           @click.stop.prevent="selectMoverChecklistItem(item)"
           @dblclick.stop.prevent="openChecklistItem(item)"
           :key="item.id"
@@ -25,22 +25,18 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import MoverAdder from './MoverAdder.vue'
 export default {
-  name: 'move-target-checklist-items',
-  components: {
-    MoverAdder,
-  },
+  name: 'move-target-checklist-sub-items',
   computed: {
     ...mapGetters([
-      'checklistItemInfoMessage',
-      'movableChecklistItems',
+      'checklistSubItemInfoMessage',
+      'movableChecklistSubItems',
       'moverIsLoading',
       'openMovableChecklistItem',
       'selectedMovableChecklistItem',
     ]),
     showInfoMessage: function() {
-      return this.moverIsLoading || this.checklistItemInfoMessage.content && this.checklistItemInfoMessage.type
+      return this.moverIsLoading || this.checklistSubItemInfoMessage.content && this.checklistSubItemInfoMessage.type
     },
     hasChecklistItems: function() {
       return ! _.isEmpty(this.selectedMovableChecklistItem.children)
@@ -62,9 +58,8 @@ export default {
 </script>
 
 <style lang="scss">
-.move-target-checklist-items {
+.move-target-checklist-sub-items {
   background: white;
-  // padding: 10px;
-  padding: 0;
+  padding: 10px;
 }
 </style>

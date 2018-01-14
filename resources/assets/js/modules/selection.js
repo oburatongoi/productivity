@@ -45,13 +45,10 @@ const mutations = {
     }
   },
   [CLEAR_SELECTED] (state) {
-    state.selected = {
-        folders: [],
-        checklists: [],
-        checklistItems: [],
-        movable: false,
-        deletable: false
-    }
+    Object.keys(state.selected).map(e => {
+      if(typeof state.selected[e] == 'object') state.selected[e] = []
+      if(typeof state.selected[e] == 'boolean') state.selected[e] = false
+    });
   },
   [REMOVE_FROM_SELECTED] (state, payload) {
     if (payload && payload.model) {

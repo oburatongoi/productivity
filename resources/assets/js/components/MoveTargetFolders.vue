@@ -1,17 +1,19 @@
 <template lang="html">
   <div class="move-target-folders">
-    <h4>Folders</h4>
+    <h5>Folders</h5>
+    <mover-adder v-if="moverContext=='folder'" model="folder"/>
+
     <div class="info-message" v-if="showFolderInfoMessage">
-      <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"/>
+      <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="moverIsLoading"/>
       <p :class="[folderInfoMessage.type]" v-if="folderInfoMessage.content&&folderInfoMessage.type">{{ folderInfoMessage.content }}</p>
     </div>
 
-    <ul class="list-unstyled" v-if="folders&&!isLoading">
-      <li v-if="isStoringFolder">
+    <ul class="list-unstyled" v-if="movableFolders&&!moverIsLoading">
+      <li v-if="isStoringMovableFolder">
         <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"/>
       </li>
       <li class="nested-folder"
-          v-for="folder in folders"
+          v-for="folder in movableFolders"
           @click.prevent="openFolder(folder)"
           @dblclick.prevent="openFolder(folder)"
           :key="folder.id"
@@ -28,32 +30,38 @@
 </template>
 
 <script>
+import MoverAdder from './MoverAdder.vue'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'move-target-folders',
-  props: {
-    folders: {
-      type: [Object, Array],
-      default: () => []
-    },
-    isLoading: {
-      type: Boolean,
-      default: false
-    },
-    isStoringFolder: {
-      type: Boolean,
-      default: false
-    },
-    folderInfoMessage: {
-      type: Object,
-      default: function() { return { content: undefined, type: undefined } }
+  components: {
+    MoverAdder,
+  },
+  data () {
+    return {
+      newMovableFolder: { name: null },
     }
   },
   computed: {
+    ...mapGetters([
+      'folderInfoMessage',
+      'movableFolders',
+      'moverContext',
+      'moverIsAddingFolder',
+      'moverIsLoading',
+      'openMovableFolder',
+      'isStoringMovableFolder',
+    ]),
     showFolderInfoMessage: function() {
-      return this.isLoading || this.folderInfoMessage.content && this.folderInfoMessage.type
+      return this.moverIsLoading || this.folderInfoMessage.content && this.folderInfoMessage.type
     },
   },
   methods: {
+    ...mapActions([
+      'addToMoverArray',
+      'setMoverVariable',
+      'toggleMoverVariable',
+    ]),
     openFolder: function(folder) {
       this.$eventHub.$emit('openFolder', folder)
     },
@@ -62,5 +70,35 @@ export default {
 </script>
 
 <style lang="scss">
+.add-folder-button {
+  cursor: pointer;
+  display: block;
+  padding: 5px;
+  border-radius: 3px;
+  &:hover {
+    background: lighten($body-bg, 0.5%);
+  }
+  .fa {
+    color: $folder-primary;
+  }
+}
 
+.add-folder-form {
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  margin-left: 10px;
+
+  .add-folder-form-input {
+    width: 60%;
+    display: inline-block;
+  }
+  .add-folder-form-buttons {
+    width: 38%;
+    display: inline-block;
+    .fa-check {
+      color: white;
+    }
+  }
+}
 </style>

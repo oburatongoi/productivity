@@ -548,8 +548,8 @@ const actions = {
       return new Promise((resolve, reject) => {
         commit(SET_CHECKLIST_ITEM_DEADLINE, payload)
         dispatch('saveChecklistItem', payload)
-        .then( (success) => resolve(success) )
-        .catch( (error) => {
+        .then( success => resolve(success) )
+        .catch( error => {
           dispatch(
             'addNotice',
             { type: 'error',
@@ -607,28 +607,25 @@ const actions = {
   storeChecklist({dispatch, commit}, checklist) {
     return new Promise((resolve, reject) => {
         axios.post('/lists', {checklist: checklist})
-             .then( response => dispatch('storeChecklistHandler', response).then(
-                    response => resolve(response)
-                  ) )
+             .then( response => resolve( dispatch('storeChecklistHandler', response) ) )
+             .catch( error => reject(error) )
     })
   },
   storeChecklistHandler({commit}, response) {
     return new Promise((resolve, reject) => {
       if (response.data.tokenMismatch) {
-          Vue.handleTokenMismatch(response.data).then(
-              (response) => {
-                  if (response.data.checklist) {
-                      commit(ADD_CHECKLIST, response.data.checklist)
-                      resolve(response.data.checklist)
-                  } else if (response.data.error) {
-                      reject(response.data.error)
-                  } else {
-                      reject()
-                  }
-              }
-          ).catch(
-              (error) => reject(error)
-          )
+          Vue.handleTokenMismatch(response.data)
+             .then( response => {
+                if (response.data.checklist) {
+                    commit(ADD_CHECKLIST, response.data.checklist)
+                    resolve(response.data.checklist)
+                } else if (response.data.error) {
+                    reject(response.data.error)
+                } else {
+                    reject()
+                }
+              })
+              .catch( error => reject(error) )
       } else if (response.data.checklist) {
           commit(ADD_CHECKLIST, response.data.checklist)
           resolve(response.data.checklist)
@@ -643,11 +640,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       if (!payload.item) payload.item = payload.isSubItem ? getters.editableItem : state.editableItem ? state.editableItem  : null
       commit(TOGGLE_ITEM_CHECK_MARK, payload)
-      dispatch('saveChecklistItem', payload).then(
-        () => resolve()
-      ).catch(
-        (error) => reject(error)
-      )
+      dispatch('saveChecklistItem', payload)
+        .then( () => resolve() )
+        .catch( error => reject(error) )
     })
   },
   toggleCurrentEditableItemExpansion({ commit }, payload) {
