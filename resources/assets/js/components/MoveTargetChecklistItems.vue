@@ -5,12 +5,14 @@
       <p :class="[checklistItemInfoMessage.type]" v-if="checklistItemInfoMessage.content&&checklistItemInfoMessage.type">{{ checklistItemInfoMessage.content }}</p>
     </div>
 
-    <ul class="list-unstyled" v-if="movableChecklistItems&&!moverIsLoading">
+    <small class="text-muted" v-if="movableChecklistItems&&movableChecklistItems.length"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"/> Click to select, doubleclick to open.</small>
+
+    <ul class="list-unstyled" v-if="movableChecklistItems&&movableChecklistItems.length&&!moverIsLoading">
       <li class="nested-checklist-item"
           :class="{ active: item.id==selectedMovableChecklistItem.id }"
           v-for="item in movableChecklistItems"
           @click.stop.prevent="selectMoverChecklistItem(item)"
-          @dblclick.stop.prevent="openChecklistItem(item)"
+          @dblclick.stop.prevent="openMoverChecklistItem(item)"
           :key="item.id"
       >
         <span>
@@ -50,7 +52,7 @@ export default {
     ...mapActions([
       'addToMoverArray',
       'fetchChecklistSubItems',
-      'openChecklistItem',
+      'openMoverChecklistItem',
       'removeFromMoverArray',
       'deselectMoverSelected',
       'setMoverVariable',

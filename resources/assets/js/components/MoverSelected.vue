@@ -1,14 +1,16 @@
 <template lang="html">
   <div class="mover-selected">
-    <template v-if="selected.checklistItems.length">
-      <h6>Move the following list items: </h6>
+    <template v-if="selected.checklistItems&&selected.checklistItems.length">
+      <h5>Move: </h5>
       <span v-for="item in selected.checklistItems" :key="item.id">
+        <i class="fa fa-fw fa-square-o" aria-hidden="true"/>
+        {{ item.content | truncate(35) }}
         <i class="fa fa-fw fa-times"
           aria-hidden="true"
           v-if="selected.checklistItems.length > 1"
-          @click="removeItem({ model: 'checklist-item', listing: item, preserveState: true })"/>
-        <i class="fa fa-fw fa-square-o" aria-hidden="true"/>
-        {{ item.content }}
+          @click="removeItem({ model: 'checklist-item', listing: item, preserveState: true })"
+          v-tooltip.bottom="'Remove this item'"
+        />
       </span>
     </template>
   </div>
@@ -50,17 +52,29 @@ export default {
 
 <style lang="scss">
 .mover-selected {
-  padding: 5px 5px 10px;
+  // padding: 5px 10px 10px;
+  padding: 5px 10px 0;
   background: $body-bg;
-  margin-bottom: 20px;
+
+  h5 {
+    display: inline-block;
+    margin-right: 10px;
+  }
   span {
     padding: 5px;
     background: white;
     color: $light-grey-text-color;
-    margin-right: 5px;
-    margin-bottom: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
     border-radius: $base-border-radius;
     border-color: $base-border-color;
+    display: inline-block;
+  }
+  .fa-times {
+    cursor: pointer;
+    &:hover {
+      color: $brand-danger;
+    }
   }
 }
 </style>

@@ -37,7 +37,10 @@ const mutations = {
       state[array]
       && payload.value
       &&  _.findIndex(state[array], ['id', payload.value.id]) == -1  // only add if it does not already exist
-    ){ state[array].splice(0, 0, payload.value) }
+    ){
+      console.log('array: '+array);
+      console.log(state[array]);
+      state[array].splice(0, 0, payload.value) }
   },
   [REMOVE_FROM_MOVER_ARRAY] (state, payload = { array: null, value: null }) {
     let array = payload.array
@@ -64,24 +67,21 @@ const actions = {
       resolve()
     })
   },
-  selectMoverChecklistItem({ dispatch, state }, item) {
-    return new Promise((resolve, reject) => {
-      dispatch('toggleMoverVariable', { variable: 'moverIsAddingFolder', value: false })
-      dispatch('toggleMoverVariable', { variable: 'moverIsAddingChecklist', value: false })
-      if(item.id != state.selectedMovableChecklistItem.id ) {
-        dispatch('deselectMoverSelected')
-        dispatch('setMoverVariable', { variable: 'selectedMovableChecklistItem', value: item })
-      }
-      resolve()
-    })
-  },
   addToMoverArray({ commit }, payload = { array: null, value: null }) {
     return new Promise((resolve, reject) => {
       commit(ADD_TO_MOVER_ARRAY, payload)
       resolve()
     })
   },
-  closeChecklistItem({ dispatch, state }) {
+  closeMoverChecklist({ dispatch }) {
+    return new Promise((resolve, reject) => {
+      dispatch('setMoverVariable', { variable: 'openMovableChecklist', value: {} })
+      dispatch('setMoverVariable', { variable: 'moverContext', value: 'folder' })
+      dispatch('refreshChecklistItems')
+      resolve()
+    })
+  },
+  closeMoverChecklistItem({ dispatch, state }) {
     return new Promise((resolve, reject) => {
       dispatch('removeFromMoverArray', { array: 'openMovableChecklistItemChain', value: state.openMovableChecklistItemChain[0] })
         .then( () => {
@@ -97,6 +97,20 @@ const actions = {
               dispatch('setMoverVariable', { variable: 'selectedMovableChecklist', value: state.openMovableChecklist }) }
           }
         })
+      resolve()
+    })
+  },
+  closeOpenMovables({ dispatch }) {
+    return new Promise((resolve, reject) => {
+      dispatch('setMoverVariable', { variable: 'openMovableChecklist', value: {} })
+      dispatch('setMoverVariable', { variable: 'openMovableChecklistItemChain', value: [] })
+      resolve()
+    })
+  },
+  deselectMoverSelected({ dispatch, state }, force = false) {
+    return new Promise((resolve, reject) => {
+      if(force || state.selectedMovableChecklist.id) dispatch('setMoverVariable', { variable: 'selectedMovableChecklist', value: {} })
+      if(force || state.selectedMovableChecklistItem.id) dispatch('setMoverVariable', { variable: 'selectedMovableChecklistItem', value: {} })
       resolve()
     })
   },
@@ -168,16 +182,17 @@ const actions = {
       else reject()
     })
   },
-  fetchInitialFoldersAndChecklists({ dispatch }, id = null) {
+  fetchInitialFoldersAndChecklists({ dispatch }, folder = null) {
     return new Promise((resolve, reject) => {
       dispatch('setMoverVariable', { variable: 'moverIsLoading', value: true })
       dispatch('resetInfoMessage')
       dispatch('deselectMoverSelected')
-      axios.post('/fetch-initial-tree', {folder_id: id, includeChecklists: true})
+      let folderId = folder && folder.id ? folder.id : null
+      axios.post('/fetch-initial-tree', {folder_id: folderId, includeChecklists: true})
            .then( response => {
              dispatch('fetchInitialFoldersAndChecklistsHandler', response)
               .then( () => {
-                  if (!id) dispatch('setMoverVariable', { variable: 'openMovableFolder', value: {name: 'Home', id: null} })
+                  if (!folderId) dispatch('setMoverVariable', { variable: 'openMovableFolder', value: {name: 'Home', id: null} })
                   resolve()
                 })
             })
@@ -240,12 +255,31 @@ const actions = {
       else reject()
     })
   },
-  openChecklistItem({ dispatch }, item) {
+  openMoverFolder({ dispatch }, folder = null) {
+    return new Promise((resolve, reject) => {
+      dispatch('refreshMover')
+      dispatch('closeOpenMovables')
+      dispatch('setMoverVariable', { variable: 'moverContext', value: 'folder' })
+      if(folder) dispatch('fetchNewFoldersAndChecklists', folder)
+      else dispatch('fetchInitialFoldersAndChecklists')
+      resolve()
+    })
+  },
+  openMoverChecklist({ dispatch }, checklist) {
+    return new Promise((resolve, reject) => {
+      dispatch('setMoverVariable', { variable: 'openMovableChecklist', value: checklist})
+      dispatch('setMoverVariable', { variable: 'moverContext', value: 'checklist' })
+      dispatch('fetchChecklistItems', checklist)
+      resolve()
+    })
+  },
+  openMoverChecklistItem({ dispatch }, item) {
     return new Promise((resolve, reject) => {
       dispatch('setMoverVariable', { variable: 'selectedMovableChecklistItem', value: item })
       dispatch('addToMoverArray', { array: 'openMovableChecklistItemChain', value: item})
       dispatch('setMoverVariable', { variable: 'moverContext', value: 'checklist-item' })
-      dispatch('fetchChecklistSubItems', item)
+      // dispatch('fetchChecklistSubItems', item)
+      dispatch('refreshChecklistSubItems', { freshChecklistSubItems: item.children || [], reportEmpty: true })
       resolve()
     })
   },
@@ -355,10 +389,27 @@ const actions = {
       }
     })
   },
-  deselectMoverSelected({ dispatch, state }, force = false) {
+  selectMoverChecklist({ dispatch, getters }, checklist) {
     return new Promise((resolve, reject) => {
-      if(force || state.selectedMovableChecklist.id) dispatch('setMoverVariable', { variable: 'selectedMovableChecklist', value: {} })
-      if(force || state.selectedMovableChecklistItem.id) dispatch('setMoverVariable', { variable: 'selectedMovableChecklistItem', value: {} })
+      dispatch('toggleMoverVariable', { variable: 'moverIsAddingFolder', value: false })
+      dispatch('toggleMoverVariable', { variable: 'moverIsAddingChecklist', value: false })
+      if(checklist.id != getters.selectedMovableChecklist.id ) {
+        dispatch('deselectMoverSelected')
+        dispatch('refreshChecklistItems')
+        dispatch('setMoverVariable', { variable: 'selectedMovableChecklist', value: checklist })
+      }
+      if (checklist.id == getters.openMovableChecklist.id) dispatch('closeMoverChecklist') // toggle openMovableChecklist.id
+      resolve()
+    })
+  },
+  selectMoverChecklistItem({ dispatch, state }, item) {
+    return new Promise((resolve, reject) => {
+      dispatch('toggleMoverVariable', { variable: 'moverIsAddingFolder', value: false })
+      dispatch('toggleMoverVariable', { variable: 'moverIsAddingChecklist', value: false })
+      if(item.id != state.selectedMovableChecklistItem.id ) {
+        dispatch('deselectMoverSelected')
+        dispatch('setMoverVariable', { variable: 'selectedMovableChecklistItem', value: item })
+      }
       resolve()
     })
   },

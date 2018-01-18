@@ -12,6 +12,7 @@
           placeholder="Add item..."
           maxlength="255"
           class="item-form-input"
+          v-focus
         >
       </div>
 

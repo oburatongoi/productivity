@@ -50,3 +50,7 @@
     width: 100%;
 
 }
+
+@mixin base-icon-color {
+  color: darken($base-border-color, 30%);
+}

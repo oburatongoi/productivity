@@ -37,7 +37,7 @@ class SelectionController extends Controller
                     ->get();
 
         if ($request->has('includeChecklists')) {
-          $checklists = Checklist::select('title', 'fake_id', 'id')
+          $checklists = Checklist::select('title', 'fake_id', 'id', 'folder_id')
                       ->where([
                         ['folder_id', $request->input('folder_id')],
                         ['user_id', $request->user()->id],

@@ -1,6 +1,8 @@
 <template lang="html">
   <div class="move-target-folders">
     <h5>Folders</h5>
+    <small class="text-muted" v-if="movableFolders&&movableFolders.length"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"/> Click to open.</small>
+    
     <mover-adder v-if="moverContext=='folder'" model="folder"/>
 
     <div class="info-message" v-if="showFolderInfoMessage">
@@ -8,21 +10,21 @@
       <p :class="[folderInfoMessage.type]" v-if="folderInfoMessage.content&&folderInfoMessage.type">{{ folderInfoMessage.content }}</p>
     </div>
 
-    <ul class="list-unstyled" v-if="movableFolders&&!moverIsLoading">
+    <ul class="list-unstyled" v-if="movableFolders&&movableFolders.length&&!moverIsLoading">
       <li v-if="isStoringMovableFolder">
         <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"/>
       </li>
       <li class="nested-folder"
           v-for="folder in movableFolders"
-          @click.prevent="openFolder(folder)"
-          @dblclick.prevent="openFolder(folder)"
+          @click.prevent="openMoverFolder(folder)"
+          @dblclick.prevent="openMoverFolder(folder)"
           :key="folder.id"
       >
         <span>
           <i class="fa fa-fw fa-folder" aria-hidden="true"/>
           {{ folder.name }}
         </span>
-        <i class="fa fa-angle-right" aria-hidden="true" @click="openFolder(folder)"/>
+        <i class="fa fa-angle-right" aria-hidden="true" @click="openMoverFolder(folder)"/>
       </li>
     </ul>
   </div>
@@ -59,12 +61,10 @@ export default {
   methods: {
     ...mapActions([
       'addToMoverArray',
+      'openMoverFolder',
       'setMoverVariable',
       'toggleMoverVariable',
     ]),
-    openFolder: function(folder) {
-      this.$eventHub.$emit('openFolder', folder)
-    },
   },
 }
 </script>

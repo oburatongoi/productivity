@@ -1,37 +1,23 @@
 <template lang="html">
   <div class="move-to-checklist">
     <div class="move-to-checklist-heading">
-      <template>
-        <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="openFolder(openMovableFolder.folder)" v-if="openMovableFolder.folder"/>
-        <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFoldersAndChecklists()" v-if="openMovableFolder.id&&!openMovableFolder.folder"/>
-        <span
-          class="current-folder"
-          v-if="openMovableFolder"
-          :class="{ active: openMovableFolder.id==selectedMovableChecklist.folder_id }"
-          @click.prevent="deselectMoverSelected"
-        >
-          <i class="fa fa-home" aria-hidden="true" v-if="!openMovableFolder.id&&!openMovableFolder.folder"/>
-          {{ openMovableFolder.name }}
-        </span>
-      </template>
-
-      <span class="heading-right" @click="cancel">
-        <i class="fa fa-times" aria-hidden="true"/>
-        Cancel Move
-      </span>
-
+      <mover-breadcrumbs />
+      <mover-selected :parent-model="parentModel"/>
+      <i class="fa close-mover-button fa-times" aria-hidden="true" v-tooltip.bottom-left="'Cancel Move'" @click="cancel"/>
     </div>
 
     <div class="move-to-checklist-body" @click.self="deselectMoverSelected">
-      <mover-selected :parent-model="parentModel"/>
+      <!-- <mover-breadcrumbs /> -->
 
-      <move-target-folders
-        @openFolder="openFolder"
-        v-if="moverContext=='folder'"
-      />
-      <move-target-checklists v-if="moverContext=='folder'||moverContext=='checklist'"/>
+      <!-- <mover-selected :parent-model="parentModel"/> -->
 
-      <move-target-open-checklist-item v-if="moverContext=='checklist-item'"/>
+      <move-target-folders v-if="moverContext=='folder'"/>
+
+      <move-target-checklists v-if="moverContext=='folder'"/>
+
+      <move-target-checklist-items v-if="moverContext=='checklist'"/>
+
+      <move-target-checklist-sub-items v-if="moverContext=='checklist-item'&&openMovableChecklistItem.id"/>
     </div>
 
     <div class="move-to-checklist-footer">
@@ -61,18 +47,24 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex'
+import MoverBreadcrumbs from './MoverBreadcrumbs.vue'
 import MoverSelected from './MoverSelected.vue'
 import MoveTargetFolders from './MoveTargetFolders.vue'
 import MoveTargetChecklists from './MoveTargetChecklists.vue'
-import MoveTargetOpenChecklistItem from './MoveTargetOpenChecklistItem.vue'
+import MoveTargetChecklistItems from './MoveTargetChecklistItems.vue'
+import MoveTargetChecklistSubItems from './MoveTargetChecklistSubItems.vue'
+// import MoveTargetOpenChecklistItem from './MoveTargetOpenChecklistItem.vue'
 
 export default {
   name: 'move-to-checklist',
   components: {
+    MoverBreadcrumbs,
     MoverSelected,
     MoveTargetFolders,
     MoveTargetChecklists,
-    MoveTargetOpenChecklistItem,
+    MoveTargetChecklistItems,
+    MoveTargetChecklistSubItems,
+    // MoveTargetOpenChecklistItem,
   },
   props: {
     replaceAfterMove: {
@@ -89,6 +81,7 @@ export default {
       'editableSubItem',
       'moverContext',
       'openMovableFolder',
+      'openMovableChecklistItem',
       'selected',
       'selectedMovableChecklist',
       'selectedMovableChecklistItem',
@@ -114,34 +107,34 @@ export default {
       return _.findIndex(this.selected.checklistItems, ['id', this.selectedMovableChecklistItem.id]) !== -1
     },
     moveButtonClass: function() {
-      switch (this.selected.model) {
-        case 'checklist': return 'btn-list'
-          break;
-        default: return 'btn-folder'
-
-      }
+      return 'btn-list'
+      // switch (this.selected.model) {
+      //   case 'checklist': return 'btn-list'
+      //     break;
+      //   default: return 'btn-list'
+      //
+      // }
     },
   },
   created: function() {
     this.refreshMover()
-    this.fetchInitialFoldersAndChecklists(this.openMovableFolder.id)
-    this.$eventHub.$on('openFolder', this.openFolder);
+    this.fetchInitialFoldersAndChecklists(this.openMovableFolder)
   },
   beforeDestroy: function() {
-    this.$eventHub.$off('openFolder', this.openFolder);
     this.resetMover()
   },
   methods: {
     ...mapActions([
       'delistChecklistItem',
       'deselect',
+      'deselectMoverSelected',
       'fetchInitialFoldersAndChecklists',
       'fetchNewFoldersAndChecklists',
+      'openMoverFolder',
       'removeCurrentlyEditable',
       'refreshMover',
       'resetInfoMessage',
       'resetMover',
-      'deselectMoverSelected',
       'setInfoMessage',
       'setMoverVariable',
       'toggleMovable',
@@ -187,9 +180,6 @@ export default {
            .then( response => response.data.success ? this.handleSuccessfulMove(response.data) : console.log('Error moving (1)') )
            .catch( response => console.log(response) )
     },
-    openFolder: function(folder) {
-      return this.fetchNewFoldersAndChecklists(folder)
-    },
   },
 }
 </script>
@@ -210,7 +200,8 @@ export default {
 .move-to-checklist-heading {
     background: $body-bg;
     border-bottom: 1px solid $base-border-color;
-    padding: 10px;
+    // padding: 10px;
+    padding: 0;
     text-align: left;
     position: relative;
     .fa-times,
@@ -220,23 +211,18 @@ export default {
             color: $folder-primary;
         }
     }
-    .heading-right {
-        // float: right;
-        // margin-top: 5px;
-        position: absolute;
-        top: 15px;
-        right: 10px;
-        @include high-z-index(0);
-        cursor: pointer;
-    }
-    .heading-left {
-        float: left;
-        margin-top: 5px;
-    }
-    &:after {
-        content: "";
-        display: block;
-        clear: both;
+    .close-mover-button {
+      padding: 5px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      @include high-z-index(0);
+      color: darken($base-border-color, 20%);
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      &:hover {
+        color: $brand-danger;
+      }
     }
     .current-folder {
         margin-left: 10px;
@@ -252,7 +238,7 @@ export default {
     height: 85%;
     overflow-x: hidden;
     // padding: 10px 10px 10px 30px;
-    padding: 10px 20px;
+    padding: 10px 10px 80px;
     position: relative;
     @include desktop-overflow-y-scroll;
     .info-message {
@@ -345,7 +331,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    // border-top: 1px solid $base-border-color;
+    border-bottom: 1px solid white;
     padding: 10px;
     @include transparent-linear-gradient;
     p {

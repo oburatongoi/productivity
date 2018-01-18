@@ -2,16 +2,18 @@
   <div class="move-target-open-checklist-item">
     <span
       class="mover-close-checklist-button"
-      @click="closeChecklistItem"
+      @click="closeMoverChecklistItem"
     >
       <i class="fa fa-fw fa-arrow-left"/>
       <span>Back</span>
     </span>
 
+    <!-- <mover-breadcrumbs /> -->
+
     <div
       class="nested-checklist-item opened"
       :class="{ active: openMovableChecklistItem.id==selectedMovableChecklistItem.id }"
-       @click.stop.prevent="selectMoverChecklistItem(openMovableChecklistItem)"
+      @click.stop.prevent="selectMoverChecklistItem(openMovableChecklistItem)"
     >
       <span class="content">
         <i class="fa fa-fw fa-circle-thin" aria-hidden="true"/>
@@ -27,11 +29,13 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import MoverAdder from './MoverAdder.vue'
+import MoverBreadcrumbs from './MoverBreadcrumbs.vue'
 import MoveTargetChecklistSubItems from './MoveTargetChecklistSubItems.vue'
 export default {
   name: 'move-target-open-checklist-item',
   components: {
     MoverAdder,
+    MoverBreadcrumbs,
     MoveTargetChecklistSubItems,
   },
   computed: {
@@ -53,7 +57,6 @@ export default {
   methods: {
     ...mapActions([
       'addToMoverArray',
-      'closeChecklistItem',
       'fetchChecklistSubItems',
       'refreshChecklistSubItems',
       'removeFromMoverArray',
@@ -69,7 +72,7 @@ export default {
 <style lang="scss">
 .move-target-open-checklist-item {
   background: white;
-  padding: 10px;
+  padding: 0;
 
   .nested-checklist-item {
       .fa {

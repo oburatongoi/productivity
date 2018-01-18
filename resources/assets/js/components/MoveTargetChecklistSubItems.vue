@@ -5,16 +5,18 @@
       <p :class="[checklistSubItemInfoMessage.type]" v-if="checklistSubItemInfoMessage.content&&checklistSubItemInfoMessage.type">{{ checklistSubItemInfoMessage.content }}</p>
     </div>
 
-    <ul class="list-unstyled" v-if="movableChecklistSubItems&&!moverIsLoading">
+    <small class="text-muted" v-if="movableChecklistSubItems&&movableChecklistSubItems.length"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"/> Click to select, doubleclick to open.</small>
+
+    <ul class="list-unstyled" v-if="movableChecklistSubItems&&movableChecklistSubItems.length&&!moverIsLoading">
       <li class="nested-checklist-item"
           :class="{ active: item.id==selectedMovableChecklistItem.id }"
           v-for="item in movableChecklistSubItems"
           @click.stop.prevent="selectMoverChecklistItem(item)"
-          @dblclick.stop.prevent="openChecklistItem(item)"
+          @dblclick.stop.prevent="openMoverChecklistItem(item)"
           :key="item.id"
       >
         <span>
-          <i class="fa fa-fw fa-circle-thin" aria-hidden="true"/>
+          <i class="fa fa-fw fa-square-o" aria-hidden="true"/>
           {{ item.content }}
         </span>
       </li>
@@ -46,7 +48,7 @@ export default {
     ...mapActions([
       'addToMoverArray',
       'fetchChecklistSubItems',
-      'openChecklistItem',
+      'openMoverChecklistItem',
       'removeFromMoverArray',
       'deselectMoverSelected',
       'setMoverVariable',
@@ -60,6 +62,6 @@ export default {
 <style lang="scss">
 .move-target-checklist-sub-items {
   background: white;
-  padding: 10px;
+  // padding: 10px;
 }
 </style>
