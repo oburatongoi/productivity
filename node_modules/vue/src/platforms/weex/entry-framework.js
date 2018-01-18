@@ -61,11 +61,7 @@ export function createInstance (
   }, timerAPIs, env.services)
 
   appCode = `(function(global){ \n${appCode}\n })(Object.create(this))`
-
   callFunction(instanceVars, appCode)
-
-  // Send `createFinish` signal to native.
-  document.taskCenter.send('dom', { action: 'createFinish' }, [])
 
   return instance
 }
@@ -117,53 +113,6 @@ export function getRoot (instanceId) {
   return instance.app.$el.toJSON()
 }
 
-const jsHandlers = {
-  fireEvent: (id, ...args) => {
-    return fireEvent(instances[id], ...args)
-  },
-  callback: (id, ...args) => {
-    return callback(instances[id], ...args)
-  }
-}
-
-function fireEvent (instance, nodeId, type, e, domChanges) {
-  const el = instance.document.getRef(nodeId)
-  if (el) {
-    return instance.document.fireEvent(el, type, e, domChanges)
-  }
-  return new Error(`invalid element reference "${nodeId}"`)
-}
-
-function callback (instance, callbackId, data, ifKeepAlive) {
-  const result = instance.document.taskCenter.callback(callbackId, data, ifKeepAlive)
-  instance.document.taskCenter.send('dom', { action: 'updateFinish' }, [])
-  return result
-}
-
-/**
- * Accept calls from native (event or callback).
- *
- * @param  {string} id
- * @param  {array} tasks list with `method` and `args`
- */
-export function receiveTasks (id, tasks) {
-  const instance = instances[id]
-  if (instance && Array.isArray(tasks)) {
-    const results = []
-    tasks.forEach((task) => {
-      const handler = jsHandlers[task.method]
-      const args = [...task.args]
-      /* istanbul ignore else */
-      if (typeof handler === 'function') {
-        args.unshift(id)
-        results.push(handler(...args))
-      }
-    })
-    return results
-  }
-  return new Error(`invalid instance id "${id}" or tasks`)
-}
-
 /**
  * Create a fresh instance of Vue for each Weex instance.
  */
@@ -207,6 +156,16 @@ function createVueModuleInstance (instanceId, weex) {
         options.data = Object.assign(internalData, instance.data)
         // record instance by id
         instance.app = this
+      }
+    },
+    mounted () {
+      const options = this.$options
+      // root component (vm)
+      if (options.el && weex.document) {
+        try {
+          // Send "createFinish" signal to native.
+          weex.document.taskCenter.send('dom', { action: 'createFinish' }, [])
+        } catch (e) {}
       }
     }
   })

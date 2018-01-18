@@ -27,6 +27,11 @@ import {
   deactivateChildComponent
 } from '../instance/lifecycle'
 
+import {
+  isRecyclableComponent,
+  renderRecyclableComponentTemplate
+} from 'weex/runtime/recycle-list/render-component-template'
+
 // hooks to be invoked on component VNodes during patch
 const componentVNodeHooks = {
   init (
@@ -191,6 +196,15 @@ export function createComponent (
     { Ctor, propsData, listeners, tag, children },
     asyncFactory
   )
+
+  // Weex specific: invoke recycle-list optimized @render function for
+  // extracting cell-slot template.
+  // https://github.com/Hanks10100/weex-native-directive/tree/master/component
+  /* istanbul ignore if */
+  if (__WEEX__ && isRecyclableComponent(vnode)) {
+    return renderRecyclableComponentTemplate(vnode)
+  }
+
   return vnode
 }
 
@@ -200,15 +214,10 @@ export function createComponentInstanceForVnode (
   parentElm?: ?Node,
   refElm?: ?Node
 ): Component {
-  const vnodeComponentOptions = vnode.componentOptions
   const options: InternalComponentOptions = {
     _isComponent: true,
     parent,
-    propsData: vnodeComponentOptions.propsData,
-    _componentTag: vnodeComponentOptions.tag,
     _parentVnode: vnode,
-    _parentListeners: vnodeComponentOptions.listeners,
-    _renderChildren: vnodeComponentOptions.children,
     _parentElm: parentElm || null,
     _refElm: refElm || null
   }
@@ -218,7 +227,7 @@ export function createComponentInstanceForVnode (
     options.render = inlineTemplate.render
     options.staticRenderFns = inlineTemplate.staticRenderFns
   }
-  return new vnodeComponentOptions.Ctor(options)
+  return new vnode.componentOptions.Ctor(options)
 }
 
 function mergeHooks (data: VNodeData) {
