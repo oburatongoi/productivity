@@ -72,7 +72,7 @@ export default {
       'selectedMovableChecklistItem',
     ]),
     backButtonText: function() {
-      return this.openMovableChecklist.id ? 'Back' : 'Home'
+      return this.openMovableChecklist.id || this.openMovableFolder.parent_id ? 'Back' : 'Home'
     },
     breadcrumbs: function() {
       return this.openMovableChecklistItemChain.length ? this.openMovableChecklistItemChain.slice().reverse() : []

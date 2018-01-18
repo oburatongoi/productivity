@@ -16,7 +16,7 @@ trait Enfoldable
     public function getFolderById()
     {
       $parentId = $this instanceof Folder ? $this->parent_id : $this->folder_id;
-      return $this->folder()->where('id', $parentId)->first();
+      return $this->folder()->where('id', $parentId)->with('folder')->first();
     }
 
     public function getFolderTree()

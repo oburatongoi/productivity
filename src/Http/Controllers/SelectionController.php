@@ -27,7 +27,7 @@ class SelectionController extends Controller
 
       try {
 
-        $folders = Folder::select('name', 'fake_id', 'id')
+        $folders = Folder::select('name', 'fake_id', 'id', 'parent_id')
                     ->where([
                       ['parent_id', $request->input('folder_id')],
                       ['user_id', $request->user()->id],
