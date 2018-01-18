@@ -117,7 +117,6 @@ export default {
     },
   },
   created: function() {
-    this.refreshMover()
     this.fetchInitialFoldersAndChecklists(this.openMovableFolder)
   },
   beforeDestroy: function() {
@@ -132,7 +131,6 @@ export default {
       'fetchNewFoldersAndChecklists',
       'openMoverFolder',
       'removeCurrentlyEditable',
-      'refreshMover',
       'resetInfoMessage',
       'resetMover',
       'setInfoMessage',

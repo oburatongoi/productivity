@@ -53,7 +53,7 @@ export default {
 <style lang="scss">
 .mover-selected {
   // padding: 5px 10px 10px;
-  padding: 5px 10px 0;
+  padding: 8px 10px 0;
   background: $body-bg;
 
   h5 {

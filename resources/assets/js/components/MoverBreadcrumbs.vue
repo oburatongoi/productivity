@@ -2,7 +2,7 @@
   <div class="mover-breadcrumbs">
     <span class="back-button" @click="goBack" v-if="openMovableFolder.id||openMovableChecklist.id">
       <i class="fa fa-fw fa-arrow-left"/>
-      <span>Back</span>
+      <span>{{ backButtonText }}</span>
     </span>
 
     <span v-if="!openMovableFolder.id&&!openMovableChecklist.id">
@@ -12,17 +12,23 @@
     </span>
 
     <span v-if="openMovableFolder.id">
-      <span class="crumb">
+      <span
+        class="crumb"
+        @click.stop.prevent="selectBreadcrumb(openMovableFolder, 'folder')"
+      >
         <i class="fa fa-fw fa-folder-open-o" aria-hidden="true"/>
         {{ openMovableFolder.name | truncate(35) }}
         <i class="fa fa-angle-down" aria-hidden="true" v-if="moverContext=='folder'"/>
       </span>
-      <!-- <i class="fa fa-angle-right" aria-hidden="true" v-if="moverContext!='folder'"/> -->
     </span>
 
     <span v-if="openMovableChecklist.id">
       <i class="fa fa-angle-right" aria-hidden="true"/>
-      <span class="crumb" :class="{ opened: moverContext=='checklist'&&!selectedMovableChecklistItem.id }">
+      <span
+        class="crumb"
+        :class="{ opened: moverContext=='checklist'&&!selectedMovableChecklistItem.id }"
+        @click.stop.prevent="selectBreadcrumb(openMovableChecklist, 'checklist')"
+      >
         <i class="fa fa-fw fa-list-ul" aria-hidden="true"/>
         {{ openMovableChecklist.title | truncate(35) }}
         <i class="fa fa-fw fa-angle-down" aria-hidden="true" v-if="moverContext=='checklist'"/>
@@ -34,10 +40,13 @@
       <span
         v-for="item in breadcrumbs"
         :key="item.id"
-        @click.stop.prevent="openMoverChecklistItem(item)"
+        @click.stop.prevent="selectBreadcrumb(item)"
       >
         <i class="fa fa-angle-right" aria-hidden="true"/>
-        <span class="crumb" :class="{ opened: item.id==selectedMovableChecklistItem.id }">
+        <span
+          class="crumb"
+          :class="{ opened: item.id==selectedMovableChecklistItem.id }"
+        >
           <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="item.id!=openMovableChecklistItemChain[openMovableChecklistItemChain.length-1].id"/>
           <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-else/>
           {{ item.content | truncate(35) }}
@@ -62,14 +71,19 @@ export default {
       'openMovableChecklistItemChain',
       'selectedMovableChecklistItem',
     ]),
+    backButtonText: function() {
+      return this.openMovableChecklist.id ? 'Back' : 'Home'
+    },
     breadcrumbs: function() {
-      return this.openMovableChecklistItemChain && this.openMovableChecklistItemChain.slice().reverse()
+      return this.openMovableChecklistItemChain.length ? this.openMovableChecklistItemChain.slice().reverse() : []
     },
   },
   methods: {
     ...mapActions([
       'closeMoverChecklist',
       'closeMoverChecklistItem',
+      'removeFromMoverArray',
+      'selectAndOpenMoverChecklist',
       'openMoverChecklistItem',
       'openMoverFolder',
     ]),
@@ -77,6 +91,16 @@ export default {
       if (this.openMovableChecklistItem.id) this.closeMoverChecklistItem()
       else if (this.openMovableChecklist.id) this.closeMoverChecklist()
       else if (this.openMovableFolder.id) this.openMoverFolder(this.openMovableFolder.folder || null)
+    },
+    selectBreadcrumb: function(breadcrumb, model = 'checklist-item') {
+      if( model == 'checklist-item' ) {
+        this.removeFromMoverArray({ array: 'openMovableChecklistItemChain', value: breadcrumb, removePrecedingSubItems: true })
+        this.openMoverChecklistItem(breadcrumb)
+      } else {
+        this.removeFromMoverArray({ array: 'openMovableChecklistItemChain', removeAll: true })
+        if( model == 'checklist' ) this.selectAndOpenMoverChecklist(breadcrumb)
+        else if( model == 'folder' ) this.openMoverFolder(breadcrumb)
+      }
     },
   },
 

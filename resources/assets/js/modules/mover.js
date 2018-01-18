@@ -38,13 +38,17 @@ const mutations = {
       && payload.value
       &&  _.findIndex(state[array], ['id', payload.value.id]) == -1  // only add if it does not already exist
     ){
-      console.log('array: '+array);
-      console.log(state[array]);
       state[array].splice(0, 0, payload.value) }
   },
-  [REMOVE_FROM_MOVER_ARRAY] (state, payload = { array: null, value: null }) {
+  [REMOVE_FROM_MOVER_ARRAY] (state, payload = { array: null, value: null, removePrecedingSubItems: false, removeAll: false  }) {
     let array = payload.array
-    if(payload.value&&payload.value.id) state[array].splice(_.findIndex(state[array], ['id', payload.value.id]), 1)
+    if(payload.removeAll) { // empties the entire array
+      state[array].splice(0, state[array].length)
+    } else if(payload.value&&payload.value.id) {
+      if( payload.removePrecedingSubItems ) state[array].splice(0, _.findIndex(state[array], ['id', payload.value.id])) // remove every element that precedes the item
+      else state[array].splice(_.findIndex(state[array], ['id', payload.value.id]), 1) // removes the item from the array
+    }
+
   },
   [SET_MOVER_VARIABLE] (state, payload = { variable: null, value: null }) {
     let variable = payload.variable
@@ -334,7 +338,6 @@ const actions = {
   },
   refreshMover({ dispatch }) {
     return new Promise((resolve, reject) => {
-      dispatch('deselectMoverSelected')
       dispatch('refreshFolders')
       dispatch('refreshChecklists')
       dispatch('refreshChecklistItems')
@@ -358,6 +361,7 @@ const actions = {
           state[e] = { content: undefined, type: undefined }
         } else {
           if(typeof state[e] == 'object' && state[e] === null ) state[e] = null
+          else if(typeof state[e] == 'object' && Object.prototype.toString.call(state[e]) === '[object Array]') state[e] = []
           else if(typeof state[e] == 'object') state[e] = {}
           if(typeof state[e] == 'string') state[e] = null
           if(typeof state[e] == 'boolean') state[e] = false
@@ -387,6 +391,14 @@ const actions = {
                     .then( dispatch('setMoverVariable', { variable: 'checklistSubItemInfoMessage', value: { content: null, type: null } }) ) )
           )
       }
+    })
+  },
+  selectAndOpenMoverChecklist({ dispatch }, checklist) {
+    return new Promise((resolve, reject) => {
+      dispatch('selectMoverChecklist', checklist)
+      .then(() => {
+        resolve( dispatch('openMoverChecklist' , checklist) )
+      })
     })
   },
   selectMoverChecklist({ dispatch, getters }, checklist) {
