@@ -111,7 +111,7 @@
 
       <div class="panel-body sub-items" :id="'sub-items-panel-'+item.id" v-if="view=='sub-items'">
         <sub-checklist-items
-          :items="item.children"
+          :items="item.sub_items"
           :parent="item"
           parent-model="checklist-item"
           :list-type="item.sub_list_type"
@@ -191,8 +191,7 @@ export default {
 
     },
     uncheckedSubItemsCount: function() {
-      // return this.item.children ? _.countBy(this.item.children, i => i.checked_at == null).true : 0
-      return this.item.children.filter( item => item.checked_at == null ).length
+      return this.item.sub_items.filter( item => item.checked_at == null ).length
     },
     isSubItem: function() {
       return this.parentModel == 'checklist-item' ? true : false;

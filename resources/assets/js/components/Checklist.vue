@@ -1,5 +1,5 @@
 <template>
-  <div class="checklist position-relative" :class="checklistClass">
+  <div class="show-checklist position-relative" :class="checklistClass">
     <div class="panel main-panel" v-show="!editableSubItem.id">
       <div class="panel-heading">
           <h4 class="checklist-title">
@@ -379,7 +379,7 @@ export default {
 </script>
 
 <style lang="scss">
-.checklist {
+.show-checklist {
     height: 100%;
     @include desktop-overflow-y;
 

@@ -5,6 +5,7 @@ namespace Oburatongoi\Productivity\Repositories\Decorators;
 use App\User;
 use Oburatongoi\Productivity\Folder;
 use Oburatongoi\Productivity\Checklist;
+use Oburatongoi\Productivity\ChecklistItem;
 use Oburatongoi\Productivity\Repositories\ChecklistItems;
 use Oburatongoi\Productivity\Interfaces\ChecklistItemsInterface;
 
@@ -35,6 +36,13 @@ class CacheableChecklistItems implements ChecklistItemsInterface {
     public function forChecklist(Checklist $checklist)
     {
         return $this->items->forChecklist($checklist);
+    }
+
+    public function getKanbanDescendants($nestedKanban)
+    {
+      // return Cache::remember('checklist.'.$nestedKanban->id.'.kanbanDescendants', 60 * 60, function() use ($nestedKanban) {
+          return $this->items->getKanbanDescendants($nestedKanban);
+      // });
     }
 
 }

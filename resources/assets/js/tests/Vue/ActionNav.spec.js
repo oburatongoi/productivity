@@ -59,14 +59,14 @@ describe('ActionNav', () => {
   });
 
   it ('calls deleteSelection when confirmOrDeleteButton is clicked and selected.deletable is true', () => {
-    wrapper.setComputed({ selected:{deletable: true} })
+    wrapper.setComputed({ selected: { folders: [], checklists: [], checklistItems: [], movable: false, deletable: true } })
     wrapper.find('#confirm-or-delete-btn').trigger('click');
     expect(actions.toggleDeletable.called).toBe(false);
     expect(actions.deleteSelection.called).toBe(true);
   });
 
   it ('calls toggleDeletable when toggleDeleteButton is clicked', () => {
-    wrapper.setComputed({ selected:{deletable: true} })
+    wrapper.setComputed({ selected: { folders: [], checklists: [], checklistItems: [], movable: false, deletable: true } })
     wrapper.find('#toggle-delete-btn').trigger('click');
       expect(actions.toggleDeletable.called).toBe(true);
   });

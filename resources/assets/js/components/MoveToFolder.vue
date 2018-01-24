@@ -218,7 +218,7 @@ export default {
       axios.post('/'+folder.fake_id+'/fetch-new-tree')
       .then( response => {
         this.refreshCurrentFolder(response.data.folder)
-        this.refreshFolders(response.data.folder.children)
+        this.refreshFolders(response.data.folder.subfolders)
       })
       .catch( error => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error') )
     },
@@ -261,7 +261,7 @@ export default {
       this.isLoading = false
       this.resetInfoMessage()
       freshFolders ? this.folders = freshFolders : this.folders = {}
-      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no children', 'info')
+      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no subfolders', 'info')
     },
     refreshCurrentFolder: function(folder) {
       return folder.id ? this.currentFolder = folder : this.setInfoMessage('The folder could not be retrieved', 'error')

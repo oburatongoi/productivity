@@ -1,11 +1,11 @@
 <template lang="html">
   <ul
-    v-if="folders"
+    v-if="foldersByName"
     class="list-unstyled"
     @click.self="clearSelected"
   >
       <li
-        v-for="folder in folders"
+        v-for="folder in foldersByName"
         class="listing folder-color-scheme"
         :class="{selected: selected.folders.indexOf(folder) !== -1 }"
         draggable="true"
@@ -35,7 +35,7 @@ export default {
   name: 'index-folders',
   computed: {
     ...mapGetters([
-      'folders',
+      'foldersByName',
       'selected'
     ])
   },

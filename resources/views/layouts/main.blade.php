@@ -55,12 +55,12 @@
                     @include('productivity::partials._auth_links')
                 </div>
 
-                <div class="wide-section">
-                    <div class="nav-sizer">
+                <div class="wide-section" id="wide-section">
+                    <div class="nav-sizer" id="wide-section-nav-sizer">
                         @include('productivity::partials._top_nav')
                     </div>
 
-                    <div class="content-wrapper">
+                    <div class="content-wrapper" id="content-wrapper">
                         @yield('content')
                         <search-results></search-results>
                         <notices></notices>

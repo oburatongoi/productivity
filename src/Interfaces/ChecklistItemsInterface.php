@@ -15,4 +15,6 @@ interface ChecklistItemsInterface
 
     public function forChecklist(Checklist $checklist);
 
+    public function getKanbanDescendants($nestedKanban);
+
 }

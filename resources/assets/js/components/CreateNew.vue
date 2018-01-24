@@ -54,7 +54,7 @@ export default {
       resource: {
         name: undefined,
         title: undefined,
-        folder_id: Productivity.currentFolder ? Productivity.currentFolder.id : {}
+        folder_id: Productivity.currentFolder ? Productivity.currentFolder.id : null
       }
     }
   },
@@ -78,6 +78,7 @@ export default {
   },
   methods: {
     ...mapActions([
+      'addFolder',
       'storeFolder',
       'storeChecklist',
       // 'storeNote',
@@ -92,16 +93,14 @@ export default {
 
       switch (this.creatingNew) {
         case 'folder':
-          this.storeFolder(this.resource).then(
-            (response) => {
-              this.createNew(undefined)
-              this.toggleCreatingNewButtons()
-              this.resetForm()
-            },
-            (response) => {
-              alert('error creating folder')
-            }
-          )
+          this.storeFolder(this.resource)
+              .then( (folder) => {
+                  this.addFolder(folder)
+                  this.createNew(undefined)
+                  this.toggleCreatingNewButtons()
+                  this.resetForm()
+                })
+              .catch( (error) => console.log('error creating folder') )
           break;
 
         case 'list':

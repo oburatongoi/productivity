@@ -39,6 +39,9 @@ export const UNDO_UPDATE_SORT_ORDER = 'checklists/UNDO_UPDATE_SORT_ORDER'
 export const UPDATE_SORT_ORDER = 'checklists/UPDATE_SORT_ORDER'
 export const UPDATE_SUB_ITEM_SORT_ORDER = 'checklists/UPDATE_SUB_ITEM_SORT_ORDER'
 
+export const ADD_TO_KANBAN_ARRAY = 'kanban/ADD_TO_KANBAN_ARRAY'
+export const SET_OR_TOGGLE_KANBAN_PROPERTY = 'kanban/SET_OR_TOGGLE_KANBAN_PROPERTY'
+
 export const ADD_NOTE = 'notes/ADD_NOTE'
 export const DELETE_NOTE = 'notes/DELETE_NOTE'
 export const UPDATE_NOTE = 'notes/UPDATE_NOTE'

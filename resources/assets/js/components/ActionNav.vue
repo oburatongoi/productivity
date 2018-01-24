@@ -47,7 +47,6 @@ export default {
   computed: {
     ...mapGetters([
       'selected',
-      'selectedCount',
     ]),
     moveButtonClass: function() {
       if (!this.selected.folders.length && this.selected.checklists.length || this.selected.checklistItems.length) {

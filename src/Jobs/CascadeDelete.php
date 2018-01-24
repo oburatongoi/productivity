@@ -48,10 +48,10 @@ class CascadeDelete implements ShouldQueue
           switch ($class) {
             case 'Oburatongoi\Productivity\Folder':
               if ($this->force) {
-                  $this->model->children()->forceDelete();
+                  $this->model->subfolders()->forceDelete();
                   $this->model->checklists()->forceDelete();
               } else {
-                  $this->model->children()->delete();
+                  $this->model->subfolders()->delete();
                   $this->model->checklists()->delete();
               }
               break;
@@ -64,9 +64,9 @@ class CascadeDelete implements ShouldQueue
               break;
             case 'Oburatongoi\Productivity\ChecklistItem':
               if ($this->force) {
-                  $this->model->children()->forceDelete();
+                  $this->model->sub_items()->forceDelete();
               } else {
-                  $this->model->children()->delete();
+                  $this->model->sub_items()->delete();
               }
               break;
           }

@@ -6517,7 +6517,7 @@ if (__webpack_require__(9)) {
   var createArrayIncludes = __webpack_require__(56);
   var speciesConstructor = __webpack_require__(63);
   var ArrayIterators = __webpack_require__(90);
-  var Iterators = __webpack_require__(49);
+  var Iterators = __webpack_require__(50);
   var $iterDetect = __webpack_require__(60);
   var setSpecies = __webpack_require__(43);
   var arrayFill = __webpack_require__(89);
@@ -7288,131 +7288,66 @@ module.exports = function (target, src, safe) {
 
 /***/ }),
 /* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var def = __webpack_require__(10).f;
-var has = __webpack_require__(14);
-var TAG = __webpack_require__(8)('toStringTag');
-
-module.exports = function (it, tag, stat) {
-  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
-};
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $export = __webpack_require__(0);
-var defined = __webpack_require__(27);
-var fails = __webpack_require__(6);
-var spaces = __webpack_require__(75);
-var space = '[' + spaces + ']';
-var non = '\u200b\u0085';
-var ltrim = RegExp('^' + space + space + '*');
-var rtrim = RegExp(space + space + '*$');
-
-var exporter = function (KEY, exec, ALIAS) {
-  var exp = {};
-  var FORCE = fails(function () {
-    return !!spaces[KEY]() || non[KEY]() != non;
-  });
-  var fn = exp[KEY] = FORCE ? exec(trim) : spaces[KEY];
-  if (ALIAS) exp[ALIAS] = fn;
-  $export($export.P + $export.F * FORCE, 'String', exp);
-};
-
-// 1 -> String#trimLeft
-// 2 -> String#trimRight
-// 3 -> String#trim
-var trim = exporter.trim = function (string, TYPE) {
-  string = String(defined(string));
-  if (TYPE & 1) string = string.replace(ltrim, '');
-  if (TYPE & 2) string = string.replace(rtrim, '');
-  return string;
-};
-
-module.exports = exporter;
-
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(7);
-module.exports = function (it, TYPE) {
-  if (!isObject(it) || it._t !== TYPE) throw TypeError('Incompatible receiver, ' + TYPE + ' required!');
-  return it;
-};
-
-
-/***/ }),
-/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return CLEAR_SELECTED; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return SET_CREATING_NEW; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return TOGGLE_CREATING_NEW_BUTTONS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "G", function() { return TOGGLE_DELETABLE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return TOGGLE_EDITABILITY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return TOGGLE_MOVABLE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return ADD_TO_SELECTED; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return REMOVE_FROM_SELECTED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return CLEAR_SELECTED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return SET_CREATING_NEW; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "G", function() { return TOGGLE_CREATING_NEW_BUTTONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return TOGGLE_DELETABLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return TOGGLE_EDITABILITY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return TOGGLE_MOVABLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return ADD_TO_SELECTED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return REMOVE_FROM_SELECTED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ADD_FOLDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return DELETE_FOLDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "R", function() { return UPDATE_FOLDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return DELETE_FOLDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "T", function() { return UPDATE_FOLDER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ADD_CHECKLIST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return ADD_TO_ARRAY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ADD_ITEM_TO_CHECKLIST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return ADD_SUB_ITEM_TO_CHECKLIST_ITEM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return ADD_UNFILTERED; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return DECREMENT_ITEM_COUNT; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return DELETE_CHECKLIST; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return DELETE_CHECKLIST_ITEM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return DELETE_UNFILTERED; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return DELIST_CHECKLIST_ITEM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return REMOVE_FROM_ARRAY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return SET_EDITABLE_CHECKLIST_ITEM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return SET_EDITABLE_CHECKLIST_ITEM_COMMENTS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return SET_CHECKLIST_ITEM_DEADLINE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return SORT_CHECKLIST_ITEMS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "B", function() { return SORT_SUB_CHECKLIST_ITEMS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return TOGGLE_ITEM_CHECK_MARK; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return TOGGLE_CHECKLIST_ITEM_IMPORTANCE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return TOGGLE_CHECKLIST_ITEM_URGENCY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "M", function() { return UNSET_EDITABLE_CHECKLIST_ITEM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "N", function() { return UPDATE_CHECKLIST; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "O", function() { return UPDATE_CHECKLIST_ITEM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Q", function() { return UPDATE_FILTERS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return UNDO_UPDATE_SORT_ORDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "V", function() { return UPDATE_SORT_ORDER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "W", function() { return UPDATE_SUB_ITEM_SORT_ORDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return ADD_UNFILTERED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return DECREMENT_ITEM_COUNT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return DELETE_CHECKLIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return DELETE_CHECKLIST_ITEM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return DELETE_UNFILTERED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return DELIST_CHECKLIST_ITEM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return REMOVE_FROM_ARRAY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return SET_EDITABLE_CHECKLIST_ITEM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return SET_EDITABLE_CHECKLIST_ITEM_COMMENTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return SET_CHECKLIST_ITEM_DEADLINE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return SORT_CHECKLIST_ITEMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return SORT_SUB_CHECKLIST_ITEMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "K", function() { return TOGGLE_ITEM_CHECK_MARK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return TOGGLE_CHECKLIST_ITEM_IMPORTANCE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return TOGGLE_CHECKLIST_ITEM_URGENCY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "O", function() { return UNSET_EDITABLE_CHECKLIST_ITEM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P", function() { return UPDATE_CHECKLIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Q", function() { return UPDATE_CHECKLIST_ITEM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "S", function() { return UPDATE_FILTERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "N", function() { return UNDO_UPDATE_SORT_ORDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "X", function() { return UPDATE_SORT_ORDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Y", function() { return UPDATE_SUB_ITEM_SORT_ORDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return ADD_TO_KANBAN_ARRAY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "B", function() { return SET_OR_TOGGLE_KANBAN_PROPERTY; });
 /* unused harmony export ADD_NOTE */
 /* unused harmony export DELETE_NOTE */
 /* unused harmony export UPDATE_NOTE */
 /* unused harmony export ADD_GOAL */
 /* unused harmony export DELETE_GOAL */
 /* unused harmony export UPDATE_GOAL */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return CLEAR_QUERY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "T", function() { return UPDATE_QUERY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "U", function() { return UPDATE_RESULTS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P", function() { return UPDATE_ERROR_MESSAGE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "S", function() { return UPDATE_IS_SEARCHING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return CLEAR_QUERY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "V", function() { return UPDATE_QUERY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "W", function() { return UPDATE_RESULTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "R", function() { return UPDATE_ERROR_MESSAGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "U", function() { return UPDATE_IS_SEARCHING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return ADD_NOTICE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return DELETE_NOTICE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return ADD_TO_MOVER_ARRAY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return REMOVE_FROM_MOVER_ARRAY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return SET_MOVER_VARIABLE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "K", function() { return TOGGLE_MOVER_VARIABLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return DELETE_NOTICE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return ADD_TO_MOVER_ARRAY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return REMOVE_FROM_MOVER_ARRAY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return SET_MOVER_VARIABLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "M", function() { return TOGGLE_MOVER_VARIABLE; });
 var CLEAR_SELECTED = 'selection/CLEAR_SELECTED';
 var SET_CREATING_NEW = 'selection/SET_CREATING_NEW';
 var TOGGLE_CREATING_NEW_BUTTONS = 'selection/TOGGLE_CREATING_NEW_BUTTONS';
@@ -7454,6 +7389,9 @@ var UNDO_UPDATE_SORT_ORDER = 'checklists/UNDO_UPDATE_SORT_ORDER';
 var UPDATE_SORT_ORDER = 'checklists/UPDATE_SORT_ORDER';
 var UPDATE_SUB_ITEM_SORT_ORDER = 'checklists/UPDATE_SUB_ITEM_SORT_ORDER';
 
+var ADD_TO_KANBAN_ARRAY = 'kanban/ADD_TO_KANBAN_ARRAY';
+var SET_OR_TOGGLE_KANBAN_PROPERTY = 'kanban/SET_OR_TOGGLE_KANBAN_PROPERTY';
+
 var ADD_NOTE = 'notes/ADD_NOTE';
 var DELETE_NOTE = 'notes/DELETE_NOTE';
 var UPDATE_NOTE = 'notes/UPDATE_NOTE';
@@ -7475,6 +7413,73 @@ var ADD_TO_MOVER_ARRAY = 'mover/ADD_TO_MOVER_ARRAY';
 var REMOVE_FROM_MOVER_ARRAY = 'mover/REMOVE_FROM_MOVER_ARRAY';
 var SET_MOVER_VARIABLE = 'mover/SET_MOVER_VARIABLE';
 var TOGGLE_MOVER_VARIABLE = 'mover/TOGGLE_MOVER_VARIABLE';
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var def = __webpack_require__(10).f;
+var has = __webpack_require__(14);
+var TAG = __webpack_require__(8)('toStringTag');
+
+module.exports = function (it, tag, stat) {
+  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
+};
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__(0);
+var defined = __webpack_require__(27);
+var fails = __webpack_require__(6);
+var spaces = __webpack_require__(75);
+var space = '[' + spaces + ']';
+var non = '\u200b\u0085';
+var ltrim = RegExp('^' + space + space + '*');
+var rtrim = RegExp(space + space + '*$');
+
+var exporter = function (KEY, exec, ALIAS) {
+  var exp = {};
+  var FORCE = fails(function () {
+    return !!spaces[KEY]() || non[KEY]() != non;
+  });
+  var fn = exp[KEY] = FORCE ? exec(trim) : spaces[KEY];
+  if (ALIAS) exp[ALIAS] = fn;
+  $export($export.P + $export.F * FORCE, 'String', exp);
+};
+
+// 1 -> String#trimLeft
+// 2 -> String#trimRight
+// 3 -> String#trim
+var trim = exporter.trim = function (string, TYPE) {
+  string = String(defined(string));
+  if (TYPE & 1) string = string.replace(ltrim, '');
+  if (TYPE & 2) string = string.replace(rtrim, '');
+  return string;
+};
+
+module.exports = exporter;
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(7);
+module.exports = function (it, TYPE) {
+  if (!isObject(it) || it._t !== TYPE) throw TypeError('Incompatible receiver, ' + TYPE + ' required!');
+  return it;
+};
+
 
 /***/ }),
 /* 52 */
@@ -7711,7 +7716,7 @@ var anInstance = __webpack_require__(44);
 var isObject = __webpack_require__(7);
 var fails = __webpack_require__(6);
 var $iterDetect = __webpack_require__(60);
-var setToStringTag = __webpack_require__(47);
+var setToStringTag = __webpack_require__(48);
 var inheritIfRequired = __webpack_require__(76);
 
 module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
@@ -8082,9 +8087,9 @@ var $export = __webpack_require__(0);
 var redefine = __webpack_require__(16);
 var hide = __webpack_require__(15);
 var has = __webpack_require__(14);
-var Iterators = __webpack_require__(49);
+var Iterators = __webpack_require__(50);
 var $iterCreate = __webpack_require__(82);
-var setToStringTag = __webpack_require__(47);
+var setToStringTag = __webpack_require__(48);
 var getPrototypeOf = __webpack_require__(20);
 var ITERATOR = __webpack_require__(8)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
@@ -8156,7 +8161,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 var create = __webpack_require__(41);
 var descriptor = __webpack_require__(36);
-var setToStringTag = __webpack_require__(47);
+var setToStringTag = __webpack_require__(48);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
@@ -8205,7 +8210,7 @@ module.exports = function (KEY) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators = __webpack_require__(49);
+var Iterators = __webpack_require__(50);
 var ITERATOR = __webpack_require__(8)('iterator');
 var ArrayProto = Array.prototype;
 
@@ -8235,7 +8240,7 @@ module.exports = function (object, index, value) {
 
 var classof = __webpack_require__(54);
 var ITERATOR = __webpack_require__(8)('iterator');
-var Iterators = __webpack_require__(49);
+var Iterators = __webpack_require__(50);
 module.exports = __webpack_require__(25).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
     || it['@@iterator']
@@ -8285,7 +8290,7 @@ module.exports = function fill(value /* , start = 0, end = @length */) {
 
 var addToUnscopables = __webpack_require__(35);
 var step = __webpack_require__(118);
-var Iterators = __webpack_require__(49);
+var Iterators = __webpack_require__(50);
 var toIObject = __webpack_require__(18);
 
 // 22.1.3.4 Array.prototype.entries()
@@ -8527,7 +8532,7 @@ var toIndex = __webpack_require__(127);
 var gOPN = __webpack_require__(42).f;
 var dP = __webpack_require__(10).f;
 var arrayFill = __webpack_require__(89);
-var setToStringTag = __webpack_require__(47);
+var setToStringTag = __webpack_require__(48);
 var ARRAY_BUFFER = 'ArrayBuffer';
 var DATA_VIEW = 'DataView';
 var PROTOTYPE = 'prototype';
@@ -9196,13 +9201,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(641)
+  __webpack_require__(649)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(642)
+var __vue_script__ = __webpack_require__(650)
 /* template */
-var __vue_template__ = __webpack_require__(643)
+var __vue_template__ = __webpack_require__(651)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -9423,7 +9428,7 @@ module.exports = function (fn, args, that) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var $parseInt = __webpack_require__(5).parseInt;
-var $trim = __webpack_require__(48).trim;
+var $trim = __webpack_require__(49).trim;
 var ws = __webpack_require__(75);
 var hex = /^[-+]?0[xX]/;
 
@@ -9438,7 +9443,7 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
 /***/ (function(module, exports, __webpack_require__) {
 
 var $parseFloat = __webpack_require__(5).parseFloat;
-var $trim = __webpack_require__(48).trim;
+var $trim = __webpack_require__(49).trim;
 
 module.exports = 1 / $parseFloat(__webpack_require__(75) + '-0') !== -Infinity ? function parseFloat(str) {
   var string = $trim(String(str), 3);
@@ -9652,7 +9657,7 @@ module.exports = function (C, x) {
 "use strict";
 
 var strong = __webpack_require__(123);
-var validate = __webpack_require__(50);
+var validate = __webpack_require__(51);
 var MAP = 'Map';
 
 // 23.1 Map Objects
@@ -9688,7 +9693,7 @@ var step = __webpack_require__(118);
 var setSpecies = __webpack_require__(43);
 var DESCRIPTORS = __webpack_require__(9);
 var fastKey = __webpack_require__(34).fastKey;
-var validate = __webpack_require__(50);
+var validate = __webpack_require__(51);
 var SIZE = DESCRIPTORS ? '_s' : 'size';
 
 var getEntry = function (that, key) {
@@ -9829,7 +9834,7 @@ module.exports = {
 "use strict";
 
 var strong = __webpack_require__(123);
-var validate = __webpack_require__(50);
+var validate = __webpack_require__(51);
 var SET = 'Set';
 
 // 23.2 Set Objects
@@ -9856,7 +9861,7 @@ var assign = __webpack_require__(106);
 var weak = __webpack_require__(126);
 var isObject = __webpack_require__(7);
 var fails = __webpack_require__(6);
-var validate = __webpack_require__(50);
+var validate = __webpack_require__(51);
 var WEAK_MAP = 'WeakMap';
 var getWeak = meta.getWeak;
 var isExtensible = Object.isExtensible;
@@ -9923,7 +9928,7 @@ var anInstance = __webpack_require__(44);
 var forOf = __webpack_require__(45);
 var createArrayMethod = __webpack_require__(30);
 var $has = __webpack_require__(14);
-var validate = __webpack_require__(50);
+var validate = __webpack_require__(51);
 var arrayFind = createArrayMethod(5);
 var arrayFindIndex = createArrayMethod(6);
 var id = 0;
@@ -33466,13 +33471,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(628)
+  __webpack_require__(636)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(629)
+var __vue_script__ = __webpack_require__(637)
 /* template */
-var __vue_template__ = __webpack_require__(657)
+var __vue_template__ = __webpack_require__(665)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -35338,7 +35343,7 @@ return Tether;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(274);
-module.exports = __webpack_require__(699);
+module.exports = __webpack_require__(708);
 
 
 /***/ }),
@@ -35347,16 +35352,16 @@ module.exports = __webpack_require__(699);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(678);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_tooltip__ = __webpack_require__(688);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(686);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_tooltip__ = __webpack_require__(697);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_tooltip___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_v_tooltip__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue2_filters__ = __webpack_require__(691);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue2_filters__ = __webpack_require__(700);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue2_filters___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue2_filters__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__plugins_vue_token_mismatch_js__ = __webpack_require__(692);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_truncate_filter__ = __webpack_require__(693);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__plugins_vue_token_mismatch_js__ = __webpack_require__(701);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_truncate_filter__ = __webpack_require__(702);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_truncate_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_truncate_filter__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_resize__ = __webpack_require__(694);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_resize_dist_vue_resize_css__ = __webpack_require__(695);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_resize__ = __webpack_require__(703);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_resize_dist_vue_resize_css__ = __webpack_require__(704);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_resize_dist_vue_resize_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue_resize_dist_vue_resize_css__);
 
 /**
@@ -35379,9 +35384,9 @@ Vue.component('Home', __webpack_require__(527));
 Vue.component('MainMenu', __webpack_require__(597));
 Vue.component('Folders', __webpack_require__(605));
 Vue.component('Folder', __webpack_require__(625));
-Vue.component('Checklists', __webpack_require__(659));
-Vue.component('Checklist', __webpack_require__(662));
-Vue.component('Notices', __webpack_require__(670));
+Vue.component('Checklists', __webpack_require__(667));
+Vue.component('Checklist', __webpack_require__(670));
+Vue.component('Notices', __webpack_require__(678));
 
 // v-focus global directive
 Vue.directive('focus', {
@@ -35718,7 +35723,7 @@ var redefine = __webpack_require__(16);
 var META = __webpack_require__(34).KEY;
 var $fails = __webpack_require__(6);
 var shared = __webpack_require__(55);
-var setToStringTag = __webpack_require__(47);
+var setToStringTag = __webpack_require__(48);
 var uid = __webpack_require__(37);
 var wks = __webpack_require__(8);
 var wksExt = __webpack_require__(102);
@@ -36277,7 +36282,7 @@ var fails = __webpack_require__(6);
 var gOPN = __webpack_require__(42).f;
 var gOPD = __webpack_require__(19).f;
 var dP = __webpack_require__(10).f;
-var $trim = __webpack_require__(48).trim;
+var $trim = __webpack_require__(49).trim;
 var NUMBER = 'Number';
 var $Number = global[NUMBER];
 var Base = $Number;
@@ -36926,7 +36931,7 @@ $export($export.S, 'String', {
 "use strict";
 
 // 21.1.3.25 String.prototype.trim()
-__webpack_require__(48)('trim', function ($trim) {
+__webpack_require__(49)('trim', function ($trim) {
   return function trim() {
     return $trim(this, 3);
   };
@@ -38221,7 +38226,7 @@ if (!USE_NATIVE) {
 }
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
-__webpack_require__(47)($Promise, PROMISE);
+__webpack_require__(48)($Promise, PROMISE);
 __webpack_require__(43)(PROMISE);
 Wrapper = __webpack_require__(25)[PROMISE];
 
@@ -38294,7 +38299,7 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(60)(function
 "use strict";
 
 var weak = __webpack_require__(126);
-var validate = __webpack_require__(50);
+var validate = __webpack_require__(51);
 var WEAK_SET = 'WeakSet';
 
 // 23.4 WeakSet Objects
@@ -38938,7 +38943,7 @@ $export($export.P, 'String', {
 "use strict";
 
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
-__webpack_require__(48)('trimLeft', function ($trim) {
+__webpack_require__(49)('trimLeft', function ($trim) {
   return function trimLeft() {
     return $trim(this, 1);
   };
@@ -38952,7 +38957,7 @@ __webpack_require__(48)('trimLeft', function ($trim) {
 "use strict";
 
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
-__webpack_require__(48)('trimRight', function ($trim) {
+__webpack_require__(49)('trimRight', function ($trim) {
   return function trimRight() {
     return $trim(this, 2);
   };
@@ -39943,7 +39948,7 @@ var getKeys = __webpack_require__(39);
 var redefine = __webpack_require__(16);
 var global = __webpack_require__(5);
 var hide = __webpack_require__(15);
-var Iterators = __webpack_require__(49);
+var Iterators = __webpack_require__(50);
 var wks = __webpack_require__(8);
 var ITERATOR = wks('iterator');
 var TO_STRING_TAG = wks('toStringTag');
@@ -72231,7 +72236,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       resource: {
         name: undefined,
         title: undefined,
-        folder_id: Productivity.currentFolder ? Productivity.currentFolder.id : {}
+        folder_id: Productivity.currentFolder ? Productivity.currentFolder.id : null
       }
     };
   },
@@ -72251,7 +72256,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       return this.creatingNew == 'list' ? 'List title' : this.creatingNew == 'note' ? 'Note title' : this.creatingNew == 'goal' ? 'Goal title' : 'Title';
     }
   }),
-  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['storeFolder', 'storeChecklist',
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addFolder', 'storeFolder', 'storeChecklist',
   // 'storeNote',
   // 'storeGoal',
   'createNew', 'toggleCreatingNewButtons']), {
@@ -72263,12 +72268,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
       switch (this.creatingNew) {
         case 'folder':
-          this.storeFolder(this.resource).then(function (response) {
+          this.storeFolder(this.resource).then(function (folder) {
+            _this.addFolder(folder);
             _this.createNew(undefined);
             _this.toggleCreatingNewButtons();
             _this.resetForm();
-          }, function (response) {
-            alert('error creating folder');
+          }).catch(function (error) {
+            return console.log('error creating folder');
           });
           break;
 
@@ -72853,7 +72859,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'action-nav',
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['selected', 'selectedCount']), {
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['selected']), {
     moveButtonClass: function moveButtonClass() {
       if (!this.selected.folders.length && this.selected.checklists.length || this.selected.checklistItems.length) {
         return 'btn-list';
@@ -74956,13 +74962,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       return this.parentModel == 'checklist-item' || !this.item.checklist_id ? true : false;
     },
     uncheckedSubItemsCount: function uncheckedSubItemsCount() {
-      // return this.item.children ? _.countBy(this.item.children, i => i.checked_at == null).true : 0
-      return this.item.children.filter(function (item) {
+      return this.item.sub_items.filter(function (item) {
         return item.checked_at == null;
       }).length;
     },
     checklistTooltip: function checklistTooltip() {
-      return this.item.children && this.item.children.length ? this.uncheckedSubItemsCount + ' unchecked items' : 'Does not have any checklist items';
+      return this.item.sub_items && this.item.sub_items.length ? this.uncheckedsub_itemsCount + ' unchecked items' : 'Does not have any checklist items';
     }
   }),
   methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['checkChecklistItem', 'setChecklistItemDeadline']), {
@@ -76009,7 +76014,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     isAncestorOfEditableSubItem: function isAncestorOfEditableSubItem() {
       // return _.some(this.subItemChain, ['parent_id', this.item.id]) && ! _.filter(this.subItemChain, (o) => o.id !== this.item.id])
 
-      var arr = _.intersectionBy(this.subItemChain, this.item.children, 'id');
+      var arr = _.intersectionBy(this.subItemChain, this.item.sub_items, 'id');
 
       return _.some(arr, ['parent_id', this.item.id]);
     }
@@ -76613,8 +76618,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       }
     },
     uncheckedSubItemsCount: function uncheckedSubItemsCount() {
-      // return this.item.children ? _.countBy(this.item.children, i => i.checked_at == null).true : 0
-      return this.item.children.filter(function (item) {
+      return this.item.sub_items.filter(function (item) {
         return item.checked_at == null;
       }).length;
     },
@@ -76851,7 +76855,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     setSortOrder: function setSortOrder() {
       switch (this.parentModel) {
         case 'checklist-item':
-          this.newItem.sort_order = this.parent.children ? this.parent.children.length : 0;
+          this.newItem.sort_order = this.parent.sub_items ? this.parent.sub_items.length : 0;
           break;
         default:
           this.newItem.sort_order = this.checklistItems ? this.checklistItems.length : 0;
@@ -94242,7 +94246,7 @@ var render = function() {
               [
                 _c("sub-checklist-items", {
                   attrs: {
-                    items: _vm.item.children,
+                    items: _vm.item.sub_items,
                     parent: _vm.item,
                     "parent-model": "checklist-item",
                     "list-type": _vm.item.sub_list_type
@@ -95115,7 +95119,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'index-folders',
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['folders', 'selected'])),
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['foldersByName', 'selected'])),
   methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['clearSelected', 'toggleSelection']), {
     goToListing: function goToListing(model, id) {
       return window.location = '/' + model + 's/' + id;
@@ -95134,7 +95138,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.folders
+  return _vm.foldersByName
     ? _c(
         "ul",
         {
@@ -95148,7 +95152,7 @@ var render = function() {
             }
           }
         },
-        _vm._l(_vm.folders, function(folder) {
+        _vm._l(_vm.foldersByName, function(folder) {
           return _c(
             "li",
             {
@@ -95807,7 +95811,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       this.resetSelectedFolder();
       axios.post('/' + folder.fake_id + '/fetch-new-tree').then(function (response) {
         _this3.refreshCurrentFolder(response.data.folder);
-        _this3.refreshFolders(response.data.folder.children);
+        _this3.refreshFolders(response.data.folder.subfolders);
       }).catch(function (error) {
         return _this3.setInfoMessage('An error has occurred. Please refresh this page.', 'error');
       });
@@ -95855,7 +95859,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       this.isLoading = false;
       this.resetInfoMessage();
       freshFolders ? this.folders = freshFolders : this.folders = {};
-      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no children', 'info');
+      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no subfolders', 'info');
     },
     refreshCurrentFolder: function refreshCurrentFolder(folder) {
       return folder.id ? this.currentFolder = folder : this.setInfoMessage('The folder could not be retrieved', 'error');
@@ -96300,7 +96304,7 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(627)
 /* template */
-var __vue_template__ = __webpack_require__(658)
+var __vue_template__ = __webpack_require__(666)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -96351,14 +96355,471 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__IndexAll_vue__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__IndexAll_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__IndexAll_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__IndexTasks_vue__ = __webpack_require__(263);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__IndexTasks_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__IndexTasks_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MoveToFolder_vue__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MoveToFolder_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__MoveToFolder_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MoveToChecklist_vue__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MoveToChecklist_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__MoveToChecklist_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EditFolderName_vue__ = __webpack_require__(628);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EditFolderName_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__EditFolderName_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__IndexAll_vue__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__IndexAll_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__IndexAll_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__IndexTasks_vue__ = __webpack_require__(263);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__IndexTasks_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__IndexTasks_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Kanban_vue__ = __webpack_require__(632);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Kanban_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Kanban_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__MoveToFolder_vue__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__MoveToFolder_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__MoveToFolder_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MoveToChecklist_vue__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MoveToChecklist_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__MoveToChecklist_vue__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'folder',
+  components: {
+    EditFolderName: __WEBPACK_IMPORTED_MODULE_1__EditFolderName_vue___default.a,
+    IndexAll: __WEBPACK_IMPORTED_MODULE_2__IndexAll_vue___default.a,
+    IndexTasks: __WEBPACK_IMPORTED_MODULE_3__IndexTasks_vue___default.a,
+    Kanban: __WEBPACK_IMPORTED_MODULE_4__Kanban_vue___default.a,
+    MoveToFolder: __WEBPACK_IMPORTED_MODULE_5__MoveToFolder_vue___default.a,
+    MoveToChecklist: __WEBPACK_IMPORTED_MODULE_6__MoveToChecklist_vue___default.a
+  },
+  data: function data() {
+    return {
+      // view: 'files'
+      view: 'overview'
+    };
+  },
+
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['selectedIsMovable'])),
+  mounted: function mounted() {
+    this.resizeContentBody();
+  },
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['clearSelected']), {
+    setView: function setView(view) {
+      this.clearSelected();
+      return this.view = view;
+    },
+    debounceResizeContentBody: _.debounce(function () {
+      this.resizeContentBody(true);
+    }, 500),
+    resizeContentBody: function resizeContentBody() {
+      var emitResize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      var wideSection = document.getElementById('wide-section'),
+          navSizer = document.getElementById('wide-section-nav-sizer'),
+          contentWrapper = document.getElementById('content-wrapper'),
+          wideSectionHeight = $(wideSection).outerHeight(true),
+          navSizerHeight = $(navSizer).outerHeight(true),
+
+      // contentWrapperHeightBefore = $(contentWrapper).outerHeight(true),
+      contentWrapperHeight = wideSectionHeight - navSizerHeight;
+
+      // console.log('contentWrapperHeightBefore: '+contentWrapperHeightBefore);
+
+      contentWrapper.style.height = contentWrapperHeight + 'px';
+
+      var innerContentHeading = document.getElementById('inner-content-heading'),
+          innerContentBody = document.getElementById('inner-content-body'),
+          innerContentHeadingHeight = $(innerContentHeading).outerHeight(true),
+          innerContentBodyHeight = contentWrapperHeight - innerContentHeadingHeight + 'px';
+
+      innerContentBody.style.height = innerContentBodyHeight;
+
+      // console.log('wideSectionHeight: '+wideSectionHeight);
+      // console.log('navSizerHeight: '+navSizerHeight);
+      // console.log('contentWrapperHeight: '+contentWrapperHeight);
+      // console.log('innerContentHeadingHeight: '+innerContentHeadingHeight);
+      // console.log('innerContentBodyHeight: '+innerContentBodyHeight);
+
+      if (emitResize) {
+        this.$eventHub.$emit('resizeKanban');
+      }
+    }
+  })
+});
+
+/***/ }),
+/* 628 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(629)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(630)
+/* template */
+var __vue_template__ = __webpack_require__(631)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/EditFolderName.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4d7f163a", Component.options)
+  } else {
+    hotAPI.reload("data-v-4d7f163a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 629 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 630 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'edit-folder-name',
+  data: function data() {
+    return {
+      isSaving: false,
+      hasSavingError: false
+    };
+  },
+
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['currentFolder', 'isEditable']), {
+    headingIcon: function headingIcon() {
+      return this.isEditable ? 'fa-pencil' : 'fa-folder-open';
+    },
+    savingIcon: function savingIcon() {
+      return this.hasSavingError ? 'fa-exclamation-circle' : this.isSaving ? 'fa-spin fa-circle-o-notch' : 'fa-floppy-o';
+    },
+    savingText: function savingText() {
+      return this.hasSavingError ? 'Error saving folder' : this.isSaving ? 'Saving...' : 'Save';
+    }
+  }),
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addNotice', 'saveFolder', 'toggleEditability']), {
+    debounceSaveChanges: _.debounce(function () {
+      this.isSaving = true;
+      this.saveChanges();
+    }, 1000),
+    saveChanges: function saveChanges() {
+      var _this = this;
+
+      this.isSaving = true;
+      this.hasSavingError = false;
+      if (!this.currentFolder.name) {
+        this.addNotice({
+          type: 'error',
+          heading: 'Error',
+          message: 'Please provide a folder name.',
+          persist: false
+        });
+      }
+      this.saveFolder(this.currentFolder).then(function () {
+        return _this.isSaving = false;
+      }).catch(function () {
+        _this.hasSavingError = true;
+        _this.isSaving = false;
+        console.log('Error saving Folder');
+      });
+    }
+  })
+});
+
+/***/ }),
+/* 631 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "folder-name-wrapper", class: { editable: _vm.isEditable } },
+    [
+      _vm.currentFolder.fake_id
+        ? [
+            _c(
+              "h4",
+              {
+                attrs: { id: "folder-name" },
+                on: { click: _vm.toggleEditability }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fw",
+                  class: _vm.headingIcon,
+                  attrs: { "aria-hidden": "true" }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.currentFolder.name,
+                      expression: "currentFolder.name"
+                    }
+                  ],
+                  staticClass: "edit-folder-input",
+                  attrs: { type: "text", id: "folder-name-input" },
+                  domProps: { value: _vm.currentFolder.name },
+                  on: {
+                    keyup: [
+                      function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k($event.keyCode, "enter", 13, $event.key)
+                        ) {
+                          return null
+                        }
+                        _vm.saveChanges($event)
+                      },
+                      _vm.debounceSaveChanges
+                    ],
+                    keydown: _vm.debounceSaveChanges,
+                    cut: _vm.debounceSaveChanges,
+                    paste: _vm.debounceSaveChanges,
+                    blur: function($event) {
+                      _vm.toggleEditability(false)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.currentFolder, "name", $event.target.value)
+                    }
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _vm.isEditable
+              ? _c(
+                  "span",
+                  {
+                    staticClass: "btn-folder btn-sm save-button",
+                    on: { click: _vm.saveChanges }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa",
+                      class: _vm.savingIcon,
+                      attrs: { "aria-hidden": "true" }
+                    }),
+                    _vm._v("\n      " + _vm._s(_vm.savingText) + "\n    ")
+                  ]
+                )
+              : _vm._e()
+          ]
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.currentFolder || !_vm.currentFolder.fake_id
+        ? _c("h4", { attrs: { id: "folder-name" } }, [_vm._m(0)])
+        : _vm._e()
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "edit-folder-input" }, [
+      _c("i", {
+        staticClass: "fa fw fa-home",
+        attrs: { "aria-hidden": "true" }
+      }),
+      _vm._v("\n      Home\n    ")
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4d7f163a", module.exports)
+  }
+}
+
+/***/ }),
+/* 632 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(633)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(634)
+/* template */
+var __vue_template__ = __webpack_require__(635)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Kanban.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7e7410ae", Component.options)
+  } else {
+    hotAPI.reload("data-v-7e7410ae", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 633 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 634 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuedraggable__ = __webpack_require__(590);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuedraggable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue__ = __webpack_require__(759);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KanbanChecklist_vue__ = __webpack_require__(779);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KanbanChecklist_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__KanbanChecklist_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__KanbanChecklistItem_vue__ = __webpack_require__(764);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__KanbanChecklistItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__KanbanChecklistItem_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__KanbanFolder_vue__ = __webpack_require__(774);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__KanbanFolder_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__KanbanFolder_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__KanbanSection_vue__ = __webpack_require__(769);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__KanbanSection_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__KanbanSection_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -96401,6 +96862,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -96409,89 +96874,218 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'folder',
+  name: 'kanban',
   components: {
-    IndexAll: __WEBPACK_IMPORTED_MODULE_1__IndexAll_vue___default.a,
-    IndexTasks: __WEBPACK_IMPORTED_MODULE_2__IndexTasks_vue___default.a,
-    MoveToFolder: __WEBPACK_IMPORTED_MODULE_3__MoveToFolder_vue___default.a,
-    MoveToChecklist: __WEBPACK_IMPORTED_MODULE_4__MoveToChecklist_vue___default.a
+    Draggable: __WEBPACK_IMPORTED_MODULE_1_vuedraggable___default.a,
+    KanbanAdder: __WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue___default.a,
+    KanbanChecklist: __WEBPACK_IMPORTED_MODULE_3__KanbanChecklist_vue___default.a,
+    KanbanChecklistItem: __WEBPACK_IMPORTED_MODULE_4__KanbanChecklistItem_vue___default.a,
+    KanbanFolder: __WEBPACK_IMPORTED_MODULE_5__KanbanFolder_vue___default.a,
+    KanbanSection: __WEBPACK_IMPORTED_MODULE_6__KanbanSection_vue___default.a
   },
-  data: function data() {
-    return {
-      view: 'files',
-      isSaving: false,
-      hasSavingError: false
-    };
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['kanbanCards'])),
+  created: function created() {
+    this.$eventHub.$on('resizeKanban', this.resizeKanban);
   },
+  beforeDestroy: function beforeDestroy() {
+    this.$eventHub.$off('resizeKanban', this.resizeKanban);
+  },
+  mounted: function mounted() {
+    this.$nextTick(function () {
+      this.resizeKanban();
+    });
+  },
+  methods: {
+    resizeKanban: function resizeKanban() {
+      var kanban = document.getElementById('kanban'),
 
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['selectedIsMovable', 'currentFolder', 'isEditable']), {
-    headingIcon: function headingIcon() {
-      return this.isEditable ? 'fa-pencil' : 'fa-folder-open';
-    },
-    savingIcon: function savingIcon() {
-      return this.hasSavingError ? 'fa-exclamation-circle' : this.isSaving ? 'fa-spin fa-circle-o-notch' : 'fa-floppy-o';
-    },
-    savingText: function savingText() {
-      return this.hasSavingError ? 'Error saving folder' : this.isSaving ? 'Saving...' : 'Save';
-    }
-  }),
-  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addNotice', 'clearSelected', 'saveFolder', 'toggleEditability']), {
-    setView: function setView(view) {
-      this.clearSelected();
-      return this.view = view;
-    },
-    debounceSaveChanges: _.debounce(function () {
-      this.isSaving = true;
-      this.saveChanges();
-    }, 1000),
-    saveChanges: function saveChanges() {
-      var _this = this;
+      // kanbanWrapper = document.getElementById('kanban-wrapper'),
+      // innerContentBody = document.getElementById('inner-content-body'),
+      // innerContentBodyHeight = $(innerContentBody).outerHeight(true),
+      // kanbanWrapperHeight = $(kanbanWrapper).outerHeight(true),
+      kanbanHeight = $(kanban).outerHeight(true),
+          kanbans = kanban.getElementsByClassName('kanban-card');
 
-      this.isSaving = true;
-      this.hasSavingError = false;
-      if (!this.currentFolder.name) {
-        this.addNotice({
-          type: 'error',
-          heading: 'Error',
-          message: 'Please provide a folder name.',
-          persist: false
-        });
+      for (var i = 0; i < kanbans.length; i++) {
+        var body = kanbans[i].querySelector('.kanban-card-body'),
+            heading = kanbans[i].querySelector('.kanban-card-heading'),
+            footer = kanbans[i].querySelector('.kanban-card-footer'),
+            headingHeight = $(heading).outerHeight(true),
+            footerHeight = $(footer).outerHeight(true),
+            computedBodyHeight = kanbanHeight + 20 - headingHeight - footerHeight;
+        body.style.maxHeight = computedBodyHeight + 'px';
+        body.style.paddingBottom = footerHeight + 10 + 'px';
+        // console.log('resizing to '+ (kanbanHeight - headingHeight - footerHeight - 50) + 'px');
+
+        // console.log('innerContentBodyHeight: '+innerContentBodyHeight);
+        // console.log('kanbanWrapperHeight: '+kanbanWrapperHeight);
+        // console.log('kanbanHeight: '+kanbanHeight);
+        // console.log('headingHeight: '+headingHeight);
+        // console.log('footerHeight: '+footerHeight);
+        // console.log('computedBodyHeight: '+computedBodyHeight);
       }
-      this.saveFolder(this.currentFolder).then(function () {
-        return _this.isSaving = false;
-      }).catch(function () {
-        _this.hasSavingError = true;
-        _this.isSaving = false;
-        console.log('Error saving Folder');
-      });
     }
-  })
+  }
 });
 
 /***/ }),
-/* 628 */
+/* 635 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "kanban-wrapper", attrs: { id: "kanban-wrapper" } },
+    [
+      _c(
+        "draggable",
+        {
+          staticClass: "kanban",
+          attrs: {
+            id: "kanban",
+            element: "ul",
+            options: { draggable: ".kanban-card" }
+          }
+        },
+        _vm._l(_vm.kanbanCards, function(card) {
+          return _c(
+            "li",
+            {
+              key: card.model + card.id,
+              staticClass: "kanban-card",
+              class: card.model
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "kanban-card-heading", class: card.model },
+                [
+                  card.model == "folder"
+                    ? _c("i", {
+                        staticClass: "fa fa-fw fa-folder",
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  card.model == "checklist"
+                    ? _c("i", {
+                        staticClass: "fa fa-fw fa-list",
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    : _vm._e(),
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm._f("truncate")(card.name || card.title, 35)) +
+                      "\n      "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "draggable",
+                {
+                  staticClass: "kanban-card-body",
+                  class: card.model,
+                  attrs: {
+                    element: "ul",
+                    options: {
+                      draggable: ".nested-kanban-card",
+                      group: {
+                        name: "nested-kanban-card",
+                        pull: true,
+                        put: true
+                      }
+                    }
+                  }
+                },
+                [
+                  _vm._l(card.subfolders, function(folder) {
+                    return _c("kanban-folder", {
+                      key: folder.id,
+                      attrs: { folder: folder }
+                    })
+                  }),
+                  _vm._v(" "),
+                  _vm._l(card.checklists, function(checklist) {
+                    return _c("kanban-checklist", {
+                      key: checklist.id,
+                      attrs: { checklist: checklist }
+                    })
+                  }),
+                  _vm._v(" "),
+                  card.model == "checklist"
+                    ? [
+                        _vm._l(card.sections, function(section) {
+                          return _c("kanban-section", {
+                            key: section.id,
+                            attrs: { section: section }
+                          })
+                        }),
+                        _vm._v(" "),
+                        _vm._l(card.items, function(item) {
+                          return _c("kanban-checklist-item", {
+                            key: item.id,
+                            attrs: { item: item }
+                          })
+                        })
+                      ]
+                    : _vm._e()
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "kanban-card-footer" },
+                [_c("kanban-adder", { attrs: { parent: card } })],
+                1
+              )
+            ],
+            1
+          )
+        })
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7e7410ae", module.exports)
+  }
+}
+
+/***/ }),
+/* 636 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 629 */
+/* 637 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MoverBreadcrumbs_vue__ = __webpack_require__(630);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MoverBreadcrumbs_vue__ = __webpack_require__(638);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MoverBreadcrumbs_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__MoverBreadcrumbs_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MoverSelected_vue__ = __webpack_require__(634);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MoverSelected_vue__ = __webpack_require__(642);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MoverSelected_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MoverSelected_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MoveTargetFolders_vue__ = __webpack_require__(638);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MoveTargetFolders_vue__ = __webpack_require__(646);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MoveTargetFolders_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__MoveTargetFolders_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MoveTargetChecklists_vue__ = __webpack_require__(645);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MoveTargetChecklists_vue__ = __webpack_require__(653);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MoveTargetChecklists_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__MoveTargetChecklists_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__MoveTargetChecklistItems_vue__ = __webpack_require__(649);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__MoveTargetChecklistItems_vue__ = __webpack_require__(657);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__MoveTargetChecklistItems_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__MoveTargetChecklistItems_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MoveTargetChecklistSubItems_vue__ = __webpack_require__(653);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MoveTargetChecklistSubItems_vue__ = __webpack_require__(661);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MoveTargetChecklistSubItems_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__MoveTargetChecklistSubItems_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -96652,19 +97246,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 630 */
+/* 638 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(631)
+  __webpack_require__(639)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(632)
+var __vue_script__ = __webpack_require__(640)
 /* template */
-var __vue_template__ = __webpack_require__(633)
+var __vue_template__ = __webpack_require__(641)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -96703,13 +97297,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 631 */
+/* 639 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 632 */
+/* 640 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -96808,7 +97402,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 633 */
+/* 641 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -97008,19 +97602,19 @@ if (false) {
 }
 
 /***/ }),
-/* 634 */
+/* 642 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(635)
+  __webpack_require__(643)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(636)
+var __vue_script__ = __webpack_require__(644)
 /* template */
-var __vue_template__ = __webpack_require__(637)
+var __vue_template__ = __webpack_require__(645)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -97059,13 +97653,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 635 */
+/* 643 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 636 */
+/* 644 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -97117,7 +97711,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 637 */
+/* 645 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -97186,19 +97780,19 @@ if (false) {
 }
 
 /***/ }),
-/* 638 */
+/* 646 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(639)
+  __webpack_require__(647)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(640)
+var __vue_script__ = __webpack_require__(648)
 /* template */
-var __vue_template__ = __webpack_require__(644)
+var __vue_template__ = __webpack_require__(652)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -97237,13 +97831,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 639 */
+/* 647 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 640 */
+/* 648 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -97309,13 +97903,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 641 */
+/* 649 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 642 */
+/* 650 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -97468,7 +98062,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 643 */
+/* 651 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -97632,7 +98226,7 @@ if (false) {
 }
 
 /***/ }),
-/* 644 */
+/* 652 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -97747,19 +98341,19 @@ if (false) {
 }
 
 /***/ }),
-/* 645 */
+/* 653 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(646)
+  __webpack_require__(654)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(647)
+var __vue_script__ = __webpack_require__(655)
 /* template */
-var __vue_template__ = __webpack_require__(648)
+var __vue_template__ = __webpack_require__(656)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -97798,13 +98392,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 646 */
+/* 654 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 647 */
+/* 655 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -97885,7 +98479,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 648 */
+/* 656 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -98024,19 +98618,19 @@ if (false) {
 }
 
 /***/ }),
-/* 649 */
+/* 657 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(650)
+  __webpack_require__(658)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(651)
+var __vue_script__ = __webpack_require__(659)
 /* template */
-var __vue_template__ = __webpack_require__(652)
+var __vue_template__ = __webpack_require__(660)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -98075,13 +98669,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 650 */
+/* 658 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 651 */
+/* 659 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98131,14 +98725,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       return this.moverIsLoading || this.checklistItemInfoMessage.content && this.checklistItemInfoMessage.type;
     },
     hasChecklistItems: function hasChecklistItems() {
-      return !_.isEmpty(this.selectedMovableChecklistItem.children);
+      return !_.isEmpty(this.selectedMovableChecklistItem.sub_items);
     }
   }),
   methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addToMoverArray', 'fetchChecklistSubItems', 'openMoverChecklistItem', 'removeFromMoverArray', 'deselectMoverSelected', 'setMoverVariable', 'selectMoverChecklistItem', 'toggleMoverVariable']))
 });
 
 /***/ }),
-/* 652 */
+/* 660 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -98228,19 +98822,19 @@ if (false) {
 }
 
 /***/ }),
-/* 653 */
+/* 661 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(654)
+  __webpack_require__(662)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(655)
+var __vue_script__ = __webpack_require__(663)
 /* template */
-var __vue_template__ = __webpack_require__(656)
+var __vue_template__ = __webpack_require__(664)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -98279,13 +98873,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 654 */
+/* 662 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 655 */
+/* 663 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98329,14 +98923,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       return this.moverIsLoading || this.checklistSubItemInfoMessage.content && this.checklistSubItemInfoMessage.type;
     },
     hasChecklistItems: function hasChecklistItems() {
-      return !_.isEmpty(this.selectedMovableChecklistItem.children);
+      return !_.isEmpty(this.selectedMovableChecklistItem.sub_items);
     }
   }),
   methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addToMoverArray', 'fetchChecklistSubItems', 'openMoverChecklistItem', 'removeFromMoverArray', 'deselectMoverSelected', 'setMoverVariable', 'selectMoverChecklistItem', 'toggleMoverVariable']))
 });
 
 /***/ }),
-/* 656 */
+/* 664 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -98426,7 +99020,7 @@ if (false) {
 }
 
 /***/ }),
-/* 657 */
+/* 665 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -98553,7 +99147,7 @@ if (false) {
 }
 
 /***/ }),
-/* 658 */
+/* 666 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -98562,143 +99156,103 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "folder" },
+    { staticClass: "show-folder" },
     [
-      _vm.currentFolder.fake_id
-        ? _c(
+      _c(
+        "div",
+        {
+          staticClass: "inner-content-wrapper",
+          attrs: { id: "inner-content-heading" }
+        },
+        [
+          _c("edit-folder-name"),
+          _vm._v(" "),
+          _c("ul", { staticClass: "folder-nav", attrs: { id: "folder-nav" } }, [
+            _c(
+              "li",
+              {
+                class: { selected: _vm.view == "files" },
+                attrs: { id: "select-files" },
+                on: {
+                  click: function($event) {
+                    _vm.setView("files")
+                  }
+                }
+              },
+              [_vm._v("Files")]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                class: { selected: _vm.view == "overview" },
+                attrs: { id: "select-tasks" },
+                on: {
+                  click: function($event) {
+                    _vm.setView("overview")
+                  }
+                }
+              },
+              [_vm._v("Overview")]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                class: { selected: _vm.view == "tasks" },
+                attrs: { id: "select-tasks" },
+                on: {
+                  click: function($event) {
+                    _vm.setView("tasks")
+                  }
+                }
+              },
+              [_vm._v("Tasks")]
+            )
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { attrs: { id: "inner-content-body" } },
+        [
+          _c(
             "div",
-            {
-              staticClass: "folder-name-wrapper",
-              class: { editable: _vm.isEditable }
-            },
+            { staticClass: "inner-content-wrapper" },
             [
-              _c(
-                "h4",
-                {
-                  attrs: { id: "folder-name" },
-                  on: { click: _vm.toggleEditability }
-                },
-                [
-                  _c("i", {
-                    staticClass: "fa fw",
-                    class: _vm.headingIcon,
-                    attrs: { "aria-hidden": "true" }
-                  }),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.currentFolder.name,
-                        expression: "currentFolder.name"
-                      }
-                    ],
-                    staticClass: "edit-folder-input",
-                    attrs: { type: "text", id: "folder-name-input" },
-                    domProps: { value: _vm.currentFolder.name },
-                    on: {
-                      keyup: [
-                        function($event) {
-                          if (
-                            !("button" in $event) &&
-                            _vm._k($event.keyCode, "enter", 13, $event.key)
-                          ) {
-                            return null
-                          }
-                          _vm.saveChanges($event)
-                        },
-                        _vm.debounceSaveChanges
-                      ],
-                      keydown: _vm.debounceSaveChanges,
-                      cut: _vm.debounceSaveChanges,
-                      paste: _vm.debounceSaveChanges,
-                      blur: function($event) {
-                        _vm.toggleEditability(false)
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.currentFolder, "name", $event.target.value)
-                      }
-                    }
-                  })
-                ]
-              ),
+              _vm.view == "files"
+                ? [
+                    _c("index-all"),
+                    _vm._v(" "),
+                    _vm.selectedIsMovable ? _c("move-to-folder") : _vm._e()
+                  ]
+                : _vm._e(),
               _vm._v(" "),
-              _vm.isEditable
-                ? _c(
-                    "span",
-                    {
-                      staticClass: "btn-folder btn-sm save-button",
-                      on: { click: _vm.saveChanges }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa",
-                        class: _vm.savingIcon,
-                        attrs: { "aria-hidden": "true" }
-                      }),
-                      _vm._v("\n      " + _vm._s(_vm.savingText) + "\n    ")
-                    ]
-                  )
+              _vm.view == "tasks"
+                ? [
+                    _c("index-tasks"),
+                    _vm._v(" "),
+                    _vm.selectedIsMovable
+                      ? _c("move-to-checklist", {
+                          attrs: { "replace-after-move": true }
+                        })
+                      : _vm._e()
+                  ]
                 : _vm._e()
-            ]
-          )
-        : _vm._e(),
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _vm.view == "overview" ? [_c("kanban")] : _vm._e()
+        ],
+        2
+      ),
       _vm._v(" "),
-      _c("ul", { staticClass: "folder-nav", attrs: { id: "folder-nav" } }, [
-        _c(
-          "li",
-          {
-            class: { selected: _vm.view == "files" },
-            attrs: { id: "select-files" },
-            on: {
-              click: function($event) {
-                _vm.setView("files")
-              }
-            }
-          },
-          [_vm._v("Files")]
-        ),
-        _vm._v(" "),
-        _c(
-          "li",
-          {
-            class: { selected: _vm.view == "tasks" },
-            attrs: { id: "select-tasks" },
-            on: {
-              click: function($event) {
-                _vm.setView("tasks")
-              }
-            }
-          },
-          [_vm._v("Tasks")]
-        )
-      ]),
-      _vm._v(" "),
-      _vm.view == "files"
-        ? [
-            _c("index-all"),
-            _vm._v(" "),
-            _vm.selectedIsMovable ? _c("move-to-folder") : _vm._e()
-          ]
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.view == "tasks"
-        ? [
-            _c("index-tasks"),
-            _vm._v(" "),
-            _vm.selectedIsMovable
-              ? _c("move-to-checklist", {
-                  attrs: { "replace-after-move": true }
-                })
-              : _vm._e()
-          ]
-        : _vm._e()
+      _c("resize-observer", { on: { notify: _vm.debounceResizeContentBody } })
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -98712,15 +99266,15 @@ if (false) {
 }
 
 /***/ }),
-/* 659 */
+/* 667 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(660)
+var __vue_script__ = __webpack_require__(668)
 /* template */
-var __vue_template__ = __webpack_require__(661)
+var __vue_template__ = __webpack_require__(669)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -98759,7 +99313,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 660 */
+/* 668 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98794,7 +99348,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 661 */
+/* 669 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -98825,19 +99379,19 @@ if (false) {
 }
 
 /***/ }),
-/* 662 */
+/* 670 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(663)
+  __webpack_require__(671)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(664)
+var __vue_script__ = __webpack_require__(672)
 /* template */
-var __vue_template__ = __webpack_require__(669)
+var __vue_template__ = __webpack_require__(677)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -98876,13 +99430,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 663 */
+/* 671 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 664 */
+/* 672 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98896,7 +99450,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Breadcrumbs_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Breadcrumbs_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__AddItem_vue__ = __webpack_require__(267);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__AddItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__AddItem_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__EditChecklist_vue__ = __webpack_require__(665);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__EditChecklist_vue__ = __webpack_require__(673);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__EditChecklist_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__EditChecklist_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__EditChecklistItem_vue__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__EditChecklistItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__EditChecklistItem_vue__);
@@ -99286,19 +99840,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 665 */
+/* 673 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(666)
+  __webpack_require__(674)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(667)
+var __vue_script__ = __webpack_require__(675)
 /* template */
-var __vue_template__ = __webpack_require__(668)
+var __vue_template__ = __webpack_require__(676)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -99337,13 +99891,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 666 */
+/* 674 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 667 */
+/* 675 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99439,7 +99993,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 668 */
+/* 676 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -99654,7 +100208,7 @@ if (false) {
 }
 
 /***/ }),
-/* 669 */
+/* 677 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -99663,7 +100217,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "checklist position-relative", class: _vm.checklistClass },
+    {
+      staticClass: "show-checklist position-relative",
+      class: _vm.checklistClass
+    },
     [
       _c(
         "div",
@@ -100100,19 +100657,19 @@ if (false) {
 }
 
 /***/ }),
-/* 670 */
+/* 678 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(671)
+  __webpack_require__(679)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(672)
+var __vue_script__ = __webpack_require__(680)
 /* template */
-var __vue_template__ = __webpack_require__(677)
+var __vue_template__ = __webpack_require__(685)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -100151,19 +100708,19 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 671 */
+/* 679 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 672 */
+/* 680 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notice_vue__ = __webpack_require__(673);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notice_vue__ = __webpack_require__(681);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notice_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Notice_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -100189,19 +100746,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 673 */
+/* 681 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(674)
+  __webpack_require__(682)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(675)
+var __vue_script__ = __webpack_require__(683)
 /* template */
-var __vue_template__ = __webpack_require__(676)
+var __vue_template__ = __webpack_require__(684)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -100240,13 +100797,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 674 */
+/* 682 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 675 */
+/* 683 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -100307,7 +100864,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 676 */
+/* 684 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100386,7 +100943,7 @@ if (false) {
 }
 
 /***/ }),
-/* 677 */
+/* 685 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100414,20 +100971,22 @@ if (false) {
 }
 
 /***/ }),
-/* 678 */
+/* 686 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_selection__ = __webpack_require__(681);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_folders__ = __webpack_require__(682);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_checklists__ = __webpack_require__(683);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_search__ = __webpack_require__(685);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_mover__ = __webpack_require__(686);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_notices__ = __webpack_require__(687);
-__webpack_require__(679).polyfill();
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_selection__ = __webpack_require__(689);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_folders__ = __webpack_require__(690);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_checklists__ = __webpack_require__(691);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_search__ = __webpack_require__(693);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_kanban__ = __webpack_require__(694);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_mover__ = __webpack_require__(695);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__modules_notices__ = __webpack_require__(696);
+__webpack_require__(687).polyfill();
+
 
 
 
@@ -100446,13 +101005,14 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
         folders: __WEBPACK_IMPORTED_MODULE_3__modules_folders__["a" /* default */],
         checklists: __WEBPACK_IMPORTED_MODULE_4__modules_checklists__["a" /* default */],
         search: __WEBPACK_IMPORTED_MODULE_5__modules_search__["a" /* default */],
-        mover: __WEBPACK_IMPORTED_MODULE_6__modules_mover__["a" /* default */],
-        notices: __WEBPACK_IMPORTED_MODULE_7__modules_notices__["a" /* default */]
+        kanban: __WEBPACK_IMPORTED_MODULE_6__modules_kanban__["a" /* default */],
+        mover: __WEBPACK_IMPORTED_MODULE_7__modules_mover__["a" /* default */],
+        notices: __WEBPACK_IMPORTED_MODULE_8__modules_notices__["a" /* default */]
     }
 }));
 
 /***/ }),
-/* 679 */
+/* 687 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {var require;/*!
@@ -100594,7 +101154,7 @@ function flush() {
 function attemptVertx() {
   try {
     var r = require;
-    var vertx = __webpack_require__(680);
+    var vertx = __webpack_require__(688);
     vertxNext = vertx.runOnLoop || vertx.runOnContext;
     return useVertxTimer();
   } catch (e) {
@@ -101649,17 +102209,17 @@ return Promise$1;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(95), __webpack_require__(31)))
 
 /***/ }),
-/* 680 */
+/* 688 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 681 */
+/* 689 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(47);
 var _mutations;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -101684,7 +102244,7 @@ var state = {
   isEditable: false
 };
 
-var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["h" /* ADD_TO_SELECTED */], function (state, payload) {
+var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* ADD_TO_SELECTED */], function (state, payload) {
   switch (payload.model) {
     case 'folder':
       if (!_.some(state.selected.folders, ['id', payload.listing.id])) state.selected.folders.unshift(payload.listing);
@@ -101699,12 +102259,12 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
       return;
 
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* CLEAR_SELECTED */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["l" /* CLEAR_SELECTED */], function (state) {
   Object.keys(state.selected).map(function (e) {
     if (_typeof(state.selected[e]) == 'object') state.selected[e] = [];
     if (typeof state.selected[e] == 'boolean') state.selected[e] = false;
   });
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* REMOVE_FROM_SELECTED */], function (state, payload) {
   if (payload && payload.model) {
     switch (payload.model) {
       case 'folder':
@@ -101726,15 +102286,15 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
   if (!payload.preserveState || payload.preserveState && !hasSelectedItems) {
     state.selected.movable = false, state.selected.deletable = false;
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* SET_CREATING_NEW */], function (state, model) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SET_CREATING_NEW */], function (state, model) {
   state.creatingNew = model;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_CREATING_NEW_BUTTONS */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* TOGGLE_CREATING_NEW_BUTTONS */], function (state) {
   state.showCreatingNewButtons = !state.showCreatingNewButtons;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* TOGGLE_DELETABLE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* TOGGLE_DELETABLE */], function (state) {
   state.selected.deletable = !state.selected.deletable;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* TOGGLE_EDITABILITY */], function (state, bool) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* TOGGLE_EDITABILITY */], function (state, bool) {
   if (bool !== "unset") state.isEditable = bool;else state.isEditable = !state.isEditable;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* TOGGLE_MOVABLE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* TOGGLE_MOVABLE */], function (state) {
   state.selected.movable = !state.selected.movable;
 }), _mutations);
 
@@ -101743,7 +102303,7 @@ var actions = {
     var commit = _ref.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["h" /* ADD_TO_SELECTED */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* ADD_TO_SELECTED */], payload);
       resolve();
     });
   },
@@ -101751,7 +102311,7 @@ var actions = {
     var commit = _ref2.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* CLEAR_SELECTED */]);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["l" /* CLEAR_SELECTED */]);
       resolve();
     });
   },
@@ -101759,7 +102319,7 @@ var actions = {
     var commit = _ref3.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* SET_CREATING_NEW */], model);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SET_CREATING_NEW */], model);
       resolve();
     });
   },
@@ -101816,7 +102376,7 @@ var actions = {
       if (selected.folders && selected.folders.length) {
         for (var i = 0; i < selected.folders.length; i++) {
           dispatch('delistFolder', selected.folders[i], { root: true });
-          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], { model: 'folder', listing: selected.folders[i] });
+          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* REMOVE_FROM_SELECTED */], { model: 'folder', listing: selected.folders[i] });
           count++;
         }
       }
@@ -101824,7 +102384,7 @@ var actions = {
       if (selected.checklists && selected.checklists.length) {
         for (var i = 0; i < selected.checklists.length; i++) {
           dispatch('delistChecklist', selected.checklists[i], { root: true });
-          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], { model: 'checklist', listing: selected.checklists[i] });
+          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* REMOVE_FROM_SELECTED */], { model: 'checklist', listing: selected.checklists[i] });
           count++;
         }
       }
@@ -101832,7 +102392,7 @@ var actions = {
       if (selected.checklistItems && selected.checklistItems.length) {
         for (var i = 0; i < selected.checklistItems.length; i++) {
           dispatch('deleteChecklistItem', selected.checklistItems[i], { root: true });
-          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], { model: 'checklist-item', listing: selected.checklistItems[i] });
+          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* REMOVE_FROM_SELECTED */], { model: 'checklist-item', listing: selected.checklistItems[i] });
           count++;
         }
       }
@@ -101855,7 +102415,7 @@ var actions = {
     var commit = _ref7.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* REMOVE_FROM_SELECTED */], payload);
       resolve(payload);
     });
   },
@@ -101863,7 +102423,7 @@ var actions = {
     var commit = _ref8.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_SELECTED */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* REMOVE_FROM_SELECTED */], payload);
       resolve();
     });
   },
@@ -101871,8 +102431,8 @@ var actions = {
     var commit = _ref9.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* CLEAR_SELECTED */]);
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["h" /* ADD_TO_SELECTED */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["l" /* CLEAR_SELECTED */]);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* ADD_TO_SELECTED */], payload);
       resolve();
     });
   },
@@ -101880,7 +102440,7 @@ var actions = {
     var commit = _ref10.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_CREATING_NEW_BUTTONS */]);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* TOGGLE_CREATING_NEW_BUTTONS */]);
       resolve();
     });
   },
@@ -101888,7 +102448,7 @@ var actions = {
     var commit = _ref11.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["G" /* TOGGLE_DELETABLE */]);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* TOGGLE_DELETABLE */]);
       resolve();
     });
   },
@@ -101897,7 +102457,7 @@ var actions = {
     var bool = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "unset";
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* TOGGLE_EDITABILITY */], bool);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* TOGGLE_EDITABILITY */], bool);
       resolve();
     });
   },
@@ -101905,7 +102465,7 @@ var actions = {
     var commit = _ref13.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["J" /* TOGGLE_MOVABLE */]);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* TOGGLE_MOVABLE */]);
       resolve();
     });
   },
@@ -102047,11 +102607,11 @@ var getters = {
 });
 
 /***/ }),
-/* 682 */
+/* 690 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(47);
 var _mutations;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -102066,36 +102626,44 @@ var state = {
 };
 
 var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["b" /* ADD_FOLDER */], function (state, folder) {
-    state.folders.unshift(folder);
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_FOLDER */], function (state, folder) {
+    state.folders.splice(0, 0, folder);
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELETE_FOLDER */], function (state, folder) {
     var i = _.findIndex(state.folders, ['id', folder.id]);
     console.log('i = ' + i);
     state.folders.splice(i, 1);
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_FOLDER */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["T" /* UPDATE_FOLDER */], function (state, payload) {
     var i = _.findIndex(state.folders, ['id', payload.folder.id]);
     state.folders.splice(i, 1, payload.updatedFolder);
 }), _mutations);
 
 var actions = {
-    delistFolder: function delistFolder(_ref, folder) {
+    addFolder: function addFolder(_ref, folder) {
         var commit = _ref.commit;
 
         console.log(folder);
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_FOLDER */], folder);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["b" /* ADD_FOLDER */], folder);
             resolve();
         });
     },
-    deleteFolder: function deleteFolder(_ref2, folder) {
+    delistFolder: function delistFolder(_ref2, folder) {
         var commit = _ref2.commit;
 
+        console.log(folder);
         return new Promise(function (resolve, reject) {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELETE_FOLDER */], folder);
+            resolve();
+        });
+    },
+    deleteFolder: function deleteFolder(_ref3, folder) {
+        var commit = _ref3.commit;
 
+        return new Promise(function (resolve, reject) {
             axios.delete('/folders/' + folder.fake_id).then(function (response) {
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(function (response) {
                         if (response.data.folder) {
-                            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_FOLDER */], response.data.folder);
+                            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELETE_FOLDER */], response.data.folder);
                             resolve(response.data.folder);
                         } else if (response.data.error) {
                             reject(response.data.error);
@@ -102106,7 +102674,7 @@ var actions = {
                         return reject(error);
                     });
                 } else if (response.data.folder) {
-                    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_FOLDER */], response.data.folder);
+                    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELETE_FOLDER */], response.data.folder);
                     resolve(response.data.folder);
                 } else if (response.data.error) {
                     reject(response.data.error);
@@ -102118,8 +102686,8 @@ var actions = {
             });
         });
     },
-    saveFolder: function saveFolder(_ref3, folder) {
-        var dispatch = _ref3.dispatch;
+    saveFolder: function saveFolder(_ref4, folder) {
+        var dispatch = _ref4.dispatch;
 
         return new Promise(function (resolve, reject) {
             axios.patch('/folders/' + folder.fake_id, { folder: folder }).then(function (response) {
@@ -102129,8 +102697,8 @@ var actions = {
             });
         });
     },
-    saveFolderHandler: function saveFolderHandler(_ref4, response) {
-        var commit = _ref4.commit;
+    saveFolderHandler: function saveFolderHandler(_ref5, response) {
+        var commit = _ref5.commit;
 
         return new Promise(function (resolve, reject) {
             if (response.data.tokenMismatch) {
@@ -102146,15 +102714,15 @@ var actions = {
             } else if (response.data.error) reject(response.data.error);else reject();
         });
     },
-    storeFolder: function storeFolder(_ref5, folder) {
-        var commit = _ref5.commit;
+    storeFolder: function storeFolder(_ref6, folder) {
+        var commit = _ref6.commit;
 
         return new Promise(function (resolve, reject) {
             axios.post('/folders', { folder: folder }).then(function (response) {
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(function (response) {
                         if (response.data.folder) {
-                            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["b" /* ADD_FOLDER */], response.data.folder);
+                            // if(payload.root) commit(ADD_FOLDER, response.data.folder)
                             resolve(response.data.folder);
                         } else if (response.data.error) {
                             reject(response.data.error);
@@ -102165,7 +102733,7 @@ var actions = {
                         return reject(error);
                     });
                 } else if (response.data.folder) {
-                    commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["b" /* ADD_FOLDER */], response.data.folder);
+                    // if(payload.root) commit(ADD_FOLDER, response.data.folder)
                     resolve(response.data.folder);
                 } else if (response.data.error) {
                     reject(response.data.error);
@@ -102181,6 +102749,9 @@ var actions = {
 
 var getters = {
     folders: function folders(state) {
+        return state.folders;
+    },
+    foldersByName: function foldersByName(state) {
         return _.orderBy(state.folders, 'name');
     },
     currentFolder: function currentFolder(state) {
@@ -102196,12 +102767,12 @@ var getters = {
 });
 
 /***/ }),
-/* 683 */
+/* 691 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fast_sort__ = __webpack_require__(684);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fast_sort__ = __webpack_require__(692);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fast_sort___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fast_sort__);
 var _mutations;
 
@@ -102241,7 +102812,7 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     });
     if (!alreadyInArray) payload.array.splice(index, 0, payload.item);
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* ADD_UNFILTERED */], function (state, item) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* ADD_UNFILTERED */], function (state, item) {
   if (!state.unfilteredItems.includes(item.id)) {
     state.unfilteredItems.unshift(item.id);
   }
@@ -102251,19 +102822,19 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
   // First, check for parent in checklistItems array
   var parent = payload.parent || findChecklistItemParent(state.checklistItems, payload.parent.id);
   // ...next, check in the editableSubItem and then the editableItem
-  if (!parent && !_.isEmpty(state.subItemChain[0].children)) parent = findChecklistItemParent(state.subItemChain[0].children, payload.parent.id);
-  if (!parent && !_.isEmpty(state.editableItem.children)) parent = findChecklistItemParent(state.editableItem.children, payload.parent.id);
+  if (!parent && !_.isEmpty(state.subItemChain[0].sub_items)) parent = findChecklistItemParent(state.subItemChain[0].sub_items, payload.parent.id);
+  if (!parent && !_.isEmpty(state.editableItem.sub_items)) parent = findChecklistItemParent(state.editableItem.sub_items, payload.parent.id);
 
-  if (parent) if (parent.children !== undefined) parent.children.push(payload.child);else parent['children'] = payload.child;
+  if (parent) if (parent.sub_items !== undefined) parent.sub_items.push(payload.child);else parent['sub_items'] = payload.child;
   // else console.log('parent not found');
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["l" /* DECREMENT_ITEM_COUNT */], function (state, checklistID) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["m" /* DECREMENT_ITEM_COUNT */], function (state, checklistID) {
   if (!_.isEmpty(state.checklists)) {
     var i = _.findIndex(state.checklists, ['id', checklistID]);
     state.checklists[i].items_count = --state.checklists[i].items_count;
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["m" /* DELETE_CHECKLIST */], function (state, checklist) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["n" /* DELETE_CHECKLIST */], function (state, checklist) {
   if (!_.isEmpty(state.checklists)) state.checklists.splice(_.findIndex(state.checklists, ['id', checklist.id]), 1);
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["n" /* DELETE_CHECKLIST_ITEM */], function (state, checklistItem) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_CHECKLIST_ITEM */], function (state, checklistItem) {
   var isSubItem = !!checklistItem.parent_id,
       haystack = void 0,
       index = void 0;
@@ -102271,21 +102842,21 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     // First, check for parent in checklistItems array
     haystack = findChecklistItemParent(state.checklistItems, checklistItem.parent_id);
     // ...next, check in the editableSubItem and then the editableItem
-    if (!haystack && !_.isEmpty(state.subItemChain[0].children)) haystack = findChecklistItemParent(state.subItemChain[0].children, checklistItem.parent_id);
-    if (!haystack && !_.isEmpty(state.editableItem.children)) haystack = findChecklistItemParent(state.editableItem.children, checklistItem.parent_id);
+    if (!haystack && !_.isEmpty(state.subItemChain[0].sub_items)) haystack = findChecklistItemParent(state.subItemChain[0].sub_items, checklistItem.parent_id);
+    if (!haystack && !_.isEmpty(state.editableItem.sub_items)) haystack = findChecklistItemParent(state.editableItem.sub_items, checklistItem.parent_id);
 
     // remove it from editableItem or editableSubItem editableSubItem (fixes checklistitem tree not reflecting changes)
     if (state.editableItem.id == checklistItem.parent_id) {
-      state.editableItem.children.splice(_.findIndex(state.editableItem.children, ['id', checklistItem.id]), 1);
+      state.editableItem.sub_items.splice(_.findIndex(state.editableItem.sub_items, ['id', checklistItem.id]), 1);
     } else if (state.subItemChain[0].id == checklistItem.parent_id) {
-      state.subItemChain[0].children.splice(_.findIndex(state.subItemChain[0].children, ['id', checklistItem.id]), 1);
+      state.subItemChain[0].sub_items.splice(_.findIndex(state.subItemChain[0].sub_items, ['id', checklistItem.id]), 1);
     }
   }
   index = _.findIndex(haystack, ['id', checklistItem.id]);
   if (!_.isEmpty(haystack) && index !== -1) haystack.splice(index, 1);
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["r" /* DELIST_CHECKLIST_ITEM */], function (state, checklistItem) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* DELIST_CHECKLIST_ITEM */], function (state, checklistItem) {
   state.delistedItems.unshift(checklistItem.id);
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["q" /* DELETE_UNFILTERED */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["r" /* DELETE_UNFILTERED */], function (state) {
   var item = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
   if (!!item && !!item.id) {
@@ -102294,7 +102865,7 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
   } else {
     state.unfilteredItems = [];
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REMOVE_FROM_ARRAY */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["t" /* REMOVE_FROM_ARRAY */], function (state) {
   var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { array: null, item: null, removePrecedingSubItems: false, removeAll: false };
 
   if (payload.removeAll || !payload.item || !payload.item.id) {
@@ -102310,16 +102881,16 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
       !!~i && payload.array.splice(i, 1);
     }
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SET_EDITABLE_CHECKLIST_ITEM */], function (state, item) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SET_EDITABLE_CHECKLIST_ITEM */], function (state, item) {
   state.editableItem = item || {};
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SET_EDITABLE_CHECKLIST_ITEM_COMMENTS */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SET_EDITABLE_CHECKLIST_ITEM_COMMENTS */], function (state, payload) {
   if (payload.isSubItem) state.subItemChain[0].comments = payload.html;else state.editableItem.comments = payload.html;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* SET_CHECKLIST_ITEM_DEADLINE */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* SET_CHECKLIST_ITEM_DEADLINE */], function (state, payload) {
   var item = void 0;
   if (payload.isSubItem) {
     if (!!state.subItemChain[0].id && state.subItemChain[0].id == payload.item.id) item = state.subItemChain[0];else {
-      item = findChildItem(state.editableItem.children, payload.item.id);
-      if (!item) item = findChildItem(state.subItemChain[0].children, payload.item.id);
+      item = findChildItem(state.editableItem.sub_items, payload.item.id);
+      if (!item) item = findChildItem(state.subItemChain[0].sub_items, payload.item.id);
     }
   } else {
     // If not a subItem
@@ -102327,20 +102898,20 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
   }
 
   if (!!item) item.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SORT_CHECKLIST_ITEMS */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* SORT_CHECKLIST_ITEMS */], function (state) {
   state.checklistItems = __WEBPACK_IMPORTED_MODULE_1_fast_sort___default()(state.checklistItems).asc(function (i) {
     return i.sort_order;
   });
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SORT_SUB_CHECKLIST_ITEMS */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* SORT_SUB_CHECKLIST_ITEMS */], function (state, payload) {
 
   var parent = findChecklistItemParent(state.checklistItems, payload.parent.id);
 
-  if (parent && !!parent.children.length) {
-    __WEBPACK_IMPORTED_MODULE_1_fast_sort___default()(parent.children).asc(function (item) {
+  if (parent && !!parent.sub_items.length) {
+    __WEBPACK_IMPORTED_MODULE_1_fast_sort___default()(parent.sub_items).asc(function (item) {
       return item.sort_order;
     });
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* TOGGLE_ITEM_CHECK_MARK */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* TOGGLE_ITEM_CHECK_MARK */], function (state) {
   var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
 
   if (payload.isSubItem) {
@@ -102348,7 +102919,7 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
   } else {
     state.editableItem.checked_at = state.editableItem.checked_at ? null : moment().format();
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], function (state) {
   var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
 
   if (payload.isSubItem) {
@@ -102357,33 +102928,33 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     state.editableSubItemIsExpanded = false;
     state.editableItemIsExpanded = !state.editableItemIsExpanded;
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CHECKLIST_ITEM_IMPORTANCE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_CHECKLIST_ITEM_IMPORTANCE */], function (state) {
   var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
 
   if (payload.isSubItem) {
     console.log('is sub item');
-    var i = _.findIndex(state.editableItem.children, ['id', payload.item.id]);
-    state.editableItem.children[i].is_important = !state.editableItem.children[i].is_important;
+    var i = _.findIndex(state.editableItem.sub_items, ['id', payload.item.id]);
+    state.editableItem.sub_items[i].is_important = !state.editableItem.sub_items[i].is_important;
   } else {
     console.log('is not sub item');
     var _i = _.findIndex(state.checklistItems, ['id', payload.item.id]);
     state.checklistItems[_i].is_important = !state.checklistItems[_i].is_important;
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CHECKLIST_ITEM_URGENCY */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_CHECKLIST_ITEM_URGENCY */], function (state) {
   var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { isSubItem: false };
 
   if (payload.isSubItem) {
-    var i = _.findIndex(state.editableItem.children, ['id', payload.item.id]);
-    state.editableItem.children[i].is_urgent = !state.editableItem.children[i].is_urgent;
+    var i = _.findIndex(state.editableItem.sub_items, ['id', payload.item.id]);
+    state.editableItem.sub_items[i].is_urgent = !state.editableItem.sub_items[i].is_urgent;
   } else {
     var _i2 = _.findIndex(state.checklistItems, ['id', payload.item.id]);
     state.checklistItems[_i2].is_urgent = !state.checklistItems[_i2].is_urgent;
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UNDO_UPDATE_SORT_ORDER */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UNDO_UPDATE_SORT_ORDER */], function (state) {
   // Maybe use https://github.com/pinguinjkeke/vue-local-storage or some other way to store/retrieve items
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UNSET_EDITABLE_CHECKLIST_ITEM */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UNSET_EDITABLE_CHECKLIST_ITEM */], function (state) {
   state.editableItem = {};
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_FILTERS */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["S" /* UPDATE_FILTERS */], function (state, payload) {
   switch (payload.type) {
     case 'checked':
       state.filters.checked = payload.value;
@@ -102392,9 +102963,9 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
       state.filters.priority = payload.value;
       break;
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_CHECKLIST */], function (state, updatedChecklist) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_CHECKLIST */], function (state, updatedChecklist) {
   if (!!updatedChecklist.title) state.checklist = updatedChecklist;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_CHECKLIST_ITEM */], function (state, item) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_CHECKLIST_ITEM */], function (state, item) {
   var newItem = item.new,
       oldItem = item.old,
       isSubItem = !!newItem.parent_id,
@@ -102402,8 +102973,8 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
       parentItem = isSubItem ? state.checklistItems.find(function (checklistItem) {
     return checklistItem.id == item.new.parent_id;
   }) : null,
-      source = wasSubitem ? state.editableItem.children : state.checklistItems,
-      destination = !isSubItem ? state.checklistItems : parentItem ? parentItem.children : null,
+      source = wasSubitem ? state.editableItem.sub_items : state.checklistItems,
+      destination = !isSubItem ? state.checklistItems : parentItem ? parentItem.sub_items : null,
       index = _.findIndex(source, ['id', oldItem.id]);
 
   if (isSubItem == wasSubitem) {
@@ -102425,15 +102996,15 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     });
     if (newChecklist) newChecklist.items_count = ++newChecklist.items_count;
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["V" /* UPDATE_SORT_ORDER */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["X" /* UPDATE_SORT_ORDER */], function (state) {
   for (var i = 0; i < state.checklistItems.length; i++) {
     state.checklistItems[i].sort_order = i;
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["W" /* UPDATE_SUB_ITEM_SORT_ORDER */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["Y" /* UPDATE_SUB_ITEM_SORT_ORDER */], function (state, payload) {
   var p = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
 
-  for (var i = 0; i < state.checklistItems[p].children.length; i++) {
-    state.checklistItems[p].children[i].sort_order = i;
+  for (var i = 0; i < state.checklistItems[p].sub_items.length; i++) {
+    state.checklistItems[p].sub_items[i].sort_order = i;
   }
 }), _mutations);
 
@@ -102443,6 +103014,7 @@ var actions = {
         commit = _ref.commit;
 
     return new Promise(function (resolve, reject) {
+      console.log(payload);
       axios.post('/lists/' + payload.parent.fake_id + '/add-item', { item: payload.item }).then(function (response) {
         return dispatch('addChecklistItemHandler', response).then(function (response) {
           return resolve(response);
@@ -102458,8 +103030,8 @@ var actions = {
         Vue.handleTokenMismatch(response.data).then(function (response) {
           if (response.data.item) {
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["c" /* ADD_ITEM_TO_CHECKLIST */], response.data.item);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SORT_CHECKLIST_ITEMS */]);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* ADD_UNFILTERED */], response.data.item);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* SORT_CHECKLIST_ITEMS */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* ADD_UNFILTERED */], response.data.item);
             resolve(response.data.item);
           } else if (response.data.error) {
             reject(response.data.error);
@@ -102471,8 +103043,8 @@ var actions = {
         });
       } else if (response.data.item) {
         commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["c" /* ADD_ITEM_TO_CHECKLIST */], response.data.item);
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SORT_CHECKLIST_ITEMS */]);
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* ADD_UNFILTERED */], response.data.item);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* SORT_CHECKLIST_ITEMS */]);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* ADD_UNFILTERED */], response.data.item);
         resolve(response.data.item);
       } else if (response.data.error) {
         reject(response.data.error);
@@ -102502,7 +103074,7 @@ var actions = {
         Vue.handleTokenMismatch(payload.response.data).then(function (response) {
           if (response.data.item) {
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["e" /* ADD_SUB_ITEM_TO_CHECKLIST_ITEM */], { parent: parent, child: response.data.item });
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: parent });
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: parent });
             resolve(response.data.item);
           } else if (response.data.error) {
             reject(response.data.error);
@@ -102514,7 +103086,7 @@ var actions = {
         });
       } else if (payload.response.data.item) {
         commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["e" /* ADD_SUB_ITEM_TO_CHECKLIST_ITEM */], { parent: parent, child: payload.response.data.item });
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: parent });
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: parent });
         resolve(payload.response.data.item);
       } else if (payload.response.data.error) {
         reject(payload.response.data.error);
@@ -102532,7 +103104,7 @@ var actions = {
       if (payload.isSubItem) {
         commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["f" /* ADD_TO_ARRAY */], { array: state.subItemChain, item: payload.item, addToTop: true });
       } else {
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["x" /* SET_EDITABLE_CHECKLIST_ITEM */], payload.item);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SET_EDITABLE_CHECKLIST_ITEM */], payload.item);
       }
       resolve();
     });
@@ -102556,7 +103128,7 @@ var actions = {
       if (response.data.tokenMismatch) {
         Vue.handleTokenMismatch(response.data).then(function (response) {
           if (response.data.checklist) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["m" /* DELETE_CHECKLIST */], response.data.checklist);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["n" /* DELETE_CHECKLIST */], response.data.checklist);
             resolve(response.data.checklist);
           } else if (response.data.error) {
             reject(response.data.error);
@@ -102567,7 +103139,7 @@ var actions = {
           return reject(error);
         });
       } else if (response.data.checklist) {
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["m" /* DELETE_CHECKLIST */], response.data.checklist);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["n" /* DELETE_CHECKLIST */], response.data.checklist);
         resolve(response.data.checklist);
       } else if (response.data.error) {
         reject(response.data.error);
@@ -102586,9 +103158,9 @@ var actions = {
       dispatch('delistChecklistItem', checklistItem).then(function () {
         return dispatch('deselect', { model: 'checklist-item', listing: checklistItem }, { root: true }).then(function () {
           return dispatch('removeCurrentlyEditable', { isSubItem: isSubItem }).then(function () {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["l" /* DECREMENT_ITEM_COUNT */], checklistItem.checklist_id);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["n" /* DELETE_CHECKLIST_ITEM */], checklistItem);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["V" /* UPDATE_SORT_ORDER */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["m" /* DECREMENT_ITEM_COUNT */], checklistItem.checklist_id);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["o" /* DELETE_CHECKLIST_ITEM */], checklistItem);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["X" /* UPDATE_SORT_ORDER */]);
             dispatch('saveSortOrder', { checklistItems: state.checklistItems, parent: state.checklist, parentModel: parentModel });
             resolve(checklistItem);
           });
@@ -102600,7 +103172,7 @@ var actions = {
     var commit = _ref9.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["m" /* DELETE_CHECKLIST */], checklist);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["n" /* DELETE_CHECKLIST */], checklist);
       resolve();
     });
   },
@@ -102608,7 +103180,7 @@ var actions = {
     var commit = _ref10.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["r" /* DELIST_CHECKLIST_ITEM */], checklistItem);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* DELIST_CHECKLIST_ITEM */], checklistItem);
       resolve(checklistItem);
     });
   },
@@ -102621,7 +103193,7 @@ var actions = {
 
     return new Promise(function (resolve, reject) {
       if (payload.isSubItem && state.editableSubItemIsExpanded || !payload.isSubItem && state.editableItemIsExpanded || !payload.isSubItem && state.editableSubItemIsExpanded) {
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], payload);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], payload);
       }
       if (!!payload.deselect) {
         var listing = payload.isSubItem ? getters.editableItem : state.editableItem;
@@ -102634,13 +103206,13 @@ var actions = {
           inSubItemChain = item && payload.isSubItem && _.some(getters.subItemChain, ['id', item.id]);
 
       if (!payload.isSubItem) {
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* UNSET_EDITABLE_CHECKLIST_ITEM */]);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UNSET_EDITABLE_CHECKLIST_ITEM */]);
       }
 
       // If the item is in the subItemChain,
       if (inSubItemChain || removeAll) {
         // Remove the item from the subItemChain
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["s" /* REMOVE_FROM_ARRAY */], { array: state.subItemChain, item: item, removePrecedingSubItems: removePrecedingSubItems, removeAll: removeAll });
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["t" /* REMOVE_FROM_ARRAY */], { array: state.subItemChain, item: item, removePrecedingSubItems: removePrecedingSubItems, removeAll: removeAll });
       }
 
       // add it to selected
@@ -102653,7 +103225,7 @@ var actions = {
     var commit = _ref12.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["O" /* UPDATE_CHECKLIST_ITEM */], item);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_CHECKLIST_ITEM */], item);
       resolve(item);
     });
   },
@@ -102676,7 +103248,7 @@ var actions = {
       if (response.data.tokenMismatch) {
         Vue.handleTokenMismatch(response.data).then(function (response) {
           if (response.data.checklist) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_CHECKLIST */], response.data.checklist);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_CHECKLIST */], response.data.checklist);
             resolve(response.data.checklist);
           } else if (response.data.error) {
             reject(response.data.error);
@@ -102687,7 +103259,7 @@ var actions = {
           return reject(error);
         });
       } else if (response.data.checklist) {
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UPDATE_CHECKLIST */], response.data.checklist);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_CHECKLIST */], response.data.checklist);
         resolve(response.data.checklist);
       } else if (response.data.error) {
         reject(response.data.error);
@@ -102708,7 +103280,7 @@ var actions = {
       if (!item) item = payload.isSubItem ? getters.editableSubItem : state.editableItem;
 
       if (!!item) {
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* ADD_UNFILTERED */], item);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* ADD_UNFILTERED */], item);
         axios.patch('/lists/item/' + item.id + '/update', { item: item }).then(function (response) {
           return resolve(dispatch('saveChecklistItemHandler', response));
         }).catch(function (error) {
@@ -102725,7 +103297,7 @@ var actions = {
 
     return new Promise(function (resolve, reject) {
       item.checked_at = item.checked_at ? null : moment().format();
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["i" /* ADD_UNFILTERED */], item);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* ADD_UNFILTERED */], item);
       axios.patch('/lists/item/' + item.id + '/check', { item: item }).then(function (response) {
         return resolve(dispatch('saveChecklistItemHandler', response));
       }).catch(function (error) {
@@ -102786,7 +103358,7 @@ var actions = {
     var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { item: null, date: null, isSubItem: false };
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["v" /* SET_CHECKLIST_ITEM_DEADLINE */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["w" /* SET_CHECKLIST_ITEM_DEADLINE */], payload);
       dispatch('saveChecklistItem', payload).then(function (success) {
         return resolve(success);
       }).catch(function (error) {
@@ -102805,7 +103377,7 @@ var actions = {
     var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { html: null, isSubItem: false };
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["y" /* SET_EDITABLE_CHECKLIST_ITEM_COMMENTS */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SET_EDITABLE_CHECKLIST_ITEM_COMMENTS */], payload);
       resolve();
     });
   },
@@ -102828,8 +103400,8 @@ var actions = {
     var commit = _ref23.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["Q" /* UPDATE_FILTERS */], payload);
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["q" /* DELETE_UNFILTERED */]);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["S" /* UPDATE_FILTERS */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["r" /* DELETE_UNFILTERED */]);
       resolve();
     });
   },
@@ -102841,13 +103413,13 @@ var actions = {
       switch (payload.parentModel) {
         case 'checklist-item':
           if (payload.parent) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: payload.parent });
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* SORT_SUB_CHECKLIST_ITEMS */], { parent: payload.parent });
           } else {
             console.log('Error: no parent included in the payload');
           }
           break;
         default:
-          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SORT_CHECKLIST_ITEMS */]);
+          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* SORT_CHECKLIST_ITEMS */]);
 
       }
       resolve();
@@ -102900,7 +103472,7 @@ var actions = {
 
     return new Promise(function (resolve, reject) {
       if (!payload.item) payload.item = payload.isSubItem ? getters.editableItem : state.editableItem ? state.editableItem : null;
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["I" /* TOGGLE_ITEM_CHECK_MARK */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* TOGGLE_ITEM_CHECK_MARK */], payload);
       dispatch('saveChecklistItem', payload).then(function () {
         return resolve();
       }).catch(function (error) {
@@ -102912,7 +103484,7 @@ var actions = {
     var commit = _ref28.commit;
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["H" /* TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION */], payload);
       resolve();
     });
   },
@@ -102930,7 +103502,7 @@ var actions = {
           payload.item = state.editableItem.id !== undefined ? state.editableItem : reject('There is no item or currently editable item');
         }
       }
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* TOGGLE_CHECKLIST_ITEM_IMPORTANCE */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["E" /* TOGGLE_CHECKLIST_ITEM_IMPORTANCE */], payload);
       dispatch('saveChecklistItem', payload).then(function () {
         return resolve();
       }).catch(function (error) {
@@ -102952,7 +103524,7 @@ var actions = {
           payload.item = state.editableItem.id !== undefined ? state.editableItem : reject('There is no item or currently editable item');
         }
       }
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* TOGGLE_CHECKLIST_ITEM_URGENCY */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["F" /* TOGGLE_CHECKLIST_ITEM_URGENCY */], payload);
       dispatch('saveChecklistItem', payload).then(function () {
         return resolve();
       }).catch(function (error) {
@@ -102967,17 +103539,17 @@ var actions = {
 
     return new Promise(function (resolve, reject) {
       if (payload.parentModel == 'checklist') {
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["V" /* UPDATE_SORT_ORDER */]);
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SORT_CHECKLIST_ITEMS */]);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["X" /* UPDATE_SORT_ORDER */]);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["C" /* SORT_CHECKLIST_ITEMS */]);
       } else if (payload.parentModel == 'checklistItem') {
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["W" /* UPDATE_SUB_ITEM_SORT_ORDER */], payload);
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SORT_SUB_CHECKLIST_ITEMS */], payload);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["Y" /* UPDATE_SUB_ITEM_SORT_ORDER */], payload);
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["D" /* SORT_SUB_CHECKLIST_ITEMS */], payload);
       }
 
       dispatch('saveSortOrder', payload).then(function () {
         return resolve();
       }).catch(function (error) {
-        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["L" /* UNDO_UPDATE_SORT_ORDER */]); //WIP : set initial items
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["N" /* UNDO_UPDATE_SORT_ORDER */]); //WIP : set initial items
         reject();
       });
     });
@@ -103033,8 +103605,8 @@ function findChecklistItemParent(itemsArray, parentId) {
       for (var _iterator = itemsArray[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var item = _step.value;
 
-        if (!!item.children.length) {
-          parent = findChecklistItemParent(item.children, parentId);
+        if (!!item.sub_items.length) {
+          parent = findChecklistItemParent(item.sub_items, parentId);
           if (!!parent) return parent;
         }
       }
@@ -103066,11 +103638,11 @@ function findChildItem(itemsArray, childId) {
     var _iteratorError2 = undefined;
 
     try {
-      for (var _iterator2 = itemsArray.children[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      for (var _iterator2 = itemsArray.sub_items[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
         var item = _step2.value;
 
-        if (!!item.children.length) {
-          child = findChildItem(item.children, childId);
+        if (!!item.sub_items.length) {
+          child = findChildItem(item.sub_items, childId);
           if (!!child) return child;
         }
       }
@@ -103102,7 +103674,7 @@ function findChildItem(itemsArray, childId) {
 });
 
 /***/ }),
-/* 684 */
+/* 692 */
 /***/ (function(module, exports) {
 
 // Internals
@@ -103148,11 +103720,11 @@ module.exports = function(ctx) {
 
 
 /***/ }),
-/* 685 */
+/* 693 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(47);
 var _mutations;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -103173,15 +103745,15 @@ var state = {
     }
 };
 
-var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* CLEAR_QUERY */], function (state) {
+var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* CLEAR_QUERY */], function (state) {
     state.search.query = undefined;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["T" /* UPDATE_QUERY */], function (state, query) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["V" /* UPDATE_QUERY */], function (state, query) {
     state.search.query = query;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["U" /* UPDATE_RESULTS */], function (state, results) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["W" /* UPDATE_RESULTS */], function (state, results) {
     state.search.results = results;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_ERROR_MESSAGE */], function (state, errorMessage) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_ERROR_MESSAGE */], function (state, errorMessage) {
     state.search.errorMessage = errorMessage;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["S" /* UPDATE_IS_SEARCHING */], function (state, isSearching) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["U" /* UPDATE_IS_SEARCHING */], function (state, isSearching) {
     state.search.isSearching = isSearching;
 }), _mutations);
 
@@ -103194,7 +103766,7 @@ var actions = {
                 folders: {},
                 checklists: {}
             };
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["U" /* UPDATE_RESULTS */], results);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["W" /* UPDATE_RESULTS */], results);
             resolve();
         });
     },
@@ -103202,7 +103774,7 @@ var actions = {
         var commit = _ref2.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["U" /* UPDATE_RESULTS */], results);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["W" /* UPDATE_RESULTS */], results);
             resolve();
         });
     },
@@ -103211,7 +103783,7 @@ var actions = {
         var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["P" /* UPDATE_ERROR_MESSAGE */], value);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["R" /* UPDATE_ERROR_MESSAGE */], value);
             resolve();
         });
     },
@@ -103220,8 +103792,8 @@ var actions = {
         var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["j" /* CLEAR_QUERY */]);
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["T" /* UPDATE_QUERY */], value);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["k" /* CLEAR_QUERY */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["V" /* UPDATE_QUERY */], value);
             resolve();
         });
     },
@@ -103229,7 +103801,7 @@ var actions = {
         var commit = _ref5.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["S" /* UPDATE_IS_SEARCHING */], value);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["U" /* UPDATE_IS_SEARCHING */], value);
             resolve();
         });
     }
@@ -103264,11 +103836,120 @@ var getters = {
 });
 
 /***/ }),
-/* 686 */
+/* 694 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(47);
+var _mutations;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var namespaced = true;
+
+var state = {};
+
+var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SET_OR_TOGGLE_KANBAN_PROPERTY */], function (state) {
+  var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { object: {}, property: null, value: null };
+
+  if (payload.value) Vue.set(payload.object, payload.property, payload.value);else if (payload.object.hasOwnProperty(payload.property) && typeof payload.object[payload.property] == 'boolean') Vue.set(payload.object, payload.property, !payload.object[payload.property]);else Vue.set(payload.object, payload.property, true);
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_TO_KANBAN_ARRAY */], function (state) {
+  var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { array: [], value: null };
+
+  payload.array.splice(payload.array.length, 0, payload.value);
+}), _mutations);
+
+var actions = {
+  EXAMPLE: function EXAMPLE(_ref, example) {
+    var dispatch = _ref.dispatch,
+        commit = _ref.commit;
+
+    return new Promise(function (resolve, reject) {
+
+      resolve();
+    });
+  },
+  addToKanbanArray: function addToKanbanArray(_ref2) {
+    var commit = _ref2.commit;
+    var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { array: [], value: null };
+
+    return new Promise(function (resolve, reject) {
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_TO_KANBAN_ARRAY */], payload);
+      resolve();
+    });
+  },
+  fetchNestedKanbanDescendants: function fetchNestedKanbanDescendants(_ref3, nestedKanban) {
+    var dispatch = _ref3.dispatch;
+
+    return new Promise(function (resolve, reject) {
+      axios.post('/fetch-nested-kanban-descendants', { nestedKanban: nestedKanban }).then(function (response) {
+        return resolve(dispatch('fetchNestedKanbanDescendantsHandler', { response: response, nestedKanban: nestedKanban }));
+      }).catch(function (error) {
+        return reject(error);
+      });
+      resolve();
+    });
+  },
+  fetchNestedKanbanDescendantsHandler: function fetchNestedKanbanDescendantsHandler(_ref4) {
+    var commit = _ref4.commit;
+    var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { response: null, nestedKanban: null };
+
+    return new Promise(function (resolve, reject) {
+      if (payload.response.data.tokenMismatch) {
+        Vue.handleTokenMismatch(payload.response.data).then(function (success) {
+          if (!success.data.descendants.length) {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SET_OR_TOGGLE_KANBAN_PROPERTY */], { object: payload.nestedKanban, property: 'infoMessage', value: 'This ' + payload.nestedKanban.model + ' is empty.' });
+          } else {
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SET_OR_TOGGLE_KANBAN_PROPERTY */], { object: payload.nestedKanban, property: 'descendants', value: success.data.descendants, assign: true });
+          }
+          resolve();
+        }).catch(function (error) {
+          return reject(error);
+        });
+      } else if (payload.response.data.descendants) {
+        if (!payload.response.data.descendants.length) {
+          commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SET_OR_TOGGLE_KANBAN_PROPERTY */], { object: payload.nestedKanban, property: 'infoMessage', value: 'This ' + payload.nestedKanban.model + ' is empty.' });
+        }
+        commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SET_OR_TOGGLE_KANBAN_PROPERTY */], { object: payload.nestedKanban, property: 'descendants', value: payload.response.data.descendants, assign: true });
+        resolve();
+      } else if (payload.response.data.error) reject(payload.response.data.error);else reject();
+    });
+  },
+  toggleNestedKanban: function toggleNestedKanban(_ref5, nestedKanban) {
+    var dispatch = _ref5.dispatch,
+        commit = _ref5.commit;
+
+    return new Promise(function (resolve, reject) {
+      if (!nestedKanban.hasOwnProperty('opened') || !nestedKanban.opened && nestedKanban.descendants == undefined) {
+        dispatch('fetchNestedKanbanDescendants', nestedKanban);
+      }
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["B" /* SET_OR_TOGGLE_KANBAN_PROPERTY */], { object: nestedKanban, property: 'opened' });
+      resolve();
+    });
+  }
+};
+
+var getters = {
+  kanbanCards: function kanbanCards(state, rootGetters) {
+    return rootGetters.folders.concat(rootGetters.checklists);
+  }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  state: state,
+  mutations: mutations,
+  actions: actions,
+  getters: getters
+});
+
+/***/ }),
+/* 695 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(47);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _mutations;
@@ -103302,7 +103983,7 @@ var state = {
   openMovableChecklistItemChain: []
 };
 
-var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_TO_MOVER_ARRAY */], function (state) {
+var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["h" /* ADD_TO_MOVER_ARRAY */], function (state) {
   var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { array: null, value: null };
 
   var array = payload.array;
@@ -103310,7 +103991,7 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
   ) {
       state[array].splice(0, 0, payload.value);
     }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["t" /* REMOVE_FROM_MOVER_ARRAY */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_MOVER_ARRAY */], function (state) {
   var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { array: null, value: null, removePrecedingSubItems: false, removeAll: false };
 
   var array = payload.array;
@@ -103321,12 +104002,12 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     if (payload.removePrecedingSubItems) state[array].splice(0, _.findIndex(state[array], ['id', payload.value.id])); // remove every element that precedes the item
     else state[array].splice(_.findIndex(state[array], ['id', payload.value.id]), 1); // removes the item from the array
   }
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SET_MOVER_VARIABLE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SET_MOVER_VARIABLE */], function (state) {
   var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { variable: null, value: null };
 
   var variable = payload.variable;
   state[variable] = payload.value || null;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* TOGGLE_MOVER_VARIABLE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* TOGGLE_MOVER_VARIABLE */], function (state) {
   var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { variable: null, value: null };
 
   var variable = payload.variable;
@@ -103352,7 +104033,7 @@ var actions = {
     var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { array: null, value: null };
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["g" /* ADD_TO_MOVER_ARRAY */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["h" /* ADD_TO_MOVER_ARRAY */], payload);
       resolve();
     });
   },
@@ -103451,7 +104132,7 @@ var actions = {
     var dispatch = _ref9.dispatch;
 
     return new Promise(function (resolve, reject) {
-      axios.post('/lists/items/' + item.id + '/fetch-children').then(function (response) {
+      axios.post('/lists/items/' + item.id + '/fetch-sub-items').then(function (response) {
         return resolve(dispatch('fetchChecklistSubItemsHandler', response));
       }).catch(function (error) {
         dispatch('setInfoMessage', { content: 'The following error occurred while fetching items: ' + error + '. Please refresh this page.', type: 'error', model: 'checklist-item' });
@@ -103465,19 +104146,19 @@ var actions = {
     return new Promise(function (resolve, reject) {
       if (response.data.tokenMismatch) {
         Vue.handleTokenMismatch(response.data).then(function (response) {
-          if (!response.data.item.children.length) {
+          if (!response.data.item.sub_items.length) {
             dispatch('setInfoMessage', { content: 'There are no items at this time.', type: 'info', model: 'checklist-item' });
           }
-          dispatch('refreshChecklistSubItems', { freshChecklistSubItems: response.data.item.children || [], reportEmpty: true });
+          dispatch('refreshChecklistSubItems', { freshChecklistSubItems: response.data.item.sub_items || [], reportEmpty: true });
           resolve();
         }).catch(function (error) {
           return reject(error);
         });
-      } else if (response.data.item.children) {
-        if (!response.data.item.children.length) {
+      } else if (response.data.item.sub_items) {
+        if (!response.data.item.sub_items.length) {
           dispatch('setInfoMessage', { content: 'There are no items at this time.', type: 'info', model: 'checklist-item' });
         }
-        dispatch('refreshChecklistSubItems', { freshChecklistSubItems: response.data.item.children || [], reportEmpty: true });
+        dispatch('refreshChecklistSubItems', { freshChecklistSubItems: response.data.item.sub_items || [], reportEmpty: true });
         resolve();
       } else if (response.data.error) reject(response.data.error);else reject();
     });
@@ -103545,7 +104226,7 @@ var actions = {
       if (response.data.tokenMismatch) {
         Vue.handleTokenMismatch(response.data).then(function (response) {
           dispatch('refreshCurrentFolder', response.data.folder);
-          dispatch('refreshFolders', { freshFolders: response.data.folder.children, reportEmpty: true });
+          dispatch('refreshFolders', { freshFolders: response.data.folder.subfolders, reportEmpty: true });
           dispatch('refreshChecklists', { freshChecklists: response.data.folder.checklists, reportEmpty: true });
           resolve();
         }).catch(function (error) {
@@ -103553,7 +104234,7 @@ var actions = {
         });
       } else if (response.data.folder) {
         dispatch('refreshCurrentFolder', response.data.folder);
-        dispatch('refreshFolders', { freshFolders: response.data.folder.children, reportEmpty: true });
+        dispatch('refreshFolders', { freshFolders: response.data.folder.subfolders, reportEmpty: true });
         dispatch('refreshChecklists', { freshChecklists: response.data.folder.checklists, reportEmpty: true });
         resolve();
       } else if (response.data.error) reject(response.data.error);else reject();
@@ -103589,7 +104270,7 @@ var actions = {
       dispatch('addToMoverArray', { array: 'openMovableChecklistItemChain', value: item });
       dispatch('setMoverVariable', { variable: 'moverContext', value: 'checklist-item' });
       // dispatch('fetchChecklistSubItems', item)
-      dispatch('refreshChecklistSubItems', { freshChecklistSubItems: item.children || [], reportEmpty: true });
+      dispatch('refreshChecklistSubItems', { freshChecklistSubItems: item.sub_items || [], reportEmpty: true });
       resolve();
     });
   },
@@ -103652,7 +104333,7 @@ var actions = {
       dispatch('setMoverVariable', { variable: 'moverIsLoading', value: false });
       dispatch('resetInfoMessage', 'folder');
       dispatch('setMoverVariable', { variable: 'movableFolders', value: payload.freshFolders || null });
-      if (payload.reportEmpty && _.isEmpty(payload.freshFolders)) dispatch('setInfoMessage', { content: 'This folder has no children', type: 'info', model: 'folder' });
+      if (payload.reportEmpty && _.isEmpty(payload.freshFolders)) dispatch('setInfoMessage', { content: 'This folder has no subfolders', type: 'info', model: 'folder' });
       resolve();
     });
   },
@@ -103671,7 +104352,7 @@ var actions = {
     var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { array: null, value: null };
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["t" /* REMOVE_FROM_MOVER_ARRAY */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["u" /* REMOVE_FROM_MOVER_ARRAY */], payload);
       resolve();
     });
   },
@@ -103784,7 +104465,7 @@ var actions = {
     var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { variable: null, value: null };
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["z" /* SET_MOVER_VARIABLE */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["A" /* SET_MOVER_VARIABLE */], payload);
       resolve();
     });
   },
@@ -103793,7 +104474,7 @@ var actions = {
     var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { variable: null, value: null };
 
     return new Promise(function (resolve, reject) {
-      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["K" /* TOGGLE_MOVER_VARIABLE */], payload);
+      commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["M" /* TOGGLE_MOVER_VARIABLE */], payload);
       resolve();
     });
   }
@@ -103876,11 +104557,11 @@ var getters = {
 });
 
 /***/ }),
-/* 687 */
+/* 696 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(47);
 var _mutations;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -103918,7 +104599,7 @@ var state = {
 
 var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["d" /* ADD_NOTICE */], function (state, payload) {
     state.notices.unshift(payload);
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELETE_NOTICE */], function (state, payload) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__mutations__["q" /* DELETE_NOTICE */], function (state, payload) {
     var i = _.findIndex(state.notices, payload);
     state.notices.splice(i, 1);
 }), _mutations);
@@ -103932,7 +104613,7 @@ var actions = {
             commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["d" /* ADD_NOTICE */], payload);
 
             if (!payload.persist) setTimeout(function () {
-                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELETE_NOTICE */], payload);
+                commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["q" /* DELETE_NOTICE */], payload);
             }, 5000);
 
             resolve(payload);
@@ -103942,7 +104623,7 @@ var actions = {
         var commit = _ref2.commit;
 
         return new Promise(function (resolve, reject) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["p" /* DELETE_NOTICE */], payload);
+            commit(__WEBPACK_IMPORTED_MODULE_0__mutations__["q" /* DELETE_NOTICE */], payload);
             resolve(payload);
         });
     }
@@ -103962,7 +104643,7 @@ var getters = {
 });
 
 /***/ }),
-/* 688 */
+/* 697 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {module.exports =
@@ -104245,7 +104926,7 @@ function getTetherAttachments(position) {
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(689);
+module.exports = __webpack_require__(698);
 
 /***/ }),
 /* 3 */
@@ -104292,14 +104973,14 @@ if (GlobalVue) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31)))
 
 /***/ }),
-/* 689 */
+/* 698 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether-tooltip 1.1.0 */
 
 (function(root, factory) {
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(690),__webpack_require__(272)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(699),__webpack_require__(272)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -104439,7 +105120,7 @@ return Tooltip;
 
 
 /***/ }),
-/* 690 */
+/* 699 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether-drop 1.4.1 */
@@ -105008,7 +105689,7 @@ return Drop;
 
 
 /***/ }),
-/* 691 */
+/* 700 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -105682,7 +106363,7 @@ function pluralize (value) {
 });
 
 /***/ }),
-/* 692 */
+/* 701 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105738,7 +106419,7 @@ var VueTokenMismatch = {
 /* harmony default export */ __webpack_exports__["a"] = (VueTokenMismatch);
 
 /***/ }),
-/* 693 */
+/* 702 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function () {
@@ -105789,7 +106470,7 @@ var VueTokenMismatch = {
 
 
 /***/ }),
-/* 694 */
+/* 703 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105915,13 +106596,13 @@ if (GlobalVue) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(31)))
 
 /***/ }),
-/* 695 */
+/* 704 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(696);
+var content = __webpack_require__(705);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -105929,7 +106610,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(697)(content, options);
+var update = __webpack_require__(706)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -105946,7 +106627,7 @@ if(false) {
 }
 
 /***/ }),
-/* 696 */
+/* 705 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(505)(false);
@@ -105960,7 +106641,7 @@ exports.push([module.i, ".resize-observer[data-v-b329ee4c]{position:absolute;top
 
 
 /***/ }),
-/* 697 */
+/* 706 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -106006,7 +106687,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(698);
+var	fixUrls = __webpack_require__(707);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -106319,7 +107000,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 698 */
+/* 707 */
 /***/ (function(module, exports) {
 
 
@@ -106414,10 +107095,1210 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 699 */
+/* 708 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 709 */,
+/* 710 */,
+/* 711 */,
+/* 712 */,
+/* 713 */,
+/* 714 */,
+/* 715 */,
+/* 716 */,
+/* 717 */,
+/* 718 */,
+/* 719 */,
+/* 720 */,
+/* 721 */,
+/* 722 */,
+/* 723 */,
+/* 724 */,
+/* 725 */,
+/* 726 */,
+/* 727 */,
+/* 728 */,
+/* 729 */,
+/* 730 */,
+/* 731 */,
+/* 732 */,
+/* 733 */,
+/* 734 */,
+/* 735 */,
+/* 736 */,
+/* 737 */,
+/* 738 */,
+/* 739 */,
+/* 740 */,
+/* 741 */,
+/* 742 */,
+/* 743 */,
+/* 744 */,
+/* 745 */,
+/* 746 */,
+/* 747 */,
+/* 748 */,
+/* 749 */,
+/* 750 */,
+/* 751 */,
+/* 752 */,
+/* 753 */,
+/* 754 */,
+/* 755 */,
+/* 756 */,
+/* 757 */,
+/* 758 */,
+/* 759 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(760)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(761)
+/* template */
+var __vue_template__ = __webpack_require__(762)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/KanbanAdder.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-16d37c30", Component.options)
+  } else {
+    hotAPI.reload("data-v-16d37c30", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 760 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 761 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'kanban-adder',
+  props: {
+    parent: {
+      type: Object,
+      required: true
+    },
+    size: {
+      type: String,
+      default: 'normal' // use 'small' for thinner look
+    }
+  },
+  data: function data() {
+    return {
+      isAddingNestedKanban: false,
+      kanbanAddableModel: null,
+      nameTitleOrContent: null
+    };
+  },
+
+  computed: {
+    addNestedKanbanInputIcon: function addNestedKanbanInputIcon() {
+      switch (this.kanbanAddableModel) {
+        case 'folder':
+          return 'fa-folder';
+          break;
+        case 'checklist':
+          return 'fa-list';
+          break;
+        case 'section':
+          return 'fa-window-maximize';
+          break;
+        case 'checklist-item':
+          return 'fa-circle-thin';
+          break;
+        default:
+          '';
+      }
+    },
+    addNestedKanbanInputPlaceholder: function addNestedKanbanInputPlaceholder() {
+      switch (this.kanbanAddableModel) {
+        case 'folder':
+          return 'Folder name';
+          break;
+        case 'checklist':
+          return 'List title';
+          break;
+        case 'section':
+          return 'Section title';
+          break;
+        case 'checklist-item':
+          return 'Add item';
+          break;
+        default:
+          '';
+      }
+    }
+  },
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addToKanbanArray', 'storeChecklist', 'addChecklistItem', 'addSubChecklistItem', 'storeFolder']), {
+    cancelIfEmpty: function cancelIfEmpty() {
+      if (!this.nameTitleOrContent) this.resetNestedKanban();
+    },
+    toggleAddingNestedKanban: function toggleAddingNestedKanban() {
+      this.kanbanAddableModel = null;
+      this.nameTitleOrContent = null;
+      this.isAddingNestedKanban = !this.isAddingNestedKanban;
+      if (this.isAddingNestedKanban && this.parent.model == 'checklist-item' || this.parent.model == 'checklist' && !!this.parent.parent_id) {
+        this.selectKanbanAddableModel('checklist-item');
+      }
+    },
+    resetNestedKanban: function resetNestedKanban() {
+      this.kanbanAddableModel = null;
+      this.nameTitleOrContent = null;
+      this.isAddingNestedKanban = false;
+    },
+    selectKanbanAddableModel: function selectKanbanAddableModel() {
+      var model = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      return this.kanbanAddableModel = model;
+    },
+    addNestedKanban: function addNestedKanban() {
+      var _this = this;
+
+      switch (this.kanbanAddableModel) {
+        case 'folder':
+          var folder = {
+            name: this.nameTitleOrContent,
+            folder_id: this.parent.id
+          };
+          this.storeFolder(folder).then(function (newFolder) {
+            _this.addToKanbanArray({ array: _this.parent.subfolders, value: newFolder });
+          });
+          break;
+        case 'checklist':
+          var checklist = {
+            title: this.nameTitleOrContent,
+            folder_id: this.parent.id
+          };
+          this.storeChecklist(checklist).then(function (newChecklist) {
+            _this.addToKanbanArray({ array: _this.parent.checklists, value: newChecklist });
+          });
+          break;
+        case 'section':
+          var section = {
+            title: this.nameTitleOrContent,
+            parent_id: this.parent.id
+          };
+          this.storeChecklist(section).then(function (newChecklist) {
+            _this.addToKanbanArray({ array: _this.parent.sections, value: newChecklist });
+          });
+          break;
+        case 'checklist-item':
+          var item = void 0;
+          if (this.parent.model == 'checklist') {
+            item = {
+              content: this.nameTitleOrContent,
+              checklist_id: this.parent.id
+            };
+            this.addChecklistItem({ item: item, parent: this.parent }).then(function (newItem) {
+              return _this.addToKanbanArray({ array: _this.parent.items, value: newItem });
+            });
+          } else if (this.parent.model == 'checklist-item') {
+            item = {
+              content: this.nameTitleOrContent,
+              parent_id: this.parent.id
+            };
+            this.addSubChecklistItem({ item: item, parent: this.parent }).then(function (newItem) {
+              return _this.addToKanbanArray({ array: _this.parent.sub_items, value: newItem });
+            });
+          }
+
+          break;
+      }
+
+      if (this.kanbanAddableModel == 'checklist-item') {
+        this.nameTitleOrContent = null;
+      } else {
+        this.resetNestedKanban();
+      }
+    }
+  })
+});
+
+/***/ }),
+/* 762 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "kanban-adder", class: _vm.size },
+    [
+      !_vm.isAddingNestedKanban
+        ? _c(
+            "div",
+            {
+              staticClass: "add-nested-kanban-button",
+              class: _vm.parent.model,
+              on: { click: _vm.toggleAddingNestedKanban }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-fw fa-plus",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" "),
+              _vm.size == "small" ? _c("span", [_vm._v("Add")]) : _vm._e()
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isAddingNestedKanban
+        ? [
+            !_vm.kanbanAddableModel
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "add-nested-kanban-chooser",
+                    class: _vm.parent.model
+                  },
+                  [
+                    _vm.parent.model == "folder"
+                      ? [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "add-folder-chooser folder",
+                              on: {
+                                click: function($event) {
+                                  _vm.selectKanbanAddableModel("folder")
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-fw fa-plus",
+                                attrs: { "aria-hidden": "true" }
+                              }),
+                              _vm._v("\n          Folder\n        ")
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass: "add-list-chooser middle list",
+                              on: {
+                                click: function($event) {
+                                  _vm.selectKanbanAddableModel("checklist")
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-fw fa-plus",
+                                attrs: { "aria-hidden": "true" }
+                              }),
+                              _vm._v("\n          List\n        ")
+                            ]
+                          )
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.parent.model == "checklist" && !_vm.parent.parent_id
+                      ? [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "add-folder-chooser section",
+                              on: {
+                                click: function($event) {
+                                  _vm.selectKanbanAddableModel("section")
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-fw fa-plus",
+                                attrs: { "aria-hidden": "true" }
+                              }),
+                              _vm._v("\n          Section\n        ")
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass: "add-list-chooser middle item",
+                              on: {
+                                click: function($event) {
+                                  _vm.selectKanbanAddableModel("checklist-item")
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-fw fa-plus",
+                                attrs: { "aria-hidden": "true" }
+                              }),
+                              _vm._v("\n          Item\n        ")
+                            ]
+                          )
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.parent.model == "checklist-item" ||
+                    (_vm.parent.model == "checklist" && !!_vm.parent.parent_id)
+                      ? [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "add-list-chooser sub-item",
+                              on: {
+                                click: function($event) {
+                                  _vm.selectKanbanAddableModel("checklist-item")
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-fw fa-plus",
+                                attrs: { "aria-hidden": "true" }
+                              }),
+                              _vm._v("\n          Item\n        ")
+                            ]
+                          )
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        staticClass: "cancel-add-nested-kanban cancel",
+                        on: { click: _vm.toggleAddingNestedKanban }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-fw fa-times",
+                          attrs: { "aria-hidden": "true" }
+                        }),
+                        _vm._v("\n        Cancel\n      ")
+                      ]
+                    )
+                  ],
+                  2
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.kanbanAddableModel
+              ? _c(
+                  "form",
+                  {
+                    staticClass: "add-nested-kanban-form",
+                    class: _vm.kanbanAddableModel,
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        _vm.addNestedKanban($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-fw add-nested-kanban-input-icon",
+                      class: _vm.addNestedKanbanInputIcon,
+                      attrs: { "aria-hidden": "true" }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.nameTitleOrContent,
+                          expression: "nameTitleOrContent"
+                        },
+                        { name: "focus", rawName: "v-focus" }
+                      ],
+                      attrs: {
+                        type: "text",
+                        name: "",
+                        placeholder: _vm.addNestedKanbanInputPlaceholder
+                      },
+                      domProps: { value: _vm.nameTitleOrContent },
+                      on: {
+                        blur: _vm.cancelIfEmpty,
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.nameTitleOrContent = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("i", {
+                      staticClass:
+                        "fa fa-fw fa-times cancel-add-nested-kanban-icon",
+                      attrs: { "aria-hidden": "true" },
+                      on: { click: _vm.toggleAddingNestedKanban }
+                    })
+                  ]
+                )
+              : _vm._e()
+          ]
+        : _vm._e()
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-16d37c30", module.exports)
+  }
+}
+
+/***/ }),
+/* 763 */,
+/* 764 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(765)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(766)
+/* template */
+var __vue_template__ = __webpack_require__(767)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/KanbanChecklistItem.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1d63917b", Component.options)
+  } else {
+    hotAPI.reload("data-v-1d63917b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 765 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 766 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'kanban-checklist-item',
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['toggleNestedKanban']))
+});
+
+/***/ }),
+/* 767 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("li", { staticClass: "nested-kanban-card checklist-item" }, [
+    _c("i", {
+      staticClass: "fa fa-fw fa-circle-thin",
+      attrs: { "aria-hidden": "true" }
+    }),
+    _vm._v("\n  " + _vm._s(_vm._f("truncate")(_vm.item.content, 35)) + "\n  "),
+    _c("span", { staticClass: "nested-kanban-card-buttons" }, [
+      _c("i", {
+        staticClass: "fa fa-fw fa-chevron-right toggle-nested-kanban-btn",
+        attrs: { "aria-hidden": "true" },
+        on: {
+          click: function($event) {
+            _vm.toggleNestedKanban(_vm.item)
+          }
+        }
+      })
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1d63917b", module.exports)
+  }
+}
+
+/***/ }),
+/* 768 */,
+/* 769 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(770)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(771)
+/* template */
+var __vue_template__ = __webpack_require__(772)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/KanbanSection.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-30729c07", Component.options)
+  } else {
+    hotAPI.reload("data-v-30729c07", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 770 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 771 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuedraggable__ = __webpack_require__(590);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuedraggable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue__ = __webpack_require__(759);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KanbanChecklistItem_vue__ = __webpack_require__(764);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KanbanChecklistItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__KanbanChecklistItem_vue__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'kanban-section',
+  components: {
+    Draggable: __WEBPACK_IMPORTED_MODULE_1_vuedraggable___default.a,
+    KanbanAdder: __WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue___default.a,
+    KanbanChecklistItem: __WEBPACK_IMPORTED_MODULE_3__KanbanChecklistItem_vue___default.a
+  },
+  props: {
+    section: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['toggleNestedKanban']))
+});
+
+/***/ }),
+/* 772 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "li",
+    { staticClass: "nested-kanban-card section" },
+    [
+      _c("span", { staticClass: "section-title" }, [
+        _vm._v(
+          "\n    " + _vm._s(_vm._f("truncate")(_vm.section.title, 35)) + "\n  "
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "draggable",
+        {
+          staticClass: "section-items",
+          attrs: {
+            element: "ul",
+            options: {
+              draggable: ".checklist-item",
+              group: { name: "checklist-item", pull: true, put: true }
+            }
+          }
+        },
+        _vm._l(_vm.section.items, function(item) {
+          return _c("kanban-checklist-item", {
+            key: item.id,
+            attrs: { item: item }
+          })
+        })
+      ),
+      _vm._v(" "),
+      _c("kanban-adder", { attrs: { parent: _vm.section, size: "small" } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-30729c07", module.exports)
+  }
+}
+
+/***/ }),
+/* 773 */,
+/* 774 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(775)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(776)
+/* template */
+var __vue_template__ = __webpack_require__(777)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/KanbanFolder.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-40e48c88", Component.options)
+  } else {
+    hotAPI.reload("data-v-40e48c88", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 775 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 776 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'kanban-folder',
+  props: {
+    folder: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['toggleNestedKanban']))
+});
+
+/***/ }),
+/* 777 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("li", { staticClass: "nested-kanban-card folder" }, [
+    _c("i", {
+      staticClass: "fa fa-fw fa-folder",
+      attrs: { "aria-hidden": "true" }
+    }),
+    _vm._v("\n  " + _vm._s(_vm._f("truncate")(_vm.folder.name, 35)) + "\n  "),
+    _c("span", { staticClass: "nested-kanban-card-buttons" }, [
+      _c("i", {
+        staticClass: "fa fa-fw fa-chevron-right toggle-nested-kanban-btn",
+        attrs: { "aria-hidden": "true" },
+        on: {
+          click: function($event) {
+            _vm.toggleNestedKanban(_vm.folder)
+          }
+        }
+      })
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-40e48c88", module.exports)
+  }
+}
+
+/***/ }),
+/* 778 */,
+/* 779 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(780)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(781)
+/* template */
+var __vue_template__ = __webpack_require__(782)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/KanbanChecklist.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5bf18bc8", Component.options)
+  } else {
+    hotAPI.reload("data-v-5bf18bc8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 780 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 781 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuedraggable__ = __webpack_require__(590);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuedraggable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue__ = __webpack_require__(759);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KanbanChecklistItem_vue__ = __webpack_require__(764);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KanbanChecklistItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__KanbanChecklistItem_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__KanbanSection_vue__ = __webpack_require__(769);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__KanbanSection_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__KanbanSection_vue__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'kanban-checklist',
+  components: {
+    Draggable: __WEBPACK_IMPORTED_MODULE_1_vuedraggable___default.a,
+    KanbanAdder: __WEBPACK_IMPORTED_MODULE_2__KanbanAdder_vue___default.a,
+    KanbanChecklistItem: __WEBPACK_IMPORTED_MODULE_3__KanbanChecklistItem_vue___default.a,
+    KanbanSection: __WEBPACK_IMPORTED_MODULE_4__KanbanSection_vue___default.a
+  },
+  props: {
+    checklist: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['toggleNestedKanban']))
+});
+
+/***/ }),
+/* 782 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "li",
+    { staticClass: "nested-kanban-card checklist" },
+    [
+      _c("i", {
+        staticClass: "fa fa-fw fa-list",
+        attrs: { "aria-hidden": "true" }
+      }),
+      _vm._v(
+        "\n  " + _vm._s(_vm._f("truncate")(_vm.checklist.title, 35)) + "\n  "
+      ),
+      _c("span", { staticClass: "nested-kanban-card-buttons" }, [
+        !_vm.checklist.opened
+          ? _c("i", {
+              staticClass: "fa fa-fw fa-chevron-down toggle-nested-kanban-btn",
+              attrs: { "aria-hidden": "true" },
+              on: {
+                click: function($event) {
+                  _vm.toggleNestedKanban(_vm.checklist)
+                }
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        !!_vm.checklist.opened
+          ? _c("i", {
+              staticClass: "fa fa-fw fa-chevron-up toggle-nested-kanban-btn",
+              attrs: { "aria-hidden": "true" },
+              on: {
+                click: function($event) {
+                  _vm.toggleNestedKanban(_vm.checklist)
+                }
+              }
+            })
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      !!_vm.checklist.opened
+        ? _c(
+            "draggable",
+            {
+              attrs: {
+                element: "ul",
+                options: {
+                  draggable: ".checklist-item",
+                  group: { name: "checklist-item", pull: true, put: true }
+                }
+              }
+            },
+            [
+              (_vm.checklist.descendants &&
+                _vm.checklist.descendants.sections.length) ||
+              _vm.checklist.descendants.items.length
+                ? [
+                    _vm._l(_vm.checklist.descendants.sections, function(
+                      section
+                    ) {
+                      return _c("kanban-section", {
+                        key: section.id,
+                        attrs: { section: section }
+                      })
+                    }),
+                    _vm._v(" "),
+                    _vm._l(_vm.checklist.descendants.items, function(item) {
+                      return _c("kanban-checklist-item", {
+                        key: "item" + item.id,
+                        attrs: { item: item }
+                      })
+                    })
+                  ]
+                : _vm._e()
+            ],
+            2
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      !!_vm.checklist.opened
+        ? _c("kanban-adder", {
+            attrs: { parent: _vm.checklist, size: "small" }
+          })
+        : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5bf18bc8", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

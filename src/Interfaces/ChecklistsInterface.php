@@ -16,4 +16,6 @@ interface ChecklistsInterface
 
     public function setItemSortOrder(Request $request, Checklist $checklist);
 
+    public function getKanbanDescendants($nestedKanban);
+
 }

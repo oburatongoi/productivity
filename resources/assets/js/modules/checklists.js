@@ -71,12 +71,12 @@ const mutations = {
       // First, check for parent in checklistItems array
       let parent = payload.parent || findChecklistItemParent(state.checklistItems, payload.parent.id)
       // ...next, check in the editableSubItem and then the editableItem
-      if ( ! parent && ! _.isEmpty(state.subItemChain[0].children) ) parent = findChecklistItemParent(state.subItemChain[0].children, payload.parent.id)
-      if ( ! parent && ! _.isEmpty(state.editableItem.children) ) parent = findChecklistItemParent(state.editableItem.children, payload.parent.id)
+      if ( ! parent && ! _.isEmpty(state.subItemChain[0].sub_items) ) parent = findChecklistItemParent(state.subItemChain[0].sub_items, payload.parent.id)
+      if ( ! parent && ! _.isEmpty(state.editableItem.sub_items) ) parent = findChecklistItemParent(state.editableItem.sub_items, payload.parent.id)
 
       if( parent )
-        if(parent.children !== undefined) parent.children.push(payload.child)
-        else parent['children'] = payload.child
+        if(parent.sub_items !== undefined) parent.sub_items.push(payload.child)
+        else parent['sub_items'] = payload.child
       // else console.log('parent not found');
     },
     [DECREMENT_ITEM_COUNT] (state, checklistID) {
@@ -98,14 +98,14 @@ const mutations = {
         // First, check for parent in checklistItems array
         haystack = findChecklistItemParent(state.checklistItems, checklistItem.parent_id)
         // ...next, check in the editableSubItem and then the editableItem
-        if ( ! haystack && ! _.isEmpty(state.subItemChain[0].children) ) haystack = findChecklistItemParent(state.subItemChain[0].children, checklistItem.parent_id)
-        if ( ! haystack && ! _.isEmpty(state.editableItem.children) ) haystack = findChecklistItemParent(state.editableItem.children, checklistItem.parent_id)
+        if ( ! haystack && ! _.isEmpty(state.subItemChain[0].sub_items) ) haystack = findChecklistItemParent(state.subItemChain[0].sub_items, checklistItem.parent_id)
+        if ( ! haystack && ! _.isEmpty(state.editableItem.sub_items) ) haystack = findChecklistItemParent(state.editableItem.sub_items, checklistItem.parent_id)
 
         // remove it from editableItem or editableSubItem editableSubItem (fixes checklistitem tree not reflecting changes)
         if (state.editableItem.id == checklistItem.parent_id) {
-          state.editableItem.children.splice(_.findIndex(state.editableItem.children, ['id', checklistItem.id]), 1)
+          state.editableItem.sub_items.splice(_.findIndex(state.editableItem.sub_items, ['id', checklistItem.id]), 1)
         } else if (state.subItemChain[0].id == checklistItem.parent_id) {
-          state.subItemChain[0].children.splice(_.findIndex(state.subItemChain[0].children, ['id', checklistItem.id]), 1)
+          state.subItemChain[0].sub_items.splice(_.findIndex(state.subItemChain[0].sub_items, ['id', checklistItem.id]), 1)
         }
       }
       index = _.findIndex(haystack, ['id', checklistItem.id])
@@ -146,8 +146,8 @@ const mutations = {
       if (payload.isSubItem) {
         if (!! state.subItemChain[0].id && state.subItemChain[0].id == payload.item.id) item = state.subItemChain[0]
         else {
-          item = findChildItem( state.editableItem.children, payload.item.id )
-          if( ! item ) item = findChildItem( state.subItemChain[0].children, payload.item.id)
+          item = findChildItem( state.editableItem.sub_items, payload.item.id )
+          if( ! item ) item = findChildItem( state.subItemChain[0].sub_items, payload.item.id)
         }
       } else { // If not a subItem
         if (!! state.editableItem.id && state.editableItem.id == payload.item.id) item = state.editableItem
@@ -163,8 +163,8 @@ const mutations = {
 
       let parent = findChecklistItemParent(state.checklistItems, payload.parent.id)
 
-      if( parent && !! parent.children.length ) {
-        sort(parent.children).asc(item => item.sort_order)
+      if( parent && !! parent.sub_items.length ) {
+        sort(parent.sub_items).asc(item => item.sort_order)
       }
     },
     [TOGGLE_ITEM_CHECK_MARK] (state, payload = {isSubItem: false}) {
@@ -185,8 +185,8 @@ const mutations = {
     [TOGGLE_CHECKLIST_ITEM_IMPORTANCE] (state, payload = {isSubItem: false}) {
       if (payload.isSubItem) {
         console.log('is sub item');
-        let i = _.findIndex(state.editableItem.children, ['id', payload.item.id]);
-        state.editableItem.children[i].is_important = ! state.editableItem.children[i].is_important
+        let i = _.findIndex(state.editableItem.sub_items, ['id', payload.item.id]);
+        state.editableItem.sub_items[i].is_important = ! state.editableItem.sub_items[i].is_important
       } else {
         console.log('is not sub item');
         let i = _.findIndex(state.checklistItems, ['id', payload.item.id]);
@@ -195,8 +195,8 @@ const mutations = {
     },
     [TOGGLE_CHECKLIST_ITEM_URGENCY] (state, payload = {isSubItem: false}) {
       if (payload.isSubItem) {
-        let i = _.findIndex(state.editableItem.children, ['id', payload.item.id]);
-        state.editableItem.children[i].is_urgent = ! state.editableItem.children[i].is_urgent
+        let i = _.findIndex(state.editableItem.sub_items, ['id', payload.item.id]);
+        state.editableItem.sub_items[i].is_urgent = ! state.editableItem.sub_items[i].is_urgent
       } else {
         let i = _.findIndex(state.checklistItems, ['id', payload.item.id]);
         state.checklistItems[i].is_urgent = ! state.checklistItems[i].is_urgent
@@ -227,8 +227,8 @@ const mutations = {
           isSubItem = !! newItem.parent_id,
           wasSubitem = !! oldItem.parent_id,
           parentItem = isSubItem ? state.checklistItems.find(checklistItem => checklistItem.id == item.new.parent_id) : null,
-          source = wasSubitem ? state.editableItem.children : state.checklistItems,
-          destination = ! isSubItem ? state.checklistItems : parentItem ? parentItem.children : null,
+          source = wasSubitem ? state.editableItem.sub_items : state.checklistItems,
+          destination = ! isSubItem ? state.checklistItems : parentItem ? parentItem.sub_items : null,
           index = _.findIndex(source, ['id', oldItem.id])
 
       if (isSubItem == wasSubitem) {
@@ -255,8 +255,8 @@ const mutations = {
     [UPDATE_SUB_ITEM_SORT_ORDER] (state, payload) {
       let p = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
 
-      for (var i = 0; i < state.checklistItems[p].children.length; i++) {
-      state.checklistItems[p].children[i].sort_order = i
+      for (var i = 0; i < state.checklistItems[p].sub_items.length; i++) {
+      state.checklistItems[p].sub_items[i].sort_order = i
       }
     },
 }
@@ -264,7 +264,8 @@ const mutations = {
 const actions = {
   addChecklistItem({dispatch, commit}, payload) {
       return new Promise((resolve, reject) => {
-          axios.post('/lists/' + payload.parent.fake_id + '/add-item', {item:payload.item})
+        console.log(payload);
+          axios.post('/lists/' + payload.parent.fake_id + '/add-item', { item:payload.item })
                .then( response => dispatch('addChecklistItemHandler', response)
                                     .then( response => resolve(response) ) )
       })
@@ -300,8 +301,8 @@ const actions = {
   },
   addSubChecklistItem({dispatch, commit}, payload) {
       return new Promise((resolve, reject) => {
-          axios.post('/lists/item/' + payload.parent.id + '/add-sub-item', {item:payload.item})
-               .then( response => dispatch('addSubChecklistItemHandler', {parent:payload.parent, response:response})
+          axios.post('/lists/item/' + payload.parent.id + '/add-sub-item', { item:payload.item })
+               .then( response => dispatch('addSubChecklistItemHandler', { parent:payload.parent, response:response })
                                     .then( response => resolve(response) ) )
       })
   },
@@ -721,8 +722,8 @@ function findChecklistItemParent(itemsArray, parentId) {
   if(!! parent) return parent
   else {
     for (let item of itemsArray) {
-      if( !! item.children.length ) {
-        parent = findChecklistItemParent(item.children, parentId)
+      if( !! item.sub_items.length ) {
+        parent = findChecklistItemParent(item.sub_items, parentId)
           if(!! parent) return parent
       }
     }
@@ -734,9 +735,9 @@ function findChildItem(itemsArray, childId) {
   let child = itemsArray.find(item => item.id == childId)
   if(!! child) return child
   else {
-    for (let item of itemsArray.children) {
-      if( !! item.children.length ) {
-        child = findChildItem(item.children, childId)
+    for (let item of itemsArray.sub_items) {
+      if( !! item.sub_items.length ) {
+        child = findChildItem(item.sub_items, childId)
           if(!! child) return child
       }
     }
