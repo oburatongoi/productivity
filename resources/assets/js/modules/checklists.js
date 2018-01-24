@@ -264,7 +264,6 @@ const mutations = {
 const actions = {
   addChecklistItem({dispatch, commit}, payload) {
       return new Promise((resolve, reject) => {
-        console.log(payload);
           axios.post('/lists/' + payload.parent.fake_id + '/add-item', { item:payload.item })
                .then( response => dispatch('addChecklistItemHandler', response)
                                     .then( response => resolve(response) ) )

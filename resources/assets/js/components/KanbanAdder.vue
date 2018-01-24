@@ -146,7 +146,7 @@ export default {
           }
           this.storeFolder(folder)
               .then( (newFolder) => {
-                this.addToKanbanArray( { array: this.parent.subfolders, value: newFolder } )
+                this.addToKanbanArray( { array: this.parent['subfolders'], value: newFolder } )
               })
           break;
         case 'checklist':
@@ -156,7 +156,7 @@ export default {
           }
           this.storeChecklist(checklist)
               .then( (newChecklist) => {
-                this.addToKanbanArray( { array: this.parent.checklists, value: newChecklist } )
+                this.addToKanbanArray( { array: this.parent['checklists'], value: newChecklist } )
               })
           break;
         case 'section':
@@ -166,7 +166,7 @@ export default {
           }
           this.storeChecklist(section)
               .then( (newChecklist) => {
-                this.addToKanbanArray( { array: this.parent.sections, value: newChecklist } )
+                this.addToKanbanArray( { array: this.parent['sections'], value: newChecklist } )
               })
           break;
         case 'checklist-item':
@@ -177,7 +177,7 @@ export default {
               checklist_id: this.parent.id
             }
             this.addChecklistItem({ item, parent: this.parent })
-                .then( (newItem) => this.addToKanbanArray( { array: this.parent.items, value: newItem } ) )
+                .then( (newItem) => this.addToKanbanArray( { array: this.parent['items'], value: newItem } ) )
           }
           else if(this.parent.model == 'checklist-item') {
             item = {
@@ -185,7 +185,7 @@ export default {
               parent_id: this.parent.id
             }
             this.addSubChecklistItem({ item, parent: this.parent })
-                .then( (newItem) => this.addToKanbanArray( { array: this.parent.sub_items, value: newItem } ) )
+                .then( (newItem) => this.addToKanbanArray( { array: this.parent['sub_items'], value: newItem } ) )
           }
 
           break;

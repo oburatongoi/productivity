@@ -16,7 +16,8 @@ const mutations = {
     else Vue.set(payload.object, payload.property, true)
   },
   [ADD_TO_KANBAN_ARRAY] (state, payload = { array: [], value: null }) {
-    payload.array.splice(payload.array.length, 0, payload.value)
+    if(payload.array) payload.array.splice(payload.array.length, 0, payload.value)
+    else console.log('Payload array is undefined');
   },
 }
 
