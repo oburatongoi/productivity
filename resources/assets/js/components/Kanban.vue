@@ -30,6 +30,7 @@
           <template v-if="card.model=='checklist'">
             <kanban-section v-for="section in card.sections" :key="section.id" :section="section"/>
             <kanban-checklist-item v-for="item in card.items" :key="item.id" :item="item"/>
+            <add-item-lite :parent="card"/>
           </template>
         </draggable>
 
@@ -43,6 +44,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import AddItemLite from './AddItemLite.vue'
 import Draggable from 'vuedraggable'
 import KanbanAdder from './KanbanAdder.vue'
 import KanbanChecklist from './KanbanChecklist.vue'
@@ -52,6 +54,7 @@ import KanbanSection from './KanbanSection.vue'
 export default {
   name: 'kanban',
   components: {
+      AddItemLite,
       Draggable,
       KanbanAdder,
       KanbanChecklist,
@@ -214,7 +217,7 @@ export default {
         }
       }
       &.checklist-item {
-        padding: 5px 0;
+        padding: 3px 0;
         background: white;
         margin-bottom: 0;
         border-top: 1px solid white;

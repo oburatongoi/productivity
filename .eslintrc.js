@@ -5,6 +5,7 @@ module.exports = {
   ],
   rules: {
     // override/add rules settings here, such as:
+    // 'vue/valid-v-for': 'off',
     // 'vue/valid-v-on': 'off',
     // 'vue/require-v-for-key': 'off',
     // 'vue/no-reserved-keys': 'off',

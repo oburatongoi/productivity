@@ -27,20 +27,5 @@ export default {
 </script>
 
 <style lang="scss">
-.nested-kanban-card {
-  &.checklist-item {
-    padding: 5px 0;
-    background: white;
-    margin-bottom: 0;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    &:hover {
-      border-top: 1px solid $base-border-color;
-      border-bottom: 1px solid $base-border-color;
-      background: $body-bg;
-    }
-  }
-}
-
 
 </style>
