@@ -262,76 +262,26 @@ const mutations = {
 }
 
 const actions = {
-  addChecklistItem({dispatch, commit}, payload) {
+  addChecklist({commit}, checklist) {
       return new Promise((resolve, reject) => {
-          axios.post('/lists/' + payload.parent.fake_id + '/add-item', { item:payload.item })
-               .then( response => dispatch('addChecklistItemHandler', response)
-                                    .then( response => resolve(response) ) )
+        commit(ADD_CHECKLIST, checklist)
+        resolve()
       })
   },
-  addChecklistItemHandler({commit}, response) {
-    return new Promise((resolve, reject) => {
-      if (response.data.tokenMismatch) {
-          Vue.handleTokenMismatch(response.data)
-          .then( (response) => {
-                  if (response.data.item) {
-                      commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
-                      commit(SORT_CHECKLIST_ITEMS)
-                      commit(ADD_UNFILTERED, response.data.item)
-                      resolve(response.data.item)
-                  } else if (response.data.error) {
-                      reject(response.data.error)
-                  } else {
-                      reject()
-                  }
-              } )
-          .catch( error => reject(error) )
-      } else if (response.data.item) {
-          commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
-          commit(SORT_CHECKLIST_ITEMS)
-          commit(ADD_UNFILTERED, response.data.item)
-          resolve(response.data.item)
-      } else if (response.data.error) {
-          reject(response.data.error)
-      } else {
-          reject()
-      }
-    })
-  },
-  addSubChecklistItem({dispatch, commit}, payload) {
+  addChecklistItem({commit}, item) {
       return new Promise((resolve, reject) => {
-          axios.post('/lists/item/' + payload.parent.id + '/add-sub-item', { item:payload.item })
-               .then( response => dispatch('addSubChecklistItemHandler', { parent:payload.parent, response:response })
-                                    .then( response => resolve(response) ) )
+        commit(ADD_ITEM_TO_CHECKLIST, item)
+        commit(SORT_CHECKLIST_ITEMS)
+        commit(ADD_UNFILTERED, item)
+        resolve()
       })
   },
-  addSubChecklistItemHandler({commit}, payload) {
-    return new Promise((resolve, reject) => {
-      let parent = payload.parent;
-      if (payload.response.data.tokenMismatch) {
-          Vue.handleTokenMismatch(payload.response.data)
-          .then( (response) => {
-                  if (response.data.item) {
-                      commit(ADD_SUB_ITEM_TO_CHECKLIST_ITEM, {parent, child: response.data.item})
-                      commit(SORT_SUB_CHECKLIST_ITEMS, {parent})
-                      resolve(response.data.item)
-                  } else if (response.data.error) {
-                      reject(response.data.error)
-                  } else {
-                      reject()
-                  }
-              } )
-          .catch( error => reject(error) )
-      } else if (payload.response.data.item) {
-          commit(ADD_SUB_ITEM_TO_CHECKLIST_ITEM, {parent, child: payload.response.data.item})
-          commit(SORT_SUB_CHECKLIST_ITEMS, {parent})
-          resolve(payload.response.data.item)
-      } else if (payload.response.data.error) {
-          reject(payload.response.data.error)
-      } else {
-          reject()
-      }
-    })
+  addSubChecklistItem({commit}, payload) {
+      return new Promise((resolve, reject) => {
+        commit(ADD_SUB_ITEM_TO_CHECKLIST_ITEM, { parent: payload.parent, child: payload.child })
+        commit(SORT_SUB_CHECKLIST_ITEMS, { parent: payload.parent })
+        resolve()
+      })
   },
   addCurrentlyEditable({commit, state}, payload = {item: null, isSubItem: false}) {
       return new Promise((resolve, reject) => {
@@ -616,21 +566,72 @@ const actions = {
       if (response.data.tokenMismatch) {
           Vue.handleTokenMismatch(response.data)
              .then( response => {
-                if (response.data.checklist) {
-                    commit(ADD_CHECKLIST, response.data.checklist)
-                    resolve(response.data.checklist)
-                } else if (response.data.error) {
-                    reject(response.data.error)
-                } else {
-                    reject()
-                }
+                if (response.data.checklist) resolve(response.data.checklist)
+                else if (response.data.error) reject(response.data.error)
+                else reject()
               })
-              .catch( error => reject(error) )
-      } else if (response.data.checklist) {
-          commit(ADD_CHECKLIST, response.data.checklist)
-          resolve(response.data.checklist)
+              .catch( error => reject(error) )}
+      else if (response.data.checklist) resolve(response.data.checklist)
+      else if (response.data.error) reject(response.data.error)
+      else reject()
+    })
+  },
+  storeChecklistItem({dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post('/lists/' + payload.parent.fake_id + '/add-item', { item:payload.item })
+               .then( response => resolve( dispatch('storeChecklistItemHandler', response) ) )
+               .catch( error => console.log(error) )
+      })
+  },
+  storeChecklistItemHandler({commit}, response) {
+    return new Promise((resolve, reject) => {
+      if (response.data.tokenMismatch) {
+          Vue.handleTokenMismatch(response.data)
+          .then( (response) => {
+                  if (response.data.item) {
+                      resolve(response.data.item)
+                  } else if (response.data.error) {
+                      reject(response.data.error)
+                  } else {
+                      reject()
+                  }
+              } )
+          .catch( error => reject(error) )
+      } else if (response.data.item) {
+          resolve(response.data.item)
       } else if (response.data.error) {
           reject(response.data.error)
+      } else {
+          reject()
+      }
+    })
+  },
+  storeSubChecklistItem({dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post('/lists/item/' + payload.parent.id + '/add-sub-item', { item:payload.item })
+               .then( response => resolve( dispatch('storeSubChecklistItemHandler', { parent:payload.parent, response:response }) ) )
+               .catch( error => console.log(error) )
+      })
+  },
+  storeSubChecklistItemHandler({commit}, payload) {
+    return new Promise((resolve, reject) => {
+      let parent = payload.parent;
+      if (payload.response.data.tokenMismatch) {
+          Vue.handleTokenMismatch(payload.response.data)
+          .then( (response) => {
+                  if (response.data.item) {
+                      resolve(response.data.item)
+                  } else if (response.data.error) {
+                      reject(response.data.error)
+                  } else {
+                      reject()
+                  }
+              } )
+          .catch( error => reject(error) )
+      } else if (payload.response.data.item) {
+          resolve(payload.response.data.item)
+      } else if (payload.response.data.error) {
+          reject(payload.response.data.error)
       } else {
           reject()
       }

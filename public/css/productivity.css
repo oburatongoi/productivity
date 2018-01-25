@@ -2110,115 +2110,116 @@ li.listing.selected .item-count-tag {
   padding: 0;
   margin: 0;
 }
-.kanban .kanban-card {
-    background: #f5f8fa;
-    border: 1px solid #d3e0e9;
-    border-radius: 3px;
-    width: 28%;
-    min-width: 300px;
-    max-width: 600px;
-    display: inline-block;
-    margin-left: 20px;
+
+.kanban-card {
+  background: #f5f8fa;
+  border: 1px solid #d3e0e9;
+  border-radius: 3px;
+  width: 28%;
+  min-width: 300px;
+  max-width: 600px;
+  display: inline-block;
+  margin-left: 20px;
+  height: auto;
+  vertical-align: top;
+  overflow: hidden;
+  position: relative;
+}
+.kanban-card:last-child {
+    margin-right: 20px;
+}
+.kanban-card .kanban-card-heading {
+    background: white;
+}
+.kanban-card .kanban-card-body {
     height: auto;
-    vertical-align: top;
-    overflow: hidden;
-    position: relative;
+    min-height: 1px;
+    border-top: 1px solid #d3e0e9;
+    overflow-y: scroll;
 }
-.kanban .kanban-card:last-child {
-      margin-right: 20px;
+.kanban-card .kanban-card-body.folder {
+      background: #f5f8fa;
 }
-.kanban .kanban-card .kanban-card-heading {
+.kanban-card .kanban-card-body.folder ul {
+        padding: 10px 0 0;
+        margin: 0;
+}
+.kanban-card .kanban-card-body.checklist {
       background: white;
 }
-.kanban .kanban-card .kanban-card-body {
-      height: auto;
-      min-height: 1px;
-      border-top: 1px solid #d3e0e9;
-      overflow-y: scroll;
+.kanban-card .kanban-card-body.checklist ul {
+        padding: 0;
+        margin: 0;
 }
-.kanban .kanban-card .kanban-card-body.folder {
+.kanban-card .kanban-card-heading,
+  .kanban-card .kanban-card-body,
+  .kanban-card .kanban-card-footer {
+    padding: 10px;
+}
+.kanban-card .kanban-card-footer {
+    border-top: 1px dashed #d3e0e9;
+    background: #f5f8fa;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.kanban-card .nested-kanban-card {
+    display: block;
+    width: 100%;
+    color: black;
+    position: relative;
+}
+.kanban-card .nested-kanban-card.folder, .kanban-card .nested-kanban-card.checklist {
+      border: 1px solid #d3e0e9;
+      border-radius: 3px;
+      padding: 10px;
+      background: white;
+}
+.kanban-card .nested-kanban-card.folder:not(:last-of-type), .kanban-card .nested-kanban-card.checklist:not(:last-of-type) {
+        margin-bottom: 10px;
+}
+.kanban-card .nested-kanban-card.checklist-item {
+      padding: 3px 0;
+      background: white;
+      margin-bottom: 0;
+      border-top: 1px solid white;
+      border-bottom: 1px solid white;
+}
+.kanban-card .nested-kanban-card.checklist-item:hover {
+        border-top: 1px solid #d3e0e9;
+        border-bottom: 1px solid #d3e0e9;
         background: #f5f8fa;
 }
-.kanban .kanban-card .kanban-card-body.folder ul {
-          padding: 10px 0 0;
-          margin: 0;
+.kanban-card .nested-kanban-card .toggle-nested-kanban-btn {
+      color: #d3e0e9;
+      font-size: 0.8em;
+      cursor: pointer;
+      padding: 5px;
 }
-.kanban .kanban-card .kanban-card-body.checklist {
-        background: white;
+.kanban-card .nested-kanban-card .toggle-nested-kanban-btn:hover {
+        color: #8fb1c7;
 }
-.kanban .kanban-card .kanban-card-body.checklist ul {
-          padding: 0;
-          margin: 0;
-}
-.kanban .kanban-card .kanban-card-heading,
-    .kanban .kanban-card .kanban-card-body,
-    .kanban .kanban-card .kanban-card-footer {
-      padding: 10px;
-}
-.kanban .kanban-card .kanban-card-footer {
-      border-top: 1px dashed #d3e0e9;
-      background: #f5f8fa;
+.kanban-card .nested-kanban-card .nested-kanban-card-buttons {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      right: 5px;
 }
-.kanban .kanban-card .nested-kanban-card {
-      display: block;
-      width: 100%;
-      color: black;
-      position: relative;
+.folder .kanban-card .nested-kanban-card .nested-kanban-card-buttons,
+      .checklist .kanban-card .nested-kanban-card .nested-kanban-card-buttons {
+        top: 12px;
 }
-.kanban .kanban-card .nested-kanban-card.folder, .kanban .kanban-card .nested-kanban-card.checklist {
-        border: 1px solid #d3e0e9;
-        border-radius: 3px;
-        padding: 10px;
-        background: white;
+.checklist-item .kanban-card .nested-kanban-card .nested-kanban-card-buttons {
+        top: 6px;
 }
-.kanban .kanban-card .nested-kanban-card.folder:not(:last-of-type), .kanban .kanban-card .nested-kanban-card.checklist:not(:last-of-type) {
-          margin-bottom: 10px;
+.kanban-card .nested-kanban-card .nested-kanban-card-buttons .fa-chevron-up,
+      .kanban-card .nested-kanban-card .nested-kanban-card-buttons .fa-chevron-down {
+        margin-right: 5px;
 }
-.kanban .kanban-card .nested-kanban-card.checklist-item {
-        padding: 3px 0;
-        background: white;
-        margin-bottom: 0;
-        border-top: 1px solid white;
-        border-bottom: 1px solid white;
+.kanban-card .folder .fa-folder {
+    color: #00A0E5;
 }
-.kanban .kanban-card .nested-kanban-card.checklist-item:hover {
-          border-top: 1px solid #d3e0e9;
-          border-bottom: 1px solid #d3e0e9;
-          background: #f5f8fa;
-}
-.kanban .kanban-card .nested-kanban-card .toggle-nested-kanban-btn {
-        color: #d3e0e9;
-        font-size: 0.8em;
-        cursor: pointer;
-        padding: 5px;
-}
-.kanban .kanban-card .nested-kanban-card .toggle-nested-kanban-btn:hover {
-          color: #8fb1c7;
-}
-.kanban .kanban-card .nested-kanban-card .nested-kanban-card-buttons {
-        position: absolute;
-        right: 5px;
-}
-.folder .kanban .kanban-card .nested-kanban-card .nested-kanban-card-buttons,
-        .checklist .kanban .kanban-card .nested-kanban-card .nested-kanban-card-buttons {
-          top: 12px;
-}
-.checklist-item .kanban .kanban-card .nested-kanban-card .nested-kanban-card-buttons {
-          top: 6px;
-}
-.kanban .kanban-card .nested-kanban-card .nested-kanban-card-buttons .fa-chevron-up,
-        .kanban .kanban-card .nested-kanban-card .nested-kanban-card-buttons .fa-chevron-down {
-          margin-right: 5px;
-}
-.kanban .kanban-card .folder .fa-folder {
-      color: #00A0E5;
-}
-.kanban .kanban-card .checklist .fa-list {
-      color: #41C15F;
+.kanban-card .checklist .fa-list {
+    color: #41C15F;
 }
 
 .add-item-lite {
@@ -2230,6 +2231,22 @@ li.listing.selected .item-count-tag {
     width: 100%;
     border: 0;
     outline: none;
+}
+.add-item-lite input::-webkit-input-placeholder {
+      /* Chrome/Opera/Safari */
+      color: #bbd0dd !important;
+}
+.add-item-lite input::-moz-placeholder {
+      /* Firefox 19+ */
+      color: #bbd0dd !important;
+}
+.add-item-lite input:-ms-input-placeholder {
+      /* IE 10+ */
+      color: #bbd0dd !important;
+}
+.add-item-lite input:-moz-placeholder {
+      /* Firefox 18- */
+      color: #bbd0dd !important;
 }
 .add-item-lite .cancel-add-item-lite-icon,
   .add-item-lite .add-item-lite-icon {
@@ -2245,6 +2262,81 @@ li.listing.selected .item-count-tag {
     right: 5px;
     background: rgba(255, 255, 255, 0.5);
     padding: 5px;
+}
+
+.add-section .add-section-button {
+  opacity: 0;
+  display: block;
+  position: relative;
+  line-height: 14px;
+  cursor: pointer;
+}
+.add-section .add-section-button:hover {
+    opacity: 1;
+}
+.add-section .add-section-button span {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    padding-right: 5px;
+    color: #bbd0dd;
+    font-size: 0.9em;
+}
+.add-section .add-section-button::after {
+    display: block;
+    position: absolute;
+    content: "";
+    border-bottom: 1px dashed #d3e0e9;
+    left: 0;
+    top: 7px;
+    width: 100%;
+}
+.add-section .add-section-form {
+  display: block;
+  position: relative;
+}
+.add-section .add-section-form input {
+    padding: 5px 5px 5px 0px;
+    width: 100%;
+    border: 0;
+    outline: none;
+    font-size: 1.1em;
+}
+.add-section .add-section-form input::-webkit-input-placeholder {
+      /* Chrome/Opera/Safari */
+      color: #41C15F !important;
+      font-weight: 300;
+}
+.add-section .add-section-form input::-moz-placeholder {
+      /* Firefox 19+ */
+      color: #41C15F !important;
+      font-weight: 300;
+}
+.add-section .add-section-form input:-ms-input-placeholder {
+      /* IE 10+ */
+      color: #41C15F !important;
+      font-weight: 300;
+}
+.add-section .add-section-form input:-moz-placeholder {
+      /* Firefox 18- */
+      color: #41C15F !important;
+      font-weight: 300;
+}
+.add-section .cancel-add-section-icon {
+  position: absolute;
+  color: #bbd0dd;
+  cursor: pointer;
+}
+.add-section .cancel-add-section-icon {
+  top: 4px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 5px;
+}
+.add-section .add-item-lite-ghost {
+  margin-bottom: 10px;
+  color: #d3e0e9;
+  cursor: pointer;
 }
 
 .add-nested-kanban-button {
@@ -2349,43 +2441,16 @@ li.listing.selected .item-count-tag {
       color: #41C15F;
 }
 
-.nested-kanban-card.section {
+.nested-kanban-card {
   padding-bottom: 5px;
 }
-.nested-kanban-card.section .section-title {
-    text-decoration: underline;
-    color: #969ea2;
+.nested-kanban-card .section-title {
+    color: #41C15F;
+    font-weight: 300;
+    font-size: 1.1em;
 }
-.nested-kanban-card.section .section-items {
+.nested-kanban-card .section-items {
     min-height: 5px;
-}
-
-.add-section .add-section-button {
-  opacity: 0;
-  display: block;
-  position: relative;
-  line-height: 14px;
-  cursor: pointer;
-}
-.add-section .add-section-button:hover {
-    opacity: 1;
-}
-.add-section .add-section-button span {
-    position: relative;
-    z-index: 1;
-    background: #fff;
-    padding-right: 5px;
-    color: #969ea2;
-    font-size: 0.85em;
-}
-.add-section .add-section-button::after {
-    display: block;
-    position: absolute;
-    content: "";
-    border-bottom: 1px dashed #d3e0e9;
-    left: 0;
-    top: 7px;
-    width: 100%;
 }
 
 .move-to-checklist {

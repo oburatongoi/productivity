@@ -1,4 +1,4 @@
-import { createLocalVue, shallow } from 'vue-test-utils'
+import { createLocalVue, shallow } from '@vue/test-utils'
 import ItemFormMeta from '../../components/ItemFormMeta.vue'
 
 const localVue = createLocalVue()

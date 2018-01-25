@@ -114,8 +114,8 @@ export default {
     ...mapActions([
       'addToKanbanArray',
       'storeChecklist',
-      'addChecklistItem',
-      'addSubChecklistItem',
+      'storeChecklistItem',
+      'storeSubChecklistItem',
       'storeFolder',
     ]),
     cancelIfEmpty: function() {
@@ -144,30 +144,27 @@ export default {
             name: this.nameTitleOrContent,
             folder_id: this.parent.id
           }
+          if (!this.parent.subfolders) this.$set(this.parent, 'subfolders', [])
           this.storeFolder(folder)
-              .then( (newFolder) => {
-                this.addToKanbanArray( { array: this.parent['subfolders'], value: newFolder } )
-              })
+              .then( (newFolder) => this.addToKanbanArray( { array: this.parent.subfolders, value: newFolder } ) )
           break;
         case 'checklist':
           let checklist = {
             title: this.nameTitleOrContent,
             folder_id: this.parent.id
           }
+          if (!this.parent.checklists) this.$set(this.parent, 'checklists', [])
           this.storeChecklist(checklist)
-              .then( (newChecklist) => {
-                this.addToKanbanArray( { array: this.parent['checklists'], value: newChecklist } )
-              })
+              .then( (newChecklist) => this.addToKanbanArray( { array: this.parent.checklists, value: newChecklist } ) )
           break;
         case 'section':
           let section = {
             title: this.nameTitleOrContent,
             parent_id: this.parent.id
           }
+          if (!this.parent.sections) this.$set(this.parent, 'sections', [])
           this.storeChecklist(section)
-              .then( (newChecklist) => {
-                this.addToKanbanArray( { array: this.parent['sections'], value: newChecklist } )
-              })
+              .then( (newChecklist) => this.addToKanbanArray( { array: this.parent.sections, value: newChecklist } ) )
           break;
         case 'checklist-item':
           let item
@@ -176,16 +173,18 @@ export default {
               content: this.nameTitleOrContent,
               checklist_id: this.parent.id
             }
-            this.addChecklistItem({ item, parent: this.parent })
-                .then( (newItem) => this.addToKanbanArray( { array: this.parent['items'], value: newItem } ) )
+            if (!this.parent.items) this.$set(this.parent, 'items', [])
+            this.storeChecklistItem({ item, parent: this.parent })
+                .then( (newItem) => this.addToKanbanArray( { array: this.parent.items, value: newItem } ) )
           }
           else if(this.parent.model == 'checklist-item') {
             item = {
               content: this.nameTitleOrContent,
               parent_id: this.parent.id
             }
-            this.addSubChecklistItem({ item, parent: this.parent })
-                .then( (newItem) => this.addToKanbanArray( { array: this.parent['sub_items'], value: newItem } ) )
+            if (!this.parent.sub_items) this.$set(this.parent, 'sub_items', [])
+            this.storeSubChecklistItem({ item, parent: this.parent })
+                .then( (newItem) => this.addToKanbanArray( { array: this.parent.sub_items, value: newItem } ) )
           }
 
           break;

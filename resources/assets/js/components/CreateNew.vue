@@ -78,6 +78,7 @@ export default {
   },
   methods: {
     ...mapActions([
+      'addChecklist',
       'addFolder',
       'storeFolder',
       'storeChecklist',
@@ -104,16 +105,14 @@ export default {
           break;
 
         case 'list':
-          this.storeChecklist(this.resource).then(
-            (response) => {
-              this.createNew(undefined)
-              this.toggleCreatingNewButtons()
-              this.resetForm()
-            },
-            (response) => {
-              alert('error creating list')
-            }
-          )
+          this.storeChecklist(this.resource)
+              .then( (checklist) => {
+                this.addChecklist(checklist)
+                this.createNew(undefined)
+                this.toggleCreatingNewButtons()
+                this.resetForm()
+              })
+              .catch( (error) => console.log('error creating list') )
           break;
 
         // case 'note':

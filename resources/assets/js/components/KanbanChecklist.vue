@@ -12,29 +12,42 @@
       :element="'ul'"
       :options="{ draggable: '.checklist-item', group: { name: 'checklist-item', pull: true, put: true } }"
     >
-      <template v-if="checklist.descendants">
-        <kanban-section v-for="section in checklist.descendants.sections" :key="section.id" :section="section"/>
-        <kanban-checklist-item v-for="item in checklist.descendants.items" :key="'item'+item.id" :item="item"/>
+      <template v-if="checklist.sections&&checklist.sections.length">
+        <kanban-section v-for="section in checklist.sections" :key="section.id" :section="section" :parent="checklist"/>
+        <kanban-section :section="defaultSection" :parent="checklist" v-if="defaultSection"/>
+      </template>
+
+      <template v-if="checklist.items&&!checklist.sections">
+        <kanban-checklist-item v-for="item in checklist.items" :key="'item'+item.id" :item="item"/>
+        <add-item-lite :parent="checklist"/>
+        <add-section :parent="checklist"/>
+      </template>
+
+      <template v-if="!checklist.items&&!checklist.sections">
+        <add-item-lite :parent="checklist"/>
+        <add-section :parent="checklist"/>
       </template>
     </draggable>
-    <!-- <kanban-adder :parent="checklist" size="small" v-if="!!checklist.opened"/> -->
-    <add-item-lite :parent="checklist" context="descendants.items" v-if="!!checklist.opened"/>
+<!--
+    <template v-if="!!checklist.opened">
+      <add-section :parent="checklist"/>
+    </template> -->
   </li>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 import AddItemLite from './AddItemLite.vue'
+import AddSection from './AddSection.vue'
 import Draggable from 'vuedraggable'
-import KanbanAdder from './KanbanAdder.vue'
 import KanbanChecklistItem from './KanbanChecklistItem.vue'
 import KanbanSection from './KanbanSection.vue'
 export default {
   name: 'kanban-checklist',
   components: {
     AddItemLite,
+    AddSection,
     Draggable,
-    KanbanAdder,
     KanbanChecklistItem,
     KanbanSection
   },
@@ -42,6 +55,19 @@ export default {
     checklist: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    defaultSection: function() {
+      if (this.checklist.items && this.checklist.items.length) {
+        return {
+          title: 'No Section',
+          items: this.checklist.items,
+          model: this.checklist.model,
+          id: this.checklist.id
+        }
+      }
+      return null
     }
   },
   methods: {

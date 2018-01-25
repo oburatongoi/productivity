@@ -1,14 +1,78 @@
 <template lang="html">
   <div class="add-section">
-    <span class="add-section-button">
+    <span class="add-section-button" @click="toggleAddSection" v-if="!isAddingSection">
       <span>New Section</span>
     </span>
+    <template v-if="isAddingSection">
+      <form class="add-section-form" @submit.prevent="submitForm">
+        <input type="text" :id="parent.model+'-'+parent.id+'-add-section'" v-model="section.title" placeholder="Name this section" v-focus @blur="resetIfEmpty">
+        <i class="fa cancel-add-section-icon" :class="addSectionInputIcon" aria-hidden="true" @click="resetAddSection"/>
+      </form>
+
+      <span class="add-item-lite-ghost">
+        <i class="fa fa-fw fa-plus" aria-hidden="true"/>
+        New Item
+      </span>
+    </template>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-  name: 'add-section'
+  name: 'add-section',
+  props: {
+    parent: {
+      type: Object,
+      required: true
+    },
+  },
+  data () {
+    return {
+      isAddingSection: false,
+      isSaving: false,
+      section: {
+        title: null,
+        parent_id: this.parent.id
+      }
+    }
+  },
+  computed: {
+    addSectionInputIcon: function() {
+      return this.isSaving ? 'fa-circle-o-notch fa-spin' : 'fa-times'
+    }
+  },
+  methods: {
+    ...mapActions([
+      'storeChecklist',
+      'addToKanbanArray',
+    ]),
+    resetAddSection: function() {
+      this.isAddingSection = false
+      this.isSaving = false
+      this.section = {
+        title: null,
+        parent_id: this.parent.id
+      }
+    },
+    resetIfEmpty: function() {
+      if(!this.section.title) setTimeout(this.resetAddSection, 300)
+    },
+    submitForm: function() {
+      if (!this.section.title) return
+      this.isSaving = true
+      if (!this.parent.sections) this.$set(this.parent, 'sections', [])
+      return this.storeChecklist(this.section) // Section is an alias for a sub checklist
+          .then( (newSection) => {
+            this.addToKanbanArray( { array: this.parent.sections, value: newSection } )
+            this.resetAddSection()
+          })
+          .catch( () => console.log('Error has occured') )
+    },
+    toggleAddSection: function() {
+      return this.isAddingSection = ! this.isAddingSection
+    },
+  },
 }
 </script>
 
@@ -30,8 +94,8 @@ export default {
       z-index: 1;
       background: #fff;
       padding-right: 5px;
-      color: $light-grey-text-color;
-      font-size: 0.85em;
+      color: darken($base-border-color, 7%);
+      font-size: 0.9em;
     }
 
     &::after {
@@ -43,6 +107,54 @@ export default {
       top: 7px;
       width: 100%;
     }
+  }
+
+  .add-section-form {
+    display: block;
+    position: relative;
+
+    input {
+      padding: 5px 5px 5px 0px;
+      width: 100%;
+      border: 0;
+      outline: none;
+      font-size: 1.1em;
+
+      &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: $list-primary !important;
+        font-weight: 300;
+      }
+      &::-moz-placeholder { /* Firefox 19+ */
+        color: $list-primary !important;
+        font-weight: 300;
+      }
+      &:-ms-input-placeholder { /* IE 10+ */
+        color: $list-primary !important;
+        font-weight: 300;
+      }
+      &:-moz-placeholder { /* Firefox 18- */
+        color: $list-primary !important;
+        font-weight: 300;
+      }
+    }
+  }
+
+  .cancel-add-section-icon {
+    position: absolute;
+    color: darken($base-border-color, 7%);
+    cursor: pointer;
+  }
+  .cancel-add-section-icon {
+    top: 4px;
+    right: 0;
+    background: rgba(255,255,255,0.5);
+    padding: 5px;
+  }
+
+  .add-item-lite-ghost {
+    margin-bottom: 10px;
+    color: $base-border-color;
+    cursor: pointer;
   }
 }
 </style>

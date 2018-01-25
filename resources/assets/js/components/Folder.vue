@@ -86,14 +86,14 @@ export default {
 
           // console.log('contentWrapperHeightBefore: '+contentWrapperHeightBefore);
 
-      contentWrapper.style.height = contentWrapperHeight + 'px'
+      if(contentWrapper) contentWrapper.style.height = contentWrapperHeight + 'px'
 
       var innerContentHeading = document.getElementById('inner-content-heading'),
           innerContentBody = document.getElementById('inner-content-body'),
           innerContentHeadingHeight = $(innerContentHeading).outerHeight(true),
           innerContentBodyHeight = contentWrapperHeight - innerContentHeadingHeight + 'px'
 
-      innerContentBody.style.height = innerContentBodyHeight
+      if(innerContentBody) innerContentBody.style.height = innerContentBodyHeight
 
       // console.log('wideSectionHeight: '+wideSectionHeight);
       // console.log('navSizerHeight: '+navSizerHeight);

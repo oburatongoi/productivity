@@ -125,6 +125,8 @@ export default {
     ...mapActions([
       'addChecklistItem',
       'addSubChecklistItem',
+      'storeChecklistItem',
+      'storeSubChecklistItem',
     ]),
     resetNewItem: function() {
       this.newItem = {
@@ -163,14 +165,23 @@ export default {
       if (!this.hasContent) return
       this.isSaving = true
       switch (this.parentModel) {
-        case 'checklist-item':
-          return this.addSubChecklistItem( {item: this.newItem, parent: this.parent} )
-                     .then( () => this.resetNewItem() )
+        case 'checklist':
+          return this.storeChecklistItem( {item: this.newItem, parent: this.parent} )
+                     .then( (newItem) => {
+                       this.addChecklistItem(newItem)
+                       this.resetNewItem()
+                     })
                      .catch( () => console.log('Error has occured') )
           break;
-        default: return this.addChecklistItem( {item: this.newItem, parent: this.parent} )
-                            .then( () => this.resetNewItem() )
-                            .catch( () => console.log('Error has occured') )
+        case 'checklist-item':
+          return this.storeSubChecklistItem( {item: this.newItem, parent: this.parent} )
+                     .then( (newItem) => {
+                       this.addSubChecklistItem({ parent: this.parent, child: newItem })
+                       this.resetNewItem()
+                     })
+                     .catch( () => console.log('Error has occured') )
+          break;
+        default: return
       }
     },
     emitResize: function() {

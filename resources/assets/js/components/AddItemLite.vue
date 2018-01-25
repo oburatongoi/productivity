@@ -1,10 +1,10 @@
 <template lang="html">
   <form class="add-item-lite" @submit.prevent="submitForm">
-    <label :for="parent.model+parent.id" class="add-item-lite-icon">
+    <label :for="parent.model+'-'+parent.id+'-add-item-lite'" class="add-item-lite-icon">
       <i class="fa fa-fw fa-plus" aria-hidden="true"/>
     </label>
-    <input type="text" :id="parent.model+parent.id" v-model="item.content" placeholder="New Item" v-focus>
-    <i class="fa fa-fw fa-times cancel-add-item-lite-icon" aria-hidden="true" v-if="item.content" @click="reset"/>
+    <input type="text" :id="parent.model+'-'+parent.id+'-add-item-lite'" v-model="item.content" placeholder="New Item">
+    <i class="fa fa-fw cancel-add-item-lite-icon" :class="addItemLiteInputIcon" aria-hidden="true" v-if="item.content" @click="resetAddItemLite"/>
   </form>
 </template>
 
@@ -17,28 +17,29 @@ export default {
       type: Object,
       required: true
     },
-    context: {
-      type: String,
-      default: 'checklist'
-    },
   },
   data () {
     return {
       isSaving: false,
       item: {
-          content: null,
-          sort_order: undefined,
-          isNewItem: true,
+        content: null,
+        sort_order: undefined,
+        isNewItem: true,
       },
+    }
+  },
+  computed: {
+    addItemLiteInputIcon: function() {
+      return this.isSaving ? 'fa-circle-o-notch fa-spin' : 'fa-times'
     }
   },
   methods: {
     ...mapActions([
-      'addChecklistItem',
-      'addSubChecklistItem',
+      'storeChecklistItem',
+      'storeSubChecklistItem',
       'addToKanbanArray',
     ]),
-    reset: function() {
+    resetAddItemLite: function() {
       this.isSaving = false
       this.item = {
           content: null,
@@ -51,20 +52,21 @@ export default {
       this.isSaving = true
       switch (this.parent.model) {
         case 'checklist':
-        return this.addChecklistItem( {item: this.item, parent: this.parent} )
-                            .then( (newItem) => {
-                              let array = this.context == 'descendants.items' ? this.parent.descendants.items : this.parent['items']
-                              this.addToKanbanArray( { array, value: newItem } )
-                              this.reset()
-                            })
-                            .catch( () => console.log('Error has occured') )
+          if (!this.parent.items) this.$set(this.parent, 'items', [])
+          return this.storeChecklistItem( {item: this.item, parent: this.parent} )
+                     .then( (newItem) => {
+                       this.addToKanbanArray( { array: this.parent.items, value: newItem } )
+                       this.resetAddItemLite()
+                     })
+                     .catch( () => console.log('Error has occured') )
           break;
         case 'checklist-item':
-          return this.addSubChecklistItem( {item: this.item, parent: this.parent} )
+          if (!this.parent.sub_items) this.$set(this.parent, 'sub_items', [])
+          return this.storeSubChecklistItem( {item: this.item, parent: this.parent} )
                      .then( (newItem) => {
-                       let array = this.context == 'descendants.items' ? this.parent.descendants.items : this.parent['sub_items']
-                        this.addToKanbanArray( { array , value: newItem } )
-                        this.reset()
+
+                       this.addToKanbanArray( { array: this.parent.sub_items , value: newItem } )
+                       this.resetAddItemLite()
                       })
                      .catch( () => console.log('Error has occured') )
           break;
@@ -85,7 +87,19 @@ export default {
     width: 100%;
     border: 0;
     outline: none;
-    // background: pink;
+
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: darken($base-border-color, 7%) !important;
+    }
+    &::-moz-placeholder { /* Firefox 19+ */
+      color: darken($base-border-color, 7%) !important;
+    }
+    &:-ms-input-placeholder { /* IE 10+ */
+      color: darken($base-border-color, 7%) !important;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+      color: darken($base-border-color, 7%) !important;
+    }
   }
 
   .cancel-add-item-lite-icon,

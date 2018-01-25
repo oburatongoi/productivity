@@ -13,7 +13,7 @@
     </draggable>
 
     <add-item-lite :parent="section"/>
-    <add-section />
+    <add-section :parent="parent"/>
   </li>
 </template>
 
@@ -32,6 +32,10 @@ export default {
     KanbanChecklistItem
   },
   props: {
+    parent: {
+      type: Object,
+      required: true
+    },
     section: {
       type: Object,
       required: true
@@ -46,10 +50,13 @@ export default {
 </script>
 
 <style lang="scss">
- .nested-kanban-card.section {
+ .nested-kanban-card {
    .section-title {
-     text-decoration: underline;
-     color: $light-grey-text-color;
+    //  text-decoration: underline;
+    //  color: $light-grey-text-color;
+     color: $list-primary;
+    font-weight: 300;
+    font-size: 1.1em;
    }
 
    .section-items {
