@@ -52,8 +52,8 @@ export default {
   },
   data () {
     return {
-      // view: 'files'
-      view: 'overview'
+      view: 'files'
+      // view: 'overview'
     }
   },
   computed: {
