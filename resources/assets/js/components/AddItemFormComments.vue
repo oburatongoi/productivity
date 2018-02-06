@@ -80,7 +80,7 @@ export default {
         p {
             margin: 0 3px;
             font-family: $font-family-sans-serif;
-            font-weight: 600;
+            font-weight: $font-weight-bold;
             display: inline-block;
         }
     }

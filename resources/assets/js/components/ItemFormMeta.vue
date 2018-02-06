@@ -1,8 +1,9 @@
 <template lang="html">
-  <div class="item-form-meta" :class="{ 'new-item':item.isNewItem }">
+  <div class="item-form-meta" :class="itemFormMetaClass">
     <span class="meta-span"
-      @click="showDatePicker"
-      v-tooltip.bottom="deadlineTooltip"
+      @click.stop="showDatePicker"
+      :id="'checklist-item-'+item.id+'-deadline'"
+      v-tooltip.bottom-end="{ content: deadlineTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-deadline' }"
       :class="{ 'item-deadline':!item.isNewItem }"
     >
       <span class="date">{{ deadlinePlaceholder }}</span>
@@ -14,33 +15,36 @@
 
     <span class="meta-span">
       <i
-        @click="toggleImportance"
+        @click.stop="toggleImportance"
         :class="importanceIcon"
         class="fa fa-fw"
         aria-hidden="true"
-        v-tooltip.bottom="importanceTooltip"
+        :id="'checklist-item-'+item.id+'-importance'"
+        v-tooltip.bottom="{ content: importanceTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-importance' }"
       />
     </span>
 
     <span class="meta-span">
       <i
-        @click="toggleUrgency"
+        @click.stop="toggleUrgency"
         :class="{ 'folder-color-scheme':item.is_urgent }"
         class="fa fa-fw fa-clock-o"
         aria-hidden="true"
-        v-tooltip.bottom="urgencyTooltip"
+        :id="'checklist-item-'+item.id+'-urgency'"
+        v-tooltip.bottom="{ content: urgencyTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-urgency' }"
       />
     </span>
 
     <span class="meta-span"
-      v-if="!item.isNewItem"
+      v-if="!item.isNewItem&&!inKanban"
     >
       <i
-        @click="toggleSelection({selection: {model, listing:item, parentModel}, event: $event})"
+        @click.stop="toggleSelection({selection: {model, listing:item, parentModel}, event: $event})"
         :class="{ 'folder-color-scheme':item.comments }"
         class="fa fa-fw fa-sticky-note-o"
         aria-hidden="true"
-        v-tooltip.bottom="commentsTooltip"
+        :id="'checklist-item-'+item.id+'-comments'"
+        v-tooltip.bottom="{ content: commentsTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-comments' }"
       />
     </span>
   </div>
@@ -55,6 +59,10 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    inKanban: {
+      type: Boolean,
+      default: false
     },
     isSubItem: {
       type: Boolean,
@@ -84,6 +92,12 @@ export default {
     importanceTooltip: function () {
       return this.item.is_important ? 'Mark as not important' : 'Mark as important'
     },
+    itemFormMetaClass: function () {
+      let c = ''
+      if( this.item.isNewItem ) c += 'new-item-meta'
+      if( this.inKanban ) c += 'kanban-item-meta'
+      return c
+    },
     deadlineTooltip: function () {
       return this.item.deadline ? 'Change or remove deadline' : 'Add a deadline'
     },
@@ -97,30 +111,31 @@ export default {
   methods: {
     ...mapActions([
       'toggleChecklistItemImportance',
-      'toggleChecklistItemUrgency'
+      'toggleChecklistItemUrgency',
+      'toggleSelection',
     ]),
     showDatePicker: function() {
       return this.$emit('showDatePicker')
     },
     toggleImportance: function() {
       this.importanceIsLoading = true
-      if (this.item.isNewItem) return this.item.is_urgent = ! this.item.is_urgent
+      if (this.item.isNewItem) return this.item.is_important = ! this.item.is_important
 
-      return this.toggleChecklistItemImportance({item: this.item, isSubItem: this.isSubItem})
+      return this.toggleChecklistItemImportance(this.item)
           .then( () => this.importanceIsLoading = false )
           .catch( (error) => console.log(error) )
     },
     toggleUrgency: function() {
       this.urgencyIsLoading = true
-      if (this.item.isNewItem) return this.item.is_important = ! this.item.is_important
+      if (this.item.isNewItem) return this.item.is_urgent = ! this.item.is_urgent
 
-      return this.toggleChecklistItemUrgency({item: this.item, isSubItem: this.isSubItem})
+      return this.toggleChecklistItemUrgency(this.item)
           .then( () => this.urgencyIsLoading = false )
           .catch( (error) => console.log(error) )
     },
-    toggleSelection: function(payload) {
-      return this.$eventHub.$emit('toggleSelection', payload);
-    },
+    // toggleSelection: function(payload) {
+    //   return this.$eventHub.$emit('toggleSelection', payload);
+    // },
   },
 }
 </script>
@@ -137,22 +152,45 @@ export default {
     background: $body-bg;
   }
 
-  &.new-item {
+  &.new-item-meta {
     border-left: 1px solid $item-form-border-color;
     background: $body-bg;
   }
-  @media(min-width:768px){
-    display: inline-block;
-    position: absolute;
-    @include high-z-index(1);
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: auto;
-    vertical-align: middle;
-    border-top: 0;
 
+  &.kanban-item-meta {
+    border-top: 1px solid $item-form-border-color;
+    background: transparent;
+    margin-top: 5px;
+    padding: 0;
+    text-align: right;
   }
+
+  &:not(.kanban-item-meta) {
+    @media(min-width:768px){
+      display: inline-block;
+      position: absolute;
+      @include high-z-index(1);
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: auto;
+      vertical-align: middle;
+      border-top: 0;
+
+    }
+  }
+  // @media(min-width:768px){
+  //   display: inline-block;
+  //   position: absolute;
+  //   @include high-z-index(1);
+  //   top: 0;
+  //   bottom: 0;
+  //   right: 0;
+  //   width: auto;
+  //   vertical-align: middle;
+  //   border-top: 0;
+  //
+  // }
   margin:0;
   height: $item-form-height;
   padding: 0 5px;

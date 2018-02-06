@@ -33,14 +33,12 @@
       v-if="editableItem.id"
       :list-type="'ta'"
       :item="editableItem"
-      parent-model="checklist"
     />
 
     <edit-checklist-item
       v-if="editableSubItem.id"
       :list-type="'ta'"
       :item="editableSubItem"
-      parent-model="checklist-item"
     />
   </div>
 </template>
@@ -64,23 +62,21 @@ export default {
       'checklistItems',
       'editableItem',
       'editableSubItem',
-      'editableItemIsExpanded',
-      'editableSubItemIsExpanded'
     ]),
     taskClass: function() {
-      return  this.editableSubItemIsExpanded ? 'has-expanded-editable-sub-item':
-              this.editableSubItem.id        ? 'has-editable-sub-item'         :
-              this.editableItemIsExpanded    ? 'has-expanded-editable-item'    :
-              this.editableItem.id           ? 'has-editable-item'             :
-                                                null                           ;
+      return  this.editableSubItem
+              && this.editableSubItem.isExpanded  ? 'has-expanded-editable-sub-item':
+              this.editableSubItem.id             ? 'has-editable-sub-item'         :
+              this.editableItem
+              && this.editableItem.isExpanded     ? 'has-expanded-editable-item'    :
+              this.editableItem.id                ? 'has-editable-item'             :
+                                                     null                           ;
     }
   },
   created: function() {
-    this.$eventHub.$on('debounceResizeInput', this.debounceResizeInput);
     this.$eventHub.$on('toggleSelection', this.toggleSelection);
   },
   beforeDestroy: function() {
-    this.$eventHub.$off('debounceResizeInput', this.debounceResizeInput);
     this.$eventHub.$off('toggleSelection', this.toggleSelection);
   },
   methods: {

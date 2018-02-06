@@ -50,26 +50,32 @@ const mutations = {
       if(typeof state.selected[e] == 'boolean') state.selected[e] = false
     });
   },
-  [REMOVE_FROM_SELECTED] (state, payload) {
+  [REMOVE_FROM_SELECTED] (state, payload = { model: null, listing: null }) {
     if (payload && payload.model) {
+      let arr, i
       switch (payload.model) {
         case 'folder':
-          state.selected.folders.splice(_.findIndex(state.selected.folders, ['id', payload.listing.id]), 1)
+          arr = state.selected.folders
           break;
         case 'checklist':
-          state.selected.checklists.splice(_.findIndex(state.selected.checklists, ['id', payload.listing.id]), 1)
+          arr = state.selected.checklists
           break;
         case 'checklist-item':
-          state.selected.checklistItems.splice(_.findIndex(state.selected.checklistItems, ['id', payload.listing.id]), 1)
+          arr = state.selected.checklistItems
           break;
-        default:
-
       }
+
+      i = _.findIndex(arr, ['id', payload.listing.id])
+
+      ~ i && arr.splice(i, 1)
+
     }
 
-    let hasSelectedItems = state.selected.folders.length + state.selected.checklists.length + state.selected.checklistItems.length
-
-    if ( ! payload.preserveState || payload.preserveState && ! hasSelectedItems ) {
+    if (
+      ! payload.preserveState
+      || payload.preserveState
+      && ! state.selected.folders.length + state.selected.checklists.length + state.selected.checklistItems.length // if ! hasSelectedItems
+    ) {
       state.selected.movable = false,
       state.selected.deletable = false
     }
@@ -196,17 +202,10 @@ const actions = {
     })
   },
 
-  deselect({ commit }, payload) {
+  deselect({ commit }, payload = { model: null, listing: null }) {
     return new Promise((resolve, reject) => {
       commit(REMOVE_FROM_SELECTED, payload)
       resolve(payload)
-    })
-  },
-
-  removeFromSelected({ commit }, payload) {
-    return new Promise((resolve, reject) => {
-      commit(REMOVE_FROM_SELECTED, payload)
-      resolve()
     })
   },
 
@@ -295,7 +294,7 @@ const actions = {
     if (isInSelectedArray) {
         // Remove if modifier key was pressed
         if (isLoneSelected || modifierKeyPressed) {
-          dispatch('removeFromSelected', payload.selection)
+          dispatch('deselect', payload.selection)
         } else { // If a modifier key was not pressed
           dispatch('replaceSelected', payload.selection)
         }

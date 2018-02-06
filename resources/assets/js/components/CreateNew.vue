@@ -28,7 +28,7 @@
       </button>
     </template>
 
-    <form class="create-new-form" v-if="creatingNew" @submit.prevent="submitForm">
+    <form class="create-new-form" v-if="creatingNew" @submit.prevent="submitForm" autocomplete="off">
       <div class="row">
         <div class="input-wrap col-md-6">
           <input type="text" class="create-new-input" v-model="resource.name" v-if="creatingNew=='folder'" placeholder="Name" maxlength="255" v-focus>

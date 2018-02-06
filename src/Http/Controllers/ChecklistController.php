@@ -51,7 +51,7 @@ class ChecklistController extends Controller
 
         try {
           if ($response['checklist'] = $request->user()->checklists()->create($request->input('checklist'))) {
-            if($response['checklist']['parent_id']) $response['checklist']['items'] = []; // This helps with adding to sections in the front end
+            if($response['checklist']['parent_id']) $response['checklist']['items'] = []; // This helps with adding to sections in the front end. WIP: Use Vue.set to solve this issue
             return response()->json($response);
           }
 

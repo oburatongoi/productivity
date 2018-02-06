@@ -13,10 +13,16 @@ use DB, Exception;
 
 class Checklists implements ChecklistsInterface {
 
+    public $relationsToLoad = [
+      'sections:id,fake_id,title,parent_id,list_type',
+      'sections.items:id,content,comments,checklist_id,checked_at,sub_list_type,sort_order,is_urgent,is_important,deadline',
+      'items:id,content,comments,checklist_id,checked_at,sub_list_type,sort_order,is_urgent,is_important,deadline'
+    ];
+
     public function forUser(User $user)
     {
         return $user->checklists()
-                    ->with('sections:id,fake_id,title,parent_id', 'items:id,content,checklist_id', 'sections.items:id,content,checklist_id')
+                    ->with($this->relationsToLoad)
                     ->withCount(['items' => function($query) {
                         $query->where('checked_at', null);
                     }])
@@ -29,7 +35,7 @@ class Checklists implements ChecklistsInterface {
         return $user->checklists()
                     ->whereNull('folder_id')
                     ->whereNull('parent_id')
-                    ->with('sections:id,fake_id,title,parent_id', 'items:id,content,checklist_id', 'sections.items:id,content,checklist_id')
+                    ->with($this->relationsToLoad)
                     ->withCount(['items' => function($query) {
                         $query->where('checked_at', null);
                     }])->orderBy('title', 'asc')
@@ -39,7 +45,8 @@ class Checklists implements ChecklistsInterface {
     public function forFolder(User $user, Folder $folder)
     {
         return $folder->checklists()
-                      ->with('sections:id,fake_id,title,parent_id', 'items:id,content,checklist_id', 'sections.items:id,content,checklist_id')
+                      ->whereNull('parent_id')
+                      ->with($this->relationsToLoad)
                       ->withCount(['items' => function($query) {
                           $query->where([
                             ['checked_at', null],
@@ -68,10 +75,14 @@ class Checklists implements ChecklistsInterface {
           $items = DB::table('productivity_checklist_items')
                      ->where('checklist_id', $checklist->id)
                      ->orderBy('sort_order')
+                     ->orderBy('created_at', 'asc')
                      ->latest()
                      ->get();
           if($items) {
-            foreach ($items as $key => $item) $itemsToUpdate[$item->id] = $key;
+            foreach ($items as $key => $item) {
+              $itemsToUpdate[$item->id] = $key;
+              $response['items'][] = $item->id;
+            }
           } else $response['exceptions'][] = 'This list has no checklist items.';
 
         } catch (Exception $e) {
@@ -92,13 +103,14 @@ class Checklists implements ChecklistsInterface {
 
       if(isset($sorted_count)) $response['sorted_count'] = $sorted_count;
 
-      return response()->json($response);
+      if($request->wantsJson()) return response()->json($response);
+      else return $response;
     }
 
     public function getKanbanDescendants($nestedKanban)
     {
       $checklist = Checklist::where('id', $nestedKanban['id'])
-                    ->with('sections:id,fake_id,title,parent_id', 'items:id,content,checklist_id')
+                    ->with($this->relationsToLoad)
                     ->first();
       return [
         'sections' => $checklist->sections,

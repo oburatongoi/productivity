@@ -41,6 +41,9 @@ body,
 
     .inner-content-wrapper {
       padding: 0 20px;
+      &.full-height {
+        height: 100%;
+      }
     }
 }
 

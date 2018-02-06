@@ -3,7 +3,13 @@
     <div class="move-to-checklist-heading">
       <mover-breadcrumbs />
       <mover-selected :parent-model="parentModel"/>
-      <i class="fa close-mover-button fa-times" aria-hidden="true" v-tooltip.bottom-left="'Cancel Move'" @click="cancel"/>
+      <i
+        class="fa close-mover-button fa-times"
+        aria-hidden="true"
+        id="close-mover-button"
+        v-tooltip.bottom-start="{ content: 'Cancel Move', classes: 'checklist', trigger: 'hover', autoHide: false, container: '#close-mover-button' }"
+        @click="cancel"
+      />
     </div>
 
     <div class="move-to-checklist-body" @click.self="deselectMoverSelected">
@@ -53,7 +59,6 @@ import MoveTargetFolders from './MoveTargetFolders.vue'
 import MoveTargetChecklists from './MoveTargetChecklists.vue'
 import MoveTargetChecklistItems from './MoveTargetChecklistItems.vue'
 import MoveTargetChecklistSubItems from './MoveTargetChecklistSubItems.vue'
-// import MoveTargetOpenChecklistItem from './MoveTargetOpenChecklistItem.vue'
 
 export default {
   name: 'move-to-checklist',
@@ -64,7 +69,6 @@ export default {
     MoveTargetChecklists,
     MoveTargetChecklistItems,
     MoveTargetChecklistSubItems,
-    // MoveTargetOpenChecklistItem,
   },
   props: {
     replaceAfterMove: {
@@ -253,7 +257,6 @@ export default {
 }
 
 .move-target-checklist-sub-items,
-.move-target-open-checklist-item,
 .move-to-checklist-body {
   .nested-checklist-item,
   .nested-checklist,
@@ -339,7 +342,7 @@ export default {
         display: inline-block;
         span.footer-text {
             color: $list-primary;
-            font-weight: 600;
+            font-weight: $font-weight-bold;
         }
     }
     .toggle-add-folder-btn {

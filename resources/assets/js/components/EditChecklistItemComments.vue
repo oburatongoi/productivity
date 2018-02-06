@@ -66,7 +66,7 @@ export default {
       this.$emit('saveChanges')
     },
     onEditorChange({ editor, html, text }) {
-      this.setCurrentEditableItemComments({html:html, isSubItem: this.isSubItem})
+      this.setCurrentEditableItemComments({ html:html, item: this.item })
       this.debounceSaveChanges()
     }
   },

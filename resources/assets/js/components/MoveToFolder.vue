@@ -13,7 +13,7 @@
         {{ currentFolder.name }}
       </span>
 
-      <form class="form-horizontal add-folder-form" v-if="addingFolder" @submit.prevent="createNewFolder">
+      <form class="form-horizontal add-folder-form" v-if="addingFolder" @submit.prevent="createNewFolder" autocomplete="off">
         <div class="add-folder-form-input">
           <input type="text" class="form-control input-sm" v-focus v-model="newFolder.name" placeholder="New Folder Name" maxlength="255">
         </div>
@@ -434,7 +434,7 @@ export default {
             display: inline-block;
             span.footer-text {
                 color: $folder-primary;
-                font-weight: 600;
+                font-weight: $font-weight-bold;
             }
         }
         .toggle-add-folder-btn {

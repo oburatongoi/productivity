@@ -1,8 +1,9 @@
 <template lang="html">
   <div class="move-target-checklists">
     <template v-if="!openMovableChecklist.id&&moverContext!='checklist-item'">
-      <h5>Lists</h5>
-      <small class="text-muted" v-if="movableChecklists&&movableChecklists.length"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"/> Click to select, doubleclick to open.</small>
+      <h5>Lists <span v-if="movableChecklists&&movableChecklists.length">(click to select, doubleclick to open)</span></h5>
+
+      <!-- <small class="text-muted" v-if="movableChecklists&&movableChecklists.length"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"/> Click to select, doubleclick to open.</small> -->
 
       <mover-adder model="checklist"/>
 
@@ -20,7 +21,7 @@
           :class="{ active: checklist.id==selectedMovableChecklist.id, opened: checklist.id==openMovableChecklist.id }"
           v-for="checklist in movableChecklists"
           v-if="!openMovableChecklist.id||checklist.id==openMovableChecklist.id"
-          :key="checklist.id"
+          :key="checklist.fake_id"
       >
         <span
           @click.stop.prevent="selectMoverChecklist(checklist)"
@@ -88,6 +89,13 @@ export default {
 </script>
 
 <style lang="scss">
+.move-target-checklists {
+  h5 span {
+    color: $light-grey-text-color;
+    font-weight: 300;
+  }
+}
+
 .mover-close-checklist-button {
   cursor: pointer;
   color: $list-primary;

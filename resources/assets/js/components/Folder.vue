@@ -11,7 +11,7 @@
     </div>
 
     <div id="inner-content-body">
-      <div class="inner-content-wrapper">
+      <div class="inner-content-wrapper full-height" v-if="view=='files'||view=='tasks'">
         <template v-if="view=='files'">
           <index-all />
           <move-to-folder v-if="selectedIsMovable"/>
@@ -36,7 +36,7 @@ import { mapActions, mapGetters } from 'vuex'
 import EditFolderName from './EditFolderName.vue'
 import IndexAll from './IndexAll.vue'
 import IndexTasks from './IndexTasks.vue'
-import Kanban from './Kanban.vue'
+import Kanban from './kanban/Kanban.vue'
 import MoveToFolder from './MoveToFolder.vue'
 import MoveToChecklist from './MoveToChecklist.vue'
 

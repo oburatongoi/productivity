@@ -48,7 +48,6 @@ const mutations = {
       if( payload.removePrecedingSubItems ) state[array].splice(0, _.findIndex(state[array], ['id', payload.value.id])) // remove every element that precedes the item
       else state[array].splice(_.findIndex(state[array], ['id', payload.value.id]), 1) // removes the item from the array
     }
-
   },
   [SET_MOVER_VARIABLE] (state, payload = { variable: null, value: null }) {
     let variable = payload.variable

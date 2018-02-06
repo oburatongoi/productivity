@@ -13,6 +13,11 @@ use DB;
 
 class ChecklistItems implements ChecklistItemsInterface {
 
+  public $relationsToLoad = [
+    'checklist.folder',
+    'sub_items:id,content,checklist_id,parent_id,checked_at,sub_list_type,sort_order,is_urgent,is_important,deadline'
+  ];
+
     public function forUser(User $user)
     {
         return $user->items()->get();
@@ -21,30 +26,33 @@ class ChecklistItems implements ChecklistItemsInterface {
     public function pendingForUser(User $user)
     {
         return $user->items()
-            ->whereNull('checked_at')
-            ->with('checklist.folder', 'sub_items')
-            ->whereHas('checklist', function($query) {
-                $query->where('list_type', 'ta');
-            })
-            ->get();
+                    ->whereNull('checked_at')
+                    ->with($this->relationsToLoad)
+                    ->whereHas('checklist', function($query) {
+                        $query->where('list_type', 'ta');
+                    })
+                    ->get();
 
     }
 
     public function pendingForFolder(Folder $folder)
     {
         return $folder->items()
-            ->whereNull('checked_at')
-            ->with('checklist.folder')
-            ->whereHas('checklist', function($query) {
-                $query->where('list_type', 'ta');
-            })
-            ->get();
+                      ->whereNull('checked_at')
+                      ->with($this->relationsToLoad)
+                      ->whereHas('checklist', function($query) {
+                          $query->where('list_type', 'ta');
+                      })
+                      ->get();
 
     }
 
     public function forChecklist(Checklist $checklist)
     {
-        return $checklist->items()->orderBy('sort_order', 'asc')->get();
+        return $checklist->items()
+                         ->with('sub_items:id,content,checklist_id,parent_id,checked_at,sub_list_type,sort_order,is_urgent,is_important,deadline')
+                         ->orderBy('sort_order', 'asc')
+                         ->get();
     }
 
     public static function setItemSortOrder(Request $request, ChecklistItem $parentItem)
@@ -63,13 +71,16 @@ class ChecklistItems implements ChecklistItemsInterface {
 
         try {
           $items = DB::table('productivity_checklist_items')
-                   ->whereNull('checklist_id')
-                   ->where('parent_id', $parentItem->id)
-                   ->orderBy('sort_order')
-                   ->latest()
-                   ->get();
+                     ->whereNull('checklist_id')
+                     ->where('parent_id', $parentItem->id)
+                     ->orderBy('sort_order')
+                     ->latest()
+                     ->get();
           if($items) {
-            foreach ($items as $key => $item) $itemsToUpdate[$item->id] = $key;
+            foreach ($items as $key => $item) {
+              $itemsToUpdate[$item->id] = $key;
+              $response['items'][] = $item->id;
+            }
           } else $response['exceptions'][] = 'This list has no checklist items.';
 
         } catch (Exception $e) {
@@ -90,13 +101,14 @@ class ChecklistItems implements ChecklistItemsInterface {
 
       if(isset($sorted_count)) $response['sorted_count'] = $sorted_count;
 
-      return response()->json($response);
+      if($request->wantsJson()) return response()->json($response);
+      else return $response;
     }
 
     public function getKanbanDescendants($nestedKanban)
     {
       $item = ChecklistItem::where('id', $nestedKanban['id'])
-                    ->with('sub_items:id,content,parent_id')
+                    ->with('sub_items:id,content,checklist_id,parent_id,checked_at,sub_list_type,sort_order,is_urgent,is_important,deadline')
                     ->first();
 
       return [

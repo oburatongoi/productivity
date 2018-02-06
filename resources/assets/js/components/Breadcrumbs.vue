@@ -20,7 +20,8 @@
 
       <li class="current-folder open-folder"
         v-if="currentFolder&&currentFolder.name&&!hasCurrentView&&!currentFolderIsAncestor"
-        v-tooltip.bottom-left="'This folder is currently open.'"
+        id="current-folder-breadcrumb"
+        v-tooltip.bottom-start="{ content: 'This folder is currently open.', classes: 'folder', trigger: 'hover', autoHide: false, container: '#current-folder-breadcrumb' }"
       >
           <i class="fa fa-fw fa-angle-right" aria-hidden="true"/>
           <i class="fa fa-fw fa-folder-open" aria-hidden="true"/>

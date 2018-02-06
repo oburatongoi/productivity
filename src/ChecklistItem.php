@@ -54,7 +54,7 @@ class ChecklistItem extends Model
         // 'deadline' => 'date',
     ];
 
-    protected $with = ['sub_items'];
+    // protected $with = ['sub_items'];
 
     /**
      * The accessors to append to the model's array form.

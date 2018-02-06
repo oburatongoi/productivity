@@ -1,15 +1,22 @@
 <template lang="html">
   <div class="add-section">
     <span class="add-section-button" @click="toggleAddSection" v-if="!isAddingSection">
-      <span>New Section</span>
+      <span>
+        <span class="add-section-icon"><i class="fa fa-fw fa-scissors" aria-hidden="true"/></span>
+        <span class="add-section-text">New Section</span>
+      </span>
     </span>
     <template v-if="isAddingSection">
-      <form class="add-section-form" @submit.prevent="submitForm">
+      <form class="add-section-form" @submit.prevent="submitForm" autocomplete="off">
         <input type="text" :id="parent.model+'-'+parent.id+'-add-section'" v-model="section.title" placeholder="Name this section" v-focus @blur="resetIfEmpty">
         <i class="fa cancel-add-section-icon" :class="addSectionInputIcon" aria-hidden="true" @click="resetAddSection"/>
       </form>
 
-      <span class="add-item-lite-ghost">
+      <span
+        class="add-item-lite-ghost"
+        :id="'add-item-lite-ghost-'+parent.id"
+        v-tooltip.bottom-start="{ content: 'To add item, first save this section', classes: 'checklist', trigger: 'hover', autoHide: false, container: '#add-item-lite-ghost-'+parent.id }"
+      >
         <i class="fa fa-fw fa-plus" aria-hidden="true"/>
         New Item
       </span>
@@ -33,7 +40,8 @@ export default {
       isSaving: false,
       section: {
         title: null,
-        parent_id: this.parent.id
+        parent_id: this.parent.id,
+        list_type: this.parent.list_type
       }
     }
   },
@@ -52,7 +60,8 @@ export default {
       this.isSaving = false
       this.section = {
         title: null,
-        parent_id: this.parent.id
+        parent_id: this.parent.id,
+        list_type: this.parent.list_type
       }
     },
     resetIfEmpty: function() {
@@ -79,7 +88,7 @@ export default {
 <style lang="scss">
 .add-section {
   .add-section-button {
-    opacity: 0;
+    opacity: 0.5;
     display: block;
     position: relative;
     line-height: 14px;
@@ -87,15 +96,35 @@ export default {
 
     &:hover {
       opacity: 1;
+
+      span .add-section-text {
+        // display: inline-block;
+        opacity: 1;
+      }
     }
 
     span {
       position: relative;
       z-index: 1;
-      background: #fff;
-      padding-right: 5px;
+      padding-left: 2px;
+      padding-right: 2px;
       color: darken($base-border-color, 7%);
       font-size: 0.9em;
+
+      &:hover & {
+        opacity: 1;
+      }
+
+      .add-section-icon,
+      .add-section-text {
+        background: #fff;
+      }
+
+      .add-section-text {
+        // display: none;
+        opacity: 0;
+        margin-left: 2px;
+      }
     }
 
     &::after {
@@ -119,6 +148,7 @@ export default {
       border: 0;
       outline: none;
       font-size: 1.1em;
+      color: $list-primary;
 
       &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
         color: $list-primary !important;
@@ -143,18 +173,17 @@ export default {
     position: absolute;
     color: darken($base-border-color, 7%);
     cursor: pointer;
-  }
-  .cancel-add-section-icon {
     top: 4px;
     right: 0;
     background: rgba(255,255,255,0.5);
     padding: 5px;
+    font-size: 0.8em;
   }
 
   .add-item-lite-ghost {
     margin-bottom: 10px;
     color: $base-border-color;
-    cursor: pointer;
+    cursor: not-allowed;
   }
 }
 </style>

@@ -8,10 +8,15 @@ use Oburatongoi\Productivity\Interfaces\FoldersInterface;
 
 class Folders implements FoldersInterface {
 
+  public $relationsToLoad = [
+    'checklists:id,fake_id,title,folder_id',
+    'subfolders:id,fake_id,name,parent_id'
+  ];
+
     public function forUser(User $user)
     {
         return $user->folders()
-                    ->with('checklists:id,fake_id,title,folder_id', 'subfolders:id,fake_id,name,parent_id')
+                    ->with($this->relationsToLoad)
                     ->orderBy('name', 'asc')
                     ->get();
     }
@@ -20,7 +25,7 @@ class Folders implements FoldersInterface {
     {
         return $user->folders()
                     ->whereNull('parent_id')
-                    ->with('checklists:id,fake_id,title,folder_id', 'subfolders:id,fake_id,name,parent_id')
+                    ->with($this->relationsToLoad)
                     ->get();
 
     }
@@ -28,14 +33,14 @@ class Folders implements FoldersInterface {
     public function rootForFolder(User $user, Folder $folder)
     {
         return $folder->subfolders()
-                      ->with('checklists:id,fake_id,title,folder_id', 'subfolders:id,fake_id,name,parent_id')
+                      ->with($this->relationsToLoad)
                       ->get();
     }
 
     public function getKanbanDescendants($nestedKanban)
     {
       $folder = Folder::where('id', $nestedKanban['id'])
-                    ->with('checklists:id,fake_id,title,folder_id', 'subfolders:id,fake_id,name,parent_id')
+                    ->with('checklists:id,fake_id,title,folder_id,list_type', 'subfolders:id,fake_id,name,parent_id')
                     ->first();
 
       return [

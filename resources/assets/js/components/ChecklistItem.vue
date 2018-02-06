@@ -1,9 +1,9 @@
 <template>
   <li v-show="itemIsVisible" class="show-item" :class="{'selected':itemIsSelected}" @click.self="toggleSelection({selection: {model, listing: item, parentModel}, event: $event})" draggable>
     <span class="checkbox-container">
-      <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"/>
-      <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"/>
-      <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{ item.sort_order + 1 }}.</span>
+      <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType=='ch'||listType=='ta'"/>
+      <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType=='bu'"/>
+      <span class="ol-number" aria-hidden="true" v-if="listType=='nu'">{{ item.sort_order + 1 }}.</span>
     </span>
 
     <p class="show-item-content"
@@ -16,7 +16,8 @@
 
       <span class="unchecked-sub-items-count"
         v-if="uncheckedSubItemsCount"
-        v-tooltip.bottom="checklistTooltip"
+        :id="'checklist-item-'+item.id"
+        v-tooltip.bottom="{ content: checklistTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id }"
       >
         <i class="fa fa-fw fa-check-square" aria-hidden="true"/>
         {{ uncheckedSubItemsCount }}</span>
@@ -182,10 +183,10 @@ export default {
       return this.parentModel == 'checklist-item' || ! this.item.checklist_id ? true : false;
     },
     uncheckedSubItemsCount: function() {
-      return this.item.sub_items.filter( item => item.checked_at == null ).length
+      return this.item.sub_items ? this.item.sub_items.filter( item => item.checked_at == null ).length : 0
     },
     checklistTooltip: function () {
-      return this.item.sub_items && this.item.sub_items.length ? this.uncheckedsub_itemsCount +' unchecked items' : 'Does not have any checklist items'
+      return this.item.sub_items && this.item.sub_items.length ? this.uncheckedSubItemsCount +' unchecked items' : 'Does not have any checklist items'
     },
   },
   methods: {
@@ -372,7 +373,7 @@ export default {
 
 }
 
-.checkbox-container {
+.show-item .checkbox-container {
   display: inline-block;
   width: 30px;
   text-align: center;

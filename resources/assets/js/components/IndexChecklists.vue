@@ -5,7 +5,8 @@
     draggable="true"
     @click="toggleSelection({selection: {model:'checklist', listing: checklist}, event: $event})"
     @dblclick="goToListing('list', checklist.fake_id)"
-    v-tooltip.bottom-left="checklist.title"
+    :id="'checklist-'+checklist.fake_id"
+    v-tooltip.bottom-start="{ content: checklist.title, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-'+checklist.fake_id }"
   >
       <h5>
         <i class="fa fa-fw" :class="checklistIconClass" aria-hidden="true"/>
