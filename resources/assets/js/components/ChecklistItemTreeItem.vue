@@ -38,10 +38,7 @@ export default {
       'subItemChain',
     ]),
     isAncestorOfEditableSubItem: function() {
-      // return _.some(this.subItemChain, ['parent_id', this.item.id]) && ! _.filter(this.subItemChain, (o) => o.id !== this.item.id])
-
-      let arr = _.intersectionBy(this.subItemChain, this.item.children, 'id')
-
+      let arr = _.intersectionBy(this.subItemChain, this.item.sub_items, 'id')
       return _.some(arr, ['parent_id', this.item.id])
     }
   },

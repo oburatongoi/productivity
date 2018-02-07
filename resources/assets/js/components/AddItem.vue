@@ -1,5 +1,5 @@
 <template lang="html">
-  <form class="add-item" @submit.prevent="submitForm">
+  <form class="add-item" @submit.prevent="submitForm" autocomplete="off">
     <div class="item-form">
       <div class="item-form-content">
         <i
@@ -57,7 +57,7 @@
         @submitForm="submitForm"
       />
     </template>
-    <resize-observer @notify="emitResize" />
+    <resize-observer @notify="resizeInput" />
   </form>
 </template>
 
@@ -125,6 +125,9 @@ export default {
     ...mapActions([
       'addChecklistItem',
       'addSubChecklistItem',
+      'resizeInput',
+      'storeChecklistItem',
+      'storeSubChecklistItem',
     ]),
     resetNewItem: function() {
       this.newItem = {
@@ -142,12 +145,15 @@ export default {
     setDate: function(date) {
       date ? this.newItem.deadline = moment(date).format('YYYY-MM-DD') : this.newItem.deadline = undefined
       this.hideDatePicker()
-      return this.$eventHub.$emit('resizeInput');
+      this.resizeInput()
     },
     setSortOrder: function() {
       switch (this.parentModel) {
         case 'checklist-item':
-          this.newItem.sort_order = this.parent.children ? this.parent.children.length : 0
+          this.newItem.sort_order = this.parent.sub_items ? this.parent.sub_items.length : 0
+          break;
+        case 'checklist':
+          this.newItem.sort_order = this.parent.items ? this.parent.items.length : 0
           break;
         default: this.newItem.sort_order = this.checklistItems ? this.checklistItems.length : 0
       }
@@ -163,18 +169,24 @@ export default {
       if (!this.hasContent) return
       this.isSaving = true
       switch (this.parentModel) {
-        case 'checklist-item':
-          return this.addSubChecklistItem( {item: this.newItem, parent: this.parent} )
-                     .then( () => this.resetNewItem() )
+        case 'checklist':
+          return this.storeChecklistItem( {item: this.newItem, parent: this.parent} )
+                     .then( (newItem) => {
+                       this.addChecklistItem(newItem)
+                       this.resetNewItem()
+                     })
                      .catch( () => console.log('Error has occured') )
           break;
-        default: return this.addChecklistItem( {item: this.newItem, parent: this.parent} )
-                            .then( () => this.resetNewItem() )
-                            .catch( () => console.log('Error has occured') )
+        case 'checklist-item':
+          return this.storeSubChecklistItem( {item: this.newItem, parent: this.parent} )
+                     .then( (newItem) => {
+                       this.addSubChecklistItem({ parent: this.parent, child: newItem })
+                       this.resetNewItem()
+                     })
+                     .catch( () => console.log('Error has occured') )
+          break;
+        default: return
       }
-    },
-    emitResize: function() {
-      return this.$eventHub.$emit('resizeInput');
     },
   },
 }

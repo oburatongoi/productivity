@@ -54,25 +54,24 @@ class ChecklistItem extends Model
         // 'deadline' => 'date',
     ];
 
-    protected $with = ['children'];
+    // protected $with = ['sub_items'];
 
-    // public function checklist()
-    // {
-    //   if ($this->parent_id) {
-    //     return $this->parent->checklist();
-    //   }
-    //   return $this->belongsTo('Oburatongoi\Productivity\Checklist', 'checklist_id');
-    // }
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['model'];
 
-    // public function children()
-    // {
-    //     return $this->hasMany('Oburatongoi\Productivity\ChecklistItem', 'parent_id');
-    // }
-    //
-    // public function parent()
-    // {
-    //     return $this->belongsTo('Oburatongoi\Productivity\ChecklistItem', 'parent_id');
-    // }
+    public function sub_items()
+    {
+      return $this->hasMany('Oburatongoi\Productivity\ChecklistItem', 'parent_id');
+    }
+
+    public function getModelAttribute()
+    {
+      return $this->attributes['model'] = 'checklist-item';
+    }
 
     protected $touches = [
       'checklist',

@@ -9,7 +9,8 @@
           aria-hidden="true"
           v-if="selected.checklistItems.length > 1"
           @click="removeItem({ model: 'checklist-item', listing: item, preserveState: true })"
-          v-tooltip.bottom="'Remove this item'"
+          :id="'checklist-item-'+item.id"
+          v-tooltip.bottom="{ content: 'Remove this item', classes: parentModel, trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id }"
         />
       </span>
     </template>

@@ -28,7 +28,7 @@
       </button>
     </template>
 
-    <form class="create-new-form" v-if="creatingNew" @submit.prevent="submitForm">
+    <form class="create-new-form" v-if="creatingNew" @submit.prevent="submitForm" autocomplete="off">
       <div class="row">
         <div class="input-wrap col-md-6">
           <input type="text" class="create-new-input" v-model="resource.name" v-if="creatingNew=='folder'" placeholder="Name" maxlength="255" v-focus>
@@ -54,7 +54,7 @@ export default {
       resource: {
         name: undefined,
         title: undefined,
-        folder_id: Productivity.currentFolder ? Productivity.currentFolder.id : {}
+        folder_id: Productivity.currentFolder ? Productivity.currentFolder.id : null
       }
     }
   },
@@ -78,6 +78,8 @@ export default {
   },
   methods: {
     ...mapActions([
+      'addChecklist',
+      'addFolder',
       'storeFolder',
       'storeChecklist',
       // 'storeNote',
@@ -92,29 +94,25 @@ export default {
 
       switch (this.creatingNew) {
         case 'folder':
-          this.storeFolder(this.resource).then(
-            (response) => {
-              this.createNew(undefined)
-              this.toggleCreatingNewButtons()
-              this.resetForm()
-            },
-            (response) => {
-              alert('error creating folder')
-            }
-          )
+          this.storeFolder(this.resource)
+              .then( (folder) => {
+                  this.addFolder(folder)
+                  this.createNew(undefined)
+                  this.toggleCreatingNewButtons()
+                  this.resetForm()
+                })
+              .catch( (error) => console.log('error creating folder') )
           break;
 
         case 'list':
-          this.storeChecklist(this.resource).then(
-            (response) => {
-              this.createNew(undefined)
-              this.toggleCreatingNewButtons()
-              this.resetForm()
-            },
-            (response) => {
-              alert('error creating list')
-            }
-          )
+          this.storeChecklist(this.resource)
+              .then( (checklist) => {
+                this.addChecklist(checklist)
+                this.createNew(undefined)
+                this.toggleCreatingNewButtons()
+                this.resetForm()
+              })
+              .catch( (error) => console.log('error creating list') )
           break;
 
         // case 'note':

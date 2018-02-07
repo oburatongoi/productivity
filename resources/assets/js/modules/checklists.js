@@ -39,8 +39,6 @@ const state = {
     unfilteredItems: [],
     editableItem: {},
     subItemChain: [],
-    editableItemIsExpanded: false,
-    editableSubItemIsExpanded: false,
     delistedItems: [],
     filters: {
         checked: 'unchecked',
@@ -61,29 +59,18 @@ const mutations = {
     },
     [ADD_UNFILTERED] (state, item) {
       if( ! state.unfilteredItems.includes(item.id) ) {
-        state.unfilteredItems.unshift(item.id)
+        state.unfilteredItems.splice(0, 0, item.id)
       }
     },
     [ADD_ITEM_TO_CHECKLIST] (state, item) {
-      state.checklistItems.push(item)
+      state.checklistItems.splice(state.checklistItems.length, 0, item)
     },
     [ADD_SUB_ITEM_TO_CHECKLIST_ITEM] (state, payload) {
-      // First, check for parent in checklistItems array
-      let parent = payload.parent || findChecklistItemParent(state.checklistItems, payload.parent.id)
-      // ...next, check in the editableSubItem and then the editableItem
-      if ( ! parent && ! _.isEmpty(state.subItemChain[0].children) ) parent = findChecklistItemParent(state.subItemChain[0].children, payload.parent.id)
-      if ( ! parent && ! _.isEmpty(state.editableItem.children) ) parent = findChecklistItemParent(state.editableItem.children, payload.parent.id)
-
-      if( parent )
-        if(parent.children !== undefined) parent.children.push(payload.child)
-        else parent['children'] = payload.child
-      // else console.log('parent not found');
+      if(payload.parent.sub_items == undefined) Vue.set(payload.parent, 'sub_items', [])
+      payload.parent.sub_items.splice(payload.parent.sub_items.length, 0, payload.child)
     },
-    [DECREMENT_ITEM_COUNT] (state, checklistID) {
-      if ( ! _.isEmpty(state.checklists) ) {
-        let i = _.findIndex(state.checklists, ['id', checklistID]);
-        state.checklists[i].items_count = -- state.checklists[i].items_count
-      }
+    [DECREMENT_ITEM_COUNT] (state, checklistItem) {
+      if(checklistItem.items_count) Vue.set(checklistItem, 'items_count', -- checklistItem.items_count)
     },
     [DELETE_CHECKLIST] (state, checklist) {
       if ( ! _.isEmpty(state.checklists) )
@@ -98,21 +85,21 @@ const mutations = {
         // First, check for parent in checklistItems array
         haystack = findChecklistItemParent(state.checklistItems, checklistItem.parent_id)
         // ...next, check in the editableSubItem and then the editableItem
-        if ( ! haystack && ! _.isEmpty(state.subItemChain[0].children) ) haystack = findChecklistItemParent(state.subItemChain[0].children, checklistItem.parent_id)
-        if ( ! haystack && ! _.isEmpty(state.editableItem.children) ) haystack = findChecklistItemParent(state.editableItem.children, checklistItem.parent_id)
+        if ( ! haystack && ! _.isEmpty(state.subItemChain[0].sub_items) ) haystack = findChecklistItemParent(state.subItemChain[0].sub_items, checklistItem.parent_id)
+        if ( ! haystack && ! _.isEmpty(state.editableItem.sub_items) ) haystack = findChecklistItemParent(state.editableItem.sub_items, checklistItem.parent_id)
 
         // remove it from editableItem or editableSubItem editableSubItem (fixes checklistitem tree not reflecting changes)
         if (state.editableItem.id == checklistItem.parent_id) {
-          state.editableItem.children.splice(_.findIndex(state.editableItem.children, ['id', checklistItem.id]), 1)
+          state.editableItem.sub_items.splice(_.findIndex(state.editableItem.sub_items, ['id', checklistItem.id]), 1)
         } else if (state.subItemChain[0].id == checklistItem.parent_id) {
-          state.subItemChain[0].children.splice(_.findIndex(state.subItemChain[0].children, ['id', checklistItem.id]), 1)
+          state.subItemChain[0].sub_items.splice(_.findIndex(state.subItemChain[0].sub_items, ['id', checklistItem.id]), 1)
         }
       }
       index = _.findIndex(haystack, ['id', checklistItem.id])
       if (! _.isEmpty(haystack) && index !== -1) haystack.splice(index, 1)
     },
     [DELIST_CHECKLIST_ITEM] (state, checklistItem) {
-      state.delistedItems.unshift(checklistItem.id)
+      state.delistedItems.splice(0, 0, checklistItem.id)
     },
     [DELETE_UNFILTERED] (state, item = null) {
       if (!! item && !! item.id) {
@@ -130,96 +117,58 @@ const mutations = {
           payload.array.splice(0, _.findIndex(state.subItemChain, ['id', payload.item.id]))
         } else { // removes the item from the array
           let i = _.findIndex(payload.array, ['id', payload.item.id]);
-          !! ~ i && payload.array.splice(i,1)
+          ~ i && payload.array.splice(i,1)
         }
       }
     },
-    [SET_EDITABLE_CHECKLIST_ITEM] (state, item) {
-      state.editableItem = item || {}
+    [SET_EDITABLE_CHECKLIST_ITEM] (state, item = {}) {
+      Vue.set(state, 'editableItem', item)
     },
     [SET_EDITABLE_CHECKLIST_ITEM_COMMENTS] (state, payload) {
-      if (payload.isSubItem) state.subItemChain[0].comments = payload.html
-      else state.editableItem.comments = payload.html
+      Vue.set(payload.item, 'comments', payload.html)
     },
     [SET_CHECKLIST_ITEM_DEADLINE] (state, payload) {
-      let item
-      if (payload.isSubItem) {
-        if (!! state.subItemChain[0].id && state.subItemChain[0].id == payload.item.id) item = state.subItemChain[0]
-        else {
-          item = findChildItem( state.editableItem.children, payload.item.id )
-          if( ! item ) item = findChildItem( state.subItemChain[0].children, payload.item.id)
-        }
-      } else { // If not a subItem
-        if (!! state.editableItem.id && state.editableItem.id == payload.item.id) item = state.editableItem
-        else item = findChildItem( state.checklistItems, payload.item.id )
-      }
-
-      if( !! item ) item.deadline = payload.date ? moment(payload.date).format('YYYY-MM-DD') : null
+      Vue.set(payload.item, 'deadline', payload.date ? moment(payload.date).format('YYYY-MM-DD') : null)
     },
     [SORT_CHECKLIST_ITEMS] (state) {
       state.checklistItems = sort(state.checklistItems).asc(i => i.sort_order)
     },
     [SORT_SUB_CHECKLIST_ITEMS] (state, payload) {
-
-      let parent = findChecklistItemParent(state.checklistItems, payload.parent.id)
-
-      if( parent && !! parent.children.length ) {
-        sort(parent.children).asc(item => item.sort_order)
+      if( payload.parent.sub_items.length ) {
+        sort(payload.parent.sub_items).asc(item => item.sort_order)
       }
     },
-    [TOGGLE_ITEM_CHECK_MARK] (state, payload = {isSubItem: false}) {
-      if (payload.isSubItem) {
-        state.subItemChain[0].checked_at = state.subItemChain[0].checked_at ? null : moment().format()
-      } else {
-        state.editableItem.checked_at = state.editableItem.checked_at ? null : moment().format()
-      }
+    [TOGGLE_ITEM_CHECK_MARK] (state, item) {
+      Vue.set(item, 'checked_at', item.checked_at ? null : moment().format())
     },
-    [TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION] (state, payload = {isSubItem: false}) {
-      if (payload.isSubItem) {
-        state.editableSubItemIsExpanded = ! state.editableSubItemIsExpanded
-      } else {
-        state.editableSubItemIsExpanded = false
-        state.editableItemIsExpanded = ! state.editableItemIsExpanded
-      }
+    [TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION] (state, item) {
+      if(item.isExpanded == undefined) Vue.set(item, 'isExpanded', true)
+      else Vue.set(item, 'isExpanded', ! item.isExpanded)
     },
-    [TOGGLE_CHECKLIST_ITEM_IMPORTANCE] (state, payload = {isSubItem: false}) {
-      if (payload.isSubItem) {
-        console.log('is sub item');
-        let i = _.findIndex(state.editableItem.children, ['id', payload.item.id]);
-        state.editableItem.children[i].is_important = ! state.editableItem.children[i].is_important
-      } else {
-        console.log('is not sub item');
-        let i = _.findIndex(state.checklistItems, ['id', payload.item.id]);
-        state.checklistItems[i].is_important = ! state.checklistItems[i].is_important
-      }
+    [TOGGLE_CHECKLIST_ITEM_IMPORTANCE] (state, item) {
+      Vue.set(item, 'is_important', ! item.is_important)
     },
-    [TOGGLE_CHECKLIST_ITEM_URGENCY] (state, payload = {isSubItem: false}) {
-      if (payload.isSubItem) {
-        let i = _.findIndex(state.editableItem.children, ['id', payload.item.id]);
-        state.editableItem.children[i].is_urgent = ! state.editableItem.children[i].is_urgent
-      } else {
-        let i = _.findIndex(state.checklistItems, ['id', payload.item.id]);
-        state.checklistItems[i].is_urgent = ! state.checklistItems[i].is_urgent
-      }
+    [TOGGLE_CHECKLIST_ITEM_URGENCY] (state, item) {
+      Vue.set(item, 'is_urgent', ! item.is_urgent)
     },
     [UNDO_UPDATE_SORT_ORDER] (state) {
       // Maybe use https://github.com/pinguinjkeke/vue-local-storage or some other way to store/retrieve items
     },
     [UNSET_EDITABLE_CHECKLIST_ITEM] (state) {
-      state.editableItem = {}
+      Vue.set(state, 'editableItem', {})
     },
     [UPDATE_FILTERS] (state, payload) {
       switch (payload.type) {
         case 'checked':
-          state.filters.checked = payload.value
+          Vue.set(state.filters, 'checked', payload.value)
           break;
         case 'priority':
-          state.filters.priority = payload.value
+          Vue.set(state.filters, 'priority', payload.value)
           break;
       }
     },
     [UPDATE_CHECKLIST] (state, updatedChecklist) {
-      if (!! updatedChecklist.title) state.checklist = updatedChecklist
+      Vue.set(state, 'checklist', updatedChecklist)
     },
     [UPDATE_CHECKLIST_ITEM] (state, item) {
       let newItem = item.new,
@@ -227,23 +176,23 @@ const mutations = {
           isSubItem = !! newItem.parent_id,
           wasSubitem = !! oldItem.parent_id,
           parentItem = isSubItem ? state.checklistItems.find(checklistItem => checklistItem.id == item.new.parent_id) : null,
-          source = wasSubitem ? state.editableItem.children : state.checklistItems,
-          destination = ! isSubItem ? state.checklistItems : parentItem ? parentItem.children : null,
+          source = wasSubitem ? state.editableItem.sub_items : state.checklistItems,
+          destination = ! isSubItem ? state.checklistItems : parentItem ? parentItem.sub_items : null,
           index = _.findIndex(source, ['id', oldItem.id])
 
       if (isSubItem == wasSubitem) {
         if (source) source.splice(index, 1, newItem)
       } else {
         if (source) source.splice(index, 1)
-        if (destination) destination.push(newItem)
+        if (destination) destination.splice(destination.length, 0, newItem)
       }
 
       if (! wasSubitem) { // If the old item was not a subitem, update item counts
         let oldChecklist = state.checklists.find(checklist => checklist.id == oldItem.checklist_id)
-        if (oldChecklist) oldChecklist.items_count = -- oldChecklist.items_count
+        if (oldChecklist) Vue.set(oldChecklist, 'items_count', -- oldChecklist.items_count)
 
         let newChecklist = state.checklists.find(checklist => checklist.id == newItem.checklist_id)
-        if (newChecklist) newChecklist.items_count = ++ newChecklist.items_count
+        if (newChecklist) Vue.set(newChecklist, 'items_count', -- newChecklist.items_count)
       }
 
     },
@@ -255,83 +204,33 @@ const mutations = {
     [UPDATE_SUB_ITEM_SORT_ORDER] (state, payload) {
       let p = _.findIndex(state.checklistItems, ['id', payload.parent.id]);
 
-      for (var i = 0; i < state.checklistItems[p].children.length; i++) {
-      state.checklistItems[p].children[i].sort_order = i
+      for (var i = 0; i < state.checklistItems[p].sub_items.length; i++) {
+      state.checklistItems[p].sub_items[i].sort_order = i
       }
     },
 }
 
 const actions = {
-  addChecklistItem({dispatch, commit}, payload) {
+  addChecklist({commit}, checklist) {
       return new Promise((resolve, reject) => {
-          axios.post('/lists/' + payload.parent.fake_id + '/add-item', {item:payload.item})
-               .then( response => dispatch('addChecklistItemHandler', response)
-                                    .then( response => resolve(response) ) )
+        commit(ADD_CHECKLIST, checklist)
+        resolve()
       })
   },
-  addChecklistItemHandler({commit}, response) {
-    return new Promise((resolve, reject) => {
-      if (response.data.tokenMismatch) {
-          Vue.handleTokenMismatch(response.data)
-          .then( (response) => {
-                  if (response.data.item) {
-                      commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
-                      commit(SORT_CHECKLIST_ITEMS)
-                      commit(ADD_UNFILTERED, response.data.item)
-                      resolve(response.data.item)
-                  } else if (response.data.error) {
-                      reject(response.data.error)
-                  } else {
-                      reject()
-                  }
-              } )
-          .catch( error => reject(error) )
-      } else if (response.data.item) {
-          commit(ADD_ITEM_TO_CHECKLIST, response.data.item)
-          commit(SORT_CHECKLIST_ITEMS)
-          commit(ADD_UNFILTERED, response.data.item)
-          resolve(response.data.item)
-      } else if (response.data.error) {
-          reject(response.data.error)
-      } else {
-          reject()
-      }
-    })
-  },
-  addSubChecklistItem({dispatch, commit}, payload) {
+  addChecklistItem({commit}, item) {
       return new Promise((resolve, reject) => {
-          axios.post('/lists/item/' + payload.parent.id + '/add-sub-item', {item:payload.item})
-               .then( response => dispatch('addSubChecklistItemHandler', {parent:payload.parent, response:response})
-                                    .then( response => resolve(response) ) )
+        commit(ADD_ITEM_TO_CHECKLIST, item)
+        commit(SORT_CHECKLIST_ITEMS)
+        commit(ADD_UNFILTERED, item)
+        resolve()
       })
   },
-  addSubChecklistItemHandler({commit}, payload) {
-    return new Promise((resolve, reject) => {
-      let parent = payload.parent;
-      if (payload.response.data.tokenMismatch) {
-          Vue.handleTokenMismatch(payload.response.data)
-          .then( (response) => {
-                  if (response.data.item) {
-                      commit(ADD_SUB_ITEM_TO_CHECKLIST_ITEM, {parent, child: response.data.item})
-                      commit(SORT_SUB_CHECKLIST_ITEMS, {parent})
-                      resolve(response.data.item)
-                  } else if (response.data.error) {
-                      reject(response.data.error)
-                  } else {
-                      reject()
-                  }
-              } )
-          .catch( error => reject(error) )
-      } else if (payload.response.data.item) {
-          commit(ADD_SUB_ITEM_TO_CHECKLIST_ITEM, {parent, child: payload.response.data.item})
-          commit(SORT_SUB_CHECKLIST_ITEMS, {parent})
-          resolve(payload.response.data.item)
-      } else if (payload.response.data.error) {
-          reject(payload.response.data.error)
-      } else {
-          reject()
-      }
-    })
+  addSubChecklistItem({commit}, payload) {
+      return new Promise((resolve, reject) => {
+        commit(ADD_SUB_ITEM_TO_CHECKLIST_ITEM, { parent: payload.parent, child: payload.child })
+        commit(SORT_SUB_CHECKLIST_ITEMS, { parent: payload.parent })
+        resolve()
+      })
   },
   addCurrentlyEditable({commit, state}, payload = {item: null, isSubItem: false}) {
       return new Promise((resolve, reject) => {
@@ -386,7 +285,7 @@ const actions = {
         () => dispatch('deselect', { model: 'checklist-item', listing: checklistItem }, {root: true}).then(
           () => dispatch('removeCurrentlyEditable', {isSubItem: isSubItem}).then(
             () => {
-              commit(DECREMENT_ITEM_COUNT, checklistItem.checklist_id)
+              commit(DECREMENT_ITEM_COUNT, checklistItem)
               commit(DELETE_CHECKLIST_ITEM, checklistItem)
               commit(UPDATE_SORT_ORDER)
               dispatch('saveSortOrder', {checklistItems: state.checklistItems, parent: state.checklist, parentModel})
@@ -412,9 +311,8 @@ const actions = {
   },
   removeCurrentlyEditable({commit, state, dispatch, getters}, payload = {isSubItem: false, deselect: false, removePrecedingSubItems: false, item: null }) {
       return new Promise((resolve, reject) => {
-        if (payload.isSubItem && state.editableSubItemIsExpanded || ! payload.isSubItem && state.editableItemIsExpanded || ! payload.isSubItem && state.editableSubItemIsExpanded) {
-          commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION, payload)
-        }
+        if (payload.item && payload.item.isExpanded) commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION, payload.item)
+
         if (!! payload.deselect) {
           let listing = payload.isSubItem ? getters.editableItem : state.editableItem
           dispatch('deselect', {listing, model: 'checklist-item', preserveState: true}, {root: true})
@@ -425,9 +323,7 @@ const actions = {
             removeAll = ! payload.isSubItem,
             inSubItemChain = item && payload.isSubItem && _.some(getters.subItemChain, ['id', item.id])
 
-        if (! payload.isSubItem) {
-          commit(UNSET_EDITABLE_CHECKLIST_ITEM)
-        }
+        if (! payload.isSubItem) commit(UNSET_EDITABLE_CHECKLIST_ITEM)
 
         // If the item is in the subItemChain,
         if ( inSubItemChain || removeAll ) {
@@ -448,6 +344,68 @@ const actions = {
         resolve(item)
     })
   },
+  resizeInput({}) {
+    Vue.nextTick(function(){
+      let count = 1,
+          minWidth = 275;
+
+      for (let form of document.getElementsByClassName('item-form')) {
+        let content = form.querySelector('.item-form-content'),
+            input = form.querySelector('.item-form-input'),
+            icon = form.querySelector('.item-form-icon'),
+            meta = form.querySelector('.item-form-meta');
+
+        let resetStyles = function() {
+          if (icon) icon.style = ''
+          if (meta) meta.style = ''
+          if (content) content.style = ''
+          if (input) input.style = ''
+        }
+
+        resetStyles()
+
+        let formWidth = form ? $(form).outerWidth(true) : 0,
+            contentWidth = content ? $(content).outerWidth(true) : 0,
+            inputWidth = input ? $(input).outerWidth(true) : 0,
+            iconWidth = icon ? $(icon).outerWidth(true) : 0,
+            metaWidth = meta ? $(meta).outerWidth(true) : 0;
+
+        // console.log('formWidth = '+formWidth);
+        // console.log('contentWidth = '+contentWidth);
+        // console.log('inputWidth = '+inputWidth);
+        // console.log('iconWidth = '+iconWidth);
+        // console.log('metaWidth = '+metaWidth);
+
+        let computedContentWidth = contentWidth > minWidth && formWidth - metaWidth > minWidth ? formWidth - metaWidth : null;
+
+        let computedInputWidth = computedContentWidth && computedContentWidth - iconWidth - 10 >= minWidth ? computedContentWidth - iconWidth - 10 : null;
+
+
+
+        // console.log('form number '+ count);
+        count ++
+
+        if(computedContentWidth) {
+          content.style.width = computedContentWidth+'px'
+        };
+
+        if(computedInputWidth) {
+          input.style.width = computedInputWidth+'px'
+        } else {
+          icon.style.display = 'none'
+          content.style.padding = '0'
+          content.style.width = input.style.width = '100%'
+          if (meta) {
+            meta.style.width = '100%'
+            meta.style.position = 'relative'
+            meta.style.display = 'block'
+            meta.style.borderLeft = '0'
+            meta.style.borderTop = '1px solid #ccd0d2'
+          }
+        };
+      }
+    })
+  }, // End resizeInput
   saveChecklist({ dispatch, commit }, checklist) {
       return new Promise((resolve, reject) => {
         axios.patch('/lists/'+checklist.fake_id, {checklist:checklist})
@@ -484,19 +442,12 @@ const actions = {
 
     })
   },
-  saveChecklistItem({dispatch, commit, state, getters}, payload = { item: null, isSubItem: false }) {
+  saveChecklistItem({dispatch, commit, state, getters}, item) {
       return new Promise((resolve, reject) => {
-        let item = payload.item
-        if( ! item ) item = payload.isSubItem ? getters.editableSubItem : state.editableItem
-
-        if (!! item) {
-          commit(ADD_UNFILTERED, item)
-          axios.patch('/lists/item/' + item.id + '/update', {item:item})
-               .then( response => resolve(dispatch('saveChecklistItemHandler', response)) )
-               .catch( error => reject(error) )
-        } else {
-          reject('There is no item or currently editable item')
-        }
+        commit(ADD_UNFILTERED, item)
+        axios.patch('/lists/item/' + item.id + '/update', { item })
+             .then( response => resolve(dispatch('saveChecklistItemHandler', response)) )
+             .catch( error => reject(error) )
       })
   },
   checkChecklistItem({dispatch, commit}, item) {
@@ -547,7 +498,7 @@ const actions = {
   setChecklistItemDeadline({dispatch, commit, state}, payload = {item: null, date: null, isSubItem: false}) {
       return new Promise((resolve, reject) => {
         commit(SET_CHECKLIST_ITEM_DEADLINE, payload)
-        dispatch('saveChecklistItem', payload)
+        dispatch('saveChecklistItem', payload.item)
         .then( success => resolve(success) )
         .catch( error => {
           dispatch(
@@ -563,7 +514,7 @@ const actions = {
         })
       })
   },
-  setCurrentEditableItemComments({dispatch, commit}, payload = {html: null, isSubItem: false}) {
+  setCurrentEditableItemComments({dispatch, commit}, payload = { html: null, item: null }) {
       return new Promise((resolve, reject) => {
         commit(SET_EDITABLE_CHECKLIST_ITEM_COMMENTS, payload)
         resolve()
@@ -616,19 +567,39 @@ const actions = {
       if (response.data.tokenMismatch) {
           Vue.handleTokenMismatch(response.data)
              .then( response => {
-                if (response.data.checklist) {
-                    commit(ADD_CHECKLIST, response.data.checklist)
-                    resolve(response.data.checklist)
-                } else if (response.data.error) {
-                    reject(response.data.error)
-                } else {
-                    reject()
-                }
+                if (response.data.checklist) resolve(response.data.checklist)
+                else if (response.data.error) reject(response.data.error)
+                else reject()
               })
-              .catch( error => reject(error) )
-      } else if (response.data.checklist) {
-          commit(ADD_CHECKLIST, response.data.checklist)
-          resolve(response.data.checklist)
+              .catch( error => reject(error) )}
+      else if (response.data.checklist) resolve(response.data.checklist)
+      else if (response.data.error) reject(response.data.error)
+      else reject()
+    })
+  },
+  storeChecklistItem({dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post('/lists/' + payload.parent.fake_id + '/add-item', { item:payload.item })
+               .then( response => resolve( dispatch('storeChecklistItemHandler', response) ) )
+               .catch( error => console.log(error) )
+      })
+  },
+  storeChecklistItemHandler({commit}, response) {
+    return new Promise((resolve, reject) => {
+      if (response.data.tokenMismatch) {
+          Vue.handleTokenMismatch(response.data)
+          .then( (response) => {
+                  if (response.data.item) {
+                      resolve(response.data.item)
+                  } else if (response.data.error) {
+                      reject(response.data.error)
+                  } else {
+                      reject()
+                  }
+              } )
+          .catch( error => reject(error) )
+      } else if (response.data.item) {
+          resolve(response.data.item)
       } else if (response.data.error) {
           reject(response.data.error)
       } else {
@@ -636,49 +607,61 @@ const actions = {
       }
     })
   },
-  toggleItemCheckMark({ dispatch, commit, state, getters }, payload) {
+  storeSubChecklistItem({dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post('/lists/item/' + payload.parent.id + '/add-sub-item', { item:payload.item })
+               .then( response => resolve( dispatch('storeSubChecklistItemHandler', { parent:payload.parent, response:response }) ) )
+               .catch( error => console.log(error) )
+      })
+  },
+  storeSubChecklistItemHandler({commit}, payload) {
     return new Promise((resolve, reject) => {
-      if (!payload.item) payload.item = payload.isSubItem ? getters.editableItem : state.editableItem ? state.editableItem  : null
-      commit(TOGGLE_ITEM_CHECK_MARK, payload)
-      dispatch('saveChecklistItem', payload)
+      let parent = payload.parent;
+      if (payload.response.data.tokenMismatch) {
+          Vue.handleTokenMismatch(payload.response.data)
+          .then( (response) => {
+                  if (response.data.item) {
+                      resolve(response.data.item)
+                  } else if (response.data.error) {
+                      reject(response.data.error)
+                  } else {
+                      reject()
+                  }
+              } )
+          .catch( error => reject(error) )
+      } else if (payload.response.data.item) {
+          resolve(payload.response.data.item)
+      } else if (payload.response.data.error) {
+          reject(payload.response.data.error)
+      } else {
+          reject()
+      }
+    })
+  },
+  toggleItemCheckMark({ dispatch, commit, state, getters }, item) {
+    return new Promise((resolve, reject) => {
+      commit(TOGGLE_ITEM_CHECK_MARK, item)
+      dispatch('saveChecklistItem', item)
         .then( () => resolve() )
         .catch( error => reject(error) )
     })
   },
-  toggleCurrentEditableItemExpansion({ commit }, payload) {
+  toggleCurrentEditableItemExpansion({ commit }, item) {
     return new Promise((resolve, reject) => {
-        commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION, payload)
+        commit(TOGGLE_CURRENT_EDITABLE_ITEM_EXPANSION, item)
         resolve()
     })
   },
-  toggleChecklistItemImportance({ dispatch, commit, state, getters }, payload) {
+  toggleChecklistItemImportance({ dispatch, commit }, item) {
     return new Promise((resolve, reject) => {
-      if(! payload.item) {
-        if (payload.isSubItem) {
-          payload.item = getters.editableItem.id !== undefined ? getters.editableItem : reject('There is no item or currently editable sub item')
-        } else {
-          payload.item = state.editableItem.id !== undefined ? state.editableItem : reject('There is no item or currently editable item')
-        }
-      }
-      commit(TOGGLE_CHECKLIST_ITEM_IMPORTANCE, payload)
-      dispatch('saveChecklistItem', payload)
-      .then( () => resolve() )
-      .catch( (error) => reject(error) )
+      commit(TOGGLE_CHECKLIST_ITEM_IMPORTANCE, item)
+      resolve( dispatch('saveChecklistItem', item) )
     })
   },
-  toggleChecklistItemUrgency({ dispatch, commit, state, getters }, payload) {
+  toggleChecklistItemUrgency({ dispatch, commit }, item) {
     return new Promise((resolve, reject) => {
-      if(! payload.item) {
-        if (payload.isSubItem) {
-          payload.item = getters.editableItem.id !== undefined ? getters.editableItem : reject('There is no item or currently editable sub item')
-        } else {
-          payload.item = state.editableItem.id !== undefined ? state.editableItem : reject('There is no item or currently editable item')
-        }
-      }
-      commit(TOGGLE_CHECKLIST_ITEM_URGENCY, payload)
-      dispatch('saveChecklistItem', payload)
-      .then( () => resolve() )
-      .catch( (error) => reject(error) )
+      commit(TOGGLE_CHECKLIST_ITEM_URGENCY, item)
+      resolve( dispatch('saveChecklistItem', item) )
     })
   },
   updateSortOrder({ commit, state, dispatch }, payload) {
@@ -709,8 +692,6 @@ const getters = {
     delistedItems: state => state.delistedItems,
     editableItem: state => state.editableItem,
     editableSubItem: state => state.subItemChain[0] || {},
-    editableItemIsExpanded: state => state.editableItemIsExpanded,
-    editableSubItemIsExpanded: state => state.editableSubItemIsExpanded,
     filters: state => state.filters,
     subItemChain: state => state.subItemChain,
     unfilteredItems: state => state.unfilteredItems,
@@ -721,8 +702,8 @@ function findChecklistItemParent(itemsArray, parentId) {
   if(!! parent) return parent
   else {
     for (let item of itemsArray) {
-      if( !! item.children.length ) {
-        parent = findChecklistItemParent(item.children, parentId)
+      if( item.sub_items && item.sub_items.length ) {
+        parent = findChecklistItemParent(item.sub_items, parentId)
           if(!! parent) return parent
       }
     }
@@ -730,13 +711,14 @@ function findChecklistItemParent(itemsArray, parentId) {
   return parent // will return 'undefined'
 } // end findChecklistItemParent
 
+/* To recursively find a child item */
 function findChildItem(itemsArray, childId) {
   let child = itemsArray.find(item => item.id == childId)
   if(!! child) return child
   else {
-    for (let item of itemsArray.children) {
-      if( !! item.children.length ) {
-        child = findChildItem(item.children, childId)
+    for (let item of itemsArray.sub_items) {
+      if( !! item.sub_items.length ) {
+        child = findChildItem(item.sub_items, childId)
           if(!! child) return child
       }
     }

@@ -13,7 +13,7 @@
         {{ currentFolder.name }}
       </span>
 
-      <form class="form-horizontal add-folder-form" v-if="addingFolder" @submit.prevent="createNewFolder">
+      <form class="form-horizontal add-folder-form" v-if="addingFolder" @submit.prevent="createNewFolder" autocomplete="off">
         <div class="add-folder-form-input">
           <input type="text" class="form-control input-sm" v-focus v-model="newFolder.name" placeholder="New Folder Name" maxlength="255">
         </div>
@@ -218,7 +218,7 @@ export default {
       axios.post('/'+folder.fake_id+'/fetch-new-tree')
       .then( response => {
         this.refreshCurrentFolder(response.data.folder)
-        this.refreshFolders(response.data.folder.children)
+        this.refreshFolders(response.data.folder.subfolders)
       })
       .catch( error => this.setInfoMessage('An error has occurred. Please refresh this page.', 'error') )
     },
@@ -261,7 +261,7 @@ export default {
       this.isLoading = false
       this.resetInfoMessage()
       freshFolders ? this.folders = freshFolders : this.folders = {}
-      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no children', 'info')
+      if (_.isEmpty(freshFolders)) this.setInfoMessage('This folder has no subfolders', 'info')
     },
     refreshCurrentFolder: function(folder) {
       return folder.id ? this.currentFolder = folder : this.setInfoMessage('The folder could not be retrieved', 'error')
@@ -434,7 +434,7 @@ export default {
             display: inline-block;
             span.footer-text {
                 color: $folder-primary;
-                font-weight: 600;
+                font-weight: $font-weight-bold;
             }
         }
         .toggle-add-folder-btn {

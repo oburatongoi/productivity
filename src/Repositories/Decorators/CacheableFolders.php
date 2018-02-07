@@ -20,23 +20,30 @@ class CacheableFolders implements FoldersInterface {
 
     public function forUser(User $user)
     {
-        // return Cache::remember('user.'.$user->id.'.allFolders', 60 * 60, function() use ($user) {
-            return $this->folders->forUser($user);
-        // });
+      // return Cache::remember('user.'.$user->id.'.allFolders', 60 * 60, function() use ($user) {
+          return $this->folders->forUser($user);
+      // });
     }
 
     public function rootForUser(User $user)
     {
-        // return Cache::remember('user.'.$user->id.'.rootFolders', 60 * 60, function() use ($user) {
-            return $this->folders->rootForUser($user);
-        // });
+      // return Cache::remember('user.'.$user->id.'.rootFolders', 60 * 60, function() use ($user) {
+          return $this->folders->rootForUser($user);
+      // });
     }
 
     public function rootForFolder(User $user, Folder $folder)
     {
-        // return Cache::remember('user.'.$user->id.'.folder.'.$folder->id.'.subFolders', 60 * 60, function() use ($user, $folder) {
-            return $this->folders->rootForFolder($user, $folder);
-        // });
+      // return Cache::remember('user.'.$user->id.'.folder.'.$folder->id.'.subFolders', 60 * 60, function() use ($user, $folder) {
+          return $this->folders->rootForFolder($user, $folder);
+      // });
+    }
+
+    public function getKanbanDescendants($nestedKanban)
+    {
+      // return Cache::remember('folder.'.$nestedKanban->id.'.kanbanDescendants', 60 * 60, function() use ($nestedKanban) {
+          return $this->folders->getKanbanDescendants($nestedKanban);
+      // });
     }
 
 }

@@ -70,7 +70,7 @@ class SelectionController extends Controller
     {
 
       try {
-        $relations = ['folder', 'children'];
+        $relations = ['folder', 'subfolders'];
 
         if ($request->has('includeChecklists')) $relations[] = 'checklists';
 
@@ -108,7 +108,7 @@ class SelectionController extends Controller
     {
 
       try {
-        $relations = ['checklist', 'children'];
+        $relations = ['checklist', 'sub_items'];
 
         $item->load($relations);
 

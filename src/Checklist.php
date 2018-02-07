@@ -35,6 +35,13 @@ class Checklist extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['model'];
+
+    /**
      * Get the index name for the model.
      *
      * @return string
@@ -54,7 +61,7 @@ class Checklist extends Model
         $array = $this->toArray();
 
         $array['items'] = $this->items->map(function ($data) {
-          return array_only($data->toArray(), ['id', 'content', 'comments', 'children']);
+          return array_only($data->toArray(), ['id', 'content', 'comments', 'sections']);
         })->toArray();
 
         $array = array_only($array, ['id', 'title', 'fake_id', 'folder_id', 'items']);
@@ -67,24 +74,19 @@ class Checklist extends Model
      return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
-    // public function folder()
-    // {
-    //  return $this->belongsTo('Oburatongoi\Productivity\Folder', 'folder_id', 'id');
-    // }
-
-    // public function children()
-    // {
-    //     return $this->hasMany('Oburatongoi\Productivity\Checklist', 'parent_id');
-    // }
-    //
-    // public function parent()
-    // {
-    //     return $this->belongsTo('Oburatongoi\Productivity\Checklist', 'parent_id');
-    // }
-
     public function items()
     {
       return $this->hasMany('Oburatongoi\Productivity\ChecklistItem', 'checklist_id');
+    }
+
+    public function sections()
+    {
+        return $this->hasMany('Oburatongoi\Productivity\Checklist', 'parent_id');
+    }
+
+    public function getModelAttribute()
+    {
+      return $this->attributes['model'] = 'checklist';
     }
 
     protected $touches = ['folder'];

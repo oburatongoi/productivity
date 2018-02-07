@@ -48,7 +48,6 @@ const mutations = {
       if( payload.removePrecedingSubItems ) state[array].splice(0, _.findIndex(state[array], ['id', payload.value.id])) // remove every element that precedes the item
       else state[array].splice(_.findIndex(state[array], ['id', payload.value.id]), 1) // removes the item from the array
     }
-
   },
   [SET_MOVER_VARIABLE] (state, payload = { variable: null, value: null }) {
     let variable = payload.variable
@@ -156,7 +155,7 @@ const actions = {
   },
   fetchChecklistSubItems({ dispatch }, item) {
     return new Promise((resolve, reject) => {
-      axios.post('/lists/items/'+item.id+'/fetch-children')
+      axios.post('/lists/items/'+item.id+'/fetch-sub-items')
            .then( response => resolve( dispatch('fetchChecklistSubItemsHandler', response) ) )
            .catch( error => {
              dispatch('setInfoMessage', { content: 'The following error occurred while fetching items: '+error+'. Please refresh this page.', type: 'error', model: 'checklist-item' })
@@ -169,18 +168,18 @@ const actions = {
       if (response.data.tokenMismatch) {
           Vue.handleTokenMismatch(response.data)
           .then( response => {
-            if ( ! response.data.item.children.length ) {
+            if ( ! response.data.item.sub_items.length ) {
               dispatch('setInfoMessage', { content: 'There are no items at this time.', type: 'info', model: 'checklist-item' })
             }
-            dispatch('refreshChecklistSubItems', { freshChecklistSubItems: response.data.item.children || [], reportEmpty: true })
+            dispatch('refreshChecklistSubItems', { freshChecklistSubItems: response.data.item.sub_items || [], reportEmpty: true })
             resolve()
           })
           .catch( error => reject(error) )
-      } else if (response.data.item.children) {
-        if ( ! response.data.item.children.length ) {
+      } else if (response.data.item.sub_items) {
+        if ( ! response.data.item.sub_items.length ) {
           dispatch('setInfoMessage', { content: 'There are no items at this time.', type: 'info', model: 'checklist-item' })
         }
-        dispatch('refreshChecklistSubItems', { freshChecklistSubItems: response.data.item.children || [], reportEmpty: true })
+        dispatch('refreshChecklistSubItems', { freshChecklistSubItems: response.data.item.sub_items || [], reportEmpty: true })
         resolve()
       } else if (response.data.error) reject(response.data.error)
       else reject()
@@ -245,14 +244,14 @@ const actions = {
           Vue.handleTokenMismatch(response.data)
           .then( response => {
             dispatch('refreshCurrentFolder', response.data.folder)
-            dispatch('refreshFolders', { freshFolders: response.data.folder.children, reportEmpty: true })
+            dispatch('refreshFolders', { freshFolders: response.data.folder.subfolders, reportEmpty: true })
             dispatch('refreshChecklists', { freshChecklists: response.data.folder.checklists, reportEmpty: true })
             resolve()
           })
           .catch( error => reject(error) )
       } else if (response.data.folder) {
         dispatch('refreshCurrentFolder', response.data.folder)
-        dispatch('refreshFolders', { freshFolders: response.data.folder.children, reportEmpty: true })
+        dispatch('refreshFolders', { freshFolders: response.data.folder.subfolders, reportEmpty: true })
         dispatch('refreshChecklists', { freshChecklists: response.data.folder.checklists, reportEmpty: true })
         resolve()
       } else if (response.data.error) reject(response.data.error)
@@ -283,7 +282,7 @@ const actions = {
       dispatch('addToMoverArray', { array: 'openMovableChecklistItemChain', value: item})
       dispatch('setMoverVariable', { variable: 'moverContext', value: 'checklist-item' })
       // dispatch('fetchChecklistSubItems', item)
-      dispatch('refreshChecklistSubItems', { freshChecklistSubItems: item.children || [], reportEmpty: true })
+      dispatch('refreshChecklistSubItems', { freshChecklistSubItems: item.sub_items || [], reportEmpty: true })
       resolve()
     })
   },
@@ -332,7 +331,7 @@ const actions = {
       dispatch('setMoverVariable', { variable: 'moverIsLoading', value: false })
       dispatch('resetInfoMessage', 'folder')
       dispatch('setMoverVariable', { variable: 'movableFolders', value: payload.freshFolders || null })
-      if (payload.reportEmpty && _.isEmpty(payload.freshFolders)) dispatch('setInfoMessage', { content: 'This folder has no children', type: 'info', model: 'folder' })
+      if (payload.reportEmpty && _.isEmpty(payload.freshFolders)) dispatch('setInfoMessage', { content: 'This folder has no subfolders', type: 'info', model: 'folder' })
       resolve()
     })
   },

@@ -9,7 +9,7 @@
       <span>Add {{ model | capitalize }}</span>
     </span>
 
-    <form class="form-horizontal mover-adder-form" v-if="moverIsAdding" @submit.prevent="createNew">
+    <form class="form-horizontal mover-adder-form" v-if="moverIsAdding" @submit.prevent="createNew" autocomplete="off">
       <div class="mover-adder-form-input">
         <input type="text" class="form-control input-sm" v-focus v-model="newMovableFolder.name" placeholder="New Folder Name" maxlength="255" v-if="model=='folder'">
         <input type="text" class="form-control input-sm" v-focus v-model="newMovableChecklist.title" placeholder="New List Title" maxlength="255" v-if="model=='checklist'">

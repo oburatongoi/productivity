@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import Breadcrumbs from '../../components/Breadcrumbs.vue'
-import { createLocalVue, shallow } from 'vue-test-utils';
+import { createLocalVue, shallow } from '@vue/test-utils';
 const localVue = createLocalVue()
 localVue.use(Vuex)
 

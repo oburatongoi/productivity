@@ -8,25 +8,45 @@ use Oburatongoi\Productivity\Interfaces\FoldersInterface;
 
 class Folders implements FoldersInterface {
 
+  public $relationsToLoad = [
+    'checklists:id,fake_id,title,folder_id',
+    'subfolders:id,fake_id,name,parent_id'
+  ];
+
     public function forUser(User $user)
     {
-        return $user->folders()->with('checklists', 'children')->orderBy('name', 'asc')->get();
+        return $user->folders()
+                    ->with($this->relationsToLoad)
+                    ->orderBy('name', 'asc')
+                    ->get();
     }
 
     public function rootForUser(User $user)
     {
         return $user->folders()
                     ->whereNull('parent_id')
-                    // ->orderBy('name', 'desc') // doestn work since values are encrypted
+                    ->with($this->relationsToLoad)
                     ->get();
 
     }
 
     public function rootForFolder(User $user, Folder $folder)
     {
-        return $folder->children()
-                    ->orderBy('name', 'desc')
-                    ->get();
+        return $folder->subfolders()
+                      ->with($this->relationsToLoad)
+                      ->get();
+    }
+
+    public function getKanbanDescendants($nestedKanban)
+    {
+      $folder = Folder::where('id', $nestedKanban['id'])
+                    ->with('checklists:id,fake_id,title,folder_id,list_type', 'subfolders:id,fake_id,name,parent_id')
+                    ->first();
+
+      return [
+        'checklists' => $folder->checklists,
+        'subfolders' => $folder->subfolders
+      ];
     }
 
 }

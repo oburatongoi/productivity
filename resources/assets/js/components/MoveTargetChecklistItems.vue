@@ -45,7 +45,7 @@ export default {
       return this.moverIsLoading || this.checklistItemInfoMessage.content && this.checklistItemInfoMessage.type
     },
     hasChecklistItems: function() {
-      return ! _.isEmpty(this.selectedMovableChecklistItem.children)
+      return ! _.isEmpty(this.selectedMovableChecklistItem.sub_items)
     },
   },
   methods: {

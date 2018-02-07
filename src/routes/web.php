@@ -19,9 +19,11 @@ Route::group(['domain' => '{'.(string)(config('productivity.subdomain')).'}.'.(s
         Route::resource('/folders', 'FolderController', ['except' => ['create', 'edit', 'destroy']]);
         Route::resource('/lists', 'ChecklistController', ['except' => ['create', 'edit', 'destroy']]);
 
+        Route::post('/fetch-nested-kanban-descendants', 'KanbanController@fetchDescendants');
+
         Route::post('/fetch-initial-tree', 'SelectionController@fetchInitialTree');
         Route::post('/{folder}/fetch-new-tree', 'SelectionController@fetchNewTree');
-        Route::post('/lists/items/{item}/fetch-children', 'SelectionController@fetchChildListItems');
+        Route::post('/lists/items/{item}/fetch-sub-items', 'SelectionController@fetchChildListItems');
         Route::post('/lists/{list}/fetch-list-items', 'SelectionController@fetchListItems');
 
         Route::patch('/move-to-folder/{folder}', 'SelectionController@moveToFolder');

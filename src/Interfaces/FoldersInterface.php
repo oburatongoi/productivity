@@ -12,4 +12,6 @@ interface FoldersInterface
 
     public function rootForFolder(User $user, Folder $folder);
 
+    public function getKanbanDescendants($nestedKanban);
+
 }

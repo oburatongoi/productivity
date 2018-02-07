@@ -1,26 +1,5 @@
 <template lang="html">
   <div class="edit-checklist-item-meta">
-    <span class="is-important">
-      <label for="is-important">Important</label>
-      <i v-if="!item.is_important"
-         @click="toggleImportance"
-         class="fa fa-fw fa-star-o"
-         aria-hidden="true"/>
-      <i v-if="item.is_important"
-         @click="toggleImportance"
-         :class="{'folder-color-scheme':item.is_important, 'fa-spin':importanceIsLoading}"
-         class="fa fa-fw fa-star"
-         aria-hidden="true"/>
-    </span>
-
-    <span class="is-urgent">
-      <label for="is-urgent">Urgent</label>
-      <i @click="toggleUrgency"
-        :class="{'folder-color-scheme':item.is_urgent, 'fa-spin':urgencyIsLoading}"
-        class="fa fa-fw fa-clock-o"
-        aria-hidden="true"/>
-    </span>
-
     <span class="deadline">
       <label for="deadline">{{ deadlinePlaceholder }}</label>
       <i @click="showDatePicker"
@@ -49,6 +28,28 @@
           />
         </div>
     </span>
+    
+    <span class="is-important">
+      <label for="is-important">Important</label>
+      <i v-if="!item.is_important"
+         @click="toggleImportance"
+         class="fa fa-fw fa-star-o"
+         aria-hidden="true"/>
+      <i v-if="item.is_important"
+         @click="toggleImportance"
+         :class="{'folder-color-scheme':item.is_important, 'fa-spin':importanceIsLoading}"
+         class="fa fa-fw fa-star"
+         aria-hidden="true"/>
+    </span>
+
+    <span class="is-urgent">
+      <label for="is-urgent">Urgent</label>
+      <i @click="toggleUrgency"
+        :class="{'folder-color-scheme':item.is_urgent, 'fa-spin':urgencyIsLoading}"
+        class="fa fa-fw fa-clock-o"
+        aria-hidden="true"/>
+    </span>
+
   </div>
 </template>
 
@@ -120,13 +121,13 @@ export default {
     },
     toggleImportance: function() {
       this.importanceIsLoading = true
-      this.toggleChecklistItemImportance({isSubItem: this.isSubItem})
+      this.toggleChecklistItemImportance(this.item)
           .then( () => this.importanceIsLoading = false )
           .catch( (error) => console.log(error) )
     },
     toggleUrgency: function() {
       this.urgencyIsLoading = true
-      this.toggleChecklistItemUrgency({isSubItem: this.isSubItem})
+      this.toggleChecklistItemUrgency(this.item)
           .then( () => this.urgencyIsLoading = false )
           .catch( (error) => console.log(error) )
     },

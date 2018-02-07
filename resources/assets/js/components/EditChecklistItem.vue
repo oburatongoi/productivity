@@ -87,18 +87,19 @@
         </div>
 
         <add-item
-          v-if="view=='sub-items'"
-          :parent="item"
-          parent-model="checklist-item"
-        />
+        v-if="view=='sub-items'"
+        :parent="item"
+        parent-model="checklist-item" />
+
       </div>
 
       <div class="panel-body notes" :id="'notes-panel-'+item.id" v-if="view=='notes'">
+
         <edit-checklist-item-comments
-          @saveChanges="saveChanges"
-          :item="item"
-          :is-sub-item="isSubItem"
-        />
+        @saveChanges="saveChanges"
+        :item="item"
+        :is-sub-item="isSubItem" />
+
       </div>
 
       <!-- <div class="panel-footer" :id="'notes-buttons-'+item.id" v-if="view=='notes'">
@@ -110,35 +111,44 @@
       </div> -->
 
       <div class="panel-body sub-items" :id="'sub-items-panel-'+item.id" v-if="view=='sub-items'">
-        <sub-checklist-items
-          :items="item.children"
+
+        <template v-if="item.sub_items">
+
+          <sub-checklist-items
+          :items="item.sub_items"
           :parent="item"
           parent-model="checklist-item"
-          :list-type="item.sub_list_type"
-        />
+          :list-type="item.sub_list_type" />
+
+        </template>
+
       </div>
+
     </div>
+
     <resize-observer @notify="debounceResizeNotes" />
+
   </div>
+
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 
 import AddItem from './AddItem.vue'
 import EditChecklistItemMeta from './EditChecklistItemMeta.vue'
 import EditChecklistItemComments from './EditChecklistItemComments.vue'
-import EditChecklistItemButtons from './EditChecklistItemButtons.vue'
+// import EditChecklistItemButtons from './EditChecklistItemButtons.vue'
 import SubChecklistItems from './SubChecklistItems.vue'
 
 export default {
   name: 'edit-checklist-item',
   components: {
     AddItem,
-      EditChecklistItemMeta,
-      EditChecklistItemComments,
-      EditChecklistItemButtons,
-      SubChecklistItems
+    EditChecklistItemMeta,
+    EditChecklistItemComments,
+    // EditChecklistItemButtons,
+    SubChecklistItems
   },
   props: {
     item: {
@@ -149,7 +159,7 @@ export default {
       type: String,
       default: 'ch'
     },
-    parentModel: {
+    parentContext: {
       type: String,
       default: 'checklist'
     }
@@ -164,10 +174,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'editableItemIsExpanded',
-      'editableSubItemIsExpanded',
-    ]),
     checkboxClass: function() {
       return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
     },
@@ -176,26 +182,24 @@ export default {
     },
     toggleExpansionClass: function() {
       if (this.isSubItem) {
-        return this.editableSubItemIsExpanded ? 'fa-compress' : 'fa-expand'
+        return this.editableSubItem && this.editableSubItem.isExpanded ? 'fa-compress' : 'fa-expand'
       } else {
-        return this.editableItemIsExpanded ? 'fa-compress' : 'fa-expand'
+        return this.editableItem && this.editableItem.isExpanded ? 'fa-compress' : 'fa-expand'
       }
     },
     toggleExpansionTitle: function() {
-      // return this.editableItemIsExpanded || this.editableSubItemIsExpanded ? 'Compress' : 'Expand'
       if (this.isSubItem) {
-        return this.editableSubItemIsExpanded ? 'Shrink' : 'Expand'
+        return this.editableSubItem && this.editableSubItem.isExpanded ? 'Shrink' : 'Expand'
       } else {
-        return this.editableItemIsExpanded ? 'Shrink' : 'Expand'
+        return this.editableItem && this.editableItem.isExpanded ? 'Shrink' : 'Expand'
       }
 
     },
     uncheckedSubItemsCount: function() {
-      // return this.item.children ? _.countBy(this.item.children, i => i.checked_at == null).true : 0
-      return this.item.children.filter( item => item.checked_at == null ).length
+      return this.item.sub_items ? this.item.sub_items.filter( item => item.checked_at == null ).length : 0
     },
     isSubItem: function() {
-      return this.parentModel == 'checklist-item' ? true : false;
+      return this.item.parent_id && ! this.item.checklist_id;
     }
   },
   mounted: function() {
@@ -205,14 +209,26 @@ export default {
   },
   methods: {
     ...mapActions([
+      'closeNestedKanbanPreview',
       'removeCurrentlyEditable',
+      'resizeInput',
       'saveChecklistItem',
       'toggleCurrentEditableItemExpansion',
       'toggleItemCheckMark',
     ]),
     saveAndClose: function() {
       this.saveChanges()
-      this.removeCurrentlyEditable( { isSubItem: this.isSubItem, deselect: true } )
+      switch (this.parentContext) {
+        case 'checklist':
+          this.removeCurrentlyEditable( { isSubItem: this.isSubItem, deselect: true } )
+          break;
+        case 'kanban':
+          this.closeNestedKanbanPreview()
+          break;
+        default:
+
+      }
+
     },
     debounceSaveChanges: _.debounce(function() {
       this.saveChanges()
@@ -221,18 +237,18 @@ export default {
       this.savingChanges = true
       this.resizeNotes()
 
-      this.saveChecklistItem({ isSubItem: this.isSubItem })
+      this.saveChecklistItem(this.item)
       .then( () => this.savingChanges = false )
       .catch( (error) => console.log(error) )
     },
     checkItem: function() {
       this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
-      this.toggleItemCheckMark({isSubItem: this.isSubItem})
+      this.toggleItemCheckMark(this.item)
           .then( () => this.checkboxClassOverride = null )
           .catch( (error) => console.log(error))
     },
     toggleExpansion: function() {
-      this.toggleCurrentEditableItemExpansion({isSubItem: this.isSubItem})
+      this.toggleCurrentEditableItemExpansion(this.item)
     },
     switchView: function(view) {
       this.view = view
@@ -242,6 +258,7 @@ export default {
     },
     debounceResizeNotes: _.debounce(function() {
       this.resizeNotes()
+      this.resizeInput()
     }, 300),
     resizeNotes: function() {
       var panel = document.getElementById('edit-checklist-item-'+this.item.id);
@@ -255,11 +272,8 @@ export default {
 
       var target = document.getElementById(this.view+'-panel-'+this.item.id);
       var notesHeight = panelHeight - (headerHeight+bottomButtonsHeight+topButtonsHeight)
-      if(!! target && !! notesHeight) target.style.height = notesHeight > 200 ? notesHeight+'px' : '200px'
+      if(target && notesHeight) target.style.height = notesHeight > 200 ? notesHeight+'px' : '200px'
     }
-  },
-  emitResize: function() {
-    return this.$eventHub.$emit('resizeInput');
   },
 }
 </script>
@@ -275,6 +289,7 @@ export default {
     font-weight: bold;
 }
 .edit-checklist-item {
+  height: 100%;
     @media(min-width:769px){
         border: 1px solid $brand-primary;
     }
@@ -457,7 +472,7 @@ export default {
         color: darken($base-border-color, 20%);
         font-size: 0.8em;
         font-family: $font-family-sans-serif;
-        font-weight: 600;
+        font-weight: $font-weight-bold;
 
         li {
           cursor: pointer;

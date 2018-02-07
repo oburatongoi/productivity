@@ -6,6 +6,7 @@ import selection from './modules/selection'
 import folders from './modules/folders'
 import checklists from './modules/checklists'
 import search from './modules/search'
+import kanban from './modules/kanban'
 import mover from './modules/mover'
 import notices from './modules/notices'
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         folders,
         checklists,
         search,
+        kanban,
         mover,
         notices
     }

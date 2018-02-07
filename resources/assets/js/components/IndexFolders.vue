@@ -1,18 +1,19 @@
 <template lang="html">
   <ul
-    v-if="folders"
+    v-if="foldersByName"
     class="list-unstyled"
     @click.self="clearSelected"
   >
       <li
-        v-for="folder in folders"
+        v-for="folder in foldersByName"
         class="listing folder-color-scheme"
         :class="{selected: selected.folders.indexOf(folder) !== -1 }"
         draggable="true"
         @click="toggleSelection({selection: {model: 'folder', listing: folder}, event: $event})"
         @dblclick="goToListing('folder', folder.fake_id)"
-        v-tooltip.bottom-left="folder.name"
+        v-tooltip.bottom-start="{ content: folder.name, classes: 'folder', trigger: 'hover', autoHide: false, container: '#folder-'+folder.fake_id }"
         :key="folder.fake_id"
+        :id="'folder-'+folder.fake_id"
       >
           <h5>
             <i class="fa fa-fw fa-folder" aria-hidden="true"/>
@@ -35,7 +36,7 @@ export default {
   name: 'index-folders',
   computed: {
     ...mapGetters([
-      'folders',
+      'foldersByName',
       'selected'
     ])
   },

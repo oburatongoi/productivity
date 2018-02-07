@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="search-wrapper">
-    <form class="search-form" :class="searchFormClass">
+    <form class="search-form" :class="searchFormClass" autocomplete="off">
       <i class="fa fa-search" aria-hidden="true"/>
       <search-input/>
       <i class="fa fa-times cancel-search-btn" aria-hidden="true" v-if="search.query" @click="cancel"/>

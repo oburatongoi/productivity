@@ -47,4 +47,11 @@ class CacheableChecklists implements ChecklistsInterface {
             return $this->checklists->setItemSortOrder($request, $checklist);
     }
 
+    public function getKanbanDescendants($nestedKanban)
+    {
+      // return Cache::remember('checklist.'.$nestedKanban->id.'.kanbanDescendants', 60 * 60, function() use ($nestedKanban) {
+          return $this->checklists->getKanbanDescendants($nestedKanban);
+      // });
+    }
+
 }

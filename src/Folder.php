@@ -38,6 +38,13 @@ class Folder extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['model'];
+
+    /**
      * Get the index name for the model.
      *
      * @return string
@@ -61,7 +68,7 @@ class Folder extends Model
         })->toArray();
 
         $array['items'] = $this->items->map(function ($data) {
-          return array_only($data->toArray(), ['id', 'content', 'comments', 'children']);
+          return array_only($data->toArray(), ['id', 'content', 'comments', 'subfolders']);
         })->toArray();
 
         $array = array_only($array, ['id', 'name', 'fake_id', 'parent_id', 'checklists', 'items']);
@@ -74,10 +81,10 @@ class Folder extends Model
     return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
-    // public function children()
-    // {
-    //     return $this->hasMany('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
-    // }
+    public function subfolders()
+    {
+        return $this->hasMany('Oburatongoi\Productivity\Folder', 'parent_id', 'id');
+    }
 
     public function checklists()
     {
@@ -87,6 +94,11 @@ class Folder extends Model
     public function items()
     {
         return $this->hasManyThrough('Oburatongoi\Productivity\ChecklistItem', 'Oburatongoi\Productivity\Checklist');
+    }
+
+    public function getModelAttribute()
+    {
+      return $this->attributes['model'] = 'folder';
     }
 
     protected $touches = ['folder'];

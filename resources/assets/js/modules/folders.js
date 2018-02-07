@@ -13,7 +13,7 @@ const state = {
 
 const mutations = {
     [ADD_FOLDER] (state, folder) {
-        state.folders.unshift(folder)
+        state.folders.splice(0,0,folder)
     },
     [DELETE_FOLDER] (state, folder) {
         let i = _.findIndex(state.folders, ['id', folder.id]);
@@ -27,6 +27,13 @@ const mutations = {
 }
 
 const actions = {
+    addFolder({ commit }, folder) {
+      console.log(folder);
+      return new Promise((resolve, reject) => {
+          commit(ADD_FOLDER, folder)
+          resolve()
+      })
+    },
     delistFolder({ commit }, folder) {
       console.log(folder);
       return new Promise((resolve, reject) => {
@@ -36,7 +43,6 @@ const actions = {
     },
     deleteFolder({ commit }, folder) {
       return new Promise((resolve, reject) => {
-
         axios.delete('/folders/'+ folder.fake_id)
         .then(function(response) {
             if (response.data.tokenMismatch) {
@@ -97,13 +103,13 @@ const actions = {
     },
     storeFolder({commit}, folder) {
         return new Promise((resolve, reject) => {
-            axios.post('/folders', {folder: folder})
+            axios.post('/folders', { folder })
             .then(function(response) {
                 if (response.data.tokenMismatch) {
                     Vue.handleTokenMismatch(response.data).then(
                         (response) => {
                             if (response.data.folder) {
-                                commit(ADD_FOLDER, response.data.folder)
+                                // if(payload.root) commit(ADD_FOLDER, response.data.folder)
                                 resolve(response.data.folder)
                             } else if (response.data.error) {
                                 reject(response.data.error)
@@ -115,7 +121,7 @@ const actions = {
                         (error) => reject(error)
                     )
                 } else if (response.data.folder) {
-                    commit(ADD_FOLDER, response.data.folder)
+                    // if(payload.root) commit(ADD_FOLDER, response.data.folder)
                     resolve(response.data.folder)
                 } else if (response.data.error) {
                     reject(response.data.error)
@@ -131,7 +137,8 @@ const actions = {
 }
 
 const getters = {
-    folders: state => _.orderBy(state.folders, 'name'),
+    folders: state => state.folders,
+    foldersByName: state => _.orderBy(state.folders, 'name'),
     currentFolder: state => state.currentFolder
 }
 

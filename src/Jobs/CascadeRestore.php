@@ -45,14 +45,14 @@ class CascadeRestore implements ShouldQueue
           $class = get_class($this->model);
           switch ($class) {
             case 'Oburatongoi\Productivity\Folder':
-              $this->model->children()->restore();
+              $this->model->subfolders()->restore();
               $this->model->checklists()->restore();
               break;
             case 'Oburatongoi\Productivity\Checklist':
               $this->model->items()->restore();
               break;
             case 'Oburatongoi\Productivity\ChecklistItem':
-              $this->model->children()->restore();
+              $this->model->sub_items()->restore();
               break;
           }
 

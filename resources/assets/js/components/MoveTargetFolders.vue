@@ -1,8 +1,9 @@
 <template lang="html">
   <div class="move-target-folders">
-    <h5>Folders</h5>
-    <small class="text-muted" v-if="movableFolders&&movableFolders.length"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"/> Click to open.</small>
-    
+    <h5>Folders <span v-if="movableFolders&&movableFolders.length">(click to open)</span></h5>
+
+    <!-- <small class="text-muted" v-if="movableFolders&&movableFolders.length"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"/> Click to open.</small> -->
+
     <mover-adder v-if="moverContext=='folder'" model="folder"/>
 
     <div class="info-message" v-if="showFolderInfoMessage">
@@ -18,7 +19,7 @@
           v-for="folder in movableFolders"
           @click.prevent="openMoverFolder(folder)"
           @dblclick.prevent="openMoverFolder(folder)"
-          :key="folder.id"
+          :key="folder.fake_id"
       >
         <span>
           <i class="fa fa-fw fa-folder" aria-hidden="true"/>
@@ -70,6 +71,13 @@ export default {
 </script>
 
 <style lang="scss">
+.move-target-folders {
+  h5 span {
+    color: $light-grey-text-color;
+    font-weight: 300;
+  }
+}
+
 .add-folder-button {
   cursor: pointer;
   display: block;
