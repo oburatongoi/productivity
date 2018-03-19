@@ -3,7 +3,7 @@
     <span class="meta-span"
       @click.stop="showDatePicker"
       :id="'checklist-item-'+item.id+'-deadline'"
-      v-tooltip.bottom-end="{ content: deadlineTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-deadline' }"
+      v-tooltip.bottom-end="{ content: deadlineTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-deadline'}"
       :class="{ 'item-deadline':!item.isNewItem }"
     >
       <span class="date">{{ deadlinePlaceholder }}</span>

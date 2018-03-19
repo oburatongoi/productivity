@@ -47,13 +47,6 @@
 
     <template v-if="!!folder.opened">
 
-      <!-- <draggable
-      class="nested-kanban-card-body"
-      :element="'ul'"
-      :options="{
-        draggable: '.nested-kanban-card',
-        group: { name: 'nested-kanban-card', pull: true, put: true }
-      }" > -->
       <ul class="nested-kanban-card-body">
 
         <i
@@ -89,7 +82,6 @@
         </template>
 
       </ul>
-      <!-- </draggable> -->
 
       <div class="nested-kanban-card-footer">
 
@@ -105,14 +97,12 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-// import Draggable from 'vuedraggable'
 import KanbanAdder from './KanbanAdder.vue'
 import KanbanChecklist from './KanbanChecklist.vue'
 import KanbanSubFolder from './KanbanSubFolder.vue'
 export default {
   name: 'kanban-folder',
   components: {
-      // Draggable,
       KanbanAdder,
       KanbanChecklist,
       KanbanSubFolder,

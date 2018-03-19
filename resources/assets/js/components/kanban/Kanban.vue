@@ -1,11 +1,6 @@
 <template lang="html">
   <div class="kanban-wrapper" id="kanban-wrapper">
-    <!-- <draggable
-      id="kanban"
-      class="kanban"
-      :element="'ul'"
-      :options="{ draggable: '.kanban-card' }"
-    > -->
+
     <ul
     id="kanban"
     class="kanban">
@@ -16,7 +11,6 @@
       :card="card" />
 
     </ul>
-    <!-- </draggable> -->
 
     <kanban-preview
     v-if="kanbanPreview.id"
@@ -27,13 +21,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import Draggable from 'vuedraggable'
 import KanbanCard from './KanbanCard.vue'
 import KanbanPreview from './KanbanPreview.vue'
 export default {
   name: 'kanban',
   components: {
-      // Draggable,
       KanbanCard,
       KanbanPreview,
   },

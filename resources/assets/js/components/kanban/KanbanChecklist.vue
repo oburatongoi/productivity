@@ -39,11 +39,6 @@
 
     </div>
 
-    <!-- <draggable
-    v-if="!!checklist.opened"
-    class="nested-kanban-card-body"
-    :element="'ul'"
-    :options="{ draggable: '.checklist-item', group: { name: 'checklist-item', pull: true, put: true } }" > -->
     <ul
     v-if="!!checklist.opened"
     class="nested-kanban-card-body" >
@@ -97,7 +92,6 @@
       </template>
 
     </ul>
-    <!-- </draggable> -->
 
   </li>
 
@@ -107,7 +101,6 @@
 import { mapActions, mapGetters } from 'vuex'
 import AddItemLite from '../AddItemLite.vue'
 import AddSection from '../AddSection.vue'
-// import Draggable from 'vuedraggable'
 import KanbanChecklistItem from './KanbanChecklistItem.vue'
 import KanbanSection from './KanbanSection.vue'
 export default {
@@ -115,7 +108,6 @@ export default {
   components: {
     AddItemLite,
     AddSection,
-    // Draggable,
     KanbanChecklistItem,
     KanbanSection
   },

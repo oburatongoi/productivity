@@ -48,7 +48,7 @@
 
       </span>
 
-      {{ currentKanbanChecklistItem.content | truncate(35) }}
+      {{ currentKanbanChecklistItem.content | truncate(truncateLength) }}
 
       <span class="nested-kanban-card-buttons">
 
@@ -82,13 +82,6 @@
 
     <template v-if="!!item.opened">
 
-      <!-- <draggable
-      class="nested-kanban-card-body"
-      :element="'ul'"
-      :options="{
-        draggable: '.sub-enlistable',
-        group: { name: 'sub-enlistable', pull: true, put: ['enlistable', 'sub-enlistable', 'sectionable'] }
-      }" > -->
       <ul class="nested-kanban-card-body">
 
         <li v-if="currentKanbanChecklistItem.isLoading">
@@ -116,7 +109,6 @@
         </template>
 
       </ul>
-      <!-- </draggable> -->
 
       <div class="nested-kanban-card-footer">
         <add-item-lite :parent="currentKanbanChecklistItem" />
@@ -130,14 +122,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import AddItemLite from '../AddItemLite.vue'
-// import Draggable from 'vuedraggable'
 import ItemFormMeta from '../ItemFormMeta.vue'
 import KanbanSubChecklistItem from './KanbanSubChecklistItem.vue'
 export default {
   name: 'kanban-checklist-item',
   components: {
     AddItemLite,
-    // Draggable,
     ItemFormMeta,
     KanbanSubChecklistItem,
   },
@@ -145,6 +135,10 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    isExpanded: {
+      type: Boolean,
+      default: false
     },
     listType: {
       type: String,
@@ -171,6 +165,9 @@ export default {
     },
     hasSubItemChain: function() {
       return this.item.subItemChain && this.item.subItemChain.length
+    },
+    truncateLength: function() {
+      return this.isExpanded ? 80 : 45
     },
   },
   methods: {

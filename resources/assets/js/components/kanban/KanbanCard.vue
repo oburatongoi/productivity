@@ -1,7 +1,7 @@
 <template lang="html">
   <li
   class="kanban-card"
-  :class="card.model" >
+  :class="[{ expanded: card.isExpanded }, card.model]" >
     <div
     class="kanban-card-heading"
     :class="card.model" >
@@ -19,16 +19,15 @@
 
       {{ card.name || card.title | truncate(35) }}
 
+      <i
+      class="fa fa-fw fa-expand toggle-expansion"
+      :class="expansionClass"
+      aria-hidden="true"
+      title="expand/shrink"
+      @click.stop="toggleKanbanExpansion(card)" />
+
     </div>
 
-    <!-- <draggable
-    class="kanban-card-body"
-    :class="card.model"
-    :element="'ul'"
-    :options="{
-      draggable: '.'+draggableClass,
-      group: { name: draggableClass, pull: true, put: true }
-    }" > -->
     <ul class="kanban-card-body">
 
       <template v-if="card.subfolders">
@@ -56,11 +55,13 @@
           v-for="section in card.sections"
           :key="section.id"
           :section="section"
+          :is-expanded="card.isExpanded"
           :parent="card" />
 
           <kanban-section
           :section="defaultSection"
           :parent="card"
+          :is-expanded="card.isExpanded"
           v-if="defaultSection" />
         </template>
 
@@ -69,6 +70,7 @@
           v-for="item in card.items"
           :key="'item'+item.id"
           :item="item"
+          :is-expanded="card.isExpanded"
           :list-type="card.list_type" />
 
           <add-item-lite :parent="card" />
@@ -85,7 +87,6 @@
       </template>
 
     </ul>
-    <!-- </draggable> -->
 
     <div
     class="kanban-card-footer"
@@ -100,9 +101,9 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import AddItemLite from '../AddItemLite.vue'
 import AddSection from '../AddSection.vue'
-// import Draggable from 'vuedraggable'
 import KanbanAdder from './KanbanAdder.vue'
 import KanbanChecklist from './KanbanChecklist.vue'
 import KanbanChecklistItem from './KanbanChecklistItem.vue'
@@ -113,7 +114,6 @@ export default {
   components: {
       AddItemLite,
       AddSection,
-      // Draggable,
       KanbanAdder,
       KanbanChecklist,
       KanbanChecklistItem,
@@ -163,12 +163,20 @@ export default {
 
       }
     },
+    expansionClass: function() {
+      return this.card.isExpanded ? 'fa-compress' : 'fa-expand'
+    },
     hasSections: function() {
       return this.card.sections && !! this.card.sections.length
     },
     hasItems: function() {
       return this.card.items && !! this.card.items.length
     },
+  },
+  methods: {
+    ...mapActions([
+      'toggleKanbanExpansion',
+    ]),
   },
 }
 </script>
@@ -178,9 +186,8 @@ export default {
     background: white;
     border: 1px solid $base-border-color;
     border-radius: 4px;
-    width: 28%;
     min-width: 340px;
-    max-width: 600px;
+    max-width: 800px;
     display: inline-block;
     margin-left: 20px;
     height: auto;
@@ -195,8 +202,32 @@ export default {
       margin-right: 20px;
     }
 
+    &.expanded {
+      min-width: 600px;
+    }
+
+    .toggle-expansion {
+      opacity: 0;
+    }
+
+    &:hover {
+      .toggle-expansion {
+        opacity: 1;
+        position: absolute;
+        color: $base-border-color;
+        right: 10px;
+        top: 15px;
+        cursor: pointer;
+
+        &:hover {
+          color: darken($base-border-color, 20%);
+        }
+      }
+    }
+
     .kanban-card-heading {
       background: white;
+      position: relative;
     }
 
     .kanban-card-body {

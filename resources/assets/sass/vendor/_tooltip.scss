@@ -16,7 +16,7 @@
     position: absolute;
     margin: 5px;
     border-color: black;
-    z-index: 1;
+    @include high-z-index(3);
   }
 
   &[x-placement^="top"] {

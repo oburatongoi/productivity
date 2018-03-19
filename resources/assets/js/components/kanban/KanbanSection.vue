@@ -7,15 +7,6 @@
 
     </span>
 
-    <!-- <draggable
-    class="section-items"
-    :element="'ul'"
-    @end="onChangeEvent"
-    :options="{
-      draggable: '.sectionable',
-      animation: 200,
-      group: { name: 'sectionable', pull: true, put: ['enlistable', 'sub-enlistable', 'sectionable'] }
-    }" > -->
     <ul class="section-items">
 
       <i
@@ -31,10 +22,10 @@
       v-for="item in section.items"
       :key="item.id"
       :item="item"
+      :is-expanded="isExpanded"
       :list-type="section.list_type||parent.list_type"/>
 
     </ul>
-    <!-- </draggable> -->
 
     <add-item-lite :parent="section"/>
 
@@ -48,17 +39,19 @@
 import { mapActions } from 'vuex'
 import AddItemLite from '../AddItemLite.vue'
 import AddSection from '../AddSection.vue'
-// import Draggable from 'vuedraggable'
 import KanbanChecklistItem from './KanbanChecklistItem.vue'
 export default {
   name: 'kanban-section',
   components: {
     AddItemLite,
     AddSection,
-    // Draggable,
     KanbanChecklistItem
   },
   props: {
+    isExpanded: {
+      type: Boolean,
+      default: false
+    },
     parent: {
       type: Object,
       required: true

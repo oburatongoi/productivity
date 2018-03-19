@@ -48,7 +48,7 @@ export default {
   // bottom: 0;
   right: 0;
   height: 100%;
-  width: 50%;
+  width: 55%;
   min-width: 600px;
   background: white;
   padding-bottom: 40px;

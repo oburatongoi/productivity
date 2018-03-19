@@ -141,6 +141,12 @@ const actions = {
       resolve()
     })
   },
+  toggleKanbanExpansion({ commit }, kanbanCard) {
+    return new Promise((resolve, reject) => {
+      commit(SET_OR_TOGGLE_KANBAN_PROPERTY, { object: kanbanCard, property: 'isExpanded' })
+      resolve()
+    })
+  },
   toggleNestedKanban({ dispatch, commit }, nestedKanban) {
     return new Promise((resolve, reject) => {
       dispatch('deselect', { model: nestedKanban.model, listing: nestedKanban }, { root: true })

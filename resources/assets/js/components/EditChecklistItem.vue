@@ -1,13 +1,30 @@
 <template lang="html">
-  <div class="edit-checklist-item panel side-panel" :class="editChecklistItemClass" :id="'edit-checklist-item-'+item.id">
+  <div
+  class="edit-checklist-item panel side-panel"
+  :class="editChecklistItemClass"
+  :id="'edit-checklist-item-'+item.id" >
+
     <div class="position-relative">
-      <div class="sizing-buttons" :id="'sizing-buttons-'+item.id">
-        <span class="pull-right icon-and-label" v-if="!savingChanges&&!isSubItem" @click="saveAndClose">
-          <i class="fa fa-times" aria-hidden="true" title="Save and Close"/>
+
+      <div
+      class="sizing-buttons"
+      :id="'sizing-buttons-'+item.id" >
+
+        <span
+        class="pull-right icon-and-label"
+        v-if="!savingChanges&&!isSubItem"
+        @click="saveAndClose" >
+
+          <i
+          class="fa fa-times"
+          aria-hidden="true"
+          title="Save and Close" />
           Close
         </span>
 
-        <span class="pull-right icon-and-label" v-if="savingChanges">
+        <span
+        class="pull-right icon-and-label"
+        v-if="savingChanges" >
           <span class="fa-stack">
             <i class="fa fa-circle-o-notch fa-spin fa-stack-2x"/>
             <i class="fa fa-floppy-o fa-stack-1x"/>
@@ -15,24 +32,53 @@
           Saving
         </span>
 
-        <span class="pull-left icon-and-label" @click="saveAndClose">
-          <i class="fa fa-chevron-left" aria-hidden="true" title="Back"/>
+        <span
+        class="pull-left icon-and-label"
+        @click="saveAndClose" >
+          <i
+          class="fa fa-chevron-left"
+          aria-hidden="true"
+          title="Back" />
           Back
         </span>
 
-        <span class="pull-left icon-and-label" @click="toggleExpansion">
-          <i class="fa" :class="toggleExpansionClass" aria-hidden="true" :title="toggleExpansionTitle"/>
+        <span
+        class="pull-left icon-and-label"
+        @click="toggleExpansion" >
+          <i
+          class="fa"
+          :class="toggleExpansionClass"
+          aria-hidden="true"
+          :title="toggleExpansionTitle" />
           {{ toggleExpansionTitle }}
         </span>
       </div>
 
-      <div class="panel-heading" :id="'panel-heading-'+item.id">
+      <div
+      class="panel-heading"
+      :id="'panel-heading-'+item.id" >
         <div class="edit-content">
+
           <h4 class="edit-checklist-item-content-container">
             <span class="checkbox-container">
-              <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType&&listType=='ch'||listType=='ta'"/>
-              <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType&&listType=='bu'"/>
-              <span class="ol-number" aria-hidden="true" v-if="listType&&listType=='nu'">{{ item.sort_order + 1 }}.</span>
+              <i
+              class="fa fa-fw"
+              :class="checkboxClass"
+              aria-hidden="true"
+              @click="checkItem"
+              v-if="listType&&listType=='ch'||listType=='ta'" />
+
+              <i
+              class="fa fa-fw fa-circle"
+              aria-hidden="true"
+              v-if="listType&&listType=='bu'" />
+
+              <span
+              class="ol-number"
+              aria-hidden="true"
+              v-if="listType&&listType=='nu'" >
+                {{ item.sort_order + 1 }}.
+              </span>
             </span>
 
             <textarea
@@ -49,16 +95,31 @@
           </h4>
         </div>
 
-        <edit-checklist-item-meta :item="item" :is-sub-item="isSubItem"/>
+        <edit-checklist-item-meta
+        :item="item"
+        :is-sub-item="isSubItem" />
 
         <ul class="manage-item-menu">
-          <li @click="switchView('sub-items')" :class="{ selected: view=='sub-items' }">
-            <i class="fa fa-check-square" aria-hidden="true"/>
-            Items <span class="list-items-count" v-if="uncheckedSubItemsCount">({{ uncheckedSubItemsCount }})</span>
+          <li
+          @click="switchView('sub-items')"
+          :class="{ selected: view=='sub-items' }" >
+            <i
+            class="fa fa-check-square"
+            aria-hidden="true" />
+            Items
+            <span
+            class="list-items-count"
+            v-if="uncheckedSubItemsCount" >
+              ({{ uncheckedSubItemsCount }})
+            </span>
           </li>
 
-          <li @click="switchView('notes')" :class="{ selected: view=='notes' }">
-            <i class="fa fa-sticky-note-o" aria-hidden="true"/>
+          <li
+          @click="switchView('notes')"
+          :class="{ selected: view=='notes' }" >
+            <i
+            class="fa fa-sticky-note-o"
+            aria-hidden="true" />
             Notes
           </li>
         </ul>
@@ -93,7 +154,10 @@
 
       </div>
 
-      <div class="panel-body notes" :id="'notes-panel-'+item.id" v-if="view=='notes'">
+      <div
+      class="panel-body notes"
+      :id="'notes-panel-'+item.id"
+      v-if="view=='notes'" >
 
         <edit-checklist-item-comments
         @saveChanges="saveChanges"
@@ -102,28 +166,23 @@
 
       </div>
 
-      <!-- <div class="panel-footer" :id="'notes-buttons-'+item.id" v-if="view=='notes'">
-        <edit-checklist-item-buttons
-          :is-saving="savingChanges"
-          @resetForm="saveAndClose"
-          @saveChanges="saveChanges"
-        />
-      </div> -->
-
-      <div class="panel-body sub-items" :id="'sub-items-panel-'+item.id" v-if="view=='sub-items'">
-
+      <div
+      class="panel-body sub-items"
+      :id="'sub-items-panel-'+item.id"
+      v-if="view=='sub-items'" >
         <template v-if="item.sub_items">
 
-          <sub-checklist-items
-          :items="item.sub_items"
-          :parent="item"
-          parent-model="checklist-item"
-          :list-type="item.sub_list_type" />
+          <div class="sub-checklist-items">
+            <checklist-items
+              :list-type="item.sub_list_type"
+              :items="item.sub_items"
+              parent-model="checklist-item"
+              :parent="parent"
+            />
+          </div>
 
         </template>
-
       </div>
-
     </div>
 
     <resize-observer @notify="debounceResizeNotes" />
@@ -138,8 +197,7 @@ import { mapActions } from 'vuex'
 import AddItem from './AddItem.vue'
 import EditChecklistItemMeta from './EditChecklistItemMeta.vue'
 import EditChecklistItemComments from './EditChecklistItemComments.vue'
-// import EditChecklistItemButtons from './EditChecklistItemButtons.vue'
-import SubChecklistItems from './SubChecklistItems.vue'
+import ChecklistItems from './ChecklistItems.vue'
 
 export default {
   name: 'edit-checklist-item',
@@ -147,8 +205,7 @@ export default {
     AddItem,
     EditChecklistItemMeta,
     EditChecklistItemComments,
-    // EditChecklistItemButtons,
-    SubChecklistItems
+    ChecklistItems
   },
   props: {
     item: {
@@ -181,19 +238,10 @@ export default {
       return this.item.checklist_id ? 'checklist-item' : 'sub-checklist-item'
     },
     toggleExpansionClass: function() {
-      if (this.isSubItem) {
-        return this.editableSubItem && this.editableSubItem.isExpanded ? 'fa-compress' : 'fa-expand'
-      } else {
-        return this.editableItem && this.editableItem.isExpanded ? 'fa-compress' : 'fa-expand'
-      }
+      return this.item.isExpanded ? 'fa-compress' : 'fa-expand'
     },
     toggleExpansionTitle: function() {
-      if (this.isSubItem) {
-        return this.editableSubItem && this.editableSubItem.isExpanded ? 'Shrink' : 'Expand'
-      } else {
-        return this.editableItem && this.editableItem.isExpanded ? 'Shrink' : 'Expand'
-      }
-
+      return this.item.isExpanded ? 'Shrink' : 'Expand'
     },
     uncheckedSubItemsCount: function() {
       return this.item.sub_items ? this.item.sub_items.filter( item => item.checked_at == null ).length : 0
