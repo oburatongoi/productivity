@@ -322,6 +322,12 @@ export default {
         }
       }
 
+      &.checklist,
+      &.checklist-item,
+      &.sub-checklist-item {
+        cursor: pointer;
+      }
+
       &.folder.selected {
         border: 1px solid $folder-primary;
       }

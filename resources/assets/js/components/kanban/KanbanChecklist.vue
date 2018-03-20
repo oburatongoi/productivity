@@ -1,8 +1,13 @@
 <template lang="html">
-  <li
+  <!-- <li
   class="nested-kanban-card checklist enfoldable"
   :class="{ opened: checklist.opened, selected: selected.checklists.indexOf(checklist) !== -1 }"
   @click.stop="toggleSelection({selection: { model: 'checklist', listing: checklist, parentModel: checklist.parent_id ? 'checklist' : 'folder' }, event: $event})"
+  @dblclick.stop="toggleNestedKanban(checklist)" > -->
+  <li
+  class="nested-kanban-card checklist enfoldable"
+  :class="{ opened: checklist.opened }"
+  @click.stop="toggleNestedKanban(checklist)"
   @dblclick.stop="toggleNestedKanban(checklist)" >
 
     <div class="nested-kanban-card-heading">
@@ -98,7 +103,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+// import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import AddItemLite from '../AddItemLite.vue'
 import AddSection from '../AddSection.vue'
 import KanbanChecklistItem from './KanbanChecklistItem.vue'
@@ -118,9 +124,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'selected'
-    ]),
+    // ...mapGetters([
+    //   'selected'
+    // ]),
     checklistIconClass: function() {
     return ! this.checklist.list_type         ? 'fa-list'         :
              this.checklist.list_type == 'ch' ? 'fa-list'         :
@@ -146,7 +152,7 @@ export default {
     ...mapActions([
       'navigateToNestedKanban',
       'toggleNestedKanban',
-      'toggleSelection',
+      // 'toggleSelection',
     ]),
   }
 }

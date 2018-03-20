@@ -1,5 +1,5 @@
 <template lang="html">
-  <li
+  <!-- <li
   class="nested-kanban-card checklist-item enlistable sectionable"
   :class="{
     opened: item.opened,
@@ -11,6 +11,11 @@
     parentModel: item.parent_id ? 'checklist-item' : 'checklist' },
     event: $event
   })"
+  @dblclick.stop="toggleNestedKanban(item)" > -->
+  <li
+  class="nested-kanban-card checklist-item enlistable sectionable"
+  :class="{ opened: item.opened }"
+  @click.stop="toggleNestedKanban(item)"
   @dblclick.stop="toggleNestedKanban(item)" >
 
     <div class="nested-kanban-card-heading">
@@ -120,7 +125,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+// import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import AddItemLite from '../AddItemLite.vue'
 import ItemFormMeta from '../ItemFormMeta.vue'
 import KanbanSubChecklistItem from './KanbanSubChecklistItem.vue'
@@ -151,9 +157,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'selected'
-    ]),
+    // ...mapGetters([
+    //   'selected'
+    // ]),
     checkboxClass: function() {
       return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
     },
@@ -177,7 +183,7 @@ export default {
       'previewNestedKanban',
       'toggleNestedKanban',
       'toggleNestedKanbanMeta',
-      'toggleSelection',
+      // 'toggleSelection',
     ]),
     closeNestedKanbanChecklistItem: function(item) {
       this.removeFromKanbanArray({ array: this.item.subItemChain, value: item })
