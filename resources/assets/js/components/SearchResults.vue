@@ -2,18 +2,18 @@
   <div class="search-results" v-if="search.isSearching||search.query">
     <div class="search-results-wrapper">
       <div class="secondary-search-input">
-        <i class="fa fa-search" aria-hidden="true"/>
+        <i class="far fa-search" aria-hidden="true"/>
         <search-input/>
-        <i class="fa fa-times" aria-hidden="true" @click="cancel"/>
+        <i class="far fa-times" aria-hidden="true" @click="cancel"/>
       </div>
 
       <div class="results-container">
-        <i class="fa fa-spinner fa-spin" aria-hidden="true" v-if="search.isSearching"/>
+        <i class="far fa-spinner fa-spin" aria-hidden="true" v-if="search.isSearching"/>
 
         <ul class="list-unstyled folder-color-scheme" v-if="searchResultHasFolders">
           <li v-for="folder in alphabeticalFolderSearchResults" :key="folder.id">
             <a :href="'/folders/'+folder.fake_id">
-              <i class="fa fa-fw fa-folder" aria-hidden="true"/>
+              <i class="fas fa-fw fa-folder" aria-hidden="true"/>
               {{ folder.name }}
             </a>
           </li>
@@ -22,7 +22,7 @@
         <ul class="list-unstyled list-color-scheme" v-if="searchResultHasChecklists">
           <li v-for="checklist in alphabeticalChecklistSearchResults" :key="checklist.id">
             <a :href="'/lists/'+checklist.fake_id">
-              <i class="fa fa-fw fa-list" aria-hidden="true"/>
+              <i class="far fa-fw fa-list" aria-hidden="true"/>
               {{ checklist.title }}
             </a>
           </li>

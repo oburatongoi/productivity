@@ -2,18 +2,18 @@
   <div class="move-target-folders">
     <h5>Folders <span v-if="movableFolders&&movableFolders.length">(click to open)</span></h5>
 
-    <!-- <small class="text-muted" v-if="movableFolders&&movableFolders.length"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"/> Click to open.</small> -->
+    <!-- <small class="text-muted" v-if="movableFolders&&movableFolders.length"><i class="far fa-fw fa-lightbulb" aria-hidden="true"/> Click to open.</small> -->
 
     <mover-adder v-if="moverContext=='folder'" model="folder"/>
 
     <div class="info-message" v-if="showFolderInfoMessage">
-      <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="moverIsLoading"/>
+      <i class="far fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="moverIsLoading"/>
       <p :class="[folderInfoMessage.type]" v-if="folderInfoMessage.content&&folderInfoMessage.type">{{ folderInfoMessage.content }}</p>
     </div>
 
     <ul class="list-unstyled" v-if="movableFolders&&movableFolders.length&&!moverIsLoading">
       <li v-if="isStoringMovableFolder">
-        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"/>
+        <i class="far fa-spinner fa-spin fa-lg" aria-hidden="true"/>
       </li>
       <li class="nested-folder"
           v-for="folder in movableFolders"
@@ -22,10 +22,10 @@
           :key="folder.fake_id"
       >
         <span>
-          <i class="fa fa-fw fa-folder" aria-hidden="true"/>
+          <i class="fas fa-fw fa-folder" aria-hidden="true"/>
           {{ folder.name }}
         </span>
-        <i class="fa fa-angle-right" aria-hidden="true" @click="openMoverFolder(folder)"/>
+        <i class="far fa-angle-right" aria-hidden="true" @click="openMoverFolder(folder)"/>
       </li>
     </ul>
   </div>
@@ -86,7 +86,7 @@ export default {
   &:hover {
     background: lighten($body-bg, 0.5%);
   }
-  .fa {
+  .far, .fas, .fal {
     color: $folder-primary;
   }
 }

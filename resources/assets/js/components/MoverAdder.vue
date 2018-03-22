@@ -5,7 +5,7 @@
       @click="toggleMoverIsAdding(true)"
       v-if="!moverIsAdding"
     >
-      <i class="fa fa-fw fa-plus"/>
+      <i class="far fa-fw fa-plus"/>
       <span>Add {{ model | capitalize }}</span>
     </span>
 
@@ -16,11 +16,11 @@
       </div>
       <div class="mover-adder-form-buttons">
         <button type="submit" class="btn btn-sm" :class="buttonClass">
-          <i class="fa fa-fw fa-plus" aria-hidden="true"/>
+          <i class="far fa-fw fa-plus" aria-hidden="true"/>
           Add
         </button>
         <button type="button" class="btn btn-default btn-sm" @click.prevent="toggleMoverIsAdding(false)">
-          <i class="fa fa-fw fa-times" aria-hidden="true"/>
+          <i class="far fa-fw fa-times" aria-hidden="true"/>
           Cancel
         </button>
       </div>

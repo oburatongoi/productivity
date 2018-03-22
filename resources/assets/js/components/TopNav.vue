@@ -5,7 +5,7 @@
             v-if="!showCreatingNewButtons"
             @click="toggleCreatingNewButtons"
     >
-      <i class="fa fa-plus" aria-hidden="true"/>
+      <i class="far fa-plus" aria-hidden="true"/>
     </button>
 
     <create-new v-if="showCreatingNewButtons||creatingNew"/>

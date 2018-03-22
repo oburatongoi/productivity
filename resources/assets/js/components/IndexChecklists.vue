@@ -6,10 +6,10 @@
     @click="toggleSelection({selection: {model:'checklist', listing: checklist}, event: $event})"
     @dblclick="goToListing('list', checklist.fake_id)"
     :id="'checklist-'+checklist.fake_id"
-    v-tooltip.bottom-start="{ content: checklist.title, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-'+checklist.fake_id }"
+    v-tooltip.bottom-start="{ content: checklist.title, classes: 'checklist-tooltip', trigger: 'hover', autoHide: false, container: '#checklist-'+checklist.fake_id }"
   >
       <h5>
-        <i class="fa fa-fw" :class="checklistIconClass" aria-hidden="true"/>
+        <i class="far fa-fw" :class="checklistIconClass" aria-hidden="true"/>
         {{ checklist.title }}
       </h5>
 
@@ -17,7 +17,7 @@
           class="go-to-listing"
           v-if="selected.checklists.indexOf(checklist) !== -1"
       >
-        <i class="fa fa-angle-double-right" aria-hidden="true"/>
+        <i class="far fa-angle-double-right" aria-hidden="true"/>
       </a>
       <span class="item-count-tag" v-if="checklist.list_type=='ta'&&checklist.items_count">
         <span class="item-count">{{ checklist.items_count }}</span>
@@ -42,7 +42,7 @@ export default {
     checklistIconClass: function() {
     return ! this.checklist.list_type         ? 'fa-list'         :
              this.checklist.list_type == 'ch' ? 'fa-list'         :
-             this.checklist.list_type == 'ta' ? 'fa-check-square' :
+             this.checklist.list_type == 'ta' ? 'fa-tasks' :
              this.checklist.list_type == 'bu' ? 'fa-list-ul'      :
              this.checklist.list_type == 'nu' ? 'fa-list-ol'      :
                                                 'fa-list'         ;

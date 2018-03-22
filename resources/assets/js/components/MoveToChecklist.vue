@@ -4,10 +4,10 @@
       <mover-breadcrumbs />
       <mover-selected :parent-model="parentModel"/>
       <i
-        class="fa close-mover-button fa-times"
+        class="far close-mover-button fa-times"
         aria-hidden="true"
         id="close-mover-button"
-        v-tooltip.bottom-start="{ content: 'Cancel Move', classes: 'checklist', trigger: 'hover', autoHide: false, container: '#close-mover-button' }"
+        v-tooltip.bottom-start="{ content: 'Cancel Move', classes: 'checklist-tooltip', trigger: 'hover', autoHide: false, container: '#close-mover-button' }"
         @click="cancel"
       />
     </div>
@@ -296,7 +296,7 @@ export default {
   }
   .nested-folder {
     cursor: pointer;
-      .fa {
+      .far, .fas, .fal {
           color: $folder-primary;
       }
       &.active {
@@ -317,7 +317,7 @@ export default {
 .move-to-checklist-body {
   .nested-checklist-item,
   .nested-checklist {
-      .fa {
+      .far, .fas, .fal {
           color: $list-primary;
       }
       &.active:not(.opened) {

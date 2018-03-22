@@ -1,15 +1,15 @@
 <template lang="html">
   <div class="move-to-folder" id="move-to-folder">
     <div class="move-to-folder-heading">
-      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="selectFolder(currentFolder.folder)" v-if="currentFolder.folder"/>
-      <i class="fa fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFolders()" v-if="currentFolder.id&&!currentFolder.folder"/>
+      <i class="far fa-arrow-left heading-left" aria-hidden="true" @click="selectFolder(currentFolder.folder)" v-if="currentFolder.folder"/>
+      <i class="far fa-arrow-left heading-left" aria-hidden="true" @click="fetchInitialFolders()" v-if="currentFolder.id&&!currentFolder.folder"/>
       <span
         class="current-folder"
         v-if="currentFolder&&!addingFolder"
         :class="{ active: currentFolder.id==selectedFolder.id }"
         @click.prevent="highlightFolder(currentFolder)"
       >
-        <i class="fa fa-home" aria-hidden="true" v-if="!currentFolder.id&&!currentFolder.folder"/>
+        <i class="fas fa-home" aria-hidden="true" v-if="!currentFolder.id&&!currentFolder.folder"/>
         {{ currentFolder.name }}
       </span>
 
@@ -19,26 +19,26 @@
         </div>
         <div class="add-folder-form-buttons">
           <button type="submit" class="btn btn-primary btn-sm">
-            <i class="fa fa-fw fa-check" aria-hidden="true"/>
+            <i class="far fa-fw fa-check" aria-hidden="true"/>
           </button>
           <button type="button" class="btn btn-default btn-sm" @click.prevent="toggleAddingFolder('false')">
-            <i class="fa fa-fw fa-times" aria-hidden="true"/>
+            <i class="far fa-fw fa-times" aria-hidden="true"/>
           </button>
         </div>
       </form>
 
-      <i class="fa fa-times heading-right" aria-hidden="true" @click="toggleMovable"/>
+      <i class="far fa-times heading-right" aria-hidden="true" @click="toggleMovable"/>
     </div>
 
     <div class="move-to-folder-body" @click.self="highlightFolder(currentFolder)">
       <div class="info-message" v-if="showInfoMessage">
-        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"/>
+        <i class="far fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="isLoading"/>
         <p :class="[infoMessage.type]" v-if="infoMessage.content&&infoMessage.type">{{ infoMessage.content }}</p>
       </div>
 
       <ul class="list-unstyled" v-if="folders&&!isLoading">
         <li v-if="isStoringFolder">
-          <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"/>
+          <i class="far fa-spinner fa-spin fa-lg" aria-hidden="true"/>
         </li>
         <li class="nested-folder"
             :class="{ active: folder.id==selectedFolder.id }"
@@ -48,11 +48,11 @@
             :key="folder.id"
         >
           <span>
-            <i class="fa fa-fw fa-folder" aria-hidden="true" v-if="folder.id!==selectedFolder.id"/>
-            <i class="fa fa-fw fa-folder-open" aria-hidden="true" v-if="folder.id==selectedFolder.id"/>
+            <i class="fas fa-fw fa-folder" aria-hidden="true" v-if="folder.id!==selectedFolder.id"/>
+            <i class="fas fa-fw fa-folder-open" aria-hidden="true" v-if="folder.id==selectedFolder.id"/>
             {{ folder.name }}
           </span>
-          <i class="fa fa-angle-right" aria-hidden="true" @click="selectFolder(folder)"/>
+          <i class="far fa-angle-right" aria-hidden="true" @click="selectFolder(folder)"/>
         </li>
       </ul>
     </div>
@@ -90,9 +90,9 @@
       </p>
 
       <span class="fa-stack toggle-add-folder-btn" @click="toggleAddingFolder">
-        <i class="fa fa-folder fa-stack-2x folder-color-scheme"/>
-        <i class="fa fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"/>
-        <i class="fa fa-times fa-stack-1x fa-inverse" v-if="addingFolder"/>
+        <i class="far fa-folder fa-stack-2x folder-color-scheme"/>
+        <i class="far fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"/>
+        <i class="far fa-times fa-stack-1x fa-inverse" v-if="addingFolder"/>
       </span>
     </div>
   </div>
@@ -398,7 +398,7 @@ export default {
                     border-radius: 3px;
                 }
             }
-            .fa {
+            .far, .fas, .fal {
                 color: $folder-primary;
             }
             &.active {

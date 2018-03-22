@@ -1,14 +1,14 @@
 <template lang="html">
   <div class="mover-breadcrumbs">
     <span class="back-button" @click="goBack" v-if="openMovableFolder.id||openMovableChecklist.id">
-      <i class="fa fa-fw fa-arrow-left"/>
+      <i class="far fa-fw fa-arrow-left"/>
       <span>{{ backButtonText }}</span>
     </span>
 
     <span v-if="!openMovableFolder.id&&!openMovableChecklist.id">
-      <i class="fa fa-fw fa-home" aria-hidden="true"/>
+      <i class="fas fa-fw fa-home " aria-hidden="true"/>
       Home
-      <i class="fa fa-angle-down" aria-hidden="true"/>
+      <i class="far fa-angle-down" aria-hidden="true"/>
     </span>
 
     <span v-if="openMovableFolder.id">
@@ -16,24 +16,24 @@
         class="crumb"
         @click.stop.prevent="selectBreadcrumb(openMovableFolder, 'folder')"
       >
-        <i class="fa fa-fw fa-folder-open-o" aria-hidden="true"/>
+        <i class="fas fa-fw fa-folder-open" aria-hidden="true"/>
         {{ openMovableFolder.name | truncate(35) }}
-        <i class="fa fa-angle-down" aria-hidden="true" v-if="moverContext=='folder'"/>
+        <i class="far fa-angle-down" aria-hidden="true" v-if="moverContext=='folder'"/>
       </span>
     </span>
 
     <span v-if="openMovableChecklist.id">
-      <i class="fa fa-angle-right" aria-hidden="true"/>
+      <i class="far fa-angle-right" aria-hidden="true"/>
       <span
         class="crumb"
         :class="{ opened: moverContext=='checklist'&&!selectedMovableChecklistItem.id }"
         @click.stop.prevent="selectBreadcrumb(openMovableChecklist, 'checklist')"
       >
-        <i class="fa fa-fw fa-list-ul" aria-hidden="true"/>
+        <i class="far fa-fw fa-list-ul" aria-hidden="true"/>
         {{ openMovableChecklist.title | truncate(35) }}
-        <i class="fa fa-fw fa-angle-down" aria-hidden="true" v-if="moverContext=='checklist'"/>
+        <i class="far fa-fw fa-angle-down" aria-hidden="true" v-if="moverContext=='checklist'"/>
       </span>
-      <i class="fa fa-fw fa-angle-right" aria-hidden="true" v-if="moverContext=='checklist-item'&&!openMovableChecklistItem.id"/>
+      <i class="far fa-fw fa-angle-right" aria-hidden="true" v-if="moverContext=='checklist-item'&&!openMovableChecklistItem.id"/>
     </span>
 
     <template v-if="breadcrumbs.length">
@@ -42,15 +42,15 @@
         :key="item.id"
         @click.stop.prevent="selectBreadcrumb(item)"
       >
-        <i class="fa fa-angle-right" aria-hidden="true"/>
+        <i class="far fa-angle-right" aria-hidden="true"/>
         <span
           class="crumb"
           :class="{ opened: item.id==selectedMovableChecklistItem.id }"
         >
-          <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="item.id!=openMovableChecklistItemChain[openMovableChecklistItemChain.length-1].id"/>
-          <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-else/>
+          <i class="far fa-fw fa-square" aria-hidden="true" v-if="item.id!=openMovableChecklistItemChain[openMovableChecklistItemChain.length-1].id"/>
+          <i class="fal fa-fw fa-circle" aria-hidden="true" v-else/>
           {{ item.content | truncate(35) }}
-          <i class="fa fa-fw fa-angle-down" aria-hidden="true" v-if="item.id==openMovableChecklistItem.id"/>
+          <i class="far fa-fw fa-angle-down" aria-hidden="true" v-if="item.id==openMovableChecklistItem.id"/>
         </span>
       </span>
     </template>
@@ -142,7 +142,7 @@ export default {
     margin: 0;
     &.opened {
       background: $list-background;
-      &, .fa {
+      &, .far, .fas, .fal {
         color: white;
       }
     }
@@ -158,12 +158,12 @@ export default {
     margin-left: 5px;
   }
   .fa-home,
-  .fa-folder-open-o {
+  .fa-folder-open {
     // color: $folder-primary;
     @include base-icon-color ;
   }
-  .fa-square-o,
-  .fa-circle-thin {
+  .fa-square,
+  .fa-circle {
     // color: $input-border;
     @include base-icon-color ;
   }

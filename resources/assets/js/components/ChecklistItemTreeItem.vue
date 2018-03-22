@@ -3,8 +3,8 @@
     <li class="item"
       @click="selectTreeLeaf({selection: {model: 'checklist-item', listing: item, parentModel: 'checklist'}, event: $event})"
     >
-      <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"/>
-      <i class="fa fa-fw fa-circle-thin" aria-hidden="true" v-if="!item.checked_at"/>
+      <i class="far fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"/>
+      <i class="fal fa-fw fa-circle" aria-hidden="true" v-if="!item.checked_at"/>
       {{ item.content | truncate(35) }}
     </li>
 

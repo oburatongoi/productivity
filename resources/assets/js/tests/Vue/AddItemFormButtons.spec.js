@@ -36,7 +36,7 @@ describe('AddItemFormButtons', () => {
   });
 
   it ('displays a loading icon while saving', () => {
-    expect(wrapper.html()).toContain('fa-floppy-o')
+    expect(wrapper.html()).toContain('fa-save')
     wrapper.setData({isSaving: true})
     expect(wrapper.html()).toContain('fa-spinner fa-spin')
   });

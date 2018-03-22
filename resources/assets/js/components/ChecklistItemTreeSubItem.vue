@@ -4,8 +4,8 @@
       :class="{active: item.id==editableSubItem.id, selected: selected.checklistItems.indexOf(item)!== -1 }"
       @click="selectTreeLeaf({selection: { model: 'checklist-item', listing: item, parentModel: 'checklist-item' }, removePrecedingSubItems: true, event: $event})"
     >
-      <i class="fa fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"/>
-      <i class="fa fa-fw fa-square-o" aria-hidden="true" v-if="!item.checked_at"/>
+      <i class="far fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"/>
+      <i class="far fa-fw fa-square" aria-hidden="true" v-if="!item.checked_at"/>
       {{ item.content | truncate(35) }}
     </li>
 

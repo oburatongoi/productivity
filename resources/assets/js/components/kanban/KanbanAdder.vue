@@ -6,10 +6,10 @@
     <div
     class="add-nested-kanban-button"
     :class="parent.model" v-if="!isAddingNestedKanban"
-    @click="toggleAddingNestedKanban" >
+    @click.stop="toggleAddingNestedKanban" >
 
       <i
-      class="fa fa-fw fa-plus"
+      class="far fa-fw fa-plus"
       aria-hidden="true"/>
 
       <span v-if="size=='small'">Add</span>
@@ -27,20 +27,20 @@
 
           <span
           class="add-folder-chooser folder"
-          @click="selectKanbanAddableModel('folder')" >
+          @click.stop="selectKanbanAddableModel('folder')" >
 
             <i
-            class="fa fa-fw fa-plus"
+            class="far fa-fw fa-plus"
             aria-hidden="true" />
             Folder
           </span>
 
           <span
           class="add-list-chooser middle list"
-          @click="selectKanbanAddableModel('checklist')" >
+          @click.stop="selectKanbanAddableModel('checklist')" >
 
             <i
-            class="fa fa-fw fa-plus"
+            class="far fa-fw fa-plus"
             aria-hidden="true"/>
             List
           </span>
@@ -51,20 +51,20 @@
 
           <span
           class="add-folder-chooser section"
-          @click="selectKanbanAddableModel('section')" >
+          @click.stop="selectKanbanAddableModel('section')" >
 
             <i
-            class="fa fa-fw fa-plus"
+            class="far fa-fw fa-plus"
             aria-hidden="true" />
             Section
           </span>
 
           <span
           class="add-list-chooser middle item"
-          @click="selectKanbanAddableModel('checklist-item')" >
+          @click.stop="selectKanbanAddableModel('checklist-item')" >
 
             <i
-            class="fa fa-fw fa-plus"
+            class="far fa-fw fa-plus"
             aria-hidden="true" />
             Item
           </span>
@@ -75,10 +75,10 @@
 
           <span
           class="add-list-chooser sub-item"
-          @click="selectKanbanAddableModel('checklist-item')" >
+          @click.stop="selectKanbanAddableModel('checklist-item')" >
 
             <i
-            class="fa fa-fw fa-plus"
+            class="far fa-fw fa-plus"
             aria-hidden="true" />
             Item
           </span>
@@ -87,10 +87,10 @@
 
         <span
         class="cancel-add-nested-kanban cancel"
-        @click="toggleAddingNestedKanban" >
+        @click.stop="toggleAddingNestedKanban" >
 
           <i
-          class="fa fa-fw fa-times"
+          class="far fa-fw fa-times"
           aria-hidden="true" />
           Cancel
         </span>
@@ -105,7 +105,7 @@
       autocomplete="off" >
 
         <i
-        class="fa fa-fw add-nested-kanban-input-icon"
+        class="far fa-fw add-nested-kanban-input-icon"
         :class="addNestedKanbanInputIcon"
         aria-hidden="true" />
 
@@ -118,9 +118,9 @@
         @blur="cancelIfEmpty" >
 
         <i
-        class="fa fa-fw fa-times cancel-add-nested-kanban-icon"
+        class="far fa-fw fa-times cancel-add-nested-kanban-icon"
         aria-hidden="true"
-        @click="toggleAddingNestedKanban" />
+        @click.stop="toggleAddingNestedKanban" />
 
       </form>
 
@@ -164,7 +164,7 @@ export default {
           return 'fa-window-maximize'
           break;
         case 'checklist-item':
-          return 'fa-circle-thin'
+          return 'fa-circle'
           break;
         default: ''
       }

@@ -1,11 +1,11 @@
 <template lang="html">
   <div class="move-target-checklist-sub-items">
     <div class="info-message" v-if="showInfoMessage">
-      <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="moverIsLoading"/>
+      <i class="far fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="moverIsLoading"/>
       <p :class="[checklistSubItemInfoMessage.type]" v-if="checklistSubItemInfoMessage.content&&checklistSubItemInfoMessage.type">{{ checklistSubItemInfoMessage.content }}</p>
     </div>
 
-    <small class="text-muted" v-if="movableChecklistSubItems&&movableChecklistSubItems.length"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"/> Click to select, doubleclick to open.</small>
+    <small class="text-muted" v-if="movableChecklistSubItems&&movableChecklistSubItems.length"><i class="far fa-fw fa-lightbulb" aria-hidden="true"/> Click to select, doubleclick to open.</small>
 
     <ul class="list-unstyled" v-if="movableChecklistSubItems&&movableChecklistSubItems.length&&!moverIsLoading">
       <li class="nested-checklist-item"
@@ -16,7 +16,7 @@
           :key="item.id"
       >
         <span>
-          <i class="fa fa-fw fa-square-o" aria-hidden="true"/>
+          <i class="far fa-fw fa-square" aria-hidden="true"/>
           {{ item.content }}
         </span>
       </li>

@@ -22,26 +22,26 @@
 
       <span class="checkbox-container">
         <span
-        class="close-nested-kanban toggle-nested-kanban-btn"
+        class="close-nested-kanban nested-kanban-card-icon"
         @click.stop="closeNestedKanbanChecklistItem(currentKanbanChecklistItem)"
         v-if="hasSubItemChain" >
 
           <i
-          class="fa fa-fw fa-chevron-left"
+          class="far fa-fw fa-chevron-left"
           aria-hidden="true"/>
 
           <span>Back</span>
         </span>
 
         <i
-        class="fa fa-fw"
+        class="fal fa-fw"
         :class="checkboxClass"
         aria-hidden="true"
         @click="checkItem"
-        v-if="listType=='ch'||listType=='ta'" />
+        v-if="listType=='ch'||listType=='ta'||!listType" />
 
         <i
-        class="fa fa-fw fa-circle"
+        class="fas fa-fw fa-circle"
         aria-hidden="true"
         v-if="listType=='bu'" />
 
@@ -55,21 +55,21 @@
 
       {{ currentKanbanChecklistItem.content | truncate(truncateLength) }}
 
-      <span class="nested-kanban-card-buttons">
+      <span class="nested-kanban-card-icons">
 
         <!-- <i
-        class="fa fa-fw fa-ellipsis-h toggle-nested-kanban-btn"
+        class="far fa-fw fa-ellipsis-h nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="toggleNestedKanbanMeta(currentKanbanChecklistItem)" /> -->
 
         <i
-        class="fa fa-fw fa-eye toggle-nested-kanban-btn"
+        class="far fa-fw fa-eye nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="previewNestedKanban(currentKanbanChecklistItem)"
         title="Preview" />
 
         <i
-        class="fa fa-fw fa-times toggle-nested-kanban-btn"
+        class="far fa-fw fa-times nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="toggleNestedKanban(item)"
         v-if="!!item.opened&&!hasSubItemChain" />
@@ -91,7 +91,7 @@
 
         <li v-if="currentKanbanChecklistItem.isLoading">
           <i
-          class="fa fa-fw fa-circle-o-notch fa-spin loading-icon"
+          class="fal fa-fw fa-circle-notch fa-spin loading-icon"
           aria-hidden="true" />
         </li>
 
@@ -161,7 +161,7 @@ export default {
     //   'selected'
     // ]),
     checkboxClass: function() {
-      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square' : 'fa-circle'
     },
     isSubItem: function() {
       return !! this.currentKanbanChecklistItem.parent_id
@@ -189,7 +189,7 @@ export default {
       this.removeFromKanbanArray({ array: this.item.subItemChain, value: item })
     },
     checkItem: function() {
-      this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
+      this.checkboxClassOverride = 'fa-circle-notch fa-spin'
       this.checkChecklistItem(this.item)
           .then( () => this.checkboxClassOverride = null )
           .catch( () => this.checkboxClassOverride = null )
@@ -205,17 +205,17 @@ export default {
     // width: 30px;
     text-align: center;
 
-    .fa {
+    .far, .fas, .fal {
         cursor: pointer;
     }
 
     .fa-ellipsis-h,
-    .fa-square-o,
-    .fa-circle-thin {
+    .fa-square,
+    .fa-circle {
         color: $input-border;
     }
 
-    .fa-circle-o-notch {
+    .fa-circle-notch {
         color: $input-border;
     }
 
@@ -229,7 +229,7 @@ export default {
         padding: 0 3px 0 5px;
     }
 
-    .fa-circle {
+    .fa-circle.fas {
         color: $list-primary;
         font-size: 0.7em;
     }

@@ -107,12 +107,12 @@
     transition: opacity .15s;
   }
 
-  &.folder,
-  &.checklist {
+  &.folder-tooltip,
+  &.checklist-tooltip {
     opacity: 0.9;
   }
 
-  &.checklist {
+  &.checklist-tooltip {
     .tooltip-inner {
       background: $list-background !important;
     }
@@ -122,7 +122,7 @@
     }
   }
 
-  &.folder {
+  &.folder-tooltip {
     .tooltip-inner {
       background: $folder-background !important;
     }

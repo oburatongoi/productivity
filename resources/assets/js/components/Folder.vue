@@ -17,7 +17,7 @@
           <move-to-folder v-if="selectedIsMovable"/>
         </template>
 
-        <template v-if="view=='tasks'">
+        <template v-if="view=='tasks'||view=='overview'">
           <index-tasks />
           <move-to-checklist v-if="selectedIsMovable" :replace-after-move="true"/>
         </template>

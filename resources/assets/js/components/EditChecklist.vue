@@ -7,7 +7,7 @@
         <input type="radio" id="ch" value="ch" v-model="checklist.list_type">
         <span>
           <label for="ch">
-            <i class="fa fa-fw fa-list" aria-hidden="true"/>
+            <i class="far fa-fw fa-list" aria-hidden="true"/>
             Check List
           </label>
           <p>List items will have a checkbox, but will not be treated as tasks</p>
@@ -17,7 +17,7 @@
         <input type="radio" id="ta" value="ta" v-model="checklist.list_type">
         <span>
           <label for="ta">
-            <i class="fa fa-fw fa-check-square" aria-hidden="true"/>
+            <i class="far fa-fw fa-tasks" aria-hidden="true"/>
             Task List
           </label>
           <p>List items will be treated as tasks which must be completed</p>
@@ -29,7 +29,7 @@
       <input type="radio" id="bu" value="bu" v-model="checklist.list_type">
       <span>
         <label for="bu">
-          <i class="fa fa-fw fa-list-ul" aria-hidden="true"/>
+          <i class="far fa-fw fa-list-ul" aria-hidden="true"/>
           Bulletted List
         </label>
         <p>List items will have bullets</p>
@@ -40,7 +40,7 @@
       <input type="radio" id="nu" value="nu" v-model="checklist.list_type">
       <span>
         <label for="nu">
-          <i class="fa fa-fw fa-list-ol" aria-hidden="true"/>
+          <i class="far fa-fw fa-list-ol" aria-hidden="true"/>
           Numbered List
         </label>
         <p>List Items will have numbers</p>
@@ -72,7 +72,7 @@ export default {
   },
   computed: {
     saveButtonIcon: function() {
-      return this.isSaving ? 'fa-spinner fa-spin' : 'fa-floppy-o'
+      return this.isSaving ? 'fa-spinner fa-spin' : 'fa-save'
     },
     listTypeTitle: function() {
       return ! this.checklist.list_item ? 'Please select a list type' : 'List Type'

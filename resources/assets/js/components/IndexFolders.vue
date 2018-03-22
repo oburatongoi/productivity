@@ -11,12 +11,12 @@
         draggable="true"
         @click="toggleSelection({selection: {model: 'folder', listing: folder}, event: $event})"
         @dblclick="goToListing('folder', folder.fake_id)"
-        v-tooltip.bottom-start="{ content: folder.name, classes: 'folder', trigger: 'hover', autoHide: false, container: '#folder-'+folder.fake_id }"
+        v-tooltip.bottom-start="{ content: folder.name, classes: 'folder-tooltip', trigger: 'hover', autoHide: false, container: '#folder-'+folder.fake_id }"
         :key="folder.fake_id"
         :id="'folder-'+folder.fake_id"
       >
           <h5>
-            <i class="fa fa-fw fa-folder" aria-hidden="true"/>
+            <i class="fas fa-fw fa-folder" aria-hidden="true"/>
             {{ folder.name }}
           </h5>
 
@@ -24,7 +24,7 @@
               class="go-to-listing"
               v-if="selected.folders.indexOf(folder) !== -1"
           >
-            <i class="fa fa-angle-double-right" aria-hidden="true"/>
+            <i class="far fa-angle-double-right" aria-hidden="true"/>
           </a>
       </li>
   </ul>

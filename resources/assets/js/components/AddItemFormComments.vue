@@ -2,22 +2,22 @@
   <div class="add-item-form-comments form-group">
     <template v-if="!showComments">
       <div class="comments-label" v-if="hasComments" @click="toggleComments">
-        <i class="fa fa-chevron-down" aria-hidden="true"/>
+        <i class="far fa-chevron-down" aria-hidden="true"/>
         <p>Preview Comments</p>
       </div>
       <div class="comments-label" v-if="!hasComments" @click="toggleComments">
-        <i class="fa fa-plus" aria-hidden="true"/>
+        <i class="far fa-plus" aria-hidden="true"/>
         <p>Quick Add Comments</p>
       </div>
     </template>
 
     <template v-if="showComments">
       <div class="comments-label" v-if="hasComments" @click="toggleComments">
-        <i class="fa fa-chevron-up" aria-hidden="true"/>
+        <i class="far fa-chevron-up" aria-hidden="true"/>
         <p>Hide Comments</p>
       </div>
       <div class="comments-label" v-if="!hasComments" @click="toggleComments">
-        <i class="fa fa-times" aria-hidden="true"/>
+        <i class="far fa-times" aria-hidden="true"/>
         <p>Cancel</p>
       </div>
       <!-- <textarea v-on="{ change: saveChanges, keyup: saveChanges, blur: saveChanges, delete: saveChanges }"

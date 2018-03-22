@@ -2,7 +2,7 @@
   <div class="folder-name-wrapper" :class="{ editable: isEditable }">
     <template v-if="currentFolder.fake_id">
       <h4 @click="toggleEditability" id="folder-name">
-        <i class="fa fw" :class="headingIcon" aria-hidden="true"/>
+        <i class="fas fa-fw" :class="headingIcon" aria-hidden="true"/>
         <input type="text"
           id="folder-name-input"
           class="edit-folder-input"
@@ -23,7 +23,7 @@
 
     <h4 v-if="!currentFolder||!currentFolder.fake_id" id="folder-name">
       <span class="edit-folder-input">
-        <i class="fa fw fa-home" aria-hidden="true"/>
+        <i class="fas fw fa-home" aria-hidden="true"/>
         Home
       </span>
     </h4>
@@ -49,7 +49,7 @@ export default {
       return this.isEditable ? 'fa-pencil' : 'fa-folder-open'
     },
     savingIcon: function() {
-      return this.hasSavingError ? 'fa-exclamation-circle' : this.isSaving ? 'fa-spin fa-circle-o-notch' : 'fa-floppy-o'
+      return this.hasSavingError ? 'fa-exclamation-circle' : this.isSaving ? 'fa-spin fa-circle-notch' : 'fa-save'
     },
     savingText: function() {
       return this.hasSavingError ? 'Error saving folder' : this.isSaving ? 'Saving...' : 'Save'

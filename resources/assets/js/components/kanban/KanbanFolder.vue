@@ -1,19 +1,24 @@
 <template lang="html">
-  <li
+  <!-- <li
   class="nested-kanban-card folder enfoldable"
   :class="{ opened: folder.opened, selected: selected.folders.indexOf(folder) !== -1 }"
   @click.stop="toggleSelection({selection: {model: 'folder', listing: folder, parentModel: 'folder'}, event: $event})"
+  @dblclick.stop="toggleNestedKanban(folder)" > -->
+  <li
+  class="nested-kanban-card folder enfoldable"
+  :class="{ opened: folder.opened, selected: selected.folders.indexOf(folder) !== -1 }"
+  @click.stop="toggleNestedKanban(folder)"
   @dblclick.stop="toggleNestedKanban(folder)" >
 
     <div class="nested-kanban-card-heading">
 
       <span
-      class="close-nested-kanban toggle-nested-kanban-btn"
+      class="close-nested-kanban nested-kanban-card-icon"
       @click.stop="closeNestedKanbanFolder(folder)"
       v-if="hasSubFolderChain" >
 
         <i
-        class="fa fa-fw fa-chevron-left"
+        class="far fa-fw fa-chevron-left"
         aria-hidden="true" />
 
         <span>Back</span>
@@ -21,22 +26,22 @@
       </span>
 
       <i
-      class="fa fa-fw fa-folder"
+      class="fas fa-fw fa-folder"
       aria-hidden="true"/>
 
       {{ currentKanbanFolder.name | truncate(35) }}
 
-      <span class="nested-kanban-card-buttons">
+      <span class="nested-kanban-card-icons">
 
         <i
-        class="fa fa-fw fa-link toggle-nested-kanban-btn"
+        class="far fa-fw fa-chevron-right nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="navigateToNestedKanban(folder)"
         :id="'#nested-folder-'+folder.fake_id"
-        v-tooltip.bottom="{ content: 'Open Link', classes: 'folder', trigger: 'hover', autoHide: false, container: '#nested-folder-'+folder.fake_id }" />
+        :title="'Navigate to '+ folder.name" />
 
         <i
-        class="fa fa-fw fa-times toggle-nested-kanban-btn"
+        class="far fa-fw fa-times nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="toggleNestedKanban(folder)"
         v-if="!!folder.opened&&!hasSubFolderChain" />
@@ -50,7 +55,7 @@
       <ul class="nested-kanban-card-body">
 
         <i
-        class="fa fa-fw fa-circle-o-notch fa-spin loading-icon"
+        class="fal fa-fw fa-circle-notch fa-spin loading-icon"
         aria-hidden="true"
         v-if="currentKanbanFolder.isLoading" />
 
@@ -129,7 +134,7 @@ export default {
       'navigateToNestedKanban',
       'removeFromKanbanArray',
       'toggleNestedKanban',
-      'toggleSelection',
+      // 'toggleSelection',
     ]),
     closeNestedKanbanFolder: function(folder) {
       this.removeFromKanbanArray({ array: this.folder.subfolderChain, value: folder })

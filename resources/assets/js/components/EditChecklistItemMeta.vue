@@ -4,17 +4,17 @@
       <label for="deadline">{{ deadlinePlaceholder }}</label>
       <i @click="showDatePicker"
         :class="{'folder-color-scheme':item.deadline, 'fa-spin':deadlineIsLoading}"
-        class="fa fa-fw fa-calendar-o"
+        class="far fa-fw fa-calendar-alt"
         aria-hidden="true"/>
 
         <div class="datepicker-container" v-if="chooseDate">
           <div class="delete-deadline">
             <button v-if="item.deadline" type="button" class="btn btn-xs btn-default" @click="setDate(null)">
-              <i class="fa fa-fw fa-calendar-times-o" aria-hidden="true"/>
+              <i class="far fa-fw fa-calendar-times" aria-hidden="true"/>
                  Remove Deadline
             </button>
             <button type="button" class="btn btn-xs btn-default" @click="hideDatePicker">
-              <i class="fa fa-fw fa-times" aria-hidden="true"/>
+              <i class="far fa-fw fa-times" aria-hidden="true"/>
                  Cancel
             </button>
           </div>
@@ -33,12 +33,12 @@
       <label for="is-important">Important</label>
       <i v-if="!item.is_important"
          @click="toggleImportance"
-         class="fa fa-fw fa-star-o"
+         class="far fa-fw fa-exclamation-circle"
          aria-hidden="true"/>
       <i v-if="item.is_important"
          @click="toggleImportance"
          :class="{'folder-color-scheme':item.is_important, 'fa-spin':importanceIsLoading}"
-         class="fa fa-fw fa-star"
+         class="fas fa-fw fa-exclamation-circle"
          aria-hidden="true"/>
     </span>
 
@@ -46,7 +46,7 @@
       <label for="is-urgent">Urgent</label>
       <i @click="toggleUrgency"
         :class="{'folder-color-scheme':item.is_urgent, 'fa-spin':urgencyIsLoading}"
-        class="fa fa-fw fa-clock-o"
+        class="far fa-fw fa-clock"
         aria-hidden="true"/>
     </span>
 
@@ -142,7 +142,7 @@ export default {
   top: 15px;
   @include high-z-index(2);
 
-  .fa {
+  .far, .fas, .fal {
     font-size: 1em;
   }
 
