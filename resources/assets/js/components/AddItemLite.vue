@@ -7,10 +7,10 @@
         {{ addItemLiteInputIcon }}.
       </span>
 
-      <i class="fa fa-fw" :class="addItemLiteInputIcon" aria-hidden="true" v-else/>
+      <i class="fal fa-fw" :class="addItemLiteInputIcon" aria-hidden="true" v-else/>
     </label>
     <input type="text" :id="parent.model+'-'+parent.id+'-add-item-lite'" :class="{ 'ol-number-input':listType=='nu' }" v-model="item.content" placeholder="New Item">
-    <i class="fa fa-fw cancel-add-item-lite-icon" :class="addItemLiteCancelIcon" aria-hidden="true" v-if="item.content" @click="resetAddItemLite"/>
+    <i class="far fa-fw cancel-add-item-lite-icon" :class="addItemLiteCancelIcon" aria-hidden="true" v-if="item.content" @click="resetAddItemLite"/>
   </form>
 </template>
 
@@ -34,10 +34,10 @@ export default {
     addItemLiteInputIcon: function() {
       return  this.listType=='bu' ? 'fa-circle' :
               this.listType=='nu' ? this.parent.items.length + 1 || this.parent.sub_items.length + 1 :
-              this.listType == 'ch' || this.listType == 'ta' ? this.isSubItem ? 'fa-square-o' : 'fa-circle-thin' : 'fa-plus'
+              this.listType == 'ch' || this.listType == 'ta' ? this.isSubItem ? 'fa-square' : 'fa-circle' : 'fa-plus'
     },
     addItemLiteCancelIcon: function() {
-      return this.isSaving ? 'fa-circle-o-notch fa-spin' : 'fa-times'
+      return this.isSaving ? 'fa-circle-notch fa-spin' : 'fa-times'
     },
     listType: function() {
       return this.parent.list_type || this.parent.sub_list_type
@@ -145,7 +145,7 @@ export default {
     // &:not(.ol-number-icon-container) {
     //   font-size: 0.7em;
     // }
-    .fa-circle {
+    .fa-circle.fas {
       font-size: 0.7em;
     }
 

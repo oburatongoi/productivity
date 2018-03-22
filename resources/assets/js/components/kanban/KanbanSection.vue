@@ -10,7 +10,7 @@
     <ul class="section-items">
 
       <i
-      class="fa fa-fw fa-circle-o-notch fa-spin loading-icon"
+      class="fal fa-fw fa-circle-notch fa-spin loading-icon"
       aria-hidden="true"
       v-if="section.isLoading" />
 

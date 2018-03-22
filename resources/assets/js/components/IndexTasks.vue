@@ -272,7 +272,7 @@ export default {
         font-size: 0.6em;
         cursor: pointer;
         color: $input-border;
-        &.fa-circle-o-notch,
+        &.fa-circle-notch,
         &:hover {
             color: $brand-primary;
         }

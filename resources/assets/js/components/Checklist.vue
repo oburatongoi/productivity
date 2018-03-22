@@ -3,7 +3,7 @@
     <div class="panel main-panel" v-show="!editableSubItem.id">
       <div class="panel-heading">
           <h4 class="checklist-title">
-            <i class="fa fa-fw fa-list"
+            <i class="far fa-fw fa-list"
               :class="[{'grey-color-scheme':isEditable}, checklistIconClass]"
               aria-hidden="true"/>
             <span v-if="!isEditable" @click="toggleEditability(true)">
@@ -21,7 +21,7 @@
                    @blur="debounceSaveChanges"
                    v-focus
             >
-            <i class="fa fa-fw edit-checklist-icon"
+            <i class="far fa-fw edit-checklist-icon"
               :class="inputIcon"
               aria-hidden="true"
               v-if="isEditable"
@@ -34,21 +34,21 @@
               <div class="checked-filter" v-if="checklist.list_type!=='nu'">
                 <span v-if="!selectingCheckedFilter" @click="toggleFilter('checked')">
                   {{ checkedFilterText }}
-                  <i class="fa fa-angle-down" aria-hidden="true"/>
+                  <i class="far fa-angle-down" aria-hidden="true"/>
                 </span>
                 &nbsp;
 
                 <ul :class="{ open: selectingCheckedFilter }" v-if="selectingCheckedFilter">
                   <li v-if="selectingCheckedFilter||filters.checked=='all'" @click="setCheckedFilter('all')">
-                    <i class="fa fa-fw fa-globe" aria-hidden="true"/>
+                    <i class="far fa-fw fa-globe" aria-hidden="true"/>
                     All
                   </li>
                   <li v-if="selectingCheckedFilter||filters.checked=='unchecked'" @click="setCheckedFilter('unchecked')">
-                    <i class="fa fa-fw fa-square-o" aria-hidden="true"/>
+                    <i class="far fa-fw fa-square" aria-hidden="true"/>
                     Incomplete
                   </li>
                   <li v-if="selectingCheckedFilter||filters.checked=='checked'" @click="setCheckedFilter('checked')">
-                    <i class="fa fa-fw fa-check-square" aria-hidden="true"/>
+                    <i class="far fa-fw fa-tasks" aria-hidden="true"/>
                     Completed
                   </li>
                 </ul>
@@ -57,25 +57,25 @@
               <div class="priority-filter">
                 <span v-if="!selectingPriorityFilter" @click="toggleFilter('priority')">
                   {{ priorityFilterText }}
-                  <i class="fa fa-angle-down" aria-hidden="true"/>
+                  <i class="far fa-angle-down" aria-hidden="true"/>
                 </span>
                 &nbsp;
 
                 <ul :class="{ open: selectingPriorityFilter }" v-if="selectingPriorityFilter">
                   <li v-if="selectingPriorityFilter||filters.priority=='none'" @click="setPriorityFilter('none')">
-                    <i class="fa fa-fw fa-globe" aria-hidden="true"/>
+                    <i class="far fa-fw fa-globe" aria-hidden="true"/>
                     All (No Priority)
                   </li>
                   <li v-if="selectingPriorityFilter||filters.priority=='both'" @click="setPriorityFilter('both')">
-                    <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"/>
+                    <i class="far fa-fw fa-exclamation-triangle" aria-hidden="true"/>
                     Important &amp; Urgent
                   </li>
                   <li v-if="selectingPriorityFilter||filters.priority=='important'" @click="setPriorityFilter('important')">
-                    <i class="fa fa-fw fa-star" aria-hidden="true"/>
+                    <i class="fas fa-fw fa-exclamation-circle" aria-hidden="true"/>
                     Important
                   </li>
                   <li v-if="selectingPriorityFilter||filters.priority=='urgent'" @click="setPriorityFilter('urgent')">
-                    <i class="fa fa-fw fa-clock-o" aria-hidden="true"/>
+                    <i class="far fa-fw fa-clock" aria-hidden="true"/>
                     Urgent
                   </li>
                 </ul>
@@ -188,7 +188,7 @@ export default {
     checklistIconClass: function() {
       return ! this.checklist.list_type         ? 'fa-list'         :
                this.checklist.list_type == 'ch' ? 'fa-list'         :
-               this.checklist.list_type == 'ta' ? 'fa-check-square' :
+               this.checklist.list_type == 'ta' ? 'fa-tasks' :
                this.checklist.list_type == 'bu' ? 'fa-list-ul'      :
                this.checklist.list_type == 'nu' ? 'fa-list-ol'      :
                                                   'fa-list'         ;
@@ -267,7 +267,7 @@ export default {
       this.saveChanges()
     }, 1000),
     saveChanges: function() {
-        this.inputIcon = 'fa-spin fa-circle-o-notch'
+        this.inputIcon = 'fa-spin fa-circle-notch'
         this.isSaving = true
         this.saveChecklist(this.checklist)
             .then(
@@ -491,7 +491,7 @@ export default {
         font-size: 0.6em;
         cursor: pointer;
         color: $input-border;
-        &.fa-circle-o-notch,
+        &.fa-circle-notch,
         &:hover {
             color: $brand-primary;
         }
@@ -581,7 +581,7 @@ export default {
                 padding: 2px;
                 border-radius: 2px;
 
-                i.fa {
+                i.far, .fas, .fal {
                     color: darken($base-border-color, 20%);
                 }
                 &:hover {

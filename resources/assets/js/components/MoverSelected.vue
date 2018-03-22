@@ -3,9 +3,9 @@
     <template v-if="selected.checklistItems&&selected.checklistItems.length">
       <h5>Move: </h5>
       <span v-for="item in selected.checklistItems" :key="item.id">
-        <i class="fa fa-fw fa-square-o" aria-hidden="true"/>
+        <i class="far fa-fw fa-square" aria-hidden="true"/>
         {{ item.content | truncate(35) }}
-        <i class="fa fa-fw fa-times"
+        <i class="far fa-fw fa-times"
           aria-hidden="true"
           v-if="selected.checklistItems.length > 1"
           @click="removeItem({ model: 'checklist-item', listing: item, preserveState: true })"

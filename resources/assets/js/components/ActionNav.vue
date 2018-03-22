@@ -8,7 +8,7 @@
           class="btn btn-sm toggle-move-btn"
           :class="moveButtonClass"
           @click.prevent="toggleMovable"
-        ><i class="fa fa-exchange" aria-hidden="true"/> Move</button>
+        ><i class="fas fa-exchange-alt" aria-hidden="true"/> Move</button>
       </template>
 
       <button
@@ -18,7 +18,7 @@
         :class="{ 'delete-armed': selected.deletable }"
         @click.prevent="confirmOrDelete"
         @dblclick.prevent="confirmOrDelete"
-      ><i class="fa fa-trash-o" aria-hidden="true"/><span v-if="selected.deletable"> Delete</span></button>
+      ><i class="far fa-trash-alt" aria-hidden="true"/><span v-if="selected.deletable"> Delete</span></button>
 
       <button
         type="button"
@@ -26,7 +26,7 @@
         class="btn btn-default btn-sm toggle-delete-btn"
         v-if="selected.deletable"
         @click.once="toggleDeletable"
-      ><i class="fa fa-times" aria-hidden="true"/></button>
+      ><i class="far fa-times" aria-hidden="true"/></button>
 
       <button
         type="button"
@@ -34,7 +34,7 @@
         class="btn btn-sm btn-default"
         v-if="!selected.deletable"
         @click.prevent="clearSelected"
-      ><i class="fa fa-times" aria-hidden="true"/></button>
+      ><i class="far fa-times" aria-hidden="true"/></button>
     </div>
   </nav>
 </template>

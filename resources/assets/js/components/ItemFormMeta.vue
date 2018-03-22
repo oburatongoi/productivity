@@ -3,12 +3,12 @@
     <span class="meta-span"
       @click.stop="showDatePicker"
       :id="'checklist-item-'+item.id+'-deadline'"
-      v-tooltip.bottom-end="{ content: deadlineTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-deadline'}"
+      v-tooltip.bottom-end="{ content: deadlineTooltip, classes: 'checklist-tooltip', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-deadline'}"
       :class="{ 'item-deadline':!item.isNewItem }"
     >
       <span class="date">{{ deadlinePlaceholder }}</span>
       <i
-        class="fa fa-fw fa-calendar"
+        class="far fa-fw fa-calendar-alt"
         aria-hidden="true"
       />
     </span>
@@ -17,10 +17,10 @@
       <i
         @click.stop="toggleImportance"
         :class="importanceIcon"
-        class="fa fa-fw"
+        class="fa-fw"
         aria-hidden="true"
         :id="'checklist-item-'+item.id+'-importance'"
-        v-tooltip.bottom="{ content: importanceTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-importance' }"
+        v-tooltip.bottom="{ content: importanceTooltip, classes: 'checklist-tooltip', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-importance' }"
       />
     </span>
 
@@ -28,10 +28,10 @@
       <i
         @click.stop="toggleUrgency"
         :class="{ 'folder-color-scheme':item.is_urgent }"
-        class="fa fa-fw fa-clock-o"
+        class="far fa-fw fa-clock"
         aria-hidden="true"
         :id="'checklist-item-'+item.id+'-urgency'"
-        v-tooltip.bottom="{ content: urgencyTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-urgency' }"
+        v-tooltip.bottom="{ content: urgencyTooltip, classes: 'checklist-tooltip', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-urgency' }"
       />
     </span>
 
@@ -41,10 +41,10 @@
       <i
         @click.stop="toggleSelection({selection: {model, listing:item, parentModel}, event: $event})"
         :class="{ 'folder-color-scheme':item.comments }"
-        class="fa fa-fw fa-sticky-note-o"
+        class="far fa-fw fa-sticky-note"
         aria-hidden="true"
         :id="'checklist-item-'+item.id+'-comments'"
-        v-tooltip.bottom="{ content: commentsTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-comments' }"
+        v-tooltip.bottom="{ content: commentsTooltip, classes: 'checklist-tooltip', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id+'-comments' }"
       />
     </span>
   </div>
@@ -105,7 +105,7 @@ export default {
       return this.item.comments ? 'Has notes' : 'Does not have any notes'
     },
     importanceIcon: function () {
-      return this.item.is_important ? 'fa-star folder-color-scheme' : 'fa-star-o'
+      return this.item.is_important ? 'fas fa-exclamation-circle folder-color-scheme' : 'far fa-exclamation-circle'
     },
   },
   methods: {
@@ -221,7 +221,7 @@ export default {
       }
     }
 
-    .show-item & .fa {
+    .show-item & .far, .fas, .fal {
       font-size: 1.1em;
     }
   }

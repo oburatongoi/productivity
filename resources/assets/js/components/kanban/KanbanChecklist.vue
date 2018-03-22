@@ -13,29 +13,23 @@
     <div class="nested-kanban-card-heading">
 
       <i
-      class="fa fa-fw"
+      class="far fa-fw"
       :class="checklistIconClass"
       aria-hidden="true" />
 
       {{ checklist.title | truncate(35) }}
 
-      <span class="nested-kanban-card-buttons">
+      <span class="nested-kanban-card-icons">
 
         <i
-        class="fa fa-fw fa-link toggle-nested-kanban-btn"
+        class="far fa-fw fa-chevron-right nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="navigateToNestedKanban(checklist)"
         :id="'#nested-checklist-'+checklist.fake_id"
-        v-tooltip.bottom="{
-          content: 'Open Link',
-          classes: 'checklist',
-          trigger: 'hover',
-          autoHide: false,
-          container: '#nested-checklist-'+checklist.fake_id
-        }" />
+        :title="'Navigate to '+ checklist.title" />
 
         <i
-        class="fa fa-fw fa-times toggle-nested-kanban-btn"
+        class="far fa-fw fa-times nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="toggleNestedKanban(checklist)"
         v-if="!!checklist.opened" />
@@ -49,7 +43,7 @@
     class="nested-kanban-card-body" >
 
       <i
-      class="fa fa-fw fa-circle-o-notch fa-spin loading-icon"
+      class="fal fa-fw fa-circle-notch fa-spin loading-icon"
       aria-hidden="true"
       v-if="checklist.isLoading" />
 
@@ -130,7 +124,7 @@ export default {
     checklistIconClass: function() {
     return ! this.checklist.list_type         ? 'fa-list'         :
              this.checklist.list_type == 'ch' ? 'fa-list'         :
-             this.checklist.list_type == 'ta' ? 'fa-check-square' :
+             this.checklist.list_type == 'ta' ? 'fa-tasks' :
              this.checklist.list_type == 'bu' ? 'fa-list-ul'      :
              this.checklist.list_type == 'nu' ? 'fa-list-ol'      :
                                                 'fa-list'         ;

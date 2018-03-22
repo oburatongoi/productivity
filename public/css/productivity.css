@@ -525,7 +525,7 @@
     cursor: pointer;
     color: #ccd0d2;
 }
-.index-tasks .edit-checklist-icon.fa-circle-o-notch, .index-tasks .edit-checklist-icon:hover {
+.index-tasks .edit-checklist-icon.fa-circle-notch, .index-tasks .edit-checklist-icon:hover {
       color: #00A0E5;
 }
 .index-tasks .checklist-title span,
@@ -612,12 +612,16 @@
     width: 60%;
 }
 .show-item .show-item-content .unchecked-sub-items-count {
-      color: #c9d9e4;
-      font-size: 0.85em;
+      color: white;
+      padding: 2px 5px 3px 3px;
+      border-radius: 3px;
+      margin-right: 5px;
+      background: #c7cbcd;
+      font-size: 0.75em;
       line-height: inherit;
 }
-.show-item .show-item-content .unchecked-sub-items-count .fa {
-        font-size: 0.9em;
+.show-item .show-item-content .unchecked-sub-items-count .far, .show-item .show-item-content .unchecked-sub-items-count .fas, .show-item .show-item-content .unchecked-sub-items-count .fal {
+        font-size: 0.85em;
 }
 @media (min-width: 768px) {
 .show-item .show-item-content {
@@ -667,7 +671,7 @@
     margin-top: 10px;
     color: #8fb1c7;
 }
-.show-item .preview-deadline .fa {
+.show-item .preview-deadline .far, .show-item .preview-deadline .fas, .show-item .preview-deadline .fal {
       font-size: 1.2em;
 }
 .show-item .preview-deadline span {
@@ -682,7 +686,7 @@
       font-size: 0.8em;
       color: #00A0E5;
 }
-.show-item .show-item-breadcrumbs span .fa {
+.show-item .show-item-breadcrumbs span .far, .show-item .show-item-breadcrumbs span .fas, .show-item .show-item-breadcrumbs span .fal {
         font-size: 0.8em;
 }
 .show-item .show-item-breadcrumbs span .fa-angle-right {
@@ -695,7 +699,7 @@
         -webkit-text-decoration-color: #00A0E5;
                 text-decoration-color: #00A0E5;
 }
-.show-item .show-item-breadcrumbs span:hover .fa {
+.show-item .show-item-breadcrumbs span:hover .far, .show-item .show-item-breadcrumbs span:hover .fas, .show-item .show-item-breadcrumbs span:hover .fal {
           text-decoration: none;
 }
 .show-item .checkbox-container {
@@ -703,15 +707,15 @@
   width: 30px;
   text-align: center;
 }
-.show-item .checkbox-container .fa {
+.show-item .checkbox-container .far, .show-item .checkbox-container .fas, .show-item .checkbox-container .fal {
     cursor: pointer;
 }
-.show-item .checkbox-container .fa-square-o,
-  .show-item .checkbox-container .fa-circle-thin {
+.show-item .checkbox-container .fa-square,
+  .show-item .checkbox-container .fa-circle {
     color: #ccd0d2;
     font-size: 1.5em;
 }
-.show-item .checkbox-container .fa-circle-o-notch {
+.show-item .checkbox-container .fa-circle-notch {
     color: #ccd0d2;
     font-size: 1em;
 }
@@ -723,7 +727,7 @@
 .show-item .checkbox-container .ol-number {
     font-weight: bold;
 }
-.show-item .checkbox-container .fa-circle {
+.show-item .checkbox-container .fa-circle.fas {
     color: #00A0E5;
     font-size: 0.7em;
 }
@@ -789,7 +793,7 @@
         display: inline-block;
         width: 40px;
 }
-.show-item .item-form-meta .meta-span .fa {
+.show-item .item-form-meta .meta-span .far, .item-form-meta .meta-span .fas, .item-form-meta .meta-span .fal {
       font-size: 1.1em;
 }
 
@@ -836,11 +840,11 @@
     padding-left: 10px;
     min-width: 300px;
 }
-.checklist-item-tree .fa-square-o {
+.checklist-item-tree .fa-square {
     color: #ccd0d2;
 }
-.checklist-item-tree .fa-circle-thin,
-  .checklist-item-tree .fa-folder-open-o,
+.checklist-item-tree .fa-circle.fas,
+  .checklist-item-tree .fa-folder-open,
   .checklist-item-tree .fa-home,
   .checklist-item-tree .fa-list-ul {
     color: #00A0E5;
@@ -884,7 +888,7 @@
       font-size: 0.85em;
       line-height: 1.2em;
 }
-.edit-checklist-item .sizing-buttons .icon-and-label .fa {
+.edit-checklist-item .sizing-buttons .icon-and-label .far, .edit-checklist-item .sizing-buttons .icon-and-label .fas, .edit-checklist-item .sizing-buttons .icon-and-label .fal {
         font-size: 1.2em;
         line-height: inherit;
 }
@@ -897,10 +901,10 @@
 .edit-checklist-item .sizing-buttons .icon-and-label.pull-left {
         margin-right: 15px;
 }
-.edit-checklist-item .sizing-buttons .fa-stack .fa-flopy-o {
+.edit-checklist-item .sizing-buttons .fa-stack .fa-save {
       color: #b1c8d8;
 }
-.edit-checklist-item .sizing-buttons .fa-stack .fa-circle-o-notch {
+.edit-checklist-item .sizing-buttons .fa-stack .fa-circle-notch {
       color: #00A0E5;
       opacity: 0.6;
 }
@@ -1065,9 +1069,13 @@
         margin: 0;
         font-size: 0.8em;
 }
-.edit-checklist-item .edit-checklist-item-meta .is-important .fa,
-      .edit-checklist-item .edit-checklist-item-meta .is-urgent .fa,
-      .edit-checklist-item .edit-checklist-item-meta .deadline .fa {
+.edit-checklist-item .edit-checklist-item-meta .is-important .far, .edit-checklist-item .edit-checklist-item-meta .is-important .fas, .edit-checklist-item .edit-checklist-item-meta .is-important .fal,
+      .edit-checklist-item .edit-checklist-item-meta .is-urgent .far,
+      .edit-checklist-item .edit-checklist-item-meta .is-urgent .fas,
+      .edit-checklist-item .edit-checklist-item-meta .is-urgent .fal,
+      .edit-checklist-item .edit-checklist-item-meta .deadline .far,
+      .edit-checklist-item .edit-checklist-item-meta .deadline .fas,
+      .edit-checklist-item .edit-checklist-item-meta .deadline .fal {
         font-size: 1.1em;
         cursor: pointer;
 }
@@ -1173,7 +1181,7 @@
   top: 15px;
   z-index: 100001 !important;
 }
-.datepicker-container .fa {
+.datepicker-container .far, .datepicker-container .fas, .datepicker-container .fal {
     font-size: 1em;
 }
 .datepicker-container .delete-deadline {
@@ -1457,7 +1465,7 @@
   -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 114, 255, 0.5);
   box-shadow: 0px 1px 1px 0px rgba(0, 114, 255, 0.5);
 }
-.search-form .fa {
+.search-form .far, .search-form .fas, .search-form .fal {
     color: white;
 }
 .search-form.has-query {
@@ -1530,7 +1538,7 @@
     width: 90%;
     display: inline-block;
 }
-.secondary-search-input .fa {
+.secondary-search-input .far, .secondary-search-input .fas, .secondary-search-input .fal {
     font-size: 1.2em;
     color: #b1c8d8;
 }
@@ -1936,7 +1944,7 @@ li.listing.selected .item-count-tag {
           border: 1px solid;
           border-radius: 3px;
 }
-.move-to-folder .move-to-folder-body .nested-folder .fa {
+.move-to-folder .move-to-folder-body .nested-folder .far, .move-to-folder .move-to-folder-body .nested-folder .fas, .move-to-folder .move-to-folder-body .nested-folder .fal {
         color: #00A0E5;
 }
 .move-to-folder .move-to-folder-body .nested-folder.active {
@@ -2099,19 +2107,24 @@ li.listing.selected .item-count-tag {
 .kanban-card.expanded {
     min-width: 600px;
 }
-.kanban-card .toggle-expansion {
+.kanban-card .kanban-card-heading-icons {
     opacity: 0;
-}
-.kanban-card:hover .toggle-expansion {
-    opacity: 1;
-    position: absolute;
-    color: #d3e0e9;
     right: 10px;
-    top: 15px;
+    top: 10px;
+    position: absolute;
+}
+.kanban-card:hover .kanban-card-heading-icons {
+    opacity: 1;
+}
+.kanban-card .kanban-card-heading-icon {
+    color: #d3e0e9;
     cursor: pointer;
 }
-.kanban-card:hover .toggle-expansion:hover {
+.kanban-card .kanban-card-heading-icon:hover {
       color: #8fb1c7;
+}
+.kanban-card .kanban-card-heading-icon:not(:last-child) {
+      margin-right: 5px;
 }
 .kanban-card .kanban-card-heading {
     background: white;
@@ -2195,7 +2208,7 @@ li.listing.selected .item-count-tag {
           background: white;
           padding: 0;
 }
-.kanban-card .nested-kanban-card.checklist, .kanban-card .nested-kanban-card.checklist-item, .kanban-card .nested-kanban-card.sub-checklist-item {
+.kanban-card .nested-kanban-card.folder, .kanban-card .nested-kanban-card.checklist, .kanban-card .nested-kanban-card.checklist-item, .kanban-card .nested-kanban-card.sub-checklist-item {
       cursor: pointer;
 }
 .kanban-card .nested-kanban-card.folder.selected {
@@ -2204,58 +2217,58 @@ li.listing.selected .item-count-tag {
 .kanban-card .nested-kanban-card.sub-checklist-item.selected, .kanban-card .nested-kanban-card.checklist-item.selected, .kanban-card .nested-kanban-card.checklist.selected {
       border: 1px solid #41C15F;
 }
-.kanban-card .nested-kanban-card .toggle-nested-kanban-btn {
+.kanban-card .nested-kanban-card .nested-kanban-card-icon {
       color: #b1c8d8;
       font-size: 0.8em;
       cursor: pointer;
       padding: 5px;
 }
-.kanban-card .nested-kanban-card .toggle-nested-kanban-btn:hover {
+.kanban-card .nested-kanban-card .nested-kanban-card-icon:hover {
         color: #8fb1c7;
 }
-.kanban-card .nested-kanban-card .nested-kanban-card-buttons {
+.kanban-card .nested-kanban-card .nested-kanban-card-icons {
       position: absolute;
       right: 0;
       padding-right: 5px;
 }
-.folder .kanban-card .nested-kanban-card .nested-kanban-card-buttons,
-      .checklist .kanban-card .nested-kanban-card .nested-kanban-card-buttons,
-      .checklist-item .kanban-card .nested-kanban-card .nested-kanban-card-buttons,
-      .sub-checklist-item .kanban-card .nested-kanban-card .nested-kanban-card-buttons {
+.folder .kanban-card .nested-kanban-card .nested-kanban-card-icons,
+      .checklist .kanban-card .nested-kanban-card .nested-kanban-card-icons,
+      .checklist-item .kanban-card .nested-kanban-card .nested-kanban-card-icons,
+      .sub-checklist-item .kanban-card .nested-kanban-card .nested-kanban-card-icons {
         top: 6px;
 }
-.kanban-card .nested-kanban-card .nested-kanban-card-buttons .fa-times,
-      .kanban-card .nested-kanban-card .nested-kanban-card-buttons .fa-chevron-up,
-      .kanban-card .nested-kanban-card .nested-kanban-card-buttons .fa-chevron-down {
+.kanban-card .nested-kanban-card .nested-kanban-card-icons .fa-times,
+      .kanban-card .nested-kanban-card .nested-kanban-card-icons .fa-chevron-up,
+      .kanban-card .nested-kanban-card .nested-kanban-card-icons .fa-chevron-down {
         margin-right: 5px;
 }
-.kanban-card .nested-kanban-card > .nested-kanban-card-heading > .nested-kanban-card-buttons > .toggle-nested-kanban-btn {
+.kanban-card .nested-kanban-card > .nested-kanban-card-heading > .nested-kanban-card-icons > .nested-kanban-card-icon {
       opacity: 0;
 }
-.kanban-card .nested-kanban-card.opened > .nested-kanban-card-heading > .nested-kanban-card-buttons > .toggle-nested-kanban-btn,
-    .kanban-card .nested-kanban-card:hover > .nested-kanban-card-heading > .nested-kanban-card-buttons > .toggle-nested-kanban-btn {
+.kanban-card .nested-kanban-card.opened > .nested-kanban-card-heading > .nested-kanban-card-icons > .nested-kanban-card-icon,
+    .kanban-card .nested-kanban-card:hover > .nested-kanban-card-heading > .nested-kanban-card-icons > .nested-kanban-card-icon {
       opacity: 1;
 }
-.kanban-card .nested-kanban-card > .nested-kanban-card-heading > .nested-kanban-card-buttons {
+.kanban-card .nested-kanban-card > .nested-kanban-card-heading > .nested-kanban-card-icons {
       background: white;
 }
-.kanban-card .nested-kanban-card.selected > .nested-kanban-card-heading > .nested-kanban-card-buttons,
-    .kanban-card .nested-kanban-card.opened > .nested-kanban-card-heading > .nested-kanban-card-buttons,
-    .kanban-card .nested-kanban-card:hover > .nested-kanban-card-heading > .nested-kanban-card-buttons {
+.kanban-card .nested-kanban-card.selected > .nested-kanban-card-heading > .nested-kanban-card-icons,
+    .kanban-card .nested-kanban-card.opened > .nested-kanban-card-heading > .nested-kanban-card-icons,
+    .kanban-card .nested-kanban-card:hover > .nested-kanban-card-heading > .nested-kanban-card-icons {
       background: #f5f8fa;
 }
 .kanban-card .folder .fa-folder {
     color: #00A0E5;
 }
-.kanban-card .sub-checklist-item .fa-check-square,
+.kanban-card .sub-checklist-item .fa-tasks,
   .kanban-card .sub-checklist-item .fa-list-ul,
   .kanban-card .sub-checklist-item .fa-list-ol,
   .kanban-card .sub-checklist-item .fa-list,
-  .kanban-card .checklist-item .fa-check-square,
+  .kanban-card .checklist-item .fa-tasks,
   .kanban-card .checklist-item .fa-list-ul,
   .kanban-card .checklist-item .fa-list-ol,
   .kanban-card .checklist-item .fa-list,
-  .kanban-card .checklist .fa-check-square,
+  .kanban-card .checklist .fa-tasks,
   .kanban-card .checklist .fa-list-ul,
   .kanban-card .checklist .fa-list-ol,
   .kanban-card .checklist .fa-list {
@@ -2318,7 +2331,7 @@ li.listing.selected .item-count-tag {
 .add-item-lite .add-item-lite-icon {
     left: 5px;
 }
-.add-item-lite .add-item-lite-icon .fa-circle {
+.add-item-lite .add-item-lite-icon .fa-circle.fas {
       font-size: 0.7em;
 }
 .add-item-lite .add-item-lite-icon.ol-number-icon-container {
@@ -2532,15 +2545,15 @@ li.listing.selected .item-count-tag {
   display: inline-block;
   text-align: center;
 }
-.nested-kanban-card.checklist-item .checkbox-container .fa {
+.nested-kanban-card.checklist-item .checkbox-container .far, .nested-kanban-card.checklist-item .checkbox-container .fas, .nested-kanban-card.checklist-item .checkbox-container .fal {
     cursor: pointer;
 }
 .nested-kanban-card.checklist-item .checkbox-container .fa-ellipsis-h,
-  .nested-kanban-card.checklist-item .checkbox-container .fa-square-o,
-  .nested-kanban-card.checklist-item .checkbox-container .fa-circle-thin {
+  .nested-kanban-card.checklist-item .checkbox-container .fa-square,
+  .nested-kanban-card.checklist-item .checkbox-container .fa-circle {
     color: #ccd0d2;
 }
-.nested-kanban-card.checklist-item .checkbox-container .fa-circle-o-notch {
+.nested-kanban-card.checklist-item .checkbox-container .fa-circle-notch {
     color: #ccd0d2;
 }
 .nested-kanban-card.checklist-item .checkbox-container .ol-number,
@@ -2551,7 +2564,7 @@ li.listing.selected .item-count-tag {
     font-weight: bold;
     padding: 0 3px 0 5px;
 }
-.nested-kanban-card.checklist-item .checkbox-container .fa-circle {
+.nested-kanban-card.checklist-item .checkbox-container .fa-circle.fas {
     color: #41C15F;
     font-size: 0.7em;
 }
@@ -2563,14 +2576,14 @@ li.listing.selected .item-count-tag {
   display: inline-block;
   text-align: center;
 }
-.nested-kanban-card.checklist-item .checkbox-container .fa {
+.nested-kanban-card.checklist-item .checkbox-container .far, .nested-kanban-card.checklist-item .checkbox-container .fas, .nested-kanban-card.checklist-item .checkbox-container .fal {
     cursor: pointer;
 }
-.nested-kanban-card.checklist-item .checkbox-container .fa-square-o,
-  .nested-kanban-card.checklist-item .checkbox-container .fa-circle-thin {
+.nested-kanban-card.checklist-item .checkbox-container .fa-square,
+  .nested-kanban-card.checklist-item .checkbox-container .fa-circle {
     color: #ccd0d2;
 }
-.nested-kanban-card.checklist-item .checkbox-container .fa-circle-o-notch {
+.nested-kanban-card.checklist-item .checkbox-container .fa-circle-notch {
     color: #ccd0d2;
 }
 .nested-kanban-card.checklist-item .checkbox-container .ol-number,
@@ -2581,7 +2594,7 @@ li.listing.selected .item-count-tag {
     font-weight: bold;
     padding: 0 3px 0 5px;
 }
-.nested-kanban-card.checklist-item .checkbox-container .fa-circle {
+.nested-kanban-card.checklist-item .checkbox-container .fa-circle.fas {
     color: #41C15F;
     font-size: 0.7em;
 }
@@ -2750,8 +2763,10 @@ li.listing.selected .item-count-tag {
 .move-to-checklist-body .nested-folder {
   cursor: pointer;
 }
-.move-target-checklist-sub-items .nested-folder .fa,
-  .move-to-checklist-body .nested-folder .fa {
+.move-target-checklist-sub-items .nested-folder .far, .move-target-checklist-sub-items .nested-folder .fas, .move-target-checklist-sub-items .nested-folder .fal,
+  .move-to-checklist-body .nested-folder .far,
+  .move-to-checklist-body .nested-folder .fas,
+  .move-to-checklist-body .nested-folder .fal {
     color: #00A0E5;
 }
 .move-target-checklist-sub-items .nested-folder.active,
@@ -2766,8 +2781,10 @@ li.listing.selected .item-count-tag {
   padding-bottom: 5px;
   background: #f7f9fb;
 }
-.move-to-checklist-body .nested-checklist-item .fa,
-.move-to-checklist-body .nested-checklist .fa {
+.move-to-checklist-body .nested-checklist-item .far, .move-to-checklist-body .nested-checklist-item .fas, .move-to-checklist-body .nested-checklist-item .fal,
+.move-to-checklist-body .nested-checklist .far,
+.move-to-checklist-body .nested-checklist .fas,
+.move-to-checklist-body .nested-checklist .fal {
   color: #41C15F;
 }
 .move-to-checklist-body .nested-checklist-item.active:not(.opened),
@@ -2844,7 +2861,7 @@ li.listing.selected .item-count-tag {
 .mover-breadcrumbs .crumb.opened {
       background: linear-gradient(190deg, rgba(125, 242, 159, 0.25) 0%, rgba(47, 191, 81, 0.25) 100%), linear-gradient(-110deg, rgba(125, 242, 159, 0.2) 0%, rgba(47, 191, 81, 0.2) 100%), linear-gradient(10deg, rgba(125, 242, 159, 0.15) 0%, rgba(47, 191, 81, 0.15) 100%), linear-gradient(190deg, rgba(1, 175, 30, 0.25) 0%, rgba(0, 205, 172, 0.25) 100%), linear-gradient(-110deg, rgba(1, 175, 30, 0.15) 0%, rgba(0, 205, 172, 0.15) 100%), linear-gradient(10deg, rgba(1, 175, 30, 0.25) 0%, rgba(0, 205, 172, 0.25) 100%), linear-gradient(190deg, rgba(125, 242, 159, 0.701961) 0%, rgba(47, 191, 81, 0.701961) 100%), linear-gradient(-110deg, rgba(125, 242, 159, 0.65098) 0%, rgba(47, 191, 81, 0.65098) 100%), linear-gradient(10deg, rgba(125, 242, 159, 0.4) 0%, rgba(47, 191, 81, 0.4) 100%), linear-gradient(190deg, rgba(1, 175, 30, 0.55) 0%, rgba(0, 204, 95, 0.55) 100%), linear-gradient(-110deg, rgba(1, 175, 30, 0.45) 0%, rgba(0, 204, 95, 0.45) 100%), linear-gradient(10deg, rgba(1, 175, 30, 0.55) 0%, rgba(0, 204, 95, 0.55) 100%);
 }
-.mover-breadcrumbs .crumb.opened, .mover-breadcrumbs .crumb.opened .fa {
+.mover-breadcrumbs .crumb.opened, .mover-breadcrumbs .crumb.opened .far, .mover-breadcrumbs .crumb.opened .fas, .mover-breadcrumbs .crumb.opened .fal {
         color: white;
 }
 .mover-breadcrumbs .fa-angle-down,
@@ -2855,11 +2872,11 @@ li.listing.selected .item-count-tag {
     margin-left: 5px;
 }
 .mover-breadcrumbs .fa-home,
-  .mover-breadcrumbs .fa-folder-open-o {
+  .mover-breadcrumbs .fa-folder-open {
     color: #6d99b6;
 }
-.mover-breadcrumbs .fa-square-o,
-  .mover-breadcrumbs .fa-circle-thin {
+.mover-breadcrumbs .fa-square,
+  .mover-breadcrumbs .fa-circle {
     color: #6d99b6;
 }
 .mover-breadcrumbs .fa-list-ul,
@@ -2906,7 +2923,7 @@ li.listing.selected .item-count-tag {
 .add-folder-button:hover {
     background: #f7f9fb;
 }
-.add-folder-button .fa {
+.add-folder-button .far, .add-folder-button .fas, .add-folder-button .fal {
     color: #00A0E5;
 }
 .add-folder-form {
@@ -3173,7 +3190,7 @@ li.listing.selected .item-count-tag {
     cursor: pointer;
     color: #ccd0d2;
 }
-.show-checklist .edit-checklist-icon.fa-circle-o-notch, .show-checklist .edit-checklist-icon:hover {
+.show-checklist .edit-checklist-icon.fa-circle-notch, .show-checklist .edit-checklist-icon:hover {
       color: #00A0E5;
 }
 .show-checklist .checklist-title span,
@@ -3253,8 +3270,10 @@ li.listing.selected .item-count-tag {
         padding: 2px;
         border-radius: 2px;
 }
-.checklist-filters .checked-filter ul li i.fa,
-        .checklist-filters .priority-filter ul li i.fa {
+.checklist-filters .checked-filter ul li i.far, .checklist-filters .checked-filter ul li .fas, .checklist-filters .checked-filter ul li .fal,
+        .checklist-filters .priority-filter ul li i.far,
+        .checklist-filters .priority-filter ul li .fas,
+        .checklist-filters .priority-filter ul li .fal {
           color: #8fb1c7;
 }
 .checklist-filters .checked-filter ul li:hover,
@@ -12073,24 +12092,24 @@ body > div,
   transition: opacity .15s;
 }
 
-.tooltip.folder,
-.tooltip.checklist {
+.tooltip.folder-tooltip,
+.tooltip.checklist-tooltip {
   opacity: 0.9;
 }
 
-.tooltip.checklist .tooltip-inner {
+.tooltip.checklist-tooltip .tooltip-inner {
   background: linear-gradient(190deg, rgba(125, 242, 159, 0.25) 0%, rgba(47, 191, 81, 0.25) 100%), linear-gradient(-110deg, rgba(125, 242, 159, 0.2) 0%, rgba(47, 191, 81, 0.2) 100%), linear-gradient(10deg, rgba(125, 242, 159, 0.15) 0%, rgba(47, 191, 81, 0.15) 100%), linear-gradient(190deg, rgba(1, 175, 30, 0.25) 0%, rgba(0, 205, 172, 0.25) 100%), linear-gradient(-110deg, rgba(1, 175, 30, 0.15) 0%, rgba(0, 205, 172, 0.15) 100%), linear-gradient(10deg, rgba(1, 175, 30, 0.25) 0%, rgba(0, 205, 172, 0.25) 100%), linear-gradient(190deg, rgba(125, 242, 159, 0.701961) 0%, rgba(47, 191, 81, 0.701961) 100%), linear-gradient(-110deg, rgba(125, 242, 159, 0.65098) 0%, rgba(47, 191, 81, 0.65098) 100%), linear-gradient(10deg, rgba(125, 242, 159, 0.4) 0%, rgba(47, 191, 81, 0.4) 100%), linear-gradient(190deg, rgba(1, 175, 30, 0.55) 0%, rgba(0, 204, 95, 0.55) 100%), linear-gradient(-110deg, rgba(1, 175, 30, 0.45) 0%, rgba(0, 204, 95, 0.45) 100%), linear-gradient(10deg, rgba(1, 175, 30, 0.55) 0%, rgba(0, 204, 95, 0.55) 100%) !important;
 }
 
-.tooltip.checklist .tooltip-arrow {
+.tooltip.checklist-tooltip .tooltip-arrow {
   border-color: #41C15F;
 }
 
-.tooltip.folder .tooltip-inner {
+.tooltip.folder-tooltip .tooltip-inner {
   background: linear-gradient(190deg, rgba(0, 198, 255, 0.25) 0%, rgba(0, 114, 255, 0.25) 100%), linear-gradient(-110deg, rgba(0, 198, 255, 0.2) 0%, rgba(0, 114, 255, 0.2) 100%), linear-gradient(10deg, rgba(0, 198, 255, 0.15) 0%, rgba(0, 114, 255, 0.15) 100%), linear-gradient(190deg, rgba(2, 170, 176, 0.25) 0%, rgba(0, 205, 172, 0.25) 100%), linear-gradient(-110deg, rgba(2, 170, 176, 0.15) 0%, rgba(0, 205, 172, 0.15) 100%), linear-gradient(10deg, rgba(2, 170, 176, 0.25) 0%, rgba(0, 205, 172, 0.25) 100%), linear-gradient(190deg, rgba(0, 198, 255, 0.701961) 0%, rgba(0, 114, 255, 0.701961) 100%), linear-gradient(-110deg, rgba(0, 198, 255, 0.65098) 0%, rgba(0, 114, 255, 0.65098) 100%), linear-gradient(10deg, rgba(0, 198, 255, 0.4) 0%, rgba(0, 114, 255, 0.4) 100%), linear-gradient(190deg, rgba(2, 170, 176, 0.55) 0%, rgba(0, 205, 172, 0.55) 100%), linear-gradient(-110deg, rgba(2, 170, 176, 0.45) 0%, rgba(0, 205, 172, 0.45) 100%), linear-gradient(10deg, rgba(2, 170, 176, 0.55) 0%, rgba(0, 205, 172, 0.55) 100%) !important;
 }
 
-.tooltip.folder .tooltip-arrow {
+.tooltip.folder-tooltip .tooltip-arrow {
   border-color: #00A0E5;
 }
 

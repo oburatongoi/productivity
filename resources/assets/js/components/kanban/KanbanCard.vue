@@ -7,24 +7,32 @@
     :class="card.model" >
 
       <i
-      class="fa fa-fw fa-folder"
+      class="fas fa-fw fa-folder"
       aria-hidden="true"
       v-if="card.model=='folder'" />
 
       <i
-      class="fa fa-fw"
+      class="far fa-fw"
       :class="checklistIconClass"
       aria-hidden="true"
       v-if="card.model=='checklist'" />
 
       {{ card.name || card.title | truncate(35) }}
 
-      <i
-      class="fa fa-fw fa-expand toggle-expansion"
-      :class="expansionClass"
-      aria-hidden="true"
-      title="expand/shrink"
-      @click.stop="toggleKanbanExpansion(card)" />
+      <span class="kanban-card-heading-icons">
+        <i
+        class="far fa-fw kanban-card-heading-icon"
+        :class="expansionClass"
+        aria-hidden="true"
+        title="expand/shrink"
+        @click.stop="toggleKanbanExpansion(card)" />
+
+        <i
+        class="far fa-fw fa-chevron-right kanban-card-heading-icon"
+        aria-hidden="true"
+        :title="'Navigate to '+ card.name || card.title"
+        @click.stop="navigateToNestedKanban(card)" />
+      </span>
 
     </div>
 
@@ -131,7 +139,7 @@ export default {
     return this.card.model != 'checklist' ? null              :
            ! this.card.list_type          ? 'fa-list'         :
              this.card.list_type == 'ch'  ? 'fa-list'         :
-             this.card.list_type == 'ta'  ? 'fa-check-square' :
+             this.card.list_type == 'ta'  ? 'fa-tasks' :
              this.card.list_type == 'bu'  ? 'fa-list-ul'      :
              this.card.list_type == 'nu'  ? 'fa-list-ol'      :
                                                 'fa-list'     ;
@@ -164,7 +172,7 @@ export default {
       }
     },
     expansionClass: function() {
-      return this.card.isExpanded ? 'fa-compress' : 'fa-expand'
+      return this.card.isExpanded ? 'fa-compress-alt' : 'fa-expand-alt'
     },
     hasSections: function() {
       return this.card.sections && !! this.card.sections.length
@@ -175,6 +183,7 @@ export default {
   },
   methods: {
     ...mapActions([
+      'navigateToNestedKanban',
       'toggleKanbanExpansion',
     ]),
   },
@@ -206,22 +215,27 @@ export default {
       min-width: 600px;
     }
 
-    .toggle-expansion {
+    .kanban-card-heading-icons {
       opacity: 0;
+      right: 10px;
+      top: 10px;
+      position: absolute;
     }
 
     &:hover {
-      .toggle-expansion {
+      .kanban-card-heading-icons {
         opacity: 1;
-        position: absolute;
-        color: $base-border-color;
-        right: 10px;
-        top: 15px;
-        cursor: pointer;
+      }
+    }
 
-        &:hover {
-          color: darken($base-border-color, 20%);
-        }
+    .kanban-card-heading-icon {
+      color: $base-border-color;
+      cursor: pointer;
+      &:hover {
+        color: darken($base-border-color, 20%);
+      }
+      &:not(:last-child) {
+        margin-right: 5px;
       }
     }
 
@@ -322,6 +336,7 @@ export default {
         }
       }
 
+      &.folder,
       &.checklist,
       &.checklist-item,
       &.sub-checklist-item {
@@ -338,7 +353,7 @@ export default {
         border: 1px solid $list-primary;
       }
 
-      .toggle-nested-kanban-btn {
+      .nested-kanban-card-icon {
         color: darken($base-border-color, 10%);
         font-size: 0.8em;
         cursor: pointer;
@@ -349,7 +364,7 @@ export default {
         }
       }
 
-      .nested-kanban-card-buttons {
+      .nested-kanban-card-icons {
         position: absolute;
         right: 0;
         padding-right: 5px;
@@ -374,22 +389,22 @@ export default {
       }
 
       /* Buttons */
-      & > .nested-kanban-card-heading > .nested-kanban-card-buttons > .toggle-nested-kanban-btn {
+      & > .nested-kanban-card-heading > .nested-kanban-card-icons > .nested-kanban-card-icon {
         opacity: 0;
       }
-      &.opened > .nested-kanban-card-heading > .nested-kanban-card-buttons > .toggle-nested-kanban-btn,
-      &:hover > .nested-kanban-card-heading > .nested-kanban-card-buttons > .toggle-nested-kanban-btn {
+      &.opened > .nested-kanban-card-heading > .nested-kanban-card-icons > .nested-kanban-card-icon,
+      &:hover > .nested-kanban-card-heading > .nested-kanban-card-icons > .nested-kanban-card-icon {
         opacity: 1;
       }
       /* End Buttons */
 
       /* Background */
-      & > .nested-kanban-card-heading > .nested-kanban-card-buttons {
+      & > .nested-kanban-card-heading > .nested-kanban-card-icons {
         background: rgba(255, 255, 255, 1);
       }
-      &.selected > .nested-kanban-card-heading > .nested-kanban-card-buttons,
-      &.opened > .nested-kanban-card-heading > .nested-kanban-card-buttons,
-      &:hover > .nested-kanban-card-heading > .nested-kanban-card-buttons {
+      &.selected > .nested-kanban-card-heading > .nested-kanban-card-icons,
+      &.opened > .nested-kanban-card-heading > .nested-kanban-card-icons,
+      &:hover > .nested-kanban-card-heading > .nested-kanban-card-icons {
         background: rgba(245, 248, 250, 1);
       }
       /* End Background */
@@ -399,15 +414,15 @@ export default {
       color: $folder-primary;
     }
 
-    .sub-checklist-item .fa-check-square,
+    .sub-checklist-item .fa-tasks,
     .sub-checklist-item .fa-list-ul,
     .sub-checklist-item .fa-list-ol,
     .sub-checklist-item .fa-list,
-    .checklist-item .fa-check-square,
+    .checklist-item .fa-tasks,
     .checklist-item .fa-list-ul,
     .checklist-item .fa-list-ol,
     .checklist-item .fa-list,
-    .checklist .fa-check-square,
+    .checklist .fa-tasks,
     .checklist .fa-list-ul,
     .checklist .fa-list-ol,
     .checklist .fa-list {
@@ -445,7 +460,7 @@ export default {
   //     color: darken($base-border-color, 5%);
   //   }
   //
-  //   .fa {
+  //   .far, .fas, .fal {
   //     cursor: move !important;
   //     padding: 0;
   //     &:last-child {

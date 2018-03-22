@@ -2,22 +2,22 @@
   <div class="add-section">
     <span class="add-section-button" @click="toggleAddSection" v-if="!isAddingSection">
       <span>
-        <span class="add-section-icon"><i class="fa fa-fw fa-scissors" aria-hidden="true"/></span>
+        <span class="add-section-icon"><i class="far fa-fw fa-cut" aria-hidden="true"/></span>
         <span class="add-section-text">New Section</span>
       </span>
     </span>
     <template v-if="isAddingSection">
       <form class="add-section-form" @submit.prevent="submitForm" autocomplete="off">
         <input type="text" :id="parent.model+'-'+parent.id+'-add-section'" v-model="section.title" placeholder="Name this section" v-focus @blur="resetIfEmpty">
-        <i class="fa cancel-add-section-icon" :class="addSectionInputIcon" aria-hidden="true" @click="resetAddSection"/>
+        <i class="far cancel-add-section-icon" :class="addSectionInputIcon" aria-hidden="true" @click="resetAddSection"/>
       </form>
 
       <span
         class="add-item-lite-ghost"
         :id="'add-item-lite-ghost-'+parent.id"
-        v-tooltip.bottom-start="{ content: 'To add item, first save this section', classes: 'checklist', trigger: 'hover', autoHide: false, container: '#add-item-lite-ghost-'+parent.id }"
+        v-tooltip.bottom-start="{ content: 'To add item, first save this section', classes: 'checklist-tooltip', trigger: 'hover', autoHide: false, container: '#add-item-lite-ghost-'+parent.id }"
       >
-        <i class="fa fa-fw fa-plus" aria-hidden="true"/>
+        <i class="far fa-fw fa-plus" aria-hidden="true"/>
         New Item
       </span>
     </template>
@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     addSectionInputIcon: function() {
-      return this.isSaving ? 'fa-circle-o-notch fa-spin' : 'fa-times'
+      return this.isSaving ? 'fa-circle-notch fa-spin' : 'fa-times'
     }
   },
   methods: {

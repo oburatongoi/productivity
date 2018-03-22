@@ -1,32 +1,31 @@
 <template lang="html">
-  <li
+  <!-- <li
   class="nested-kanban-card folder enfoldable"
   :class="{ opened: folder.opened, selected: selected.folders.indexOf(folder) !== -1 }"
   @click.stop="toggleSelection({selection: {model: 'folder', listing: folder, parentModel: 'folder'}, event: $event})"
+  @dblclick.stop="openNestedKanbanFolder(folder)" > -->
+  <li
+  class="nested-kanban-card folder enfoldable"
+  :class="{ opened: folder.opened, selected: selected.folders.indexOf(folder) !== -1 }"
+  @click.stop="openNestedKanbanFolder(folder)"
   @dblclick.stop="openNestedKanbanFolder(folder)" >
 
     <div class="nested-kanban-card-heading">
 
       <i
-      class="fa fa-fw fa-folder"
+      class="fas fa-fw fa-folder"
       aria-hidden="true" />
 
       {{ folder.name | truncate(35) }}
 
-      <span class="nested-kanban-card-buttons">
+      <span class="nested-kanban-card-icons">
 
         <i
-        class="fa fa-fw fa-link toggle-nested-kanban-btn"
-          aria-hidden="true"
-          @click.stop="navigateToNestedKanban(folder)"
-          :id="'#nested-folder-'+folder.fake_id"
-          v-tooltip.bottom="{
-            content: 'Open Link',
-            classes: 'folder',
-            trigger: 'hover',
-            autoHide: false,
-            container: '#nested-folder-'+folder.fake_id
-          }" />
+        class="far fa-fw fa-chevron-right nested-kanban-card-icon"
+        aria-hidden="true"
+        @click.stop="navigateToNestedKanban(folder)"
+        :id="'#nested-folder-'+folder.fake_id"
+        :title="'Navigate to '+ folder.name" />
 
       </span>
 
@@ -60,7 +59,7 @@ export default {
       'addToKanbanArray',
       'fetchNestedKanbanDescendants',
       'navigateToNestedKanban',
-      'toggleSelection',
+      // 'toggleSelection',
     ]),
     openNestedKanbanFolder: function(folder) {
       if (!this.ancestor.subfolderChain) this.$set(this.ancestor, 'subfolderChain', [])

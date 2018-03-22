@@ -8,7 +8,7 @@
         class="item"
         @click="emitClick({ selection: {model: 'home'}, event: $event})"
         >
-          <i class="fa fa-fw fa-home" aria-hidden="true"/>
+          <i class="fas fa-fw fa-home " aria-hidden="true"/>
           Home
         </li>
 
@@ -167,11 +167,11 @@ export default {
     min-width: 300px;
   }
 
-  .fa-square-o {
+  .fa-square {
       color: $input-border;
   }
-  .fa-circle-thin,
-  .fa-folder-open-o,
+  .fa-circle.fas,
+  .fa-folder-open,
   .fa-home,
   .fa-list-ul {
     color: $brand-primary;

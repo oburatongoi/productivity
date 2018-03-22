@@ -16,7 +16,7 @@
         @click="saveAndClose" >
 
           <i
-          class="fa fa-times"
+          class="far fa-times"
           aria-hidden="true"
           title="Save and Close" />
           Close
@@ -26,8 +26,8 @@
         class="pull-right icon-and-label"
         v-if="savingChanges" >
           <span class="fa-stack">
-            <i class="fa fa-circle-o-notch fa-spin fa-stack-2x"/>
-            <i class="fa fa-floppy-o fa-stack-1x"/>
+            <i class="fal fa-circle-notch fa-spin fa-stack-2x"/>
+            <i class="far fa-save fa-stack-1x"/>
           </span>
           Saving
         </span>
@@ -36,7 +36,7 @@
         class="pull-left icon-and-label"
         @click="saveAndClose" >
           <i
-          class="fa fa-chevron-left"
+          class="far fa-chevron-left"
           aria-hidden="true"
           title="Back" />
           Back
@@ -62,14 +62,14 @@
           <h4 class="edit-checklist-item-content-container">
             <span class="checkbox-container">
               <i
-              class="fa fa-fw"
+              class="fal fa-fw"
               :class="checkboxClass"
               aria-hidden="true"
               @click="checkItem"
               v-if="listType&&listType=='ch'||listType=='ta'" />
 
               <i
-              class="fa fa-fw fa-circle"
+              class="fas fa-fw fa-circle"
               aria-hidden="true"
               v-if="listType&&listType=='bu'" />
 
@@ -104,7 +104,7 @@
           @click="switchView('sub-items')"
           :class="{ selected: view=='sub-items' }" >
             <i
-            class="fa fa-check-square"
+            class="far fa-tasks"
             aria-hidden="true" />
             Items
             <span
@@ -118,7 +118,7 @@
           @click="switchView('notes')"
           :class="{ selected: view=='notes' }" >
             <i
-            class="fa fa-sticky-note-o"
+            class="far fa-sticky-note"
             aria-hidden="true" />
             Notes
           </li>
@@ -232,13 +232,13 @@ export default {
   },
   computed: {
     checkboxClass: function() {
-      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square' : 'fa-circle'
     },
     editChecklistItemClass: function() {
       return this.item.checklist_id ? 'checklist-item' : 'sub-checklist-item'
     },
     toggleExpansionClass: function() {
-      return this.item.isExpanded ? 'fa-compress' : 'fa-expand'
+      return this.item.isExpanded ? 'fa-compress-alt' : 'fa-expand-alt'
     },
     toggleExpansionTitle: function() {
       return this.item.isExpanded ? 'Shrink' : 'Expand'
@@ -290,7 +290,7 @@ export default {
       .catch( (error) => console.log(error) )
     },
     checkItem: function() {
-      this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
+      this.checkboxClassOverride = 'fa-circle-notch fa-spin'
       this.toggleItemCheckMark(this.item)
           .then( () => this.checkboxClassOverride = null )
           .catch( (error) => console.log(error))
@@ -356,7 +356,7 @@ export default {
         @include clearfix;
         text-align: center;
 
-        // .fa {
+        // .far, .fas, .fal {
         //   cursor: pointer;
         //   color: $base-border-color;
         //   &:hover {
@@ -370,7 +370,7 @@ export default {
           font-size: 0.85em;
           line-height: 1.2em;
 
-          .fa {
+          .far, .fas, .fal {
             font-size: 1.2em;
             line-height: inherit;
           }
@@ -393,10 +393,10 @@ export default {
         .fa-stack {
             // margin-top: -5px;
             // font-size: 0.75em;
-            .fa-flopy-o {
+            .fa-save{
                 color: darken($base-border-color, 10%);
             }
-            .fa-circle-o-notch {
+            .fa-circle-notch {
                 color: $brand-primary;
                 opacity: 0.6;
             }
@@ -566,7 +566,7 @@ export default {
                 font-size: 0.8em;
             }
 
-            .fa {
+            .far, .fas, .fal {
                 font-size: 1.1em;
                 cursor: pointer;
             }

@@ -3,7 +3,7 @@
     <div class="item-form">
       <div class="item-form-content">
         <i
-          class="fa fa-fw fa-plus item-form-icon"
+          class="far fa-fw fa-plus item-form-icon"
           aria-hidden="true"
         />
         <input
@@ -29,11 +29,11 @@
       <div class="datepicker-container" v-if="chooseDate">
         <div class="delete-deadline">
           <button v-if="newItem.deadline" type="button" class="btn btn-xs btn-default" @click="setDate(null)">
-            <i class="fa fa-fw fa-calendar-times-o" aria-hidden="true"/>
+            <i class="far fa-fw fa-calendar-times" aria-hidden="true"/>
                Remove Deadline
           </button>
           <button type="button" class="btn btn-xs btn-default" @click="hideDatePicker">
-            <i class="fa fa-fw fa-times" aria-hidden="true"/>
+            <i class="far fa-fw fa-times" aria-hidden="true"/>
                Cancel
           </button>
         </div>

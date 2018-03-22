@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     saveButtonIcon: function() {
-      return this.isSaving ? 'fa-spinner fa-spin' : 'fa-floppy-o'
+      return this.isSaving ? 'fa-spinner fa-spin' : 'fa-save'
     }
   },
   methods: {

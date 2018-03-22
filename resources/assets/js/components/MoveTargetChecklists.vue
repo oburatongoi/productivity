@@ -3,19 +3,19 @@
     <template v-if="!openMovableChecklist.id&&moverContext!='checklist-item'">
       <h5>Lists <span v-if="movableChecklists&&movableChecklists.length">(click to select, doubleclick to open)</span></h5>
 
-      <!-- <small class="text-muted" v-if="movableChecklists&&movableChecklists.length"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"/> Click to select, doubleclick to open.</small> -->
+      <!-- <small class="text-muted" v-if="movableChecklists&&movableChecklists.length"><i class="far fa-fw fa-lightbulb" aria-hidden="true"/> Click to select, doubleclick to open.</small> -->
 
       <mover-adder model="checklist"/>
 
       <div class="info-message" v-if="showChecklistInfoMessage">
-        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="moverIsLoading"/>
+        <i class="far fa-spinner fa-spin fa-lg" aria-hidden="true" v-if="moverIsLoading"/>
         <p :class="[checklistInfoMessage.type]" v-if="checklistInfoMessage.content&&checklistInfoMessage.type">{{ checklistInfoMessage.content }}</p>
       </div>
     </template>
 
     <ul class="list-unstyled" v-if="movableChecklists&&movableChecklists.length&&!moverIsLoading">
       <li v-if="isStoringMovableChecklist">
-        <i class="fa fa-spinner fa-spin fa-lg" aria-hidden="true"/>
+        <i class="far fa-spinner fa-spin fa-lg" aria-hidden="true"/>
       </li>
       <li class="nested-checklist"
           :class="{ active: checklist.id==selectedMovableChecklist.id, opened: checklist.id==openMovableChecklist.id }"
@@ -27,10 +27,10 @@
           @click.stop.prevent="selectMoverChecklist(checklist)"
           @dblclick.stop.prevent="toggleChecklist(checklist)"
         >
-          <i class="fa fa-fw fa-list" aria-hidden="true"/>
+          <i class="far fa-fw fa-list" aria-hidden="true"/>
           {{ checklist.title }}
         </span>
-        <i class="fa fa-angle-right" aria-hidden="true" @click="fetchChecklistItems(checklist)"/>
+        <i class="far fa-angle-right" aria-hidden="true" @click="fetchChecklistItems(checklist)"/>
       </li>
     </ul>
   </div>

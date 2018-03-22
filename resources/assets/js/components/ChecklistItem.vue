@@ -1,8 +1,8 @@
 <template>
   <li v-show="itemIsVisible" class="show-item" :class="{'selected':itemIsSelected}" @click.self="toggleSelection({selection: {model, listing: item, parentModel}, event: $event})" draggable>
     <span class="checkbox-container">
-      <i class="fa fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType=='ch'||listType=='ta'"/>
-      <i class="fa fa-fw fa-circle" aria-hidden="true" v-if="listType=='bu'"/>
+      <i class="fal fa-fw" :class="checkboxClass" aria-hidden="true" @click="checkItem" v-if="listType=='ch'||listType=='ta'"/>
+      <i class="fas fa-fw fa-circle" aria-hidden="true" v-if="listType=='bu'"/>
       <span class="ol-number" aria-hidden="true" v-if="listType=='nu'">{{ item.sort_order + 1 }}.</span>
     </span>
 
@@ -11,16 +11,19 @@
       @dblclick="toggleSelection({selection: {model, listing: item, parentModel}, event: $event})"
     >
       <span class="item-content">
-        {{ item.content }}
-      </span>
 
-      <span class="unchecked-sub-items-count"
+        <span
+        class="unchecked-sub-items-count"
         v-if="uncheckedSubItemsCount"
         :id="'checklist-item-'+item.id"
-        v-tooltip.bottom="{ content: checklistTooltip, classes: 'checklist', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id }"
-      >
-        <i class="fa fa-fw fa-check-square" aria-hidden="true"/>
-        {{ uncheckedSubItemsCount }}</span>
+        v-tooltip.bottom="{ content: checklistTooltip, classes: 'checklist-tooltip', trigger: 'hover', autoHide: false, container: '#checklist-item-'+item.id }" >
+          <i class="fas fa-fw fa-square" aria-hidden="true"/>
+          {{ uncheckedSubItemsCount }}
+        </span>
+
+        {{ item.content }}
+        
+      </span>
     </p>
 
     <item-form-meta
@@ -35,26 +38,26 @@
         v-if="item.checklist.folder"
         @click="navigateTo('folders', item.checklist.folder.fake_id)"
       >
-        <i class="fa fa-fw fa-folder" aria-hidden="true"/>
+        <i class="fas fa-fw fa-folder" aria-hidden="true"/>
         {{ item.checklist.folder.name }}
-        <i class="fa fa-fw fa-angle-right" aria-hidden="true"/>
+        <i class="far fa-fw fa-angle-right" aria-hidden="true"/>
       </span>
 
       <span
         @click="navigateTo('lists', item.checklist.fake_id)"
       >
-        <i class="fa fa-fw fa-list" aria-hidden="true"/> {{ item.checklist.title }}
+        <i class="far fa-fw fa-list" aria-hidden="true"/> {{ item.checklist.title }}
       </span>
     </div>
 
     <div class="datepicker-container" v-if="chooseDate">
       <div class="delete-deadline">
         <button v-if="item.deadline" type="button" class="btn btn-xs btn-default" @click="setDate(null)">
-          <i class="fa fa-fw fa-calendar-times-o" aria-hidden="true"/>
+          <i class="far fa-fw fa-calendar-times" aria-hidden="true"/>
              Remove Deadline
         </button>
         <button type="button" class="btn btn-xs btn-default" @click="hideDatePicker">
-          <i class="fa fa-fw fa-times" aria-hidden="true"/>
+          <i class="far fa-fw fa-times" aria-hidden="true"/>
              Cancel
         </button>
       </div>
@@ -110,7 +113,7 @@ export default {
       'filters'
     ]),
     checkboxClass: function() {
-      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square-o' : 'fa-circle-thin'
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square' : 'fa-circle'
     },
     highlightedDate () {
       return {
@@ -195,7 +198,7 @@ export default {
       'setChecklistItemDeadline',
     ]),
     checkItem: function() {
-      this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
+      this.checkboxClassOverride = 'fa-circle-notch fa-spin'
       this.checkChecklistItem(this.item)
           .then( () => this.checkboxClassOverride = null )
           .catch( () => this.checkboxClassOverride = null )
@@ -280,11 +283,16 @@ export default {
     width: 60%;
 
     .unchecked-sub-items-count {
-      color: darken($item-form-border-color, 5%);
-      font-size: 0.85em;
+      color: white;
+      padding: 2px 5px 3px 3px;
+      border-radius: 3px;
+      margin-right: 5px;
+      background: darken($input-border, 2%);
+
+      font-size: 0.75em;
       line-height: inherit;
-      .fa {
-        font-size: 0.9em;
+      .far, .fas, .fal {
+        font-size: 0.85em;
       }
     }
 
@@ -327,7 +335,7 @@ export default {
       font-size: 0.75em;
       margin-top: 10px;
       color: darken($base-border-color, 20%);
-      .fa {
+      .far, .fas, .fal {
           font-size: 1.2em;
       }
       span {
@@ -340,7 +348,7 @@ export default {
   //     text-decoration: underline;
   //     text-decoration-style: dotted;
   //     text-decoration-color: $brand-primary;
-  //     .fa {
+  //     .far, .fas, .fal {
   //       text-decoration: none;
   //     }
   //   }
@@ -353,7 +361,7 @@ export default {
       span {
           font-size:0.8em;
           color: $brand-primary;
-          .fa {
+          .far, .fas, .fal {
               font-size: 0.8em;
           }
           .fa-angle-right {
@@ -364,7 +372,7 @@ export default {
             text-decoration: underline;
             text-decoration-style: dotted;
             text-decoration-color: $brand-primary;
-            .fa {
+            .far, .fas, .fal {
               text-decoration: none;
             }
           }
@@ -378,17 +386,17 @@ export default {
   width: 30px;
   text-align: center;
 
-  .fa {
+  .far, .fas, .fal {
       cursor: pointer;
   }
 
-  .fa-square-o,
-  .fa-circle-thin {
+  .fa-square,
+  .fa-circle {
       color: $input-border;
       font-size: 1.5em;
   }
 
-  .fa-circle-o-notch {
+  .fa-circle-notch {
       color: $input-border;
       font-size: 1em;
   }
@@ -403,7 +411,7 @@ export default {
       font-weight: bold;
   }
 
-  .fa-circle {
+  .fa-circle.fas {
       color: $brand-primary;
       font-size: 0.7em;
   }

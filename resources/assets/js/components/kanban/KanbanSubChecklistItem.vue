@@ -14,14 +14,14 @@
       <span class="checkbox-container">
 
         <i
-        class="fa fa-fw"
+        class="far fa-fw"
         :class="checkboxClass"
         aria-hidden="true"
         @click.stop="checkItem"
         v-if="listType=='ch'||listType=='ta'" />
 
         <i
-        class="fa fa-fw fa-circle"
+        class="fas fa-fw fa-circle"
         aria-hidden="true"
         v-if="listType=='bu'" />
 
@@ -36,15 +36,15 @@
 
       {{ item.content | truncate(35) }}
 
-      <span class="nested-kanban-card-buttons">
+      <span class="nested-kanban-card-icons">
 
         <!-- <i
-        class="fa fa-fw fa-ellipsis-h toggle-nested-kanban-btn"
+        class="far fa-fw fa-ellipsis-h nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="toggleNestedKanbanMeta(item)" /> -->
 
         <i
-        class="fa fa-fw fa-eye toggle-nested-kanban-btn"
+        class="far fa-fw fa-eye nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="previewNestedKanban(item)"
         title="Preview" />
@@ -97,7 +97,7 @@ export default {
     //   'selected'
     // ]),
     checkboxClass: function() {
-      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-square-o'
+      return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-square'
     },
   },
   methods: {
@@ -111,7 +111,7 @@ export default {
       // 'toggleSelection',
     ]),
     checkItem: function() {
-      this.checkboxClassOverride = 'fa-circle-o-notch fa-spin'
+      this.checkboxClassOverride = 'fa-circle-notch fa-spin'
       this.checkChecklistItem(this.item)
           .then( () => this.checkboxClassOverride = null )
           .catch( () => this.checkboxClassOverride = null )
@@ -132,17 +132,17 @@ export default {
     // width: 30px;
     text-align: center;
 
-    .fa {
+    .far, .fas, .fal {
         cursor: pointer;
     }
 
-    .fa-square-o,
-    .fa-circle-thin {
+    .fa-square,
+    .fa-circle {
         color: $input-border;
         // font-size: 1.5em;
     }
 
-    .fa-circle-o-notch {
+    .fa-circle-notch {
         color: $input-border;
         // font-size: 1em;
     }
@@ -158,7 +158,7 @@ export default {
         padding: 0 3px 0 5px;
     }
 
-    .fa-circle {
+    .fa-circle.fas {
         color: $list-primary;
         font-size: 0.7em;
     }

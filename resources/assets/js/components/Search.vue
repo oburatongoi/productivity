@@ -1,9 +1,9 @@
 <template lang="html">
   <div class="search-wrapper">
     <form class="search-form" :class="searchFormClass" autocomplete="off">
-      <i class="fa fa-search" aria-hidden="true"/>
+      <i class="far fa-search" aria-hidden="true"/>
       <search-input/>
-      <i class="fa fa-times cancel-search-btn" aria-hidden="true" v-if="search.query" @click="cancel"/>
+      <i class="far fa-times cancel-search-btn" aria-hidden="true" v-if="search.query" @click="cancel"/>
     </form>
   </div>
 
@@ -57,7 +57,7 @@ export default {
 
 
 .search-form {
-    .fa {
+    .far, .fas, .fal {
         color: white;
     }
     display: block;
@@ -141,7 +141,7 @@ export default {
         display: inline-block;
     }
 
-    .fa {
+    .far, .fas, .fal {
         font-size: 1.2em;
         color: darken($base-border-color, 10%);
     }
