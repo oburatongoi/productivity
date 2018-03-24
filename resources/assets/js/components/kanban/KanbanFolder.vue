@@ -29,7 +29,7 @@
       class="fas fa-fw fa-folder"
       aria-hidden="true"/>
 
-      {{ currentKanbanFolder.name | truncate(35) }}
+      {{ currentKanbanFolder.name | truncate(truncateLength) }}
 
       <i
       class="fas fa-fw toggle-button"
@@ -77,6 +77,7 @@
           <kanban-sub-folder
           v-for="subfolder in currentKanbanFolder.subfolders"
           :key="subfolder.id"
+          :truncate-length="truncateLength"
           :folder="subfolder"
           :ancestor="folder" />
 
@@ -89,6 +90,7 @@
           <kanban-checklist
           v-for="checklist in currentKanbanFolder.checklists"
           :key="checklist.id"
+          :truncate-length="truncateLength"
           :checklist="checklist" />
 
         </template>
@@ -123,7 +125,11 @@ export default {
     folder: {
       type: Object,
       required: true
-    }
+    },
+    truncateLength: {
+      type: Number,
+      default: 45
+    },
   },
   computed: {
     // ...mapGetters([

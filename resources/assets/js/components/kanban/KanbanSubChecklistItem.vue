@@ -34,7 +34,7 @@
 
       </span>
 
-      {{ item.content | truncate(35) }}
+      {{ item.content | truncate(truncateLength) }}
 
       <i
       class="fas fa-fw toggle-button"
@@ -80,6 +80,10 @@ export default {
     ItemFormMeta,
   },
   props: {
+    ancestor: {
+      type: Object,
+      required: true
+    },
     item: {
       type: Object,
       required: true
@@ -88,10 +92,10 @@ export default {
       type: String,
       default: 'ch'
     },
-    ancestor: {
-      type: Object,
-      required: true
-    }
+    truncateLength: {
+      type: Number,
+      default: 45
+    },
   },
   data () {
     return {

@@ -4,7 +4,7 @@
   @click="selectTreeLeaf({selection: {model: 'checklist', listing: checklist, parentModel: 'folder'}, event: $event})"
   >
     <i class="far fa-fw fa-list-ul" aria-hidden="true"/>
-    {{ checklist.title | truncate(35) }}
+    {{ checklist.title | truncate(45) }}
   </li>
 </template>
 

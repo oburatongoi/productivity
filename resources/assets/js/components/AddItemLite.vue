@@ -32,8 +32,8 @@ export default {
   },
   computed: {
     addItemLiteInputIcon: function() {
-      return  this.listType=='bu' ? 'fa-circle' :
-              this.listType=='nu' ? this.parent.items.length + 1 || this.parent.sub_items.length + 1 :
+      return  this.listType == 'bu' ? 'fa-circle' :
+              this.listType == 'nu' ? this.parent.items ? this.parent.items.length + 1 : this.parent.sub_items ? this.parent.sub_items.length + 1 : 'fa-plus' :
               this.listType == 'ch' || this.listType == 'ta' ? this.isSubItem ? 'fa-square' : 'fa-circle' : 'fa-plus'
     },
     addItemLiteCancelIcon: function() {

@@ -16,7 +16,7 @@
       class="fas fa-fw fa-folder"
       aria-hidden="true" />
 
-      {{ folder.name | truncate(35) }}
+      {{ folder.name | truncate(truncateLength) }}
 
       <i
       class="fas fa-fw toggle-button"
@@ -46,14 +46,18 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'kanban-sub-folder',
   props: {
+    ancestor: {
+      type: Object,
+      required: true
+    },
     folder: {
       type: Object,
       required: true
     },
-    ancestor: {
-      type: Object,
-      required: true
-    }
+    truncateLength: {
+      type: Number,
+      default: 45
+    },
   },
   computed: {
     // ...mapGetters([

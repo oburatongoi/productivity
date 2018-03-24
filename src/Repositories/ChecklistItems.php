@@ -18,6 +18,8 @@ class ChecklistItems implements ChecklistItemsInterface {
     'sub_items:id,content,checklist_id,parent_id,checked_at,sub_list_type,sort_order,is_urgent,is_important,deadline'
   ];
 
+  public $subItemsQueryConstraints = ['sub_items:id,content,checklist_id,parent_id,checked_at,sub_list_type,sort_order,is_urgent,is_important,deadline'];
+
     public function forUser(User $user)
     {
         return $user->items()->get();
@@ -50,7 +52,7 @@ class ChecklistItems implements ChecklistItemsInterface {
     public function forChecklist(Checklist $checklist)
     {
         return $checklist->items()
-                         ->with('sub_items:id,content,checklist_id,parent_id,checked_at,sub_list_type,sort_order,is_urgent,is_important,deadline')
+                         ->with($this->subItemsQueryConstraints)
                          ->orderBy('sort_order', 'asc')
                          ->get();
     }
@@ -108,7 +110,7 @@ class ChecklistItems implements ChecklistItemsInterface {
     public function getKanbanDescendants($nestedKanban)
     {
       $item = ChecklistItem::where('id', $nestedKanban['id'])
-                    ->with('sub_items:id,content,checklist_id,parent_id,checked_at,sub_list_type,sort_order,is_urgent,is_important,deadline')
+                    ->with($this->subItemsQueryConstraints)
                     ->first();
 
       return [

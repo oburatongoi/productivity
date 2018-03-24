@@ -13,7 +13,7 @@
           <i class="far fa-fw fa-angle-right" aria-hidden="true"/>
           <a :href="'/folders/'+ancestor.fake_id">
             <i class="fas fa-fw fa-folder-open" aria-hidden="true"/>
-            {{ ancestor.name | truncate(35) }}
+            {{ ancestor.name | truncate(45) }}
           </a>
         </li>
       </template>
@@ -25,7 +25,7 @@
       >
           <i class="far fa-fw fa-angle-right" aria-hidden="true"/>
           <i class="fas fa-fw fa-folder-open" aria-hidden="true"/>
-          {{ currentFolder.name | truncate(35) }}
+          {{ currentFolder.name | truncate(45) }}
       </li>
 
       <!-- this section renders the name of the current view of the Home screen -->

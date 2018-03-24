@@ -17,7 +17,7 @@
         @click.stop.prevent="selectBreadcrumb(openMovableFolder, 'folder')"
       >
         <i class="fas fa-fw fa-folder-open" aria-hidden="true"/>
-        {{ openMovableFolder.name | truncate(35) }}
+        {{ openMovableFolder.name | truncate(45) }}
         <i class="far fa-angle-down" aria-hidden="true" v-if="moverContext=='folder'"/>
       </span>
     </span>
@@ -30,7 +30,7 @@
         @click.stop.prevent="selectBreadcrumb(openMovableChecklist, 'checklist')"
       >
         <i class="far fa-fw fa-list-ul" aria-hidden="true"/>
-        {{ openMovableChecklist.title | truncate(35) }}
+        {{ openMovableChecklist.title | truncate(45) }}
         <i class="far fa-fw fa-angle-down" aria-hidden="true" v-if="moverContext=='checklist'"/>
       </span>
       <i class="far fa-fw fa-angle-right" aria-hidden="true" v-if="moverContext=='checklist-item'&&!openMovableChecklistItem.id"/>
@@ -49,7 +49,7 @@
         >
           <i class="far fa-fw fa-square" aria-hidden="true" v-if="item.id!=openMovableChecklistItemChain[openMovableChecklistItemChain.length-1].id"/>
           <i class="fal fa-fw fa-circle" aria-hidden="true" v-else/>
-          {{ item.content | truncate(35) }}
+          {{ item.content | truncate(45) }}
           <i class="far fa-fw fa-angle-down" aria-hidden="true" v-if="item.id==openMovableChecklistItem.id"/>
         </span>
       </span>

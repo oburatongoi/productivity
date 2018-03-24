@@ -3,7 +3,7 @@
 
     <span class="section-title">
 
-      {{ section.title | truncate(35) }}
+      {{ section.title | truncate(truncateLength) }}
 
     </span>
 
@@ -22,7 +22,7 @@
       v-for="item in section.items"
       :key="item.id"
       :item="item"
-      :is-expanded="isExpanded"
+      :truncate-length="truncateLength"
       :list-type="section.list_type||parent.list_type"/>
 
     </ul>
@@ -48,9 +48,9 @@ export default {
     KanbanChecklistItem
   },
   props: {
-    isExpanded: {
-      type: Boolean,
-      default: false
+    truncateLength: {
+      type: Number,
+      default: 45
     },
     parent: {
       type: Object,

@@ -17,7 +17,7 @@
       aria-hidden="true"
       v-if="card.model=='checklist'" />
 
-      {{ card.name || card.title | truncate(35) }}
+      {{ card.name || card.title | truncate(truncateLength) }}
 
       <span class="kanban-card-heading-icons">
         <i
@@ -43,6 +43,7 @@
         <kanban-folder
         v-for="folder in card.subfolders"
         :key="folder.id"
+        :truncate-length="truncateLength"
         :folder="folder" />
 
       </template>
@@ -52,6 +53,7 @@
         <kanban-checklist
         v-for="checklist in card.checklists"
         :key="checklist.id"
+        :truncate-length="truncateLength"
         :checklist="checklist" />
 
       </template>
@@ -63,13 +65,13 @@
           v-for="section in card.sections"
           :key="section.id"
           :section="section"
-          :is-expanded="card.isExpanded"
+          :truncate-length="truncateLength"
           :parent="card" />
 
           <kanban-section
           :section="defaultSection"
           :parent="card"
-          :is-expanded="card.isExpanded"
+          :truncate-length="truncateLength"
           v-if="defaultSection" />
         </template>
 
@@ -78,7 +80,7 @@
           v-for="item in card.items"
           :key="'item'+item.id"
           :item="item"
-          :is-expanded="card.isExpanded"
+          :truncate-length="truncateLength"
           :list-type="card.list_type" />
 
           <add-item-lite :parent="card" />
@@ -179,6 +181,9 @@ export default {
     },
     hasItems: function() {
       return this.card.items && !! this.card.items.length
+    },
+    truncateLength: function() {
+      return this.card.isExpanded ? 80 : 45
     },
   },
   methods: {

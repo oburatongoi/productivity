@@ -1,12 +1,14 @@
 <template lang="html">
-  <ul class="nested-tree">
-    <li class="item"
-      :class="{active: item.id==editableSubItem.id, selected: selected.checklistItems.indexOf(item)!== -1 }"
-      @click="selectTreeLeaf({selection: { model: 'checklist-item', listing: item, parentModel: 'checklist-item' }, removePrecedingSubItems: true, event: $event})"
-    >
+  <ul
+  class="nested-tree"
+  :class="{active: item.id==editableSubItem.id, selected: selected.checklistItems.indexOf(item)!== -1 }" >
+
+    <li
+    class="item"
+    @click="selectTreeLeaf({selection: { model: 'checklist-item', listing: item, parentModel: 'checklist-item' }, removePrecedingSubItems: true, event: $event})" >
       <i class="far fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"/>
       <i class="far fa-fw fa-square" aria-hidden="true" v-if="!item.checked_at"/>
-      {{ item.content | truncate(35) }}
+      {{ item.content | truncate(45) }}
     </li>
 
     <li v-if="subItemChain[subItemChainIndex]">

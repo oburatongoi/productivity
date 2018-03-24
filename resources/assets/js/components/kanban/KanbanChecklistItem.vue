@@ -116,6 +116,7 @@
           v-for="sub_item in currentKanbanChecklistItem.sub_items"
           :key="sub_item.id"
           :item="sub_item"
+          :truncate-length="truncateLength"
           :ancestor="item" />
 
         </template>
@@ -149,9 +150,9 @@ export default {
       type: Object,
       required: true
     },
-    isExpanded: {
-      type: Boolean,
-      default: false
+    truncateLength: {
+      type: Number,
+      default: 45
     },
     listType: {
       type: String,
@@ -181,9 +182,6 @@ export default {
     },
     toggleIconClass: function() {
       return this.item.opened ? 'fa-caret-up' : 'fa-caret-down';
-    },
-    truncateLength: function() {
-      return this.isExpanded ? 80 : 45
     },
   },
   methods: {

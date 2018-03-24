@@ -17,7 +17,7 @@
       :class="checklistIconClass"
       aria-hidden="true" />
 
-      {{ checklist.title | truncate(35) }}
+      {{ checklist.title | truncate(truncateLength) }}
 
       <i
       class="fas fa-fw toggle-button"
@@ -66,11 +66,13 @@
         v-for="section in checklist.sections"
         :key="section.id"
         :section="section"
+        :truncate-length="truncateLength"
         :parent="checklist" />
 
         <kanban-section
         :section="defaultSection"
         :parent="checklist"
+        :truncate-length="truncateLength"
         v-if="defaultSection" />
 
       </template>
@@ -81,6 +83,7 @@
         v-for="item in checklist.items"
         :key="'item'+item.id"
         :item="item"
+        :truncate-length="truncateLength"
         :list-type="checklist.list_type" />
 
         <add-item-lite :parent="checklist" />
@@ -122,7 +125,11 @@ export default {
     checklist: {
       type: Object,
       required: true
-    }
+    },
+    truncateLength: {
+      type: Number,
+      default: 45
+    },
   },
   computed: {
     // ...mapGetters([

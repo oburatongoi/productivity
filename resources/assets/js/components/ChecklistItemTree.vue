@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="panel side-panel checklist-item-tree">
     <div class="panel-body">
-      <h4 class="rabbit-hole">{{ rabbitHoleText }}</h4>
-      <small class="text-muted">...here are some breadcrumbs to find your way back. {{ rabbitHoleHashtag }}</small>
+      <!-- <h4 class="rabbit-hole">{{ rabbitHoleText }}</h4>
+      <small class="text-muted">...here are some breadcrumbs to find your way back. {{ rabbitHoleHashtag }}</small> -->
       <ul>
         <li
         class="item"
@@ -84,18 +84,18 @@ export default {
       required: true
     }
   },
-  computed: {
-    rabbitHoleText: function() {
-      let phrases = ['Uh, this is getting deep...', 'Hmmm, nice rabbit hole...', 'You\'re taking this to a whole other level...' ],
-          randomIndex = Math.floor(Math.random()*phrases.length);
-      return phrases[randomIndex]
-    },
-    rabbitHoleHashtag: function() {
-      let phrases = ['#GotYourSix', '#ThankMeNow', '#KeepItClassy' ],
-          randomIndex = Math.floor(Math.random()*phrases.length);
-      return phrases[randomIndex]
-    },
-  },
+  // computed: {
+  //   rabbitHoleText: function() {
+  //     let phrases = ['Uh, this is getting deep...', 'Hmmm, nice rabbit hole...', 'You\'re taking this to a whole other level...' ],
+  //         randomIndex = Math.floor(Math.random()*phrases.length);
+  //     return phrases[randomIndex]
+  //   },
+  //   rabbitHoleHashtag: function() {
+  //     let phrases = ['#GotYourSix', '#ThankMeNow', '#KeepItClassy' ],
+  //         randomIndex = Math.floor(Math.random()*phrases.length);
+  //     return phrases[randomIndex]
+  //   },
+  // },
   created: function() {
     this.$eventHub.$on('selectTreeLeaf', this.selectTreeLeaf);
   },
@@ -127,9 +127,9 @@ export default {
     height: 100%;
     overflow-y: scroll;
     width: auto;
-    & > ul {
-      margin-top: 20px;
-    }
+    // & > ul {
+    //   margin-top: 20px;
+    // }
   }
 
   .rabbit-hole {
@@ -144,27 +144,30 @@ export default {
   }
   li.item {
     cursor: pointer;
+
     &:hover {
       color: $brand-primary;
     }
-    &.selected,
-    &.active {
-      border-radius: 2px;
-    }
+  }
+  .nested-tree {
+    border-top: 1px solid lighten($base-border-color, 2%);
+    border-left: 1px solid lighten($base-border-color, 2%);
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-top: 5px;
+    min-width: 300px;
+    // border-top-left-radius: 3px;
+    border-top-left-radius: 9px;
+
     &.selected {
-      border: 1px dotted $base-border-color;
       background: $body-bg;
     }
     &.active {
       color: $brand-primary;
-      border: 1px solid $brand-primary;
+      border-top: 1px solid $brand-primary;
+      border-left: 1px solid $brand-primary;
+      min-height: 100px;
     }
-  }
-  .nested-tree {
-    border-left: 1px dashed $base-border-color;
-    margin-left: 10px;
-    padding-left: 10px;
-    min-width: 300px;
   }
 
   .fa-square {

@@ -9,7 +9,7 @@ use Oburatongoi\Productivity\Interfaces\FoldersInterface;
 class Folders implements FoldersInterface {
 
   public $relationsToLoad = [
-    'checklists:id,fake_id,title,folder_id',
+    'checklists:id,fake_id,title,folder_id,list_type',
     'subfolders:id,fake_id,name,parent_id'
   ];
 
@@ -40,7 +40,7 @@ class Folders implements FoldersInterface {
     public function getKanbanDescendants($nestedKanban)
     {
       $folder = Folder::where('id', $nestedKanban['id'])
-                    ->with('checklists:id,fake_id,title,folder_id,list_type', 'subfolders:id,fake_id,name,parent_id')
+                    ->with($this->relationsToLoad)
                     ->first();
 
       return [

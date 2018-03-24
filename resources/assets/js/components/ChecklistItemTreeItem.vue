@@ -5,7 +5,7 @@
     >
       <i class="far fa-fw fa-check" aria-hidden="true" v-if="item.checked_at"/>
       <i class="fal fa-fw fa-circle" aria-hidden="true" v-if="!item.checked_at"/>
-      {{ item.content | truncate(35) }}
+      {{ item.content | truncate(45) }}
     </li>
 
     <li v-if="subItemChain.length">
@@ -34,7 +34,6 @@ export default {
   computed: {
     ...mapGetters([
       'editableSubItem',
-      'selected',
       'subItemChain',
     ]),
     isAncestorOfEditableSubItem: function() {

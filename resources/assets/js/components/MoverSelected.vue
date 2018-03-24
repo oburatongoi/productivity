@@ -4,7 +4,7 @@
       <h5>Move: </h5>
       <span v-for="item in selected.checklistItems" :key="item.id">
         <i class="far fa-fw fa-square" aria-hidden="true"/>
-        {{ item.content | truncate(35) }}
+        {{ item.content | truncate(45) }}
         <i class="far fa-fw fa-times"
           aria-hidden="true"
           v-if="selected.checklistItems.length > 1"
