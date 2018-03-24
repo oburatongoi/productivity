@@ -6,14 +6,14 @@
   @dblclick.stop="toggleNestedKanban(folder)" > -->
   <li
   class="nested-kanban-card folder enfoldable"
-  :class="{ opened: folder.opened, selected: selected.folders.indexOf(folder) !== -1 }"
-  @click.stop="toggleNestedKanban(folder)"
-  @dblclick.stop="toggleNestedKanban(folder)" >
+  :class="{ opened: folder.opened }"
+  @click.stop="beforeToggleNestedKanban(folder)"
+  @dblclick.stop="beforeToggleNestedKanban(folder)" >
 
     <div class="nested-kanban-card-heading">
 
       <span
-      class="close-nested-kanban nested-kanban-card-icon"
+      class="close-nested-kanban"
       @click.stop="closeNestedKanbanFolder(folder)"
       v-if="hasSubFolderChain" >
 
@@ -31,10 +31,17 @@
 
       {{ currentKanbanFolder.name | truncate(35) }}
 
+      <i
+      class="fas fa-fw toggle-button"
+      :class="toggleIconClass"
+      aria-hidden="true"
+      @click.stop="toggleNestedKanban(folder)"
+      v-if="!hasSubFolderChain" />
+
       <span class="nested-kanban-card-icons">
 
         <i
-        class="far fa-fw fa-chevron-right nested-kanban-card-icon"
+        class="far fa-fw fa-arrow-circle-right nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="navigateToNestedKanban(folder)"
         :id="'#nested-folder-'+folder.fake_id"
@@ -43,8 +50,8 @@
         <i
         class="far fa-fw fa-times nested-kanban-card-icon"
         aria-hidden="true"
-        @click.stop="toggleNestedKanban(folder)"
-        v-if="!!folder.opened&&!hasSubFolderChain" />
+        @click.stop="closeAllNestedKanbanFolders(folder)"
+        v-if="folder.opened&&hasSubFolderChain" />
 
       </span>
 
@@ -119,14 +126,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'selected'
-    ]),
+    // ...mapGetters([
+    //   'selected'
+    // ]),
     currentKanbanFolder: function() {
       return this.hasSubFolderChain ? this.folder.subfolderChain[this.folder.subfolderChain.length-1] : this.folder
     },
     hasSubFolderChain: function() {
       return this.folder.subfolderChain && this.folder.subfolderChain.length
+    },
+    toggleIconClass: function() {
+      return this.folder.opened ? 'fa-caret-up' : 'fa-caret-down';
     },
   },
   methods: {
@@ -136,8 +146,15 @@ export default {
       'toggleNestedKanban',
       // 'toggleSelection',
     ]),
+    beforeToggleNestedKanban: function(folder) {
+      if (! this.hasSubFolderChain) this.toggleNestedKanban(folder)
+    },
     closeNestedKanbanFolder: function(folder) {
       this.removeFromKanbanArray({ array: this.folder.subfolderChain, value: folder })
+    },
+    closeAllNestedKanbanFolders: function(folder) {
+      this.removeFromKanbanArray({ array: this.folder.subfolderChain, removeAll: true })
+      this.toggleNestedKanban(folder)
     },
   },
 }

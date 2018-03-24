@@ -49,7 +49,7 @@
     </head>
     <body>
         <div id="productivity-app">
-            <div class="section-wrapper">
+            {{-- <div class="section-wrapper"> --}}
                 <div class="narrow-section main-menu-wrapper">
                     <div class="nav-sizer">
                         @yield('main-menu')
@@ -64,11 +64,12 @@
 
                     <div class="content-wrapper" id="content-wrapper">
                         @yield('content')
-                        <search-results></search-results>
-                        <notices></notices>
+                        {{-- <search-results></search-results>
+                        <notices></notices> --}}
+                        <global></global>
                     </div>
                 </div>
-            </div>
+            {{-- </div> --}}
         </div>
 
         @include('productivity::javascript')

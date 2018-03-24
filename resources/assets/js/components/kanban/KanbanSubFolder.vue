@@ -6,7 +6,7 @@
   @dblclick.stop="openNestedKanbanFolder(folder)" > -->
   <li
   class="nested-kanban-card folder enfoldable"
-  :class="{ opened: folder.opened, selected: selected.folders.indexOf(folder) !== -1 }"
+  :class="{ opened: folder.opened }"
   @click.stop="openNestedKanbanFolder(folder)"
   @dblclick.stop="openNestedKanbanFolder(folder)" >
 
@@ -18,10 +18,16 @@
 
       {{ folder.name | truncate(35) }}
 
+      <i
+      class="fas fa-fw toggle-button"
+      :class="toggleIconClass"
+      aria-hidden="true"
+      @click.stop="toggleNestedKanban(folder)" />
+
       <span class="nested-kanban-card-icons">
 
         <i
-        class="far fa-fw fa-chevron-right nested-kanban-card-icon"
+        class="far fa-fw fa-arrow-circle-right nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="navigateToNestedKanban(folder)"
         :id="'#nested-folder-'+folder.fake_id"
@@ -50,9 +56,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'selected'
-    ]),
+    // ...mapGetters([
+    //   'selected'
+    // ]),
+    toggleIconClass: function() {
+      return this.folder.opened ? 'fa-caret-up' : 'fa-caret-down';
+    },
   },
   methods: {
     ...mapActions([

@@ -15,14 +15,14 @@
   <li
   class="nested-kanban-card checklist-item enlistable sectionable"
   :class="{ opened: item.opened }"
-  @click.stop="toggleNestedKanban(item)"
-  @dblclick.stop="toggleNestedKanban(item)" >
+  @click.stop="beforeToggleNestedKanban(item)"
+  @dblclick.stop="beforeToggleNestedKanban(item)" >
 
     <div class="nested-kanban-card-heading">
 
       <span class="checkbox-container">
         <span
-        class="close-nested-kanban nested-kanban-card-icon"
+        class="close-nested-kanban"
         @click.stop="closeNestedKanbanChecklistItem(currentKanbanChecklistItem)"
         v-if="hasSubItemChain" >
 
@@ -55,6 +55,13 @@
 
       {{ currentKanbanChecklistItem.content | truncate(truncateLength) }}
 
+      <i
+      class="fas fa-fw toggle-button"
+      :class="toggleIconClass"
+      aria-hidden="true"
+      @click.stop="toggleNestedKanban(item)"
+      v-if="!hasSubItemChain" />
+
       <span class="nested-kanban-card-icons">
 
         <!-- <i
@@ -63,16 +70,16 @@
         @click.stop="toggleNestedKanbanMeta(currentKanbanChecklistItem)" /> -->
 
         <i
-        class="far fa-fw fa-eye nested-kanban-card-icon"
+        class="far fa-fw fa-arrow-to-right nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="previewNestedKanban(currentKanbanChecklistItem)"
-        title="Preview" />
+        :title="'Preview' + currentKanbanChecklistItem.content" />
 
         <i
         class="far fa-fw fa-times nested-kanban-card-icon"
         aria-hidden="true"
-        @click.stop="toggleNestedKanban(item)"
-        v-if="!!item.opened&&!hasSubItemChain" />
+        @click.stop="closeAllNestedKanbanChecklistItems(item)"
+        v-if="item.opened&&hasSubItemChain" />
 
       </span>
 
@@ -172,6 +179,9 @@ export default {
     hasSubItemChain: function() {
       return this.item.subItemChain && this.item.subItemChain.length
     },
+    toggleIconClass: function() {
+      return this.item.opened ? 'fa-caret-up' : 'fa-caret-down';
+    },
     truncateLength: function() {
       return this.isExpanded ? 80 : 45
     },
@@ -185,8 +195,15 @@ export default {
       'toggleNestedKanbanMeta',
       // 'toggleSelection',
     ]),
+    beforeToggleNestedKanban: function(item) {
+      if (! this.hasSubItemChain) this.toggleNestedKanban(item)
+    },
     closeNestedKanbanChecklistItem: function(item) {
       this.removeFromKanbanArray({ array: this.item.subItemChain, value: item })
+    },
+    closeAllNestedKanbanChecklistItems: function(item) {
+      this.removeFromKanbanArray({ array: this.item.subItemChain, removeAll: true })
+      this.toggleNestedKanban(item)
     },
     checkItem: function() {
       this.checkboxClassOverride = 'fa-circle-notch fa-spin'

@@ -5,7 +5,8 @@
 @endsection
 
 @section('main-menu')
-    <main-menu logo="{{config('productivity.logo')}}"></main-menu>
+    {{-- <main-menu logo="{{config('productivity.logo')}}"></main-menu> --}}
+    <main-menu logo="M"></main-menu>
 @endsection
 
 @section('content')

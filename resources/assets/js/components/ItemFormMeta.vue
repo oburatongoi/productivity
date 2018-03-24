@@ -87,10 +87,10 @@ export default {
       return this.item.deadline ? moment(this.item.deadline).format('MMM D') : ''
     },
     urgencyTooltip: function () {
-      return this.item.is_urgent ? 'Mark as not urgent' : 'Mark as urgent'
+      return this.item.is_urgent ? "Mark 'Not Urgent'" : "Mark 'Urgent'"
     },
     importanceTooltip: function () {
-      return this.item.is_important ? 'Mark as not important' : 'Mark as important'
+      return this.item.is_important ? "Mark 'Not Important'" : "Mark 'Important'"
     },
     itemFormMetaClass: function () {
       let c = ''
@@ -99,10 +99,10 @@ export default {
       return c
     },
     deadlineTooltip: function () {
-      return this.item.deadline ? 'Change or remove deadline' : 'Add a deadline'
+      return this.item.deadline ? 'Edit deadline' : 'Add deadline'
     },
     commentsTooltip: function () {
-      return this.item.comments ? 'Has notes' : 'Does not have any notes'
+      return this.item.comments ? 'Has notes' : 'No notes yet'
     },
     importanceIcon: function () {
       return this.item.is_important ? 'fas fa-exclamation-circle folder-color-scheme' : 'far fa-exclamation-circle'
@@ -169,7 +169,7 @@ export default {
     @media(min-width:768px){
       display: inline-block;
       position: absolute;
-      @include high-z-index(1);
+      // @include high-z-index(1);
       top: 0;
       bottom: 0;
       right: 0;

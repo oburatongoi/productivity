@@ -132,3 +132,9 @@
     }
   }
 }
+
+.checklist-tooltip,
+.folder-tooltip,
+.menu-tooltip {
+  @include high-z-index(3);
+}

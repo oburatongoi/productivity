@@ -52,6 +52,7 @@ export const DELETE_GOAL = 'goals/DELETE_GOAL'
 export const UPDATE_GOAL = 'goals/UPDATE_GOAL'
 
 export const CLEAR_QUERY = 'search/CLEAR_QUERY'
+export const SET_SEARCHABILITY = 'search/SET_SEARCHABILITY'
 export const UPDATE_QUERY = 'search/UPDATE_QUERY'
 export const UPDATE_RESULTS = 'search/UPDATE_RESULTS'
 export const UPDATE_ERROR_MESSAGE = 'search/UPDATE_ERROR_MESSAGE'

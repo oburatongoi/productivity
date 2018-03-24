@@ -10,6 +10,7 @@
     @keydown.enter.prevent="debounceSearch"
     @keyup.enter.prevent="debounceSearch"
     @keyup.delete="clearSearchResults"
+    v-focus
   >
 </template>
 
@@ -28,15 +29,17 @@ export default {
   methods: {
     ...mapActions([
       'clearSearchResults',
+      'setSearchability',
       'setSearchResults',
       'setIsSearching',
       'setSearchErrorMessage'
     ]),
     debounceSearch: _.debounce(function() {
       this.setSearchErrorMessage()
-      this.setIsSearching(true)
-      if (this.search.query) { this.triggerSearch() }
-      else { this.setIsSearching(false) }
+      if (this.search.query) {
+        this.setIsSearching(true)
+        this.triggerSearch()
+      }
     }, 500),
     triggerSearch: function() {
       axios.post('/search', {currentFolderId: this.currentFolder.id, query: this.search.query})
@@ -82,7 +85,7 @@ export default {
       this.clearSearchResults()
       this.setSearchErrorMessage()
       this.search.query = undefined
-      return this.setIsSearching(false)
+      return this.setSearchability(false)
     }
   },
 }

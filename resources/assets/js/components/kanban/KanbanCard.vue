@@ -28,7 +28,7 @@
         @click.stop="toggleKanbanExpansion(card)" />
 
         <i
-        class="far fa-fw fa-chevron-right kanban-card-heading-icon"
+        class="far fa-fw fa-arrow-circle-right kanban-card-heading-icon"
         aria-hidden="true"
         :title="'Navigate to '+ card.name || card.title"
         @click.stop="navigateToNestedKanban(card)" />
@@ -276,6 +276,9 @@ export default {
     .kanban-card-footer {
       padding: 10px;
     }
+    .kanban-card-body {
+      padding-bottom: 53px;
+    }
 
     .kanban-card-footer {
       border-top: 1px dashed $base-border-color;
@@ -353,9 +356,17 @@ export default {
         border: 1px solid $list-primary;
       }
 
+      .toggle-button {
+        // font-size: 0.8em;
+        font-size: 1em;
+        // color: darken($base-border-color, 20%);
+        color: darken($base-border-color, 10%);
+      }
+
       .nested-kanban-card-icon {
         color: darken($base-border-color, 10%);
-        font-size: 0.8em;
+        // font-size: 0.8em;
+        font-size: 1em;
         cursor: pointer;
         padding: 5px;
 
@@ -394,6 +405,13 @@ export default {
       }
       &.opened > .nested-kanban-card-heading > .nested-kanban-card-icons > .nested-kanban-card-icon,
       &:hover > .nested-kanban-card-heading > .nested-kanban-card-icons > .nested-kanban-card-icon {
+        opacity: 1;
+      }
+
+      & > .nested-kanban-card-heading > .toggle-button {
+        opacity: 0;
+      }
+      &:hover > .nested-kanban-card-heading > .toggle-button {
         opacity: 1;
       }
       /* End Buttons */
@@ -440,6 +458,9 @@ export default {
   }
 
   .close-nested-kanban {
+    color: darken($base-border-color, 10%);
+    font-size: 1em;
+    cursor: pointer;
     display: inline-block;
     padding-right: 10px !important;
     margin-left: -10px;

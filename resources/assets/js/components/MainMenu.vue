@@ -4,31 +4,54 @@
 
     <div class="main-logo">
       <!-- <i class="far fa-bars" aria-hidden="true"/> -->
-        <a href="/">
+        <!-- <a href="/">
             {{ logo }}
+        </a> -->
+        <a href="/">
+            M
         </a>
     </div>
 
-    <search/>
+    <!-- <search/> -->
 
     <ul class="main-menu-options">
 
       <li class="menu-option">
           <a href="/">
             <i class="fas fa-fw fa-home " aria-hidden="true"/>
-            Home
+            <p>Home</p>
           </a>
       </li>
 
       <li class="menu-option">
-        <button type="button" @click="toggleNestedOptions">
-          <i class="far fa-fw fa-inbox" aria-hidden="true"/>
-          Browse
-          <i class="fa" :class="showNestedOptionsClass" aria-hidden="true"/>
-        </button>
+          <a href="#" @click.prevent="toggleCreatingNewButtons()">
+            <i class="fas fa-fw fa-plus-circle" aria-hidden="true"/>
+            <p>New</p>
+          </a>
       </li>
 
-      <li v-if="showNestedOptions" class="nested-menu-options" :class="{open:showNestedOptions}">
+      <li class="menu-option">
+          <a href="#" @click.prevent="toggleSearchability(true)">
+            <i class="fas fa-fw fa-search" aria-hidden="true"/>
+            <p>Search</p>
+          </a>
+      </li>
+
+      <li class="menu-option">
+        <a href="/folders">
+          <i class="fas fa-fw fa-folder" aria-hidden="true"/>
+          <p>Folders</p>
+        </a>
+      </li>
+
+      <li class="menu-option">
+        <a href="/lists">
+          <i class="fas fa-fw fa-list" aria-hidden="true"/>
+          <p>Lists</p>
+        </a>
+      </li>
+
+      <!-- <li v-if="showNestedOptions" class="nested-menu-options" :class="{open:showNestedOptions}">
         <ul>
           <li>
             <a href="/folders">
@@ -44,54 +67,51 @@
             </a>
           </li>
         </ul>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import Search from './Search.vue'
 
 export default {
   name: 'main-menu',
-  components: {
-    Search
-  },
   props: {
     logo: {
       type: String,
-      default: 'Productivity'
-    }
-  },
-  data () {
-    return {
-      showNestedOptions: false
+      default: 'M'
     }
   },
   computed: {
     ...mapGetters([
-      'showCreatingNewButtons',
-      'selected'
+      'search'
     ]),
-    showNestedOptionsClass: function() {
-      return this.showNestedOptions ? 'fa-caret-up' : 'fa-caret-down'
-    }
   },
   methods: {
     ...mapActions([
+      'clearSearchResults',
+      'setSearchability',
+      'setSearchErrorMessage',
       'toggleCreatingNewButtons'
     ]),
-    toggleNestedOptions: function() {
-      this.showNestedOptions = ! this.showNestedOptions
-    }
+    cancel: function() {
+      this.clearSearchResults()
+      this.setSearchErrorMessage()
+      this.search.query = undefined
+      return this.setSearchability(false)
+    },
+    toggleSearchability: function() {
+      return this.setSearchability(!this.search.isSearchable)
+    },
   },
 }
 </script>
 
 <style lang="scss">
 .main-menu {
-    text-align: left;
+    // text-align: left;
+    text-align: center;
     @media(max-width:767px){
         padding: 0 5px;
     }
@@ -111,20 +131,34 @@ export default {
     }
 
     ul.main-menu-options {
-        margin-top: 5px;
+        margin-top: 15px;
         a, button {
             color: white;
         }
     }
     li.menu-option {
-        text-align: left;
-        border-radius: 18px;
+        // text-align: left;
+        text-align: center;
+        // border-radius: 18px;
+        border-radius: 10%;
         a, button {
             display: block;
-            width: 100%;
-            padding: 8px;
+            // width: 100%;
+            padding: 3px;
             text-shadow: $folder-text-shadow;
             text-decoration: none;
+            // font-size: 1.5em;
+            font-size: 1.4em;
+        }
+        p {
+          font-size: 0.6em;
+          opacity: 0;
+          padding: 0;
+          margin: 0;
+          margin-top: -5px;
+        }
+        &:hover p {
+          opacity: 1;
         }
         button {
             background: transparent;
@@ -158,12 +192,19 @@ export default {
     color: white;
     list-style: none;
     margin: 0;
-    font-size: 0.9em;
+    font-size: 1em;
     color: rgba(255,255,255,0.7);
     cursor: pointer;
     text-shadow: $folder-text-shadow;
     &:hover {
         color: rgba(255,255,255,1);
+    }
+    &, & li {
+      display: block;
+      margin:0;
+      padding: 0;
+      text-align: center;
+      width: 100%;
     }
 }
 

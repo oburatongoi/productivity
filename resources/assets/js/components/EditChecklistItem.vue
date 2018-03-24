@@ -177,7 +177,7 @@
               :list-type="item.sub_list_type"
               :items="item.sub_items"
               parent-model="checklist-item"
-              :parent="parent"
+              :parent="item"
             />
           </div>
 
@@ -443,7 +443,7 @@ export default {
 
         .delete-item-btn-container {
             @include clearfix;
-            @include desktop-overflow-y;
+            @include desktop-overflow-y-no-scroll;
             float: right;
             display: inline-block;
             margin: 0;
