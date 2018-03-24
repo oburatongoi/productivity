@@ -36,6 +36,12 @@
 
       {{ item.content | truncate(35) }}
 
+      <i
+      class="fas fa-fw toggle-button"
+      :class="toggleIconClass"
+      aria-hidden="true"
+      @click.stop="openNestedKanbanChecklistItem(item)" />
+
       <span class="nested-kanban-card-icons">
 
         <!-- <i
@@ -44,7 +50,7 @@
         @click.stop="toggleNestedKanbanMeta(item)" /> -->
 
         <i
-        class="far fa-fw fa-eye nested-kanban-card-icon"
+        class="far fa-fw fa-arrow-to-right nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="previewNestedKanban(item)"
         title="Preview" />
@@ -99,6 +105,9 @@ export default {
     checkboxClass: function() {
       return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-square'
     },
+    toggleIconClass: function() {
+      return this.item.opened ? 'fa-caret-up' : 'fa-caret-down';
+    },
   },
   methods: {
     ...mapActions([
@@ -106,8 +115,8 @@ export default {
       'fetchNestedKanbanDescendants',
       'checkChecklistItem',
       'previewNestedKanban',
-      'toggleNestedKanban',
-      'toggleNestedKanbanMeta',
+      // 'toggleNestedKanban',
+      // 'toggleNestedKanbanMeta',
       // 'toggleSelection',
     ]),
     checkItem: function() {

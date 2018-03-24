@@ -7,7 +7,7 @@
     }
 }
 
-@mixin desktop-overflow-y {
+@mixin desktop-overflow-y-no-scroll {
     @media(min-width:768px){
         overflow: hidden;
     }
@@ -21,7 +21,7 @@
 }
 
 @mixin top-menu-height {
-    height: 40px;
+    height: $top-menu-height;
 }
 
 @mixin high-z-index($add) {

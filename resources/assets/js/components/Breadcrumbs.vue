@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="productivity-breadcrumbs">
     <ul class="list-unstyled">
-      <li>
+      <li v-if="ancestors.length||currentFolder&&currentFolder.name&&!hasCurrentView&&!currentFolderIsAncestor||hasCurrentView">
         <a href="/">
           <i class="fas fa-fw fa-home " aria-hidden="true"/>
           Home
@@ -74,8 +74,8 @@ export default {
 
 <style lang="scss">
 .productivity-breadcrumbs {
-    border-left: 1px solid $base-border-color;
-    padding-left: 10px;
+    // border-left: 1px solid $base-border-color;
+    // padding-left: 10px;
     display: inline-block;
     width: 80%;
     font-size: 1em;

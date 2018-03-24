@@ -105,7 +105,7 @@
       autocomplete="off" >
 
         <i
-        class="far fa-fw add-nested-kanban-input-icon"
+        class="fa-fw add-nested-kanban-input-icon"
         :class="addNestedKanbanInputIcon"
         aria-hidden="true" />
 
@@ -155,16 +155,16 @@ export default {
     addNestedKanbanInputIcon: function() {
       switch (this.kanbanAddableModel) {
         case 'folder':
-          return 'fa-folder'
+          return 'fas fa-folder'
           break;
         case 'checklist':
-          return 'fa-list'
+          return 'far fa-list'
           break;
         case 'section':
-          return 'fa-window-maximize'
+          return 'far fa-window-maximize'
           break;
         case 'checklist-item':
-          return 'fa-circle'
+          return 'far fa-circle'
           break;
         default: ''
       }

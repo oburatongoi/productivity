@@ -1,16 +1,7 @@
 <template lang="html">
   <div class="top-nav-wrap">
-    <button type="button"
-            class="btn btn-xs toggle-create-new-btn btn-primary"
-            v-if="!showCreatingNewButtons"
-            @click="toggleCreatingNewButtons"
-    >
-      <i class="far fa-plus" aria-hidden="true"/>
-    </button>
-
-    <create-new v-if="showCreatingNewButtons||creatingNew"/>
-
-    <breadcrumbs v-if="!showCreatingNewButtons" :current-view="currentView"/>
+    
+    <breadcrumbs :current-view="currentView"/>
 
     <action-nav v-if="listingIsActionable"/>
 
@@ -18,16 +9,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+// import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
-import CreateNew from './CreateNew.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import ActionNav from './ActionNav.vue'
 
 export default {
   name: 'top-nav',
   components: {
-    CreateNew,
     Breadcrumbs,
     ActionNav
   },
@@ -39,16 +29,16 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'showCreatingNewButtons',
-      'creatingNew',
+      // 'showCreatingNewButtons',
+      // 'creatingNew',
       'listingIsActionable'
     ])
   },
-  methods: {
-    ...mapActions([
-      'toggleCreatingNewButtons'
-    ])
-  },
+  // methods: {
+  //   ...mapActions([
+  //     'toggleCreatingNewButtons'
+  //   ])
+  // },
 
 }
 </script>
@@ -56,8 +46,10 @@ export default {
 <style lang="scss">
 .top-nav {
     @include main-nav;
-    padding-right: 1.7vw;
-    padding-left: 1.7vw;
+    // padding-right: 1.7vw;
+    // padding-left: 1.7vw;
+    padding-right: 20px;
+    padding-left: 20px;
     padding-top: 4px;
     padding-bottom: 4px;
     height: inherit;

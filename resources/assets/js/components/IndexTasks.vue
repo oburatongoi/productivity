@@ -73,12 +73,12 @@ export default {
                                                      null                           ;
     }
   },
-  created: function() {
-    this.$eventHub.$on('toggleSelection', this.toggleSelection);
-  },
-  beforeDestroy: function() {
-    this.$eventHub.$off('toggleSelection', this.toggleSelection);
-  },
+  // created: function() {
+  //   this.$eventHub.$on('toggleSelection', this.toggleSelection);
+  // },
+  // beforeDestroy: function() {
+  //   this.$eventHub.$off('toggleSelection', this.toggleSelection);
+  // },
   methods: {
     ...mapActions([
       'toggleSelection'
@@ -90,18 +90,18 @@ export default {
 <style lang="scss">
 .index-tasks {
     height: 100%;
-    @include desktop-overflow-y;
+    @include desktop-overflow-y-no-scroll;
 
     .main-panel {
         height: 100%;
-        @include desktop-overflow-y;
+        @include desktop-overflow-y-no-scroll;
         .panel-heading {
             padding-bottom: 0;
         }
     }
 
     .side-panel {
-        @include desktop-overflow-y;
+        @include desktop-overflow-y-no-scroll;
         height: 100%;
     }
 
@@ -164,7 +164,7 @@ export default {
                 font-size: 1em;
                 line-height: 0.7em;
                 white-space: nowrap;
-                @include desktop-overflow-y;
+                @include desktop-overflow-y-no-scroll;
                 text-overflow: ellipsis;
             }
             @media(min-width:1200px){

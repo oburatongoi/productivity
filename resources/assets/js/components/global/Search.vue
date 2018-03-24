@@ -116,41 +116,7 @@ export default {
 
 
 
-.folder-color-scheme mark {
-    background: #E5F5FF;
-}
 
-.list-color-scheme mark {
-    background: #DEF2E3;
-}
-.secondary-search-input {
-    width: 100%;
-    line-height: 40px;
-    border: 1px solid $base-border-color;
-    border-radius: 25px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    padding: 0 10px 0 10px;
 
-    input {
-        outline: none;
-        border: 0;
-        height: 40px;
-        padding: 5px 10px;
-        width: 90%;
-        display: inline-block;
-    }
-
-    .far, .fas, .fal {
-        font-size: 1.2em;
-        color: darken($base-border-color, 10%);
-    }
-
-    .fa-times {
-        float: right;
-        margin-top: 12px;
-        cursor: pointer;
-    }
-}
 
 </style>

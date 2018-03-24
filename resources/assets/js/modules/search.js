@@ -1,5 +1,6 @@
 import {
     CLEAR_QUERY,
+    SET_SEARCHABILITY,
     UPDATE_QUERY,
     UPDATE_RESULTS,
     UPDATE_ERROR_MESSAGE,
@@ -16,6 +17,7 @@ const state = {
             checklists: []
         },
         errorMessage: undefined,
+        isSearchable: false,
         isSearching: false
     }
 }
@@ -23,6 +25,9 @@ const state = {
 const mutations = {
     [CLEAR_QUERY] (state) {
         state.search.query = undefined
+    },
+    [SET_SEARCHABILITY] (state, bool) {
+        state.search.isSearchable = bool
     },
     [UPDATE_QUERY] (state, query) {
         state.search.query = query
@@ -46,6 +51,13 @@ const actions = {
               checklists: {}
           }
           commit(UPDATE_RESULTS, results)
+          resolve()
+      })
+    },
+    setSearchability({ dispatch, commit }, bool) {
+      return new Promise((resolve, reject) => {
+          dispatch('setIsSearching', false)
+          commit(SET_SEARCHABILITY, bool)
           resolve()
       })
     },

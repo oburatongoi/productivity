@@ -1,22 +1,43 @@
 <template lang="html">
-  <div class="search-results" v-if="search.isSearching||search.query">
+  <div class="search-results">
     <div class="search-results-wrapper">
       <div class="secondary-search-input">
+
         <i class="far fa-search" aria-hidden="true"/>
+
         <search-input/>
+
         <i class="far fa-times" aria-hidden="true" @click="cancel"/>
+
+      </div>
+
+      <div class="algolia-image">
+        powered by <img src="/vendor/productivity/images/Algolia_logo_bg-white.jpg" alt="Powered by Algolia">
       </div>
 
       <div class="results-container">
-        <i class="far fa-spinner fa-spin" aria-hidden="true" v-if="search.isSearching"/>
 
-        <ul class="list-unstyled folder-color-scheme" v-if="searchResultHasFolders">
-          <li v-for="folder in alphabeticalFolderSearchResults" :key="folder.id">
+        <i
+        class="far fa-spinner fa-spin"
+        aria-hidden="true"
+        v-if="search.isSearching" />
+
+        <ul
+        class="list-unstyled folder-color-scheme"
+        v-if="searchResultHasFolders" >
+
+          <li
+          v-for="folder in alphabeticalFolderSearchResults"
+          :key="folder.id" >
+
             <a :href="'/folders/'+folder.fake_id">
               <i class="fas fa-fw fa-folder" aria-hidden="true"/>
+
               {{ folder.name }}
             </a>
+
           </li>
+
         </ul>
 
         <ul class="list-unstyled list-color-scheme" v-if="searchResultHasChecklists">
@@ -30,9 +51,9 @@
 
         <p v-if="search.errorMessage" class="error-message">{{ search.errorMessage }}</p>
         <!-- <p v-if="search.query&&!search.isSearching&&!hasSearchResults" class="info-message">There were no files or folders matching your search.</p> -->
-        <div class="algolia-image">
+        <!-- <div class="algolia-image">
           powered by <img src="/vendor/productivity/images/Algolia_logo_bg-white.jpg" alt="Powered by Algolia">
-        </div>
+        </div> -->
       </div>
       <div class="search-results-bottom-gradient"/>
     </div>
@@ -63,14 +84,14 @@ export default {
     ...mapActions([
       'clearSearchResults',
       'setSearchQuery',
-      'setIsSearching',
+      'setSearchability',
       'setSearchErrorMessage'
     ]),
     cancel: function() {
       this.clearSearchResults()
       this.setSearchErrorMessage()
       this.setSearchQuery()
-      return this.setIsSearching(false)
+      return this.setSearchability(false)
     }
   },
 }
@@ -100,6 +121,36 @@ export default {
 
   @media(min-width:1200px){
       padding: 0px 200px 20px;
+  }
+
+  .secondary-search-input {
+      width: 100%;
+      line-height: 40px;
+      border: 1px solid $base-border-color;
+      border-radius: 25px;
+      margin-top: 40px;
+      margin-bottom: 5px;
+      padding: 0 10px 0 10px;
+
+      input {
+          outline: none;
+          border: 0;
+          height: 40px;
+          padding: 5px 10px;
+          width: 90%;
+          display: inline-block;
+      }
+
+      .far, .fas, .fal {
+          font-size: 1.2em;
+          color: darken($base-border-color, 10%);
+      }
+
+      .fa-times {
+          float: right;
+          margin-top: 12px;
+          cursor: pointer;
+      }
   }
 
   .secondary-search-input,
@@ -136,9 +187,7 @@ export default {
   }
 
   .algolia-image {
-      border-top: 1px solid $base-border-color;
-      margin-top: 30px;
-      padding-top: 3px;
+      margin-bottom: 20px;
       text-align: right;
       font-size: 0.9em;
       img {
@@ -149,6 +198,14 @@ export default {
       margin: 0;
       padding: 0;
       color: inherit;
+  }
+
+  .folder-color-scheme mark {
+      background: #E5F5FF;
+  }
+
+  .list-color-scheme mark {
+      background: #DEF2E3;
   }
 }
 </style>

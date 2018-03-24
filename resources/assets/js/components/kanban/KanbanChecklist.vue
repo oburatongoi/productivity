@@ -19,10 +19,17 @@
 
       {{ checklist.title | truncate(35) }}
 
+      <i
+      class="fas fa-fw toggle-button"
+      :class="toggleIconClass"
+      aria-hidden="true"
+      @click.stop="toggleNestedKanban(checklist)"
+      :id="'#nested-checklist-'+checklist.fake_id" />
+
       <span class="nested-kanban-card-icons">
 
         <i
-        class="far fa-fw fa-chevron-right nested-kanban-card-icon"
+        class="far fa-fw fa-arrow-circle-right nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="navigateToNestedKanban(checklist)"
         :id="'#nested-checklist-'+checklist.fake_id"
@@ -140,6 +147,9 @@ export default {
         }
       }
       return null
+    },
+    toggleIconClass: function() {
+      return this.checklist.opened ? 'fa-caret-up' : 'fa-caret-down';
     },
   },
   methods: {

@@ -22,7 +22,7 @@
         </span>
 
         {{ item.content }}
-        
+
       </span>
     </p>
 
@@ -196,6 +196,7 @@ export default {
     ...mapActions([
       'checkChecklistItem',
       'setChecklistItemDeadline',
+      'toggleSelection',
     ]),
     checkItem: function() {
       this.checkboxClassOverride = 'fa-circle-notch fa-spin'
@@ -203,9 +204,9 @@ export default {
           .then( () => this.checkboxClassOverride = null )
           .catch( () => this.checkboxClassOverride = null )
     },
-    toggleSelection: function(payload) {
-      return this.$eventHub.$emit('toggleSelection', payload);
-    },
+    // toggleSelection: function(payload) {
+    //   return this.$eventHub.$emit('toggleSelection', payload);
+    // },
     showDatePicker: function() {
       return this.chooseDate = true
     },
@@ -231,7 +232,7 @@ export default {
 
 <style lang="scss">
 .show-item {
-  // @include desktop-overflow-y;
+  // @include desktop-overflow-y-no-scroll;
   border-bottom: 1px solid lighten($base-border-color, 10%);
   font-family: $paragraph-font-family-sans-serif;
   position: relative;
@@ -268,7 +269,7 @@ export default {
       cursor: pointer;
       @media(min-width:992px){
           white-space: nowrap;
-          @include desktop-overflow-y;
+          @include desktop-overflow-y-no-scroll;
           text-overflow: ellipsis;
       }
   }
@@ -306,7 +307,7 @@ export default {
         width: 75%;
         padding: 7px 0;
         white-space: nowrap;
-        @include desktop-overflow-y;
+        @include desktop-overflow-y-no-scroll;
         text-overflow: ellipsis;
     }
     @media(min-width:1200px){
