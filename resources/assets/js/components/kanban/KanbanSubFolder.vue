@@ -6,11 +6,12 @@
   @dblclick.stop="openNestedKanbanFolder(folder)" > -->
   <li
   class="nested-kanban-card folder enfoldable"
-  :class="{ opened: folder.opened }"
-  @click.stop="openNestedKanbanFolder(folder)"
-  @dblclick.stop="openNestedKanbanFolder(folder)" >
+  :class="{ opened: folder.opened }" >
 
-    <div class="nested-kanban-card-heading">
+    <div
+    class="nested-kanban-card-heading"
+    @click.stop="openNestedKanbanFolder(folder)"
+    @dblclick.stop="openNestedKanbanFolder(folder)" >
 
       <i
       class="fas fa-fw fa-folder"

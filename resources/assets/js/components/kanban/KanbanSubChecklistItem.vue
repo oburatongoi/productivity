@@ -5,11 +5,12 @@
     @click.stop="toggleSelection({selection: { model: 'checklist-item', listing: item, parentModel: 'checklist-item' }, event: $event})"
     @dblclick.stop="openNestedKanbanChecklistItem(item)" > -->
   <li
-    class="nested-kanban-card sub-checklist-item enlistable sub-enlistable sectionable"
+    class="nested-kanban-card sub-checklist-item enlistable sub-enlistable sectionable" >
+
+    <div
+    class="nested-kanban-card-heading"
     @click.stop="openNestedKanbanChecklistItem(item)"
     @dblclick.stop="openNestedKanbanChecklistItem(item)" >
-
-    <div class="nested-kanban-card-heading">
 
       <span class="checkbox-container">
 

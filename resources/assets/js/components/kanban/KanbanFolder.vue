@@ -6,11 +6,12 @@
   @dblclick.stop="toggleNestedKanban(folder)" > -->
   <li
   class="nested-kanban-card folder enfoldable"
-  :class="{ opened: folder.opened }"
-  @click.stop="beforeToggleNestedKanban(folder)"
-  @dblclick.stop="beforeToggleNestedKanban(folder)" >
+  :class="{ opened: folder.opened }" >
 
-    <div class="nested-kanban-card-heading">
+    <div
+    class="nested-kanban-card-heading"
+    @click.stop="beforeToggleNestedKanban(folder)"
+    @dblclick.stop="beforeToggleNestedKanban(folder)" >
 
       <span
       class="close-nested-kanban"

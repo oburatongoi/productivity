@@ -1,5 +1,9 @@
 <template lang="html">
-  <form class="add-item-lite" @submit.prevent="submitForm" autocomplete="off">
+  <form
+  class="add-item-lite"
+  @submit.prevent="submitForm"
+  @click.stop
+  autocomplete="off" >
     <label :for="parent.model+'-'+parent.id+'-add-item-lite'" class="add-item-lite-icon" :class="{ 'ol-number-icon-container': listType=='nu' }">
       <span
       class="ol-number-icon"

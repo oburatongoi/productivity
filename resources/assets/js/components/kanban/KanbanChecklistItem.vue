@@ -14,11 +14,12 @@
   @dblclick.stop="toggleNestedKanban(item)" > -->
   <li
   class="nested-kanban-card checklist-item enlistable sectionable"
-  :class="{ opened: item.opened }"
-  @click.stop="beforeToggleNestedKanban(item)"
-  @dblclick.stop="beforeToggleNestedKanban(item)" >
+  :class="{ opened: item.opened }" >
 
-    <div class="nested-kanban-card-heading">
+    <div
+    class="nested-kanban-card-heading"
+    @click.stop="beforeToggleNestedKanban(item)"
+    @dblclick.stop="beforeToggleNestedKanban(item)" >
 
       <span class="checkbox-container">
         <span

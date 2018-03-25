@@ -6,11 +6,12 @@
   @dblclick.stop="toggleNestedKanban(checklist)" > -->
   <li
   class="nested-kanban-card checklist enfoldable"
-  :class="{ opened: checklist.opened }"
-  @click.stop="toggleNestedKanban(checklist)"
-  @dblclick.stop="toggleNestedKanban(checklist)" >
+  :class="{ opened: checklist.opened }" >
 
-    <div class="nested-kanban-card-heading">
+    <div
+    class="nested-kanban-card-heading"
+    @click.stop="toggleNestedKanban(checklist)"
+    @dblclick.stop="toggleNestedKanban(checklist)" >
 
       <i
       class="far fa-fw"
