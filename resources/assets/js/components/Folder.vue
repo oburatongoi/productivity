@@ -14,7 +14,6 @@
       <div class="inner-content-wrapper full-height" v-if="view=='files'||view=='tasks'">
         <template v-if="view=='files'">
           <index-all />
-          <move-to-folder v-if="selectedIsMovable"/>
         </template>
 
         <template v-if="view=='tasks'||view=='overview'">
@@ -37,7 +36,6 @@ import EditFolderName from './EditFolderName.vue'
 import IndexAll from './IndexAll.vue'
 import IndexTasks from './IndexTasks.vue'
 import Kanban from './kanban/Kanban.vue'
-import MoveToFolder from './MoveToFolder.vue'
 import MoveToChecklist from './MoveToChecklist.vue'
 
 export default {
@@ -47,7 +45,6 @@ export default {
     IndexAll,
     IndexTasks,
     Kanban,
-    MoveToFolder,
     MoveToChecklist
   },
   data () {

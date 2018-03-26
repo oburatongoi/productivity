@@ -3,6 +3,7 @@
     <search-results v-if="search.isSearchable" />
     <notices />
     <create-new v-if="showCreatingNewButtons||creatingNew"/>
+    <move-to-folder v-if="selectedIsMovable"/>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 // import { mapActions, mapGetters } from 'vuex'
 import { mapGetters } from 'vuex'
 import CreateNew from './CreateNew.vue'
+import MoveToFolder from './MoveToFolder.vue'
 import Notices from './Notices.vue'
 import SearchResults from './SearchResults.vue'
 
@@ -17,14 +19,16 @@ export default {
   name: 'global',
   components: {
     CreateNew,
+    MoveToFolder,
     Notices,
     SearchResults,
   },
   computed: {
     ...mapGetters([
-      'search',
-      'showCreatingNewButtons',
       'creatingNew',
+      'search',
+      'selectedIsMovable',
+      'showCreatingNewButtons',
     ])
   },
   // methods: {

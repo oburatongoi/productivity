@@ -89,10 +89,10 @@
         <span class="footer-text"> {{ footerText }}</span>
       </p>
 
-      <span class="fa-stack toggle-add-folder-btn" @click="toggleAddingFolder">
-        <i class="far fa-folder fa-stack-2x folder-color-scheme"/>
-        <i class="far fa-plus fa-stack-1x fa-inverse" v-if="!addingFolder"/>
-        <i class="far fa-times fa-stack-1x fa-inverse" v-if="addingFolder"/>
+      <span class="fa-layers fa-fw toggle-add-folder-btn" @click="toggleAddingFolder">
+        <i class="fas fa-folder folder-color-scheme"/>
+        <i class="far fa-plus fa-inverse" data-fa-transform="shrink-6 left-5" v-if="!addingFolder"/>
+        <i class="far fa-times fa-inverse" data-fa-transform="shrink-6 left-5" v-if="addingFolder"/>
       </span>
     </div>
   </div>
@@ -441,14 +441,18 @@ export default {
             float: right;
             cursor: pointer;
             margin-top: 8px;
-            .fa-folder {
-                font-size: 1.5em;
-                line-height: 16px;
-            }
+            // .fa-folder {
+            //     font-size: 1.5em;
+            //     line-height: 16px;
+            // }
+            // .fa-times,
+            // .fa-plus {
+            //     font-size: 0.7em;
+            //     line-height: 18px;
+            // }
             .fa-times,
             .fa-plus {
-                font-size: 0.7em;
-                line-height: 18px;
+                color: white;
             }
         }
     }

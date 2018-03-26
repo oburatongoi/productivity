@@ -183,7 +183,7 @@ export default {
       return this.card.items && !! this.card.items.length
     },
     truncateLength: function() {
-      return this.card.isExpanded ? 80 : 40
+      return this.card.isExpanded ? 100 : 40
     },
   },
   methods: {
@@ -200,7 +200,7 @@ export default {
     background: white;
     border: 1px solid $base-border-color;
     border-radius: 4px;
-    min-width: 340px;
+    min-width: 400px;
     max-width: 800px;
     display: inline-block;
     margin-left: 20px;
@@ -217,7 +217,7 @@ export default {
     }
 
     &.expanded {
-      min-width: 600px;
+      min-width: 660px;
     }
 
     .kanban-card-heading-icons {
@@ -309,15 +309,18 @@ export default {
         background: white;
         margin-bottom: 2px;
         border: 1px solid white;
-        border-radius: 3px;
+
         &:hover {
-          border: 1px solid $base-border-color;
+          border-top: 1px dotted $base-border-color;
+          border-bottom: 1px dotted $base-border-color;
+          border-radius: 0px;
           // background: $body-bg;
         }
 
         &.selected,
         &.opened {
           background: $body-bg;
+          border-radius: 3px;
         }
 
         &.opened {
@@ -344,12 +347,12 @@ export default {
         }
       }
 
-      // &.folder,
-      // &.checklist,
-      // &.checklist-item,
-      // &.sub-checklist-item {
-      //   cursor: pointer;
-      // }
+      &.folder,
+      &.checklist,
+      &.checklist-item,
+      &.sub-checklist-item {
+        cursor: default;
+      }
 
       &.folder.selected {
         border: 1px solid $folder-primary;

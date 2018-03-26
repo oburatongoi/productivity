@@ -8,17 +8,18 @@
           class="btn btn-sm toggle-move-btn"
           :class="moveButtonClass"
           @click.prevent="toggleMovable"
-        ><i class="fas fa-exchange-alt" aria-hidden="true"/> Move</button>
+        ><i class="fas fa-arrows" aria-hidden="true"/> Move</button>
       </template>
 
       <button
         type="button"
         id="confirm-or-delete-btn"
         class="btn btn-default btn-sm toggle-delete-btn"
+        title="Archive"
         :class="{ 'delete-armed': selected.deletable }"
         @click.prevent="confirmOrDelete"
         @dblclick.prevent="confirmOrDelete"
-      ><i class="far fa-trash-alt" aria-hidden="true"/><span v-if="selected.deletable"> Delete</span></button>
+      ><i class="far fa-archive" aria-hidden="true"/> Archive<span v-if="selected.deletable">?</span></button>
 
       <button
         type="button"

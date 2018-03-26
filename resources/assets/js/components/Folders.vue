@@ -8,25 +8,17 @@
 
       <index-folders/>
     </div>
-    <move-to-folder v-if="selectedIsMovable"/>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import IndexFolders from './IndexFolders.vue'
-import MoveToFolder from './MoveToFolder.vue'
 
 export default {
   name: 'folders',
   components: {
     IndexFolders,
-    MoveToFolder
-  },
-  computed: {
-    ...mapGetters([
-      'selectedIsMovable'
-    ])
   },
   methods: {
     ...mapActions([

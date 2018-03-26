@@ -25,9 +25,9 @@
         <span
         class="pull-right icon-and-label"
         v-if="savingChanges" >
-          <span class="fa-stack">
-            <i class="fal fa-circle-notch fa-spin fa-stack-2x"/>
-            <i class="far fa-save fa-stack-1x"/>
+          <span class="fa-layers">
+            <i class="fal fa-circle-notch fa-spin"/>
+            <i class="far fa-save fa-stack-1x" data-fa-transform="shrink-6"/>
           </span>
           Saving
         </span>
