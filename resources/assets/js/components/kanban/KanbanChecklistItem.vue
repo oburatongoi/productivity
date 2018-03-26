@@ -1,10 +1,7 @@
 <template lang="html">
   <!-- <li
   class="nested-kanban-card checklist-item enlistable sectionable"
-  :class="{
-    opened: item.opened,
-    selected: selected.checklistItems.indexOf(item) !== -1
-  }"
+  :class="{ opened: item.opened, selected: selected.checklistItems.indexOf(item) !== -1 }"
   @click.stop="toggleSelection({ selection: {
     model: 'checklist-item',
     listing: item,
@@ -14,11 +11,16 @@
   @dblclick.stop="toggleNestedKanban(item)" > -->
   <li
   class="nested-kanban-card checklist-item enlistable sectionable"
-  :class="{ opened: item.opened }" >
+  :class="{ opened: item.opened, selected: selected.checklistItems.indexOf(item) !== -1 }" >
 
     <div
     class="nested-kanban-card-heading"
-    @click.stop="beforeToggleNestedKanban(item)"
+    @click.stop="toggleSelection({ selection: {
+      model: 'checklist-item',
+      listing: item,
+      parentModel: item.parent_id ? 'checklist-item' : 'checklist' },
+      event: $event
+    })"
     @dblclick.stop="beforeToggleNestedKanban(item)" >
 
       <span class="checkbox-container">
@@ -57,7 +59,7 @@
       {{ currentKanbanChecklistItem.content | truncate(truncateLength) }}
 
       <i
-      class="fas fa-fw toggle-button"
+      class="fas fa-fw nested-kanban-card-icon"
       :class="toggleIconClass"
       aria-hidden="true"
       @click.stop="toggleNestedKanban(item)"
@@ -134,8 +136,8 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from 'vuex'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+// import { mapActions } from 'vuex'
 import AddItemLite from '../AddItemLite.vue'
 import ItemFormMeta from '../ItemFormMeta.vue'
 import KanbanSubChecklistItem from './KanbanSubChecklistItem.vue'
@@ -166,9 +168,9 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters([
-    //   'selected'
-    // ]),
+    ...mapGetters([
+      'selected'
+    ]),
     checkboxClass: function() {
       return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : this.isSubItem ? 'fa-square' : 'fa-circle'
     },
@@ -192,7 +194,7 @@ export default {
       'previewNestedKanban',
       'toggleNestedKanban',
       'toggleNestedKanbanMeta',
-      // 'toggleSelection',
+      'toggleSelection',
     ]),
     beforeToggleNestedKanban: function(item) {
       if (! this.hasSubItemChain) this.toggleNestedKanban(item)

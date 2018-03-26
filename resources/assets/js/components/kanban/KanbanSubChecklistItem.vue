@@ -5,11 +5,12 @@
     @click.stop="toggleSelection({selection: { model: 'checklist-item', listing: item, parentModel: 'checklist-item' }, event: $event})"
     @dblclick.stop="openNestedKanbanChecklistItem(item)" > -->
   <li
-    class="nested-kanban-card sub-checklist-item enlistable sub-enlistable sectionable" >
+  class="nested-kanban-card sub-checklist-item enlistable sub-enlistable sectionable"
+  :class="{ selected: selected.checklistItems.indexOf(item) !== -1 }" >
 
     <div
     class="nested-kanban-card-heading"
-    @click.stop="openNestedKanbanChecklistItem(item)"
+    @click.stop="toggleSelection({selection: { model: 'checklist-item', listing: item, parentModel: 'checklist-item' }, event: $event})"
     @dblclick.stop="openNestedKanbanChecklistItem(item)" >
 
       <span class="checkbox-container">
@@ -38,7 +39,7 @@
       {{ item.content | truncate(truncateLength) }}
 
       <i
-      class="fas fa-fw toggle-button"
+      class="fas fa-fw nested-kanban-card-icon"
       :class="toggleIconClass"
       aria-hidden="true"
       @click.stop="openNestedKanbanChecklistItem(item)" />
@@ -72,8 +73,7 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from 'vuex'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import ItemFormMeta from '../ItemFormMeta.vue'
 export default {
   name: 'kanban-sub-checklist-item',
@@ -104,9 +104,9 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters([
-    //   'selected'
-    // ]),
+    ...mapGetters([
+      'selected'
+    ]),
     checkboxClass: function() {
       return this.checkboxClassOverride ? this.checkboxClassOverride : this.item.checked_at ? 'fa-check' : 'fa-square'
     },
@@ -122,7 +122,7 @@ export default {
       'previewNestedKanban',
       // 'toggleNestedKanban',
       // 'toggleNestedKanbanMeta',
-      // 'toggleSelection',
+      'toggleSelection',
     ]),
     checkItem: function() {
       this.checkboxClassOverride = 'fa-circle-notch fa-spin'

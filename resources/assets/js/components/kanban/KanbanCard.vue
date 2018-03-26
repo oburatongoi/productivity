@@ -183,7 +183,7 @@ export default {
       return this.card.items && !! this.card.items.length
     },
     truncateLength: function() {
-      return this.card.isExpanded ? 80 : 45
+      return this.card.isExpanded ? 80 : 40
     },
   },
   methods: {
@@ -312,7 +312,7 @@ export default {
         border-radius: 3px;
         &:hover {
           border: 1px solid $base-border-color;
-          background: $body-bg;
+          // background: $body-bg;
         }
 
         &.selected,
@@ -344,12 +344,12 @@ export default {
         }
       }
 
-      &.folder,
-      &.checklist,
-      &.checklist-item,
-      &.sub-checklist-item {
-        cursor: pointer;
-      }
+      // &.folder,
+      // &.checklist,
+      // &.checklist-item,
+      // &.sub-checklist-item {
+      //   cursor: pointer;
+      // }
 
       &.folder.selected {
         border: 1px solid $folder-primary;
@@ -361,7 +361,7 @@ export default {
         border: 1px solid $list-primary;
       }
 
-      .toggle-button {
+      .nested-kanban-card-icon {
         // font-size: 0.8em;
         font-size: 1em;
         // color: darken($base-border-color, 20%);
@@ -413,10 +413,10 @@ export default {
         opacity: 1;
       }
 
-      & > .nested-kanban-card-heading > .toggle-button {
+      & > .nested-kanban-card-heading > .nested-kanban-card-icon {
         opacity: 0;
       }
-      &:hover > .nested-kanban-card-heading > .toggle-button {
+      &:hover > .nested-kanban-card-heading > .nested-kanban-card-icon {
         opacity: 1;
       }
       /* End Buttons */
@@ -426,8 +426,8 @@ export default {
         background: rgba(255, 255, 255, 1);
       }
       &.selected > .nested-kanban-card-heading > .nested-kanban-card-icons,
-      &.opened > .nested-kanban-card-heading > .nested-kanban-card-icons,
-      &:hover > .nested-kanban-card-heading > .nested-kanban-card-icons {
+      &.opened > .nested-kanban-card-heading > .nested-kanban-card-icons {
+      // &:hover > .nested-kanban-card-heading > .nested-kanban-card-icons {
         background: rgba(245, 248, 250, 1);
       }
       /* End Background */
@@ -468,7 +468,7 @@ export default {
     cursor: pointer;
     display: inline-block;
     padding-right: 10px !important;
-    margin-left: -10px;
+    // margin-left: -10px;
     margin-right: 5px;
     border-right: 1px solid $base-border-color;
     & > span {

@@ -6,11 +6,11 @@
   @dblclick.stop="toggleNestedKanban(folder)" > -->
   <li
   class="nested-kanban-card folder enfoldable"
-  :class="{ opened: folder.opened }" >
+  :class="{ opened: folder.opened, selected: selected.folders.indexOf(folder) !== -1 }" >
 
     <div
     class="nested-kanban-card-heading"
-    @click.stop="beforeToggleNestedKanban(folder)"
+    @click.stop="toggleSelection({selection: {model: 'folder', listing: folder, parentModel: 'folder'}, event: $event})"
     @dblclick.stop="beforeToggleNestedKanban(folder)" >
 
       <span
@@ -22,7 +22,7 @@
         class="far fa-fw fa-chevron-left"
         aria-hidden="true" />
 
-        <span>Back</span>
+        <!-- <span>Back</span> -->
 
       </span>
 
@@ -33,7 +33,7 @@
       {{ currentKanbanFolder.name | truncate(truncateLength) }}
 
       <i
-      class="fas fa-fw toggle-button"
+      class="fas fa-fw nested-kanban-card-icon"
       :class="toggleIconClass"
       aria-hidden="true"
       @click.stop="toggleNestedKanban(folder)"
@@ -133,9 +133,9 @@ export default {
     },
   },
   computed: {
-    // ...mapGetters([
-    //   'selected'
-    // ]),
+    ...mapGetters([
+      'selected'
+    ]),
     currentKanbanFolder: function() {
       return this.hasSubFolderChain ? this.folder.subfolderChain[this.folder.subfolderChain.length-1] : this.folder
     },
@@ -151,7 +151,7 @@ export default {
       'navigateToNestedKanban',
       'removeFromKanbanArray',
       'toggleNestedKanban',
-      // 'toggleSelection',
+      'toggleSelection',
     ]),
     beforeToggleNestedKanban: function(folder) {
       if (! this.hasSubFolderChain) this.toggleNestedKanban(folder)

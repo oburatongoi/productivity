@@ -6,11 +6,11 @@
   @dblclick.stop="openNestedKanbanFolder(folder)" > -->
   <li
   class="nested-kanban-card folder enfoldable"
-  :class="{ opened: folder.opened }" >
+  :class="{ opened: folder.opened, selected: selected.folders.indexOf(folder) !== -1 }" >
 
     <div
     class="nested-kanban-card-heading"
-    @click.stop="openNestedKanbanFolder(folder)"
+    @click.stop="toggleSelection({selection: {model: 'folder', listing: folder, parentModel: 'folder'}, event: $event})"
     @dblclick.stop="openNestedKanbanFolder(folder)" >
 
       <i
@@ -20,10 +20,10 @@
       {{ folder.name | truncate(truncateLength) }}
 
       <i
-      class="fas fa-fw toggle-button"
+      class="fas fa-fw nested-kanban-card-icon"
       :class="toggleIconClass"
       aria-hidden="true"
-      @click.stop="toggleNestedKanban(folder)" />
+      @click.stop="openNestedKanbanFolder(folder)" />
 
       <span class="nested-kanban-card-icons">
 
@@ -61,9 +61,9 @@ export default {
     },
   },
   computed: {
-    // ...mapGetters([
-    //   'selected'
-    // ]),
+    ...mapGetters([
+      'selected'
+    ]),
     toggleIconClass: function() {
       return this.folder.opened ? 'fa-caret-up' : 'fa-caret-down';
     },
@@ -73,7 +73,7 @@ export default {
       'addToKanbanArray',
       'fetchNestedKanbanDescendants',
       'navigateToNestedKanban',
-      // 'toggleSelection',
+      'toggleSelection',
     ]),
     openNestedKanbanFolder: function(folder) {
       if (!this.ancestor.subfolderChain) this.$set(this.ancestor, 'subfolderChain', [])
