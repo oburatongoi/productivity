@@ -30,7 +30,7 @@
         <i
         class="far fa-fw fa-arrow-circle-right kanban-card-heading-icon"
         aria-hidden="true"
-        :title="'Navigate to '+ card.name || card.title"
+        :title="'Navigate to '+ (card.name || card.title)"
         @click.stop="navigateToNestedKanban(card)" />
       </span>
 

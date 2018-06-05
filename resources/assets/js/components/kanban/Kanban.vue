@@ -1,9 +1,10 @@
 <template lang="html">
-  <div class="kanban-wrapper" id="kanban-wrapper">
+  <div class="kanban-wrapper" id="kanban-wrapper" @click.self="clearSelected">
 
     <ul
     id="kanban"
-    class="kanban">
+    class="kanban"
+    @click.self="clearSelected" >
 
       <kanban-card
       v-for="card in kanbanCards"
@@ -20,7 +21,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import KanbanCard from './KanbanCard.vue'
 import KanbanPreview from './KanbanPreview.vue'
 export default {
@@ -47,6 +48,9 @@ export default {
     })
   },
   methods: {
+    ...mapActions([
+      'clearSelected'
+    ]),
     resizeKanban: function() {
       var kanban = document.getElementById('kanban'),
           kanbanHeight = kanban ? $(kanban).outerHeight(true) : 0,
