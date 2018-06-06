@@ -74,9 +74,11 @@ class ChecklistController extends Controller
         $this->authorize('view', $checklist);
 
         $checklistItems = $this->items->forChecklist($checklist);
+        $sections = $this->checklists->sections($checklist);
 
         JavaScript::put([
           'checklist' => $checklist,
+          'sections' => $sections,
           'checklistItems' => $checklistItems,
           'ancestors' => $checklist->getFolderTree(),
           'currentFolder' => $checklist->getFolderById()

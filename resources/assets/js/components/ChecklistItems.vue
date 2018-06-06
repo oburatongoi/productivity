@@ -5,7 +5,29 @@
       @end="beforeUpdateSortOrder"
       :list="items"
     >
+      <template v-if="sections">
+
+        <div
+          class="section"
+          v-for="section in sections"
+          :key="section.id"
+        >
+          <h4 class="section-title">{{ section.title }}</h4>
+
+          <checklist-item
+            v-for="item in section.items"
+            :item="item"
+            :list-type="listType"
+            :key="item.id"
+            :parent-model="parentModel"
+          />
+        </div>
+      </template>
+
       <template v-if="items">
+
+        <h4 v-if="sections" class="section-title">Unsectioned Items</h4>
+
         <checklist-item
           v-for="item in items"
           :item="item"
@@ -34,6 +56,10 @@ export default {
         type: Array,
         required: true
       },
+      // sections: {
+      //   type: Array,
+      //   default: () => []
+      // },
       listType: {
         type: String,
         default: 'ch'
@@ -45,6 +71,11 @@ export default {
       parentModel: {
         type: String,
         required: true
+      }
+    },
+    data () {
+      return {
+        sections: Productivity.sections || []
       }
     },
     computed: {
@@ -70,5 +101,12 @@ export default {
 <style lang="scss">
   .checklist-items {
     padding: 0;
+    .section-title {
+      color: $brand-primary;
+      font-weight: 300;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
   }
 </style>

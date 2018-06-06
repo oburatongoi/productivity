@@ -42,6 +42,17 @@ class Checklists implements ChecklistsInterface {
                     ->get();
     }
 
+    public function sections(Checklist $checklist)
+    {
+        return $checklist->sections()
+                    // ->whereNull('folder_id')
+                    ->with([
+                      'items:id,content,comments,checklist_id,checked_at,sub_list_type,sort_order,is_urgent,is_important,deadline'
+                    ])
+                    ->orderBy('title', 'asc')
+                    ->get();
+    }
+
     public function forFolder(User $user, Folder $folder)
     {
         return $folder->checklists()
