@@ -76,7 +76,7 @@
         class="far fa-fw fa-arrow-to-right nested-kanban-card-icon"
         aria-hidden="true"
         @click.stop="previewNestedKanban(currentKanbanChecklistItem)"
-        :title="'Preview' + currentKanbanChecklistItem.content" />
+        :title="'Preview ' + currentKanbanChecklistItem.content" />
 
         <i
         class="far fa-fw fa-times nested-kanban-card-icon"
